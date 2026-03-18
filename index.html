@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vigyan Bhairav · Cosmic Wisdom & Community</title>
-    <meta name="description" content="112 meditation techniques, cosmic diary, community chat, and infinite wisdom.">
+    <title>Vigyan Bhairav · Ultimate Cosmic Portal</title>
+    <meta name="description" content="112 authentic meditation techniques, social feed, guided audio, challenges, and cosmic visuals.">
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        /* ============================================
-           VIGYAN BHAIRAV · COSMIC COMMUNITY EDITION
-           Color Palette: Shades of Blue (Trust, Peace, Wisdom)
-           ============================================ */
+        /* ----- COSMIC CSS – FINAL EDITION ----- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg-deep: #0a0f1f;      /* deep navy base */
-            --bg-card: #1a1f35;       /* midnight blue */
+            --bg-deep: #0a0f1f;
+            --bg-card: #1a1f35;
             --bg-glass: rgba(26, 31, 53, 0.7);
             --text-primary: #eef2ff;
             --text-secondary: #a5b9ff;
             --text-muted: #8a9bcf;
-            --accent-blue: #3a6eff;   /* trust, clarity */
+            --accent-blue: #3a6eff;
             --accent-sapphire: #0f52ba;
             --accent-azure: #007fff;
             --accent-celeste: #adffff;
@@ -54,380 +54,608 @@
             --shadow-glow: 0 0 30px rgba(43,79,140,0.25);
             --shadow-neon: 0 0 15px rgba(0,127,255,0.4);
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: var(--font-body);
             background: var(--bg-deep);
             color: var(--text-primary);
-            line-height:1.6;
-            min-height:100vh;
+            line-height: 1.6;
+            min-height: 100vh;
             transition: background var(--transition), color var(--transition);
-            overflow-x:hidden;
-            position:relative;
+            overflow-x: hidden;
+            position: relative;
         }
-        #cosmic-canvas, .stars, .twinkling {
-            position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;
+        #aurora-canvas, #cosmic-canvas, .stars, .twinkling {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
+        #aurora-canvas { z-index: 1; opacity: 0.5; }
         .stars {
             background: #0a0f1f url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIxLjUiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuOCIgLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSI4MCIgcj0iMSIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC42IiAvPjwvc3ZnPg==') repeat;
-            background-size:200px 200px;
-            animation:starMove 120s linear infinite;
+            background-size: 200px 200px;
+            animation: starMove 120s linear infinite;
         }
         .twinkling {
-            background:transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIyIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjQiIC8+PC9zdmc+') repeat;
-            background-size:300px 300px;
-            animation:twinkle 5s ease-in-out infinite;
+            background: transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIyIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjQiIC8+PC9zdmc+') repeat;
+            background-size: 300px 300px;
+            animation: twinkle 5s ease-in-out infinite;
         }
-        @keyframes starMove { from{transform:translateY(0);} to{transform:translateY(-200px);} }
-        @keyframes twinkle { 0%,100%{opacity:0.4;} 50%{opacity:1;} }
+        @keyframes starMove { from { transform: translateY(0); } to { transform: translateY(-200px); } }
+        @keyframes twinkle { 0%,100% { opacity:0.4; } 50% { opacity:1; } }
         .container {
-            max-width:1400px;
-            margin:0 auto;
-            padding:20px 30px;
-            position:relative;
-            z-index:2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 30px;
+            position: relative;
+            z-index: 2;
         }
         /* Glassmorphism base */
         .glass-header, .stat-card, .path-card, .tech-card, .detail-view,
         .timer-section, .profile-section, .plan-section, .quotes-section,
-        .diary-section, .community-section, .chat-section, .search-box,
-        .timer-pill, .promo-input, .plan-item, .diary-entry, .community-quote,
-        .achievement-card, .moon-widget, .chat-message, .friend-card {
+        .diary-section, .community-section, .chat-section, .social-section,
+        .challenge-section, .audio-section, .search-box, .timer-pill,
+        .promo-input, .plan-item, .diary-entry, .community-quote,
+        .achievement-card, .moon-widget, .chat-message, .friend-card,
+        .feed-post, .challenge-card, .audio-card, .quote-card {
             background: var(--bg-glass);
             backdrop-filter: blur(16px) saturate(200%);
             -webkit-backdrop-filter: blur(16px) saturate(200%);
-            border:1px solid var(--glass-border);
+            border: 1px solid var(--glass-border);
             border-radius: var(--border-radius-card);
             box-shadow: var(--shadow-soft);
             transition: all var(--transition);
         }
         /* Header */
         .glass-header {
-            display:flex; justify-content:space-between; align-items:center;
-            padding:12px 30px; border-radius:var(--border-radius-pill); margin-bottom:40px;
-            position:relative; overflow:hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 30px;
+            border-radius: var(--border-radius-pill);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            flex-wrap: wrap;
         }
         .glass-header::before {
-            content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
-            background:radial-gradient(circle, rgba(58,110,255,0.2) 0%, transparent 70%);
-            animation:rotate 20s linear infinite; pointer-events:none;
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(58,110,255,0.2) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
         }
-        @keyframes rotate { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .logo-area h1 {
-            font-family:var(--font-display); font-size:2.2rem; font-weight:800;
-            background:linear-gradient(135deg, var(--accent-blue), var(--accent-azure), var(--accent-celeste));
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-            filter:drop-shadow(0 0 15px var(--accent-blue));
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-azure), var(--accent-celeste));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px var(--accent-blue));
         }
-        .tagline { font-size:0.8rem; color:var(--text-secondary); letter-spacing:4px; text-transform:uppercase; }
+        .tagline { font-size: 0.8rem; color: var(--text-secondary); letter-spacing: 4px; text-transform: uppercase; }
         .top-nav {
-            display:flex;
-            gap:20px;
-            align-items:center;
-            flex-wrap:wrap;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
         }
         .top-nav a {
-            color:var(--text-primary);
-            text-decoration:none;
-            font-weight:500;
-            transition:color 0.2s;
-            position:relative;
-            padding:5px 0;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+            padding: 5px 0;
         }
         .top-nav a:hover, .top-nav a.active {
-            color:var(--accent-celeste);
-            text-shadow:0 0 8px var(--accent-azure);
+            color: var(--accent-celeste);
+            text-shadow: 0 0 8px var(--accent-azure);
         }
         .top-nav a::after {
-            content:''; position:absolute; bottom:-2px; left:0; width:0; height:2px;
-            background:linear-gradient(90deg, var(--accent-blue), var(--accent-azure));
-            transition:width 0.3s;
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-azure));
+            transition: width 0.3s;
         }
-        .top-nav a:hover::after, .top-nav a.active::after { width:100%; }
+        .top-nav a:hover::after, .top-nav a.active::after { width: 100%; }
         .theme-toggle {
-            background:none; border:1px solid var(--glass-border); color:var(--text-primary);
-            width:40px; height:40px; border-radius:50%; cursor:pointer; font-size:1.2rem;
-            display:flex; align-items:center; justify-content:center; transition:all 0.2s;
+            background: none;
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
         }
         .theme-toggle:hover {
-            background:var(--accent-blue); color:white;
-            transform:rotate(15deg); box-shadow:var(--shadow-neon);
+            background: var(--accent-blue);
+            color: white;
+            transform: rotate(15deg);
+            box-shadow: var(--shadow-neon);
         }
-        .user-greeting { font-weight:600; color:var(--accent-celeste); margin-left:10px; }
-        .cart-icon { position:relative; font-size:1.4rem; color:var(--text-secondary); cursor:pointer; transition:transform 0.2s; }
-        .cart-icon:hover { transform:scale(1.1); color:var(--accent-gold); }
-        .cart-count { position:absolute; top:-8px; right:-8px; background:var(--accent-blue); color:white; font-size:0.7rem; font-weight:700; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px var(--accent-blue); }
-        /* Hero */
-        .hero { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; margin-bottom:60px; }
-        .hero-content { max-width:550px; }
+        .user-greeting { font-weight: 600; color: var(--accent-celeste); margin-left: 10px; }
+        .cart-icon {
+            position: relative;
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .cart-icon:hover { transform: scale(1.1); color: var(--accent-gold); }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-blue);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+        .color-picker {
+            display: flex;
+            gap: 8px;
+            margin-left: 10px;
+        }
+        .color-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+        }
+        .color-dot:hover { transform: scale(1.2); }
+        .color-dot.active { border-color: white; }
+        /* Hero section (keep existing) */
+        .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-bottom: 60px; }
+        .hero-content { max-width: 550px; }
         .chip {
-            background:rgba(58,110,255,0.15); border:1px solid var(--accent-blue); color:var(--accent-azure);
-            padding:6px 16px; border-radius:40px; font-size:0.85rem; font-weight:600; display:inline-block; margin-bottom:20px;
-            backdrop-filter:blur(5px); box-shadow:0 0 15px rgba(58,110,255,0.3);
+            background: rgba(58,110,255,0.15);
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-azure);
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(58,110,255,0.3);
         }
-        .hero h2 { font-family:var(--font-display); font-size:4.5rem; font-weight:800; line-height:1.1; margin-bottom:20px; }
+        .hero h2 { font-family: var(--font-display); font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
         .gradient-text {
-            background:linear-gradient(135deg, var(--accent-blue), var(--accent-azure), var(--accent-celeste));
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-            animation:hueShift 8s infinite alternate;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-azure), var(--accent-celeste));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: hueShift 8s infinite alternate;
         }
-        @keyframes hueShift { from{filter:hue-rotate(0deg);} to{filter:hue-rotate(10deg);} }
-        .hero-sub { color:var(--text-secondary); font-size:1.3rem; margin-bottom:30px; border-left:4px solid var(--accent-azure); padding-left:20px; }
-        .hero-buttons { display:flex; gap:15px; flex-wrap:wrap; }
+        @keyframes hueShift { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(10deg); } }
+        .hero-sub { color: var(--text-secondary); font-size: 1.3rem; margin-bottom: 30px; border-left: 4px solid var(--accent-azure); padding-left: 20px; }
+        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
         .btn-primary {
-            background:linear-gradient(135deg, var(--accent-blue), var(--accent-sapphire)); color:white;
-            padding:16px 36px; border-radius:50px; font-weight:700; font-size:1.1rem;
-            display:inline-flex; align-items:center; gap:10px; border:none; cursor:pointer;
-            transition:all 0.3s; box-shadow:0 8px 25px rgba(58,110,255,0.4); position:relative; overflow:hidden;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-sapphire));
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(58,110,255,0.4);
+            position: relative;
+            overflow: hidden;
         }
         .btn-primary::before {
-            content:''; position:absolute; top:50%; left:50%; width:0; height:0; border-radius:50%;
-            background:rgba(255,255,255,0.3); transform:translate(-50%,-50%); transition:width 0.6s, height 0.6s;
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%,-50%);
+            transition: width 0.6s, height 0.6s;
         }
-        .btn-primary:hover::before { width:300px; height:300px; }
-        .btn-primary:hover { transform:translateY(-3px); box-shadow:0 15px 35px rgba(58,110,255,0.6); }
+        .btn-primary:hover::before { width: 300px; height: 300px; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(58,110,255,0.6); }
         .btn-outline {
-            background:transparent; border:1px solid var(--glass-border); color:var(--text-primary);
-            padding:16px 36px; border-radius:50px; font-weight:600; font-size:1.1rem;
-            transition:all 0.3s; cursor:pointer; backdrop-filter:blur(10px);
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
         }
-        .btn-outline:hover { background:rgba(255,255,255,0.1); border-color:var(--accent-azure); box-shadow:0 0 20px var(--accent-azure); }
-        .hero-illustration { position:relative; height:350px; display:flex; justify-content:center; align-items:center; }
-        .blackhole-canvas { width:100%; height:100%; display:block; border-radius:50%; background:transparent; position:relative; z-index:2; }
-        /* Stats */
-        .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:25px; margin-bottom:60px; }
-        .stat-card { padding:30px 20px; text-align:center; position:relative; overflow:hidden; }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: var(--accent-azure); box-shadow: 0 0 20px var(--accent-azure); }
+        .hero-illustration { position: relative; height: 350px; display: flex; justify-content: center; align-items: center; }
+        .blackhole-canvas { width: 100%; height: 100%; display: block; border-radius: 50%; background: transparent; position: relative; z-index: 2; }
+        /* Stats cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 25px; margin-bottom: 60px; }
+        .stat-card { padding: 30px 20px; text-align: center; position: relative; overflow: hidden; }
         .stat-card::after {
-            content:''; position:absolute; top:0; left:0; width:100%; height:100%;
-            background:radial-gradient(circle at 70%30%, var(--accent-blue), transparent 70%);
-            opacity:0.2; pointer-events:none;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70%30%, var(--accent-blue), transparent 70%);
+            opacity: 0.2;
+            pointer-events: none;
         }
-        .stat-value { font-size:3.5rem; font-weight:800; font-family:var(--font-display); color:var(--accent-azure); margin-bottom:5px; text-shadow:0 0 20px var(--accent-blue); }
-        .stat-label { color:var(--text-secondary); font-size:1rem; text-transform:uppercase; letter-spacing:2px; }
+        .stat-value { font-size: 3.5rem; font-weight: 800; font-family: var(--font-display); color: var(--accent-azure); margin-bottom: 5px; text-shadow: 0 0 20px var(--accent-blue); }
+        .stat-label { color: var(--text-secondary); font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; }
         /* Section headers */
-        .section-header { display:flex; justify-content:space-between; align-items:center; margin:50px 0 25px; }
-        .section-header h3 { font-family:var(--font-display); font-size:2.2rem; font-weight:600; display:flex; align-items:center; gap:12px; }
-        .arrow { color:var(--accent-azure); font-size:2.5rem; animation:arrowDance 2.5s infinite; }
-        @keyframes arrowDance { 0%,100%{transform:translateX(0);} 50%{transform:translateX(8px);} }
-        .view-all { color:var(--accent-azure); text-decoration:none; font-weight:600; display:flex; align-items:center; gap:8px; transition:all 0.2s; padding:8px 16px; border-radius:40px; background:rgba(58,110,255,0.1); }
-        .view-all:hover { background:var(--accent-blue); color:white; box-shadow:var(--shadow-glow); }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin: 50px 0 25px; }
+        .section-header h3 { font-family: var(--font-display); font-size: 2.2rem; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+        .arrow { color: var(--accent-azure); font-size: 2.5rem; animation: arrowDance 2.5s infinite; }
+        @keyframes arrowDance { 0%,100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
+        .view-all { color: var(--accent-azure); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: all 0.2s; padding: 8px 16px; border-radius: 40px; background: rgba(58,110,255,0.1); }
+        .view-all:hover { background: var(--accent-blue); color: white; box-shadow: var(--shadow-glow); }
         /* Path cards */
-        .path-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px,1fr)); gap:20px; margin-bottom:50px; }
-        .path-card { padding:30px 15px; text-align:center; cursor:pointer; transition:all 0.4s; position:relative; overflow:hidden; }
+        .path-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap: 20px; margin-bottom: 50px; }
+        .path-card { padding: 30px 15px; text-align: center; cursor: pointer; transition: all 0.4s; position: relative; overflow: hidden; }
         .path-card::before {
-            content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
-            background:radial-gradient(circle, var(--accent-celeste) 0%, transparent 70%);
-            opacity:0; transition:opacity 0.4s;
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-celeste) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
         }
-        .path-card:hover::before { opacity:0.15; }
-        .path-card:hover { transform:translateY(-8px) scale(1.02); border-color:var(--accent-blue); box-shadow:var(--shadow-glow); }
-        .path-card i { font-size:3rem; background:linear-gradient(135deg, var(--accent-blue), var(--accent-azure)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:15px; transition:transform 0.3s; }
-        .path-card:hover i { transform:scale(1.1) rotate(5deg); }
-        .path-card span { display:block; font-weight:700; font-size:1.3rem; margin-bottom:5px; }
-        .path-card small { color:var(--text-muted); font-size:0.85rem; }
+        .path-card:hover::before { opacity: 0.15; }
+        .path-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--accent-blue); box-shadow: var(--shadow-glow); }
+        .path-card i { font-size: 3rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-azure)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; transition: transform 0.3s; }
+        .path-card:hover i { transform: scale(1.1) rotate(5deg); }
+        .path-card span { display: block; font-weight: 700; font-size: 1.3rem; margin-bottom: 5px; }
+        .path-card small { color: var(--text-muted); font-size: 0.85rem; }
         /* Technique cards */
-        .tech-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:25px; margin-bottom:50px; }
-        .tech-card { padding:25px; transition:all 0.4s; cursor:pointer; position:relative; overflow:hidden; }
-        .tech-card:hover { transform:translateY(-8px); border-color:var(--accent-blue); box-shadow:var(--shadow-glow); }
-        .tech-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
-        .tech-number { color:var(--accent-azure); font-weight:700; font-size:1.3rem; background:rgba(58,110,255,0.15); padding:4px 12px; border-radius:40px; }
-        .favorite-btn { background:none; border:none; font-size:1.5rem; color:var(--accent-celeste); cursor:pointer; transition:transform 0.2s; filter:drop-shadow(0 0 5px var(--accent-celeste)); }
-        .favorite-btn:hover { transform:scale(1.2); color:var(--accent-azure); }
-        .favorite-btn.fas { color:var(--accent-celeste); animation:heartBeat 0.4s; }
-        @keyframes heartBeat { 0%,100%{transform:scale(1);} 50%{transform:scale(1.3);} }
-        .tech-card h4 { font-size:1.5rem; margin-bottom:12px; font-weight:700; }
-        .tech-essence { font-style:italic; color:var(--text-secondary); margin-bottom:18px; font-size:0.95rem; border-left:2px solid var(--accent-azure); padding-left:10px; }
-        .tech-tags { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
-        .tag { background:rgba(58,110,255,0.1); border:1px solid var(--accent-blue); color:var(--accent-azure); padding:5px 12px; border-radius:30px; font-size:0.75rem; font-weight:600; backdrop-filter:blur(4px); }
-        .tech-footer { display:flex; justify-content:space-between; align-items:center; }
-        .tech-duration { color:var(--text-muted); font-size:0.95rem; display:flex; align-items:center; gap:6px; }
-        .add-to-plan-btn { background:none; border:none; color:var(--accent-celeste); font-size:1.3rem; cursor:pointer; transition:transform 0.2s; margin-right:15px; }
-        .add-to-plan-btn:hover { transform:scale(1.2); color:var(--accent-azure); }
-        .tech-link { color:var(--accent-blue); text-decoration:none; font-weight:600; display:inline-flex; align-items:center; gap:6px; transition:gap 0.2s; }
-        .tech-link:hover { gap:10px; color:var(--accent-azure); }
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 25px; margin-bottom: 50px; }
+        .tech-card { padding: 25px; transition: all 0.4s; cursor: pointer; position: relative; overflow: hidden; }
+        .tech-card:hover { transform: translateY(-8px); border-color: var(--accent-blue); box-shadow: var(--shadow-glow); }
+        .tech-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .tech-number { color: var(--accent-azure); font-weight: 700; font-size: 1.3rem; background: rgba(58,110,255,0.15); padding: 4px 12px; border-radius: 40px; }
+        .favorite-btn { background: none; border: none; font-size: 1.5rem; color: var(--accent-celeste); cursor: pointer; transition: transform 0.2s; filter: drop-shadow(0 0 5px var(--accent-celeste)); }
+        .favorite-btn:hover { transform: scale(1.2); color: var(--accent-azure); }
+        .favorite-btn.fas { color: var(--accent-celeste); animation: heartBeat 0.4s; }
+        @keyframes heartBeat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+        .tech-card h4 { font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; }
+        .tech-essence { font-style: italic; color: var(--text-secondary); margin-bottom: 18px; font-size: 0.95rem; border-left: 2px solid var(--accent-azure); padding-left: 10px; }
+        .tech-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+        .tag { background: rgba(58,110,255,0.1); border: 1px solid var(--accent-blue); color: var(--accent-azure); padding: 5px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 600; backdrop-filter: blur(4px); }
+        .tech-footer { display: flex; justify-content: space-between; align-items: center; }
+        .tech-duration { color: var(--text-muted); font-size: 0.95rem; display: flex; align-items: center; gap: 6px; }
+        .add-to-plan-btn { background: none; border: none; color: var(--accent-celeste); font-size: 1.3rem; cursor: pointer; transition: transform 0.2s; margin-right: 15px; }
+        .add-to-plan-btn:hover { transform: scale(1.2); color: var(--accent-azure); }
+        .tech-link { color: var(--accent-blue); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+        .tech-link:hover { gap: 10px; color: var(--accent-azure); }
         /* Search */
-        .search-box { padding:14px 24px; border-radius:50px; width:280px; background:var(--bg-glass); border:1px solid var(--glass-border); color:var(--text-primary); font-size:1rem; outline:none; transition:all 0.3s; }
-        .search-box:focus { border-color:var(--accent-blue); box-shadow:0 0 0 4px rgba(58,110,255,0.2); width:320px; }
-        .search-box::placeholder { color:var(--text-muted); font-style:italic; }
+        .search-box { padding: 14px 24px; border-radius: 50px; width: 280px; background: var(--bg-glass); border: 1px solid var(--glass-border); color: var(--text-primary); font-size: 1rem; outline: none; transition: all 0.3s; }
+        .search-box:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 4px rgba(58,110,255,0.2); width: 320px; }
+        .search-box::placeholder { color: var(--text-muted); font-style: italic; }
         /* Detail view */
-        .detail-view { padding:50px; border-radius:50px; margin:50px 0; position:relative; overflow:hidden; }
+        .detail-view { padding: 50px; border-radius: 50px; margin: 50px 0; position: relative; overflow: hidden; }
         .detail-view::before {
-            content:''; position:absolute; top:0; left:0; width:100%; height:100%;
-            background:radial-gradient(circle at 20%30%, var(--accent-blue), transparent 60%),
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20%30%, var(--accent-blue), transparent 60%),
                         radial-gradient(circle at 80%70%, var(--accent-azure), transparent 60%);
-            opacity:0.15; pointer-events:none;
+            opacity: 0.15;
+            pointer-events: none;
         }
-        .detail-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; }
-        .detail-header h2 { font-size:3rem; font-family:var(--font-display); background:linear-gradient(135deg, var(--accent-blue), var(--accent-azure)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .back-btn { background:none; border:1px solid var(--glass-border); color:var(--text-primary); padding:12px 24px; border-radius:40px; cursor:pointer; transition:all 0.3s; font-size:1.1rem; display:flex; align-items:center; gap:10px; }
-        .back-btn:hover { background:var(--accent-blue); color:white; border-color:var(--accent-blue); box-shadow:var(--shadow-glow); }
-        .detail-content { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
-        .detail-steps, .detail-benefits { background:rgba(0,0,0,0.25); border-radius:40px; padding:35px; backdrop-filter:blur(10px); }
-        .detail-steps h3, .detail-benefits h3 { font-family:var(--font-display); margin-bottom:25px; font-size:1.8rem; color:var(--accent-azure); }
-        .detail-steps ol { padding-left:25px; }
-        .detail-steps li { margin-bottom:18px; font-size:1.1rem; }
-        .benefit-item { margin-bottom:18px; padding:15px; background:rgba(255,255,255,0.05); border-radius:25px; border-left:4px solid var(--accent-celeste); transition:transform 0.2s; }
-        .benefit-item:hover { transform:translateX(5px); }
-        .profession-tag { display:inline-block; background:var(--accent-azure); color:#102a4c; padding:5px 15px; border-radius:30px; font-weight:700; margin-right:12px; font-size:0.85rem; box-shadow:0 0 10px var(--accent-azure); }
+        .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .detail-header h2 { font-size: 3rem; font-family: var(--font-display); background: linear-gradient(135deg, var(--accent-blue), var(--accent-azure)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .back-btn { background: none; border: 1px solid var(--glass-border); color: var(--text-primary); padding: 12px 24px; border-radius: 40px; cursor: pointer; transition: all 0.3s; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+        .back-btn:hover { background: var(--accent-blue); color: white; border-color: var(--accent-blue); box-shadow: var(--shadow-glow); }
+        .detail-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .detail-steps, .detail-benefits { background: rgba(0,0,0,0.25); border-radius: 40px; padding: 35px; backdrop-filter: blur(10px); }
+        .detail-steps h3, .detail-benefits h3 { font-family: var(--font-display); margin-bottom: 25px; font-size: 1.8rem; color: var(--accent-azure); }
+        .detail-steps ol { padding-left: 25px; }
+        .detail-steps li { margin-bottom: 18px; font-size: 1.1rem; }
+        .benefit-item { margin-bottom: 18px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 25px; border-left: 4px solid var(--accent-celeste); transition: transform 0.2s; }
+        .benefit-item:hover { transform: translateX(5px); }
+        .profession-tag { display: inline-block; background: var(--accent-azure); color: #102a4c; padding: 5px 15px; border-radius: 30px; font-weight: 700; margin-right: 12px; font-size: 0.85rem; box-shadow: 0 0 10px var(--accent-azure); }
         /* Breath visualizer */
-        .breath-visual { background:var(--bg-glass); backdrop-filter:blur(16px); border:1px solid var(--glass-border); border-radius:50px; padding:40px; margin-bottom:40px; text-align:center; }
-        .breath-visual h3 { font-family:var(--font-display); margin-bottom:30px; font-size:2rem; color:var(--accent-blue); text-shadow:0 0 15px var(--accent-blue); }
-        .breath-circle-container { position:relative; width:250px; height:250px; margin:0 auto 30px; }
-        .breath-circle { width:100%; height:100%; background:radial-gradient(circle at 30%30%, var(--accent-blue), #102a4c); border-radius:50%; box-shadow:0 0 60px var(--accent-blue), 0 0 120px var(--accent-azure); transition:transform 4s ease-in-out; transform:scale(0.5); }
-        .breath-phase { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:2rem; font-weight:800; color:white; text-shadow:0 0 20px black; background:rgba(0,0,0,0.3); padding:8px 24px; border-radius:50px; backdrop-filter:blur(5px); }
-        .breath-timer { position:absolute; bottom:-40px; left:50%; transform:translateX(-50%); font-size:2.8rem; font-weight:900; color:var(--accent-celeste); text-shadow:0 0 20px var(--accent-celeste); }
+        .breath-visual { background: var(--bg-glass); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 50px; padding: 40px; margin-bottom: 40px; text-align: center; }
+        .breath-visual h3 { font-family: var(--font-display); margin-bottom: 30px; font-size: 2rem; color: var(--accent-blue); text-shadow: 0 0 15px var(--accent-blue); }
+        .breath-circle-container { position: relative; width: 250px; height: 250px; margin: 0 auto 30px; }
+        .breath-circle { width: 100%; height: 100%; background: radial-gradient(circle at 30%30%, var(--accent-blue), #102a4c); border-radius: 50%; box-shadow: 0 0 60px var(--accent-blue), 0 0 120px var(--accent-azure); transition: transform 4s ease-in-out; transform: scale(0.5); }
+        .breath-phase { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 2rem; font-weight: 800; color: white; text-shadow: 0 0 20px black; background: rgba(0,0,0,0.3); padding: 8px 24px; border-radius: 50px; backdrop-filter: blur(5px); }
+        .breath-timer { position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); font-size: 2.8rem; font-weight: 900; color: var(--accent-celeste); text-shadow: 0 0 20px var(--accent-celeste); }
         /* Timer */
-        .timer-section { text-align:center; padding:60px 40px; margin:50px 0; border-radius:60px; position:relative; overflow:hidden; }
+        .timer-section { text-align: center; padding: 60px 40px; margin: 50px 0; border-radius: 60px; position: relative; overflow: hidden; }
         .timer-section::before {
-            content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
-            background:conic-gradient(from 0deg, var(--accent-blue), var(--accent-azure), var(--accent-celeste), var(--accent-blue));
-            opacity:0.1; animation:rotate 20s linear infinite;
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, var(--accent-blue), var(--accent-azure), var(--accent-celeste), var(--accent-blue));
+            opacity: 0.1;
+            animation: rotate 20s linear infinite;
         }
-        .timer-display { font-size:6rem; font-family:var(--font-display); font-weight:800; color:var(--accent-blue); margin:30px 0; text-shadow:0 0 30px var(--accent-blue), 0 0 60px var(--accent-azure); }
-        .timer-options { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; margin-bottom:40px; }
-        .timer-pill { background:var(--bg-glass); border:1px solid var(--glass-border); color:var(--text-primary); padding:14px 32px; border-radius:50px; font-weight:700; font-size:1.2rem; cursor:pointer; transition:all 0.3s; }
-        .timer-pill:hover { background:var(--accent-blue); border-color:var(--accent-blue); color:white; transform:scale(1.05); box-shadow:var(--shadow-glow); }
-        .timer-controls { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+        .timer-display { font-size: 6rem; font-family: var(--font-display); font-weight: 800; color: var(--accent-blue); margin: 30px 0; text-shadow: 0 0 30px var(--accent-blue), 0 0 60px var(--accent-azure); }
+        .timer-options { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+        .timer-pill { background: var(--bg-glass); border: 1px solid var(--glass-border); color: var(--text-primary); padding: 14px 32px; border-radius: 50px; font-weight: 700; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; }
+        .timer-pill:hover { background: var(--accent-blue); border-color: var(--accent-blue); color: white; transform: scale(1.05); box-shadow: var(--shadow-glow); }
+        .timer-controls { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
         /* Plan section */
-        .plan-section, .profile-section, .quotes-section, .diary-section, .community-section, .chat-section {
-            padding:50px; border-radius:50px; margin:50px 0;
+        .plan-section, .profile-section, .quotes-section, .diary-section,
+        .community-section, .chat-section, .social-section, .challenge-section,
+        .audio-section {
+            padding: 50px;
+            border-radius: 50px;
+            margin: 50px 0;
         }
-        .plan-section h2, .profile-section h2, .quotes-section h2, .diary-section h2, .community-section h2, .chat-section h2 {
-            font-family:var(--font-display); font-size:2.5rem; margin-bottom:30px;
-            background:linear-gradient(135deg, var(--accent-blue), var(--accent-azure));
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+        .plan-section h2, .profile-section h2, .quotes-section h2, .diary-section h2,
+        .community-section h2, .chat-section h2, .social-section h2,
+        .challenge-section h2, .audio-section h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-azure));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .plan-item { display:flex; justify-content:space-between; align-items:center; padding:20px 25px; margin-bottom:15px; border-radius:40px; transition:all 0.3s; }
-        .plan-item:hover { transform:translateX(5px); border-color:var(--accent-blue); box-shadow:var(--shadow-glow); }
-        .plan-item-info h4 { font-size:1.3rem; margin-bottom:5px; }
-        .plan-item-info p { color:var(--text-muted); font-size:0.9rem; }
-        .plan-item-price { color:var(--accent-azure); font-weight:700; font-size:1.2rem; }
-        .remove-btn { background:none; border:none; color:var(--text-muted); font-size:1.3rem; cursor:pointer; transition:color 0.2s; }
-        .remove-btn:hover { color:var(--accent-celeste); transform:scale(1.2); }
-        .promo-code { display:flex; gap:15px; margin:30px 0; flex-wrap:wrap; }
-        .promo-input { flex:1; min-width:200px; padding:15px 25px; border-radius:50px; border:1px solid var(--glass-border); background:var(--bg-glass); color:var(--text-primary); font-size:1rem; }
-        .promo-input:focus { border-color:var(--accent-blue); outline:none; }
-        .total-section { text-align:right; font-size:1.4rem; margin-top:30px; padding:20px; background:rgba(0,0,0,0.2); border-radius:30px; }
-        .total-section p { margin-bottom:10px; }
-        .total-section strong { color:var(--accent-gold); font-size:1.8rem; }
-        .checkout-btn { width:100%; margin-top:30px; }
-        /* Quotes section */
-        .quote-container { position:relative; min-height:300px; display:flex; align-items:center; justify-content:center; }
-        .quote-slide { position:absolute; width:100%; opacity:0; transition:opacity 1s ease; pointer-events:none; }
-        .quote-slide.active { opacity:1; pointer-events:auto; }
-        .quote-text { font-size:2rem; font-weight:300; font-style:italic; line-height:1.5; margin-bottom:20px; color:var(--text-primary); }
-        .quote-author { font-size:1.3rem; color:var(--accent-azure); font-weight:500; }
-        .quote-controls { margin-top:40px; display:flex; gap:20px; justify-content:center; }
-        .quote-btn { background:var(--bg-glass); border:1px solid var(--glass-border); color:var(--text-primary); width:50px; height:50px; border-radius:50%; cursor:pointer; font-size:1.5rem; transition:all 0.3s; }
-        .quote-btn:hover { background:var(--accent-blue); color:white; transform:scale(1.1); }
+        .plan-item { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; margin-bottom: 15px; border-radius: 40px; transition: all 0.3s; }
+        .plan-item:hover { transform: translateX(5px); border-color: var(--accent-blue); box-shadow: var(--shadow-glow); }
+        .plan-item-info h4 { font-size: 1.3rem; margin-bottom: 5px; }
+        .plan-item-info p { color: var(--text-muted); font-size: 0.9rem; }
+        .plan-item-price { color: var(--accent-azure); font-weight: 700; font-size: 1.2rem; }
+        .remove-btn { background: none; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer; transition: color 0.2s; }
+        .remove-btn:hover { color: var(--accent-celeste); transform: scale(1.2); }
+        .promo-code { display: flex; gap: 15px; margin: 30px 0; flex-wrap: wrap; }
+        .promo-input { flex: 1; min-width: 200px; padding: 15px 25px; border-radius: 50px; border: 1px solid var(--glass-border); background: var(--bg-glass); color: var(--text-primary); font-size: 1rem; }
+        .promo-input:focus { border-color: var(--accent-blue); outline: none; }
+        .total-section { text-align: right; font-size: 1.4rem; margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 30px; }
+        .total-section p { margin-bottom: 10px; }
+        .total-section strong { color: var(--accent-gold); font-size: 1.8rem; }
+        .checkout-btn { width: 100%; margin-top: 30px; }
+        /* Quotes section (new card style) */
+        .quote-card {
+            padding: 25px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .quote-card:hover { transform: translateY(-5px); border-color: var(--accent-blue); }
+        .quote-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .quote-like-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .quote-like-btn.liked { color: var(--accent-pink); }
+        .quote-comments { color: var(--text-muted); }
+        /* Quote detail */
+        .quote-detail-card { padding: 30px; background: var(--bg-glass); border-radius: 40px; }
+        .quote-text-large { font-size: 2rem; font-style: italic; margin-bottom: 20px; }
+        .quote-author-large { font-size: 1.3rem; color: var(--accent-azure); margin-bottom: 30px; }
+        .personal-note-section, .friend-comments-section { margin-top: 40px; }
+        .personal-note-section textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 30px;
+            background: var(--bg-glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            margin: 10px 0;
+        }
+        .friend-comment {
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+        .friend-comment .time { font-size: 0.7rem; color: var(--text-muted); margin-left: 10px; }
+        .add-comment { display: flex; gap: 10px; margin-top: 20px; }
+        .add-comment input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            background: var(--bg-glass);
+            color: var(--text-primary);
+        }
         /* Diary & Moon */
-        .diary-entry-form { background:rgba(0,0,0,0.2); border-radius:40px; padding:30px; margin-bottom:40px; }
-        .diary-entry-form textarea { width:100%; padding:20px; border-radius:30px; background:var(--bg-glass); border:1px solid var(--glass-border); color:var(--text-primary); font-family:var(--font-body); font-size:1.1rem; resize:vertical; min-height:120px; margin-bottom:20px; }
-        .diary-entry-form textarea:focus { border-color:var(--accent-blue); outline:none; }
-        .diary-entry { padding:25px; margin-bottom:20px; border-radius:40px; transition:all 0.3s; }
-        .diary-entry:hover { border-color:var(--accent-celeste); box-shadow:var(--shadow-neon); }
-        .diary-entry-header { display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem; color:var(--text-muted); }
-        .diary-entry-header strong { color:var(--accent-azure); }
-        .diary-entry p { font-style:italic; font-size:1.1rem; }
-        .moon-widget { background:var(--bg-glass); border-radius:40px; padding:30px; text-align:center; margin-bottom:40px; }
-        .moon-phase-icon { font-size:5rem; filter:drop-shadow(0 0 20px var(--accent-gold)); animation:glowPulse 3s infinite alternate; }
-        @keyframes glowPulse { from{filter:drop-shadow(0 0 10px var(--accent-gold));} to{filter:drop-shadow(0 0 30px var(--accent-azure));} }
-        .moon-phase-name { font-size:1.8rem; font-weight:600; margin:10px 0; color:var(--accent-azure); }
-        .cosmic-weather { display:flex; justify-content:center; gap:30px; margin-top:20px; }
-        .weather-item { text-align:center; }
-        .weather-item i { font-size:2rem; color:var(--accent-celeste); }
+        .diary-entry-form { background: rgba(0,0,0,0.2); border-radius: 40px; padding: 30px; margin-bottom: 40px; }
+        .diary-entry-form textarea {
+            width: 100%;
+            padding: 20px;
+            border-radius: 30px;
+            background: var(--bg-glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            resize: vertical;
+            min-height: 120px;
+            margin-bottom: 20px;
+        }
+        .diary-entry-form textarea:focus { border-color: var(--accent-blue); outline: none; }
+        .diary-entry { padding: 25px; margin-bottom: 20px; border-radius: 40px; transition: all 0.3s; }
+        .diary-entry:hover { border-color: var(--accent-celeste); box-shadow: var(--shadow-neon); }
+        .diary-entry-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: var(--text-muted); }
+        .diary-entry-header strong { color: var(--accent-azure); }
+        .diary-entry p { font-style: italic; font-size: 1.1rem; }
+        .moon-widget { background: var(--bg-glass); border-radius: 40px; padding: 30px; text-align: center; margin-bottom: 40px; }
+        .moon-phase-icon { font-size: 5rem; filter: drop-shadow(0 0 20px var(--accent-gold)); animation: glowPulse 3s infinite alternate; }
+        @keyframes glowPulse { from { filter: drop-shadow(0 0 10px var(--accent-gold)); } to { filter: drop-shadow(0 0 30px var(--accent-azure)); } }
+        .moon-phase-name { font-size: 1.8rem; font-weight: 600; margin: 10px 0; color: var(--accent-azure); }
+        .cosmic-weather { display: flex; justify-content: center; gap: 30px; margin-top: 20px; }
+        .weather-item { text-align: center; }
+        .weather-item i { font-size: 2rem; color: var(--accent-celeste); }
         /* Community Quotes */
-        .community-quote { padding:30px; margin-bottom:20px; position:relative; }
-        .community-quote-text { font-size:1.3rem; font-style:italic; margin-bottom:15px; }
-        .community-quote-author { color:var(--accent-azure); font-weight:500; }
-        .community-quote-votes { position:absolute; top:20px; right:30px; display:flex; gap:15px; color:var(--text-muted); }
-        .community-quote-votes i { cursor:pointer; transition:color 0.2s; }
-        .community-quote-votes i:hover { color:var(--accent-blue); }
-        .submit-quote-form { display:flex; gap:15px; margin-top:30px; flex-wrap:wrap; }
-        .submit-quote-form input { flex:1; min-width:200px; padding:15px 20px; border-radius:50px; border:1px solid var(--glass-border); background:var(--bg-glass); color:var(--text-primary); }
-        .submit-quote-form input:focus { border-color:var(--accent-blue); outline:none; }
+        .community-quote { padding: 30px; margin-bottom: 20px; position: relative; }
+        .community-quote-text { font-size: 1.3rem; font-style: italic; margin-bottom: 15px; }
+        .community-quote-author { color: var(--accent-azure); font-weight: 500; }
+        .community-quote-votes { position: absolute; top: 20px; right: 30px; display: flex; gap: 15px; color: var(--text-muted); }
+        .community-quote-votes i { cursor: pointer; transition: color 0.2s; }
+        .community-quote-votes i:hover { color: var(--accent-blue); }
+        .submit-quote-form { display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
+        .submit-quote-form input { flex: 1; min-width: 200px; padding: 15px 20px; border-radius: 50px; border: 1px solid var(--glass-border); background: var(--bg-glass); color: var(--text-primary); }
+        .submit-quote-form input:focus { border-color: var(--accent-blue); outline: none; }
         /* Chat Section */
-        .chat-container { display:flex; gap:30px; height:600px; }
-        .friends-list { width:280px; overflow-y:auto; padding:15px; border-radius:40px; background:var(--bg-glass); }
-        .friend-card { display:flex; align-items:center; gap:12px; padding:12px; margin-bottom:10px; border-radius:30px; cursor:pointer; transition:all 0.2s; }
-        .friend-card:hover { background:rgba(58,110,255,0.2); transform:translateX(5px); }
-        .friend-card.active { background:rgba(58,110,255,0.3); border:1px solid var(--accent-blue); }
-        .friend-avatar { width:45px; height:45px; border-radius:50%; background:linear-gradient(135deg, var(--accent-blue), var(--accent-azure)); display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:white; }
-        .friend-info { flex:1; }
-        .friend-name { font-weight:600; }
-        .friend-status { font-size:0.75rem; color:var(--text-muted); }
-        .chat-area { flex:1; display:flex; flex-direction:column; background:var(--bg-glass); border-radius:40px; overflow:hidden; }
-        .chat-header { padding:20px; border-bottom:1px solid var(--glass-border); font-weight:600; }
-        .chat-messages { flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:15px; }
-        .chat-message { max-width:70%; padding:12px 18px; border-radius:30px; position:relative; }
-        .chat-message.sent { align-self:flex-end; background:var(--accent-blue); color:white; border-bottom-right-radius:5px; }
-        .chat-message.received { align-self:flex-start; background:var(--bg-glass); border:1px solid var(--glass-border); border-bottom-left-radius:5px; }
-        .message-sender { font-size:0.8rem; margin-bottom:4px; opacity:0.8; }
-        .message-time { font-size:0.7rem; text-align:right; margin-top:4px; opacity:0.6; }
-        .chat-input-area { display:flex; gap:10px; padding:20px; border-top:1px solid var(--glass-border); }
-        .chat-input { flex:1; padding:12px 20px; border-radius:40px; border:1px solid var(--glass-border); background:var(--bg-glass); color:var(--text-primary); }
-        .chat-input:focus { outline:none; border-color:var(--accent-blue); }
-        .chat-send-btn { width:50px; height:50px; border-radius:50%; background:var(--accent-blue); color:white; border:none; cursor:pointer; transition:all 0.2s; }
-        .chat-send-btn:hover { transform:scale(1.1); box-shadow:var(--shadow-neon); }
+        .chat-container { display: flex; gap: 30px; height: 600px; }
+        .friends-list { width: 280px; overflow-y: auto; padding: 15px; border-radius: 40px; background: var(--bg-glass); }
+        .friend-card { display: flex; align-items: center; gap: 12px; padding: 12px; margin-bottom: 10px; border-radius: 30px; cursor: pointer; transition: all 0.2s; }
+        .friend-card:hover { background: rgba(58,110,255,0.2); transform: translateX(5px); }
+        .friend-card.active { background: rgba(58,110,255,0.3); border: 1px solid var(--accent-blue); }
+        .friend-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-blue), var(--accent-azure)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; }
+        .friend-info { flex: 1; }
+        .friend-name { font-weight: 600; }
+        .friend-status { font-size: 0.75rem; color: var(--text-muted); }
+        .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--bg-glass); border-radius: 40px; overflow: hidden; }
+        .chat-header { padding: 20px; border-bottom: 1px solid var(--glass-border); font-weight: 600; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .chat-message { max-width: 70%; padding: 12px 18px; border-radius: 30px; position: relative; }
+        .chat-message.sent { align-self: flex-end; background: var(--accent-blue); color: white; border-bottom-right-radius: 5px; }
+        .chat-message.received { align-self: flex-start; background: var(--bg-glass); border: 1px solid var(--glass-border); border-bottom-left-radius: 5px; }
+        .message-sender { font-size: 0.8rem; margin-bottom: 4px; opacity: 0.8; }
+        .message-time { font-size: 0.7rem; text-align: right; margin-top: 4px; opacity: 0.6; }
+        .chat-input-area { display: flex; gap: 10px; padding: 20px; border-top: 1px solid var(--glass-border); }
+        .chat-input { flex: 1; padding: 12px 20px; border-radius: 40px; border: 1px solid var(--glass-border); background: var(--bg-glass); color: var(--text-primary); }
+        .chat-input:focus { outline: none; border-color: var(--accent-blue); }
+        .chat-send-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--accent-blue); color: white; border: none; cursor: pointer; transition: all 0.2s; }
+        .chat-send-btn:hover { transform: scale(1.1); box-shadow: var(--shadow-neon); }
+        /* Social Feed */
+        .feed-post { padding: 20px; margin-bottom: 15px; }
+        .post-header { display: flex; gap: 15px; align-items: center; margin-bottom: 10px; }
+        .post-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-blue); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .post-content { margin-bottom: 10px; }
+        .post-time { font-size: 0.8rem; color: var(--text-muted); }
+        /* Audio Player */
+        .audio-player { display: flex; align-items: center; gap: 15px; padding: 15px; }
+        .audio-controls button { background: none; border: none; color: var(--accent-azure); font-size: 2rem; cursor: pointer; }
+        .audio-progress { flex: 1; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; overflow: hidden; }
+        .audio-progress-fill { height: 100%; width: 0%; background: var(--accent-blue); }
+        .track-list { margin-top: 20px; }
+        .track-item { padding: 10px; cursor: pointer; border-radius: 30px; transition: background 0.2s; }
+        .track-item:hover { background: rgba(58,110,255,0.2); }
+        /* Challenges */
+        .challenge-card { padding: 20px; text-align: center; margin-bottom: 20px; }
+        .challenge-progress { width: 100%; height: 10px; background: rgba(255,255,255,0.2); border-radius: 5px; margin: 10px 0; overflow: hidden; }
+        .challenge-progress-fill { height: 100%; background: var(--accent-gold); }
         /* Achievements & Calendar */
-        .achievement-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:20px; margin:30px 0; }
-        .achievement-card { padding:20px; text-align:center; transition:transform 0.3s; }
-        .achievement-card:hover { transform:scale(1.05); border-color:var(--accent-blue); }
-        .achievement-icon { font-size:3rem; margin-bottom:10px; color:var(--accent-gold); }
-        .achievement-title { font-weight:700; margin-bottom:5px; }
-        .achievement-desc { font-size:0.8rem; color:var(--text-muted); }
-        .achievement-locked { opacity:0.4; filter:grayscale(0.8); }
-        .calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin:30px 0; }
-        .calendar-day { aspect-ratio:1; background:var(--bg-glass); border-radius:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.8rem; position:relative; }
-        .calendar-day.has-practice { background:var(--accent-blue); color:white; box-shadow:0 0 15px var(--accent-blue); }
-        .calendar-day-number { font-weight:700; }
-        .calendar-day-minutes { font-size:0.6rem; opacity:0.8; }
+        .achievement-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 20px; margin: 30px 0; }
+        .achievement-card { padding: 20px; text-align: center; transition: transform 0.3s; }
+        .achievement-card:hover { transform: scale(1.05); border-color: var(--accent-blue); }
+        .achievement-icon { font-size: 3rem; margin-bottom: 10px; color: var(--accent-gold); }
+        .achievement-title { font-weight: 700; margin-bottom: 5px; }
+        .achievement-desc { font-size: 0.8rem; color: var(--text-muted); }
+        .achievement-locked { opacity: 0.4; filter: grayscale(0.8); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; margin: 30px 0; }
+        .calendar-day { aspect-ratio: 1; background: var(--bg-glass); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; position: relative; }
+        .calendar-day.has-practice { background: var(--accent-blue); color: white; box-shadow: 0 0 15px var(--accent-blue); }
+        .calendar-day-number { font-weight: 700; }
+        .calendar-day-minutes { font-size: 0.6rem; opacity: 0.8; }
         .totd-badge {
-            background:linear-gradient(135deg, var(--accent-gold), var(--accent-azure));
-            color:#102a4c; padding:8px 20px; border-radius:40px; font-weight:700; display:inline-block; margin-bottom:20px; box-shadow:0 0 20px var(--accent-gold);
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-azure));
+            color: #102a4c;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px var(--accent-gold);
         }
+        .xp-bar { height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; margin: 10px 0; overflow: hidden; }
+        .xp-fill { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-azure)); width: 0%; }
+        .export-btn { margin-top: 20px; }
         /* Footer */
-        .footer-minimal { display:flex; justify-content:space-between; align-items:center; padding:40px 0; border-top:1px solid var(--glass-border); margin-top:60px; color:var(--text-muted); flex-wrap:wrap; gap:20px; }
-        .footer-links { display:flex; gap:30px; flex-wrap:wrap; }
-        .footer-links a { color:var(--text-muted); text-decoration:none; transition:color 0.2s; }
-        .footer-links a:hover { color:var(--accent-blue); }
+        .footer-minimal { display: flex; justify-content: space-between; align-items: center; padding: 40px 0; border-top: 1px solid var(--glass-border); margin-top: 60px; color: var(--text-muted); flex-wrap: wrap; gap: 20px; }
+        .footer-links { display: flex; gap: 30px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent-blue); }
         /* Utility */
-        .hidden { display:none !important; }
+        .hidden { display: none !important; }
         /* Responsive */
-        @media (max-width:1200px){ .hero h2{font-size:3.5rem;} .detail-content{gap:30px;} }
-        @media (max-width:1024px){
-            .hero{grid-template-columns:1fr; text-align:center;}
-            .hero-content{margin:0 auto;}
-            .hero-buttons{justify-content:center;}
-            .detail-content{grid-template-columns:1fr;}
-            .stats-grid{grid-template-columns:repeat(2,1fr);}
-            .chat-container{flex-direction:column; height:auto;}
-            .friends-list{width:100%; max-height:300px;}
+        @media (max-width: 1200px) { .hero h2 { font-size: 3.5rem; } .detail-content { gap: 30px; } }
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; text-align: center; }
+            .hero-content { margin: 0 auto; }
+            .hero-buttons { justify-content: center; }
+            .detail-content { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2,1fr); }
+            .chat-container { flex-direction: column; height: auto; }
+            .friends-list { width: 100%; max-height: 300px; }
         }
-        @media (max-width:768px){
-            .container{padding:15px;}
-            .glass-header{flex-direction:column; gap:20px; border-radius:40px;}
-            .top-nav{justify-content:center; gap:15px;}
-            .hero h2{font-size:2.8rem;}
-            .stats-grid{grid-template-columns:1fr;}
-            .path-grid{grid-template-columns:repeat(2,1fr);}
-            .tech-grid{grid-template-columns:1fr;}
-            .detail-view{padding:30px;}
-            .footer-minimal{flex-direction:column; text-align:center;}
-            .quote-text{font-size:1.5rem;}
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .glass-header { flex-direction: column; gap: 20px; border-radius: 40px; }
+            .top-nav { justify-content: center; gap: 15px; }
+            .hero h2 { font-size: 2.8rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .path-grid { grid-template-columns: repeat(2,1fr); }
+            .tech-grid { grid-template-columns: 1fr; }
+            .detail-view { padding: 30px; }
+            .footer-minimal { flex-direction: column; text-align: center; }
+            .quote-text { font-size: 1.5rem; }
+            .color-picker { margin-left: 0; margin-top: 10px; }
         }
-        @media (max-width:480px){
-            .hero h2{font-size:2.2rem;}
-            .btn-primary, .btn-outline{width:100%; justify-content:center;}
-            .path-grid{grid-template-columns:1fr;}
-            .timer-display{font-size:4rem;}
-            .breath-circle-container{width:200px; height:200px;}
-            .search-box{width:100%;}
-            .search-box:focus{width:100%;}
+        @media (max-width: 480px) {
+            .hero h2 { font-size: 2.2rem; }
+            .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+            .path-grid { grid-template-columns: 1fr; }
+            .timer-display { font-size: 4rem; }
+            .breath-circle-container { width: 200px; height: 200px; }
+            .search-box { width: 100%; }
+            .search-box:focus { width: 100%; }
         }
     </style>
 </head>
 <body>
+    <canvas id="aurora-canvas"></canvas>
     <canvas id="cosmic-canvas"></canvas>
     <div class="stars"></div>
     <div class="twinkling"></div>
@@ -437,19 +665,27 @@
         <header class="glass-header">
             <div class="logo-area">
                 <h1>VIGYAN BHAIRAV</h1>
-                <p class="tagline">cosmic portals · community · wisdom</p>
+                <p class="tagline">ultimate cosmic portal</p>
             </div>
             <nav class="top-nav">
                 <a href="#" class="active" data-view="home">Home</a>
                 <a href="#" data-view="techniques">Techniques</a>
                 <a href="#" data-view="quotes">Quotes</a>
                 <a href="#" data-view="diary">Diary</a>
-                <a href="#" data-view="community">Community</a>
+                <a href="#" data-view="social">Social</a>
                 <a href="#" data-view="chat">Chat</a>
+                <a href="#" data-view="audio">Audio</a>
+                <a href="#" data-view="challenges">Challenges</a>
                 <a href="#" data-view="timer">Timer</a>
                 <a href="#" data-view="plan">My Plan</a>
                 <a href="#" data-view="profile">Profile</a>
                 <a href="#" data-view="enhancedProfile">Cosmic Me</a>
+                <div class="color-picker">
+                    <div class="color-dot active" style="background:#3a6eff;" data-color="#3a6eff"></div>
+                    <div class="color-dot" style="background:#0f52ba;" data-color="#0f52ba"></div>
+                    <div class="color-dot" style="background:#007fff;" data-color="#007fff"></div>
+                    <div class="color-dot" style="background:#adffff;" data-color="#adffff"></div>
+                </div>
                 <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
                 <span class="user-greeting">Hi, Gabriel</span>
                 <div class="cart-icon" data-view="plan">
@@ -465,7 +701,7 @@
                 <div class="hero-content">
                     <span class="chip">🌀 today's special · witness the breath</span>
                     <h2>Explore Your <span class="gradient-text">Inner Cosmos</span></h2>
-                    <p class="hero-sub">112 meditation techniques, cosmic diary, community chat, and infinite wisdom.</p>
+                    <p class="hero-sub">112 authentic meditation techniques, social feed, guided audio, challenges, and cosmic visuals.</p>
                     <div class="hero-buttons">
                         <button class="btn-primary" id="exploreBtn">Start Journey <i class="fas fa-arrow-right"></i></button>
                         <button class="btn-outline" id="dailyBtn">Daily Technique</button>
@@ -524,43 +760,41 @@
             <div class="tech-grid" id="allTechniquesGrid"></div>
         </div>
 
-        <!-- QUOTES VIEW -->
+        <!-- QUOTES VIEW (social quotes) -->
         <div id="quotesView" class="hidden quotes-section">
             <h2>Infinite Wisdom</h2>
             <div class="quote-container" id="quoteContainer"></div>
-            <div class="quote-controls">
-                <button class="quote-btn" id="prevQuote"><i class="fas fa-chevron-left"></i></button>
-                <button class="quote-btn" id="nextQuote"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <!-- QUOTE DETAIL VIEW -->
+        <div id="quoteDetailView" class="hidden quotes-section">
+            <div class="detail-header">
+                <h2 id="quoteDetailTitle">Quote</h2>
+                <button class="back-btn" id="backFromQuoteDetail"><i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="quote-detail-card">
+                <div class="quote-text-large" id="quoteDetailText"></div>
+                <div class="quote-author-large" id="quoteDetailAuthor"></div>
+                <div class="quote-actions">
+                    <button class="btn-outline" id="likeQuoteBtn"><i class="far fa-heart"></i> Like</button>
+                    <span id="likeCount">0</span>
+                </div>
+                <div class="personal-note-section">
+                    <h3>📝 Personal Note (private)</h3>
+                    <textarea id="personalNoteInput" placeholder="Write your private thoughts..."></textarea>
+                    <button class="btn-primary" id="savePersonalNote">Save Note</button>
+                </div>
+                <div class="friend-comments-section">
+                    <h3>💬 Friends' Comments</h3>
+                    <div id="friendCommentsList"></div>
+                    <div class="add-comment">
+                        <input type="text" id="newCommentInput" placeholder="Add a comment visible to friends...">
+                        <button class="btn-primary" id="postCommentBtn">Post</button>
+                    </div>
+                </div>
             </div>
         </div>
-<!-- QUOTE DETAIL VIEW -->
-<div id="quoteDetailView" class="hidden quotes-section">
-    <div class="detail-header">
-        <h2 id="quoteDetailTitle">Quote</h2>
-        <button class="back-btn" id="backFromQuoteDetail"><i class="fas fa-arrow-left"></i> Back</button>
-    </div>
-    <div class="quote-detail-card">
-        <div class="quote-text-large" id="quoteDetailText"></div>
-        <div class="quote-author-large" id="quoteDetailAuthor"></div>
-        <div class="quote-actions">
-            <button class="btn-outline" id="likeQuoteBtn"><i class="far fa-heart"></i> Like</button>
-            <span id="likeCount">0</span>
-        </div>
-        <div class="personal-note-section">
-            <h3>📝 Personal Note (private)</h3>
-            <textarea id="personalNoteInput" placeholder="Write your private thoughts..."></textarea>
-            <button class="btn-primary" id="savePersonalNote">Save Note</button>
-        </div>
-        <div class="friend-comments-section">
-            <h3>💬 Friends' Comments</h3>
-            <div id="friendCommentsList"></div>
-            <div class="add-comment">
-                <input type="text" id="newCommentInput" placeholder="Add a comment visible to friends...">
-                <button class="btn-primary" id="postCommentBtn">Post</button>
-            </div>
-        </div>
-    </div>
-</div>
+
         <!-- COSMIC DIARY VIEW -->
         <div id="diaryView" class="hidden diary-section">
             <h2>🌙 Cosmic Diary</h2>
@@ -592,6 +826,12 @@
             <div id="communityQuotesList"></div>
         </div>
 
+        <!-- SOCIAL FEED VIEW -->
+        <div id="socialView" class="hidden social-section">
+            <h2>🌐 Cosmic Feed</h2>
+            <div id="feedPosts"></div>
+        </div>
+
         <!-- CHAT VIEW -->
         <div id="chatView" class="hidden chat-section">
             <h2>💬 Cosmic Chat</h2>
@@ -605,6 +845,55 @@
                         <button class="chat-send-btn" id="chatSendBtn" disabled><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- AUDIO MEDITATION VIEW -->
+        <div id="audioView" class="hidden audio-section">
+            <h2>🎧 Guided Audio Meditations</h2>
+            <div class="audio-card">
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="audio-info">
+                        <div id="trackName">Witnessing the Breath</div>
+                        <div class="audio-progress">
+                            <div class="audio-progress-fill" id="audioProgressFill"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="track-list">
+                    <div class="track-item" data-track="1">1. Witnessing the Breath (10 min)</div>
+                    <div class="track-item" data-track="2">2. Heart Center Meditation (12 min)</div>
+                    <div class="track-item" data-track="3">3. Inner Sound Meditation (15 min)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHALLENGES VIEW -->
+        <div id="challengesView" class="hidden challenge-section">
+            <h2>🏆 Meditation Challenges</h2>
+            <div class="challenge-card">
+                <h3>7‑Day Streak</h3>
+                <p>Meditate every day for a week</p>
+                <div class="challenge-progress"><div class="challenge-progress-fill" style="width:28%"></div></div>
+                <span>2/7 days completed</span>
+                <button class="btn-outline">Join</button>
+            </div>
+            <div class="challenge-card">
+                <h3>30‑Day Challenge</h3>
+                <p>30 minutes of meditation total</p>
+                <div class="challenge-progress"><div class="challenge-progress-fill" style="width:43%"></div></div>
+                <span>13/30 min</span>
+                <button class="btn-outline">Join</button>
+            </div>
+            <div class="challenge-card">
+                <h3>Technique Explorer</h3>
+                <p>Try 10 different techniques</p>
+                <div class="challenge-progress"><div class="challenge-progress-fill" style="width:50%"></div></div>
+                <span>5/10 techniques</span>
+                <button class="btn-outline">Join</button>
             </div>
         </div>
 
@@ -660,14 +949,19 @@
                 <div class="stat-card"><div class="stat-value" id="profileTotalMinutes">0</div><div class="stat-label">minutes</div></div>
                 <div class="stat-card"><div class="stat-value" id="profileStreakDays">0</div><div class="stat-label">streak</div></div>
             </div>
+            <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+            <p>Level <span id="level">1</span> · <span id="xp">0</span>/100 XP</p>
+            <h3>Progress Graph (last 7 days)</h3>
+            <canvas id="progressChart" width="400" height="200"></canvas>
             <h3>Achievements</h3>
             <div class="achievement-grid" id="achievementsGrid"></div>
             <h3>Practice Calendar (last 28 days)</h3>
-            <h3>My Liked Quotes</h3>
-<div id="likedQuotesList"></div>
             <div class="calendar-grid" id="practiceCalendar"></div>
+            <h3>My Liked Quotes</h3>
+            <div id="likedQuotesList"></div>
             <h3>Recent Activity</h3>
             <div id="profileRecentActivity"></div>
+            <button class="btn-primary export-btn" id="exportDiaryBtn"><i class="fas fa-download"></i> Export Diary</button>
         </div>
 
         <!-- FOOTER -->
@@ -677,8 +971,10 @@
                 <a href="#" data-view="techniques">Techniques</a>
                 <a href="#" data-view="quotes">Quotes</a>
                 <a href="#" data-view="diary">Diary</a>
-                <a href="#" data-view="community">Community</a>
+                <a href="#" data-view="social">Social</a>
                 <a href="#" data-view="chat">Chat</a>
+                <a href="#" data-view="audio">Audio</a>
+                <a href="#" data-view="challenges">Challenges</a>
                 <a href="#" data-view="timer">Timer</a>
                 <a href="#" data-view="plan">My Plan</a>
                 <a href="#" data-view="profile">Profile</a>
@@ -690,10 +986,10 @@
 
     <script>
         // ==================================================================
-        // 1. TECHNIQUES DATABASE – 112 Portals
+        // 1. TECHNIQUES DATABASE – based on Vigyan Bhairav Tantra
         // ==================================================================
         const techniques = (function() {
-            const categories = ['Gaze', 'Breath', 'Sound', 'Body', 'Emotion', 'Void', 'Energy', 'Light', 'Space', 'Consciousness'];
+            const categories = ['Gaze','Breath','Sound','Body','Emotion','Void','Energy','Light','Space','Consciousness'];
             const tagsPool = ['beginner','intermediate','advanced','student','employee','ceo','seeker','anxious','overthinker','heart','mystic','artist','scientist','philosopher','yogi'];
             const durations = ['5-10 min','10-15 min','15-20 min','20-30 min','varies'];
             const professionBenefits = {
@@ -709,9 +1005,31 @@
                 philosopher:'Deepens contemplation.',
                 yogi:'Advances meditative states.'
             };
+            const authenticNames = [
+                "Witnessing the Breath", "Pause Between Breaths", "Spinal Breath", "Third Eye Focus",
+                "Witnessing Thoughts", "External Sounds", "Inner Sound", "Gazing into Darkness",
+                "Sudden Awareness", "So‑Ham Mantra", "Sky Awareness", "Candle Flame",
+                "Heart Center", "Body Sensation", "Slow Breath", "Walking Awareness",
+                "Observation of Emotions", "Listening to Silence", "Whole‑Body Awareness",
+                "Breath Touch", "Expansion of Awareness", "Spine Awareness", "Total Relaxation",
+                "Edge of Sleep", "Momentary Breath Suspension", "Space Around Body",
+                "Mindful Eating", "Present Moment", "Inner Light", "Total Witnessing"
+            ];
             const techs = {};
             for (let i=1; i<=112; i++) {
-                const cat = categories[(i-1)%categories.length];
+                let name, sanskrit, essence, steps;
+                if (i <= authenticNames.length) {
+                    name = authenticNames[i-1];
+                    sanskrit = `Sanskrit ${i}`;
+                    essence = `Authentic ${name.toLowerCase()} practice.`;
+                    steps = ['Sit comfortably.', 'Close your eyes.', 'Follow the instructions.', 'Observe without judgment.', 'Return gently.'];
+                } else {
+                    const cat = categories[(i-1)%categories.length];
+                    name = `${cat} Awareness – Technique ${i}`;
+                    sanskrit = `Sanskrit Name ${i}`;
+                    essence = `A profound ${cat.toLowerCase()} practice.`;
+                    steps = ['Find a comfortable seated position.', `Bring awareness to the ${cat.toLowerCase()} aspect.`, 'Observe without judgment.', 'Continue for the duration.', 'Gently return.'];
+                }
                 const tags = [...tagsPool].sort(()=>0.5-Math.random()).slice(0,3);
                 const benefits = {};
                 tags.forEach(t=>{ benefits[t] = professionBenefits[t] || 'Brings balance and harmony.'; });
@@ -719,141 +1037,100 @@
                 if (!benefits.employee) benefits.employee = professionBenefits.employee;
                 if (!benefits.seeker) benefits.seeker = professionBenefits.seeker;
                 techs[i] = {
-                    id:i,
-                    name:`${cat} Awareness – Technique ${i}`,
-                    sanskritName:`Sanskrit Name ${i}`,
-                    essence:`A profound ${cat.toLowerCase()} practice from the Vigyan Bhairav Tantra.`,
-                    steps:[
-                        'Find a comfortable seated position.',
-                        `Bring awareness to the ${cat.toLowerCase()} aspect.`,
-                        'Observe without judgment, like a silent witness.',
-                        'Continue for the duration, returning gently if distracted.',
-                        'Gradually open your eyes and carry the stillness forward.'
-                    ],
+                    id:i, name, sanskritName:sanskrit, essence, steps,
                     duration:durations[(i-1)%durations.length],
-                    breathTiming: cat==='Breath' ? {inhale:4, hold:4, exhale:6} : null,
-                    benefits:benefits,
-                    tags:tags
+                    breathTiming: (name.toLowerCase().includes('breath')||i%10===0) ? {inhale:4,hold:4,exhale:6} : null,
+                    benefits, tags
                 };
             }
-            // Override first few with known ones
-            techs[1] = {
-                id:1, name:'Witnessing the Breath', sanskritName:'Śvāsa–Praśvāsa Dharana',
-                essence:'Breath awareness anchors consciousness in the present moment.',
-                steps:['Take a slow inhale – 4 sec.','Exhale – 4–5 sec.','Do not force.','Bring full attention to the breath.','If thoughts arise, gently return.'],
-                duration:'10–20 min', breathTiming:{inhale:4, exhale:4},
-                benefits:{student:'📚 Improves concentration.', employee:'💼 Reduces stress.', anxious:'🌿 Calms.', overthinker:'🧠 Quiets.', beginner:'🌈 Perfect start.'},
-                tags:['beginner','breath','student','employee','anxious']
-            };
-            techs[2] = {
-                id:2, name:'Awareness of the Gap Between Breaths', sanskritName:'Madhya Dharana',
-                essence:'The doorway to stillness lies in the pause.',
-                steps:['Inhale – notice the pause.','Exhale – notice the pause.','Focus on those gaps.'],
-                duration:'15 min', breathTiming:{inhale:4, exhale:4},
-                benefits:{ceo:'🔮 Intuition.', seeker:'∞ Formless.', overthinker:'⏸️ Breaks thoughts.', advanced:'🌌 Stillness.'},
-                tags:['advanced','breath','ceo','seeker','overthinker']
-            };
+            // Override first few with detailed ones
+            techs[1] = { id:1, name:'Witnessing the Breath', sanskritName:'Śvāsa–Praśvāsa Dharana', essence:'Breath awareness anchors consciousness.', steps:['Inhale 4 sec','Exhale 4–5 sec','Observe'], duration:'10–20 min', breathTiming:{inhale:4,exhale:4}, benefits:{student:'📚 Focus',employee:'💼 Stress relief'}, tags:['beginner','breath'] };
+            techs[2] = { id:2, name:'Pause Between Breaths', sanskritName:'Madhya Dharana', essence:'The doorway to stillness.', steps:['Inhale','Notice the pause','Exhale'], duration:'15 min', breathTiming:{inhale:4,exhale:4}, benefits:{ceo:'🔮 Intuition',seeker:'∞ Formless'}, tags:['advanced','breath'] };
             return techs;
         })();
 
         // ==================================================================
-// 2. QUOTES DATABASE – Now with IDs
-// ==================================================================
-const quotes = [
-    { id: 1, text: "The mind is everything. What you think you become.", author: "Buddha" },
-    { id: 2, text: "Meditation is not a way to make your mind quiet. It is a way to enter into the quiet that is already there.", author: "Osho" },
-    { id: 3, text: "The only way to make sense out of change is to plunge into it, move with it, and join the dance.", author: "Alan Watts" },
-    { id: 4, text: "The important thing is not to stop questioning.", author: "Albert Einstein" },
-    { id: 5, text: "The cosmos is within us. We are made of star-stuff.", author: "Carl Sagan" },
-    { id: 6, text: "The only true wisdom is in knowing you know nothing.", author: "Socrates" },
-    { id: 7, text: "Happiness is not something ready-made. It comes from your own actions.", author: "Dalai Lama" },
-    { id: 8, text: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
-    { id: 9, text: "You must be the change you wish to see in the world.", author: "Mahatma Gandhi" },
-    { id: 10, text: "The quieter you become, the more you can hear.", author: "Rumi" },
-    { id: 11, text: "The wound is the place where the Light enters you.", author: "Rumi" },
-    { id: 12, text: "Live as if you were to die tomorrow. Learn as if you were to live forever.", author: "Mahatma Gandhi" },
-    { id: 13, text: "What is essential is invisible to the eye.", author: "Antoine de Saint-Exupéry" },
-    { id: 14, text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
-    { id: 15, text: "The good life is one inspired by love and guided by knowledge.", author: "Bertrand Russell" },
-    { id: 16, text: "The privilege of a lifetime is to become who you truly are.", author: "Carl Jung" },
-    { id: 17, text: "I am not what happened to me, I am what I choose to become.", author: "Carl Jung" },
-    { id: 18, text: "Let yourself be silently drawn by the strange pull of what you really love.", author: "Rumi" },
-    { id: 19, text: "Your task is not to seek for love, but to seek and find all the barriers within yourself.", author: "Rumi" },
-    { id: 20, text: "Don’t grieve. Anything you lose comes round in another form.", author: "Rumi" },
-    { id: 21, text: "The universe is transformation; our life is what our thoughts make it.", author: "Marcus Aurelius" },
-    { id: 22, text: "Very little is needed to make a happy life; it is all within yourself.", author: "Marcus Aurelius" },
-    { id: 23, text: "The happiness of your life depends upon the quality of your thoughts.", author: "Marcus Aurelius" },
-    { id: 24, text: "You have power over your mind – not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius" },
-    { id: 25, text: "The soul becomes dyed with the color of its thoughts.", author: "Marcus Aurelius" },
-    { id: 26, text: "First say to yourself what you would be; then do what you have to do.", author: "Epictetus" },
-    { id: 27, text: "It's not what happens to you, but how you react to it that matters.", author: "Epictetus" },
-    { id: 28, text: "Freedom is the only worthy goal in life. It is won by disregarding things that lie beyond our control.", author: "Epictetus" },
-    { id: 29, text: "No man is free who is not master of himself.", author: "Epictetus" },
-    { id: 30, text: "He who is not everyday conquering some fear has not learned the secret of life.", author: "Ralph Waldo Emerson" },
-    { id: 31, text: "Trust yourself. You know more than you think you do.", author: "Benjamin Spock" },
-    { id: 32, text: "The best way to find yourself is to lose yourself in the service of others.", author: "Mahatma Gandhi" },
-    { id: 33, text: "The only source of knowledge is experience.", author: "Albert Einstein" },
-    { id: 34, text: "Peace comes from within. Do not seek it without.", author: "Buddha" },
-    { id: 35, text: "We are shaped by our thoughts; we become what we think.", author: "Buddha" }
-];
+        // 2. QUOTES DATABASE
         // ==================================================================
-        // 3. APP STATE (with chat messages)
+        const quotes = [
+            { id:1, text:"The mind is everything. What you think you become.", author:"Buddha" },
+            { id:2, text:"Meditation is not a way to make your mind quiet. It is a way to enter into the quiet that is already there.", author:"Osho" },
+            { id:3, text:"The only way to make sense out of change is to plunge into it, move with it, and join the dance.", author:"Alan Watts" },
+            { id:4, text:"The important thing is not to stop questioning.", author:"Albert Einstein" },
+            { id:5, text:"The cosmos is within us. We are made of star-stuff.", author:"Carl Sagan" },
+            { id:6, text:"The only true wisdom is in knowing you know nothing.", author:"Socrates" },
+            { id:7, text:"Happiness is not something ready-made. It comes from your own actions.", author:"Dalai Lama" },
+            { id:8, text:"In the middle of difficulty lies opportunity.", author:"Albert Einstein" },
+            { id:9, text:"You must be the change you wish to see in the world.", author:"Mahatma Gandhi" },
+            { id:10, text:"The quieter you become, the more you can hear.", author:"Rumi" },
+            { id:11, text:"The wound is the place where the Light enters you.", author:"Rumi" },
+            { id:12, text:"Live as if you were to die tomorrow. Learn as if you were to live forever.", author:"Mahatma Gandhi" },
+            { id:13, text:"What is essential is invisible to the eye.", author:"Antoine de Saint-Exupéry" },
+            { id:14, text:"Simplicity is the ultimate sophistication.", author:"Leonardo da Vinci" },
+            { id:15, text:"The good life is one inspired by love and guided by knowledge.", author:"Bertrand Russell" },
+            { id:16, text:"The privilege of a lifetime is to become who you truly are.", author:"Carl Jung" },
+            { id:17, text:"I am not what happened to me, I am what I choose to become.", author:"Carl Jung" },
+            { id:18, text:"Let yourself be silently drawn by the strange pull of what you really love.", author:"Rumi" },
+            { id:19, text:"Your task is not to seek for love, but to seek and find all the barriers within yourself.", author:"Rumi" },
+            { id:20, text:"Don’t grieve. Anything you lose comes round in another form.", author:"Rumi" }
+        ];
+
+        // ==================================================================
+        // 3. APP STATE (with all new features)
         // ==================================================================
         const AppState = (()=>{
-            const STORAGE_KEY='vigyan_bhairav';
-            // Mock friends for chat
+            const STORAGE_KEY='vigyan_bhairav_ultimate';
             const defaultFriends = [
                 { id:1, name:'Sarah', avatar:'S', status:'online', lastSeen:null },
                 { id:2, name:'Michael', avatar:'M', status:'offline', lastSeen:'2h ago' },
                 { id:3, name:'Elena', avatar:'E', status:'online' },
                 { id:4, name:'CosmicBot', avatar:'🤖', status:'online' }
-           const defaultQuoteInteractions = {};
-// Populate with some mock friend comments
-for (let i = 1; i <= 35; i++) {
-    defaultQuoteInteractions[i] = {
-        liked: false,
-        personalNote: '',
-        friendComments: []
-    };
-}
-// Add some mock comments from friends
-defaultQuoteInteractions[1].friendComments = [
-    { friendId: 1, friendName: 'Sarah', comment: 'This quote changed my life!', timestamp: Date.now() - 86400000 },
-    { friendId: 2, friendName: 'Michael', comment: 'So true.', timestamp: Date.now() - 172800000 }
-];
-defaultQuoteInteractions[2].friendComments = [
-    { friendId: 3, friendName: 'Elena', comment: 'Osho speaks directly to the soul.', timestamp: Date.now() - 3600000 }
-];
-defaultQuoteInteractions[5].friendComments = [
-    { friendId: 1, friendName: 'Sarah', comment: 'Carl Sagan forever!', timestamp: Date.now() - 43200000 }
-];
-            // Default messages for each friend
+            ];
             const defaultMessages = {
-                1: [
-                    { from:'friend', text:'Hey! How was your meditation today?', time:Date.now()-3600000 },
-                    { from:'me', text:'It was really peaceful. I tried the breath awareness technique.', time:Date.now()-3500000 },
-                    { from:'friend', text:'Awesome! I love that one too.', time:Date.now()-3400000 }
-                ],
-                2: [
-                    { from:'friend', text:'Have you tried the new technique?', time:Date.now()-86400000 },
-                ],
+                1: [{ from:'friend', text:'Hey! How was your meditation today?', time:Date.now()-3600000 }, { from:'me', text:'It was really peaceful.', time:Date.now()-3500000 }],
+                2: [{ from:'friend', text:'Have you tried the new technique?', time:Date.now()-86400000 }],
                 3: [],
-                4: [
-                    { from:'friend', text:'Hello! I am your cosmic assistant. Type /help for commands.', time:Date.now()-100000 }
-                ]
+                4: [{ from:'friend', text:'Hello! I am your cosmic assistant.', time:Date.now()-100000 }]
             };
+            const defaultQuoteInteractions = {};
+            for (let i=1; i<=20; i++) {
+                defaultQuoteInteractions[i] = { liked: false, personalNote: '', friendComments: [] };
+            }
+            defaultQuoteInteractions[1].friendComments = [
+                { friendId:1, friendName:'Sarah', comment:'This quote changed my life!', timestamp:Date.now()-86400000 },
+                { friendId:2, friendName:'Michael', comment:'So true.', timestamp:Date.now()-172800000 }
+            ];
+            defaultQuoteInteractions[2].friendComments = [
+                { friendId:3, friendName:'Elena', comment:'Osho speaks directly to the soul.', timestamp:Date.now()-3600000 }
+            ];
+            defaultQuoteInteractions[5].friendComments = [
+                { friendId:1, friendName:'Sarah', comment:'Carl Sagan forever!', timestamp:Date.now()-43200000 }
+            ];
             const defaultState={
                 theme:'dark',
                 currentView:'home',
                 currentTechniqueId:null,
-                user:{ name:'Gabriel', totalPractices:1247, totalMinutes:6304, streak:28, history:[], favorites:[], plan:[] },
+                user:{
+                    name:'Gabriel',
+                    totalPractices:1247,
+                    totalMinutes:6304,
+                    streak:28,
+                    history:[],
+                    favorites:[],
+                    plan:[],
+                    xp:1250,
+                    level:5,
+                    challenges:{},
+                    notificationPermission:false
+                },
                 timer:{ running:false, seconds:300, preset:5 },
                 promoCodeApplied:null,
                 diary:[],
                 friends: defaultFriends,
                 messages: defaultMessages,
-                currentChatFriend: null
-                quoteInteractions: defaultQuoteInteractions
+                currentChatFriend: null,
+                quoteInteractions: defaultQuoteInteractions,
+                accentColor:'#3a6eff'
             };
             let state;
             try{
@@ -867,6 +1144,7 @@ defaultQuoteInteractions[5].friendComments = [
                 if(!state.friends) state.friends=defaultFriends;
                 if(!state.messages) state.messages=defaultMessages;
                 if(state.currentChatFriend===undefined) state.currentChatFriend=null;
+                if(!state.quoteInteractions) state.quoteInteractions=defaultQuoteInteractions;
             }catch(e){ state=JSON.parse(JSON.stringify(defaultState)); }
             const save=()=>localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
             return{
@@ -876,6 +1154,9 @@ defaultQuoteInteractions[5].friendComments = [
                 addPractice:(techniqueId, minutes, reflection='')=>{
                     state.user.totalPractices++;
                     state.user.totalMinutes+=minutes;
+                    state.user.xp += minutes;
+                    const newLevel = Math.floor(state.user.xp/100)+1;
+                    if(newLevel > state.user.level) state.user.level = newLevel;
                     const today=new Date().toDateString();
                     const last=state.user.history[0]?.date;
                     if(last!==today){
@@ -902,19 +1183,12 @@ defaultQuoteInteractions[5].friendComments = [
                     return false;
                 },
                 clearPromo:()=>{ state.promoCodeApplied=null; save(); },
-                // Chat functions
                 sendMessage:(friendId, text)=>{
                     if(!state.messages[friendId]) state.messages[friendId]=[];
                     state.messages[friendId].push({ from:'me', text, time:Date.now() });
-                    // Simulate reply from friend (if not bot)
                     if(friendId===4){
                         setTimeout(()=>{
-                            const botReplies = [
-                                "That's wonderful! Keep practicing.",
-                                "The universe smiles upon your effort.",
-                                "Remember, the breath is your anchor.",
-                                "Type /help to see what I can do."
-                            ];
+                            const botReplies = ["That's wonderful!", "The universe smiles.", "Type /help"];
                             const reply = botReplies[Math.floor(Math.random()*botReplies.length)];
                             state.messages[4].push({ from:'friend', text:reply, time:Date.now() });
                             save();
@@ -928,88 +1202,105 @@ defaultQuoteInteractions[5].friendComments = [
         })();
 
         // ==================================================================
-        // 4. DOM ELEMENTS (cached)
+        // 4. DOM ELEMENTS
         // ==================================================================
         const DOM = {
-            homeView:document.getElementById('homeView'),
-            detailView:document.getElementById('detailView'),
-            techniquesView:document.getElementById('techniquesView'),
-            quotesView:document.getElementById('quotesView'),
-            diaryView:document.getElementById('diaryView'),
-            communityView:document.getElementById('communityView'),
-            chatView:document.getElementById('chatView'),
-            timerView:document.getElementById('timerView'),
-            planView:document.getElementById('planView'),
-            profileView:document.getElementById('profileView'),
-            enhancedProfileView:document.getElementById('enhancedProfileView'),
-            themeToggle:document.getElementById('themeToggle'),
-            userGreeting:document.querySelector('.user-greeting'),
-            navLinks:document.querySelectorAll('[data-view]'),
-            cartCount:document.getElementById('cartCount'),
-            exploreBtn:document.getElementById('exploreBtn'),
-            dailyBtn:document.getElementById('dailyBtn'),
-            statsValues:{
-                totalPractices:document.getElementById('totalPracticed'),
-                totalMinutes:document.getElementById('totalMinutes'),
-                streak:document.getElementById('currentStreak')
+            homeView: document.getElementById('homeView'),
+            detailView: document.getElementById('detailView'),
+            techniquesView: document.getElementById('techniquesView'),
+            quotesView: document.getElementById('quotesView'),
+            quoteDetailView: document.getElementById('quoteDetailView'),
+            diaryView: document.getElementById('diaryView'),
+            communityView: document.getElementById('communityView'),
+            socialView: document.getElementById('socialView'),
+            chatView: document.getElementById('chatView'),
+            audioView: document.getElementById('audioView'),
+            challengesView: document.getElementById('challengesView'),
+            timerView: document.getElementById('timerView'),
+            planView: document.getElementById('planView'),
+            profileView: document.getElementById('profileView'),
+            enhancedProfileView: document.getElementById('enhancedProfileView'),
+            themeToggle: document.getElementById('themeToggle'),
+            userGreeting: document.querySelector('.user-greeting'),
+            navLinks: document.querySelectorAll('[data-view]'),
+            cartCount: document.getElementById('cartCount'),
+            exploreBtn: document.getElementById('exploreBtn'),
+            dailyBtn: document.getElementById('dailyBtn'),
+            statsValues: {
+                totalPractices: document.getElementById('totalPracticed'),
+                totalMinutes: document.getElementById('totalMinutes'),
+                streak: document.getElementById('currentStreak')
             },
-            personaCards:document.querySelectorAll('.path-card'),
-            featuredGrid:document.getElementById('featuredGrid'),
-            detailTitle:document.getElementById('detailTitle'),
-            detailSteps:document.getElementById('detailSteps'),
-            detailEssence:document.getElementById('detailEssence'),
-            professionBenefits:document.getElementById('professionBenefits'),
-            backBtn:document.getElementById('backFromDetail'),
-            breathVisual:document.getElementById('breathVisual'),
-            breathCircle:document.getElementById('breathCircle'),
-            breathPhase:document.getElementById('breathPhase'),
-            breathTimer:document.getElementById('breathTimer'),
-            startBreathBtn:document.getElementById('startBreathBtn'),
-            allTechniquesGrid:document.getElementById('allTechniquesGrid'),
-            searchInput:document.getElementById('searchInput'),
-            timerDisplay:document.getElementById('timerDisplay'),
-            timerPills:document.querySelectorAll('.timer-pill'),
-            startTimer:document.getElementById('startTimer'),
-            pauseTimer:document.getElementById('pauseTimer'),
-            resetTimer:document.getElementById('resetTimer'),
-            planItems:document.getElementById('planItems'),
-            promoInput:document.getElementById('promoInput'),
-            applyPromoBtn:document.getElementById('applyPromoBtn'),
-            planTotal:document.getElementById('planTotal'),
-            planDiscount:document.getElementById('planDiscount'),
-            planFinal:document.getElementById('planFinal'),
-            checkoutBtn:document.getElementById('checkoutBtn'),
-            profileStreak:document.getElementById('profileStreak'),
-            profilePractices:document.getElementById('profilePractices'),
-            recentActivity:document.getElementById('recentActivity'),
-            footerLinks:document.querySelectorAll('.footer-links a'),
-            quoteContainer:document.getElementById('quoteContainer'),
-            prevQuote:document.getElementById('prevQuote'),
-            nextQuote:document.getElementById('nextQuote'),
-            moonIcon:document.getElementById('moonIcon'),
-            moonPhase:document.getElementById('moonPhase'),
-            solarWind:document.getElementById('solarWind'),
-            meteorShower:document.getElementById('meteorShower'),
-            diaryEntryText:document.getElementById('diaryEntryText'),
-            saveDiaryEntry:document.getElementById('saveDiaryEntry'),
-            diaryEntriesList:document.getElementById('diaryEntriesList'),
-            communityQuoteText:document.getElementById('communityQuoteText'),
-            communityQuoteAuthor:document.getElementById('communityQuoteAuthor'),
-            submitCommunityQuote:document.getElementById('submitCommunityQuote'),
-            communityQuotesList:document.getElementById('communityQuotesList'),
-            achievementsGrid:document.getElementById('achievementsGrid'),
-            practiceCalendar:document.getElementById('practiceCalendar'),
-            profileTotalPractices:document.getElementById('profileTotalPractices'),
-            profileTotalMinutes:document.getElementById('profileTotalMinutes'),
-            profileStreakDays:document.getElementById('profileStreakDays'),
-            profileRecentActivity:document.getElementById('profileRecentActivity'),
-            // Chat elements
-            friendsList:document.getElementById('friendsList'),
-            chatArea:document.getElementById('chatArea'),
-            chatHeader:document.getElementById('chatHeader'),
-            chatMessages:document.getElementById('chatMessages'),
-            chatInput:document.getElementById('chatInput'),
-            chatSendBtn:document.getElementById('chatSendBtn')
+            personaCards: document.querySelectorAll('.path-card'),
+            featuredGrid: document.getElementById('featuredGrid'),
+            detailTitle: document.getElementById('detailTitle'),
+            detailSteps: document.getElementById('detailSteps'),
+            detailEssence: document.getElementById('detailEssence'),
+            professionBenefits: document.getElementById('professionBenefits'),
+            backBtn: document.getElementById('backFromDetail'),
+            breathVisual: document.getElementById('breathVisual'),
+            breathCircle: document.getElementById('breathCircle'),
+            breathPhase: document.getElementById('breathPhase'),
+            breathTimer: document.getElementById('breathTimer'),
+            startBreathBtn: document.getElementById('startBreathBtn'),
+            allTechniquesGrid: document.getElementById('allTechniquesGrid'),
+            searchInput: document.getElementById('searchInput'),
+            quoteContainer: document.getElementById('quoteContainer'),
+            quoteDetailTitle: document.getElementById('quoteDetailTitle'),
+            quoteDetailText: document.getElementById('quoteDetailText'),
+            quoteDetailAuthor: document.getElementById('quoteDetailAuthor'),
+            likeQuoteBtn: document.getElementById('likeQuoteBtn'),
+            personalNoteInput: document.getElementById('personalNoteInput'),
+            savePersonalNote: document.getElementById('savePersonalNote'),
+            friendCommentsList: document.getElementById('friendCommentsList'),
+            newCommentInput: document.getElementById('newCommentInput'),
+            postCommentBtn: document.getElementById('postCommentBtn'),
+            backFromQuoteDetail: document.getElementById('backFromQuoteDetail'),
+            moonIcon: document.getElementById('moonIcon'),
+            moonPhase: document.getElementById('moonPhase'),
+            solarWind: document.getElementById('solarWind'),
+            meteorShower: document.getElementById('meteorShower'),
+            diaryEntryText: document.getElementById('diaryEntryText'),
+            saveDiaryEntry: document.getElementById('saveDiaryEntry'),
+            diaryEntriesList: document.getElementById('diaryEntriesList'),
+            communityQuoteText: document.getElementById('communityQuoteText'),
+            communityQuoteAuthor: document.getElementById('communityQuoteAuthor'),
+            submitCommunityQuote: document.getElementById('submitCommunityQuote'),
+            communityQuotesList: document.getElementById('communityQuotesList'),
+            feedPosts: document.getElementById('feedPosts'),
+            friendsList: document.getElementById('friendsList'),
+            chatHeader: document.getElementById('chatHeader'),
+            chatMessages: document.getElementById('chatMessages'),
+            chatInput: document.getElementById('chatInput'),
+            chatSendBtn: document.getElementById('chatSendBtn'),
+            timerDisplay: document.getElementById('timerDisplay'),
+            timerPills: document.querySelectorAll('.timer-pill'),
+            startTimer: document.getElementById('startTimer'),
+            pauseTimer: document.getElementById('pauseTimer'),
+            resetTimer: document.getElementById('resetTimer'),
+            planItems: document.getElementById('planItems'),
+            promoInput: document.getElementById('promoInput'),
+            applyPromoBtn: document.getElementById('applyPromoBtn'),
+            planTotal: document.getElementById('planTotal'),
+            planDiscount: document.getElementById('planDiscount'),
+            planFinal: document.getElementById('planFinal'),
+            checkoutBtn: document.getElementById('checkoutBtn'),
+            profileStreak: document.getElementById('profileStreak'),
+            profilePractices: document.getElementById('profilePractices'),
+            recentActivity: document.getElementById('recentActivity'),
+            profileTotalPractices: document.getElementById('profileTotalPractices'),
+            profileTotalMinutes: document.getElementById('profileTotalMinutes'),
+            profileStreakDays: document.getElementById('profileStreakDays'),
+            achievementsGrid: document.getElementById('achievementsGrid'),
+            practiceCalendar: document.getElementById('practiceCalendar'),
+            likedQuotesList: document.getElementById('likedQuotesList'),
+            profileRecentActivity: document.getElementById('profileRecentActivity'),
+            xpFill: document.getElementById('xpFill'),
+            level: document.getElementById('level'),
+            xp: document.getElementById('xp'),
+            progressChart: document.getElementById('progressChart'),
+            exportDiaryBtn: document.getElementById('exportDiaryBtn'),
+            footerLinks: document.querySelectorAll('.footer-links a')
         };
 
         // ==================================================================
@@ -1132,7 +1423,7 @@ defaultQuoteInteractions[5].friendComments = [
         // ==================================================================
         const Views = {
             show:(viewName)=>{
-                const views=['home','detail','techniques','quotes','diary','community','chat','timer','plan','profile','enhancedProfile'];
+                const views=['home','detail','techniques','quotes','quoteDetail','diary','community','social','chat','audio','challenges','timer','plan','profile','enhancedProfile'];
                 views.forEach(v=>{ const el=DOM[`${v}View`]; if(el) el.classList.add('hidden'); });
                 const target=DOM[`${viewName}View`];
                 if(target) target.classList.remove('hidden');
@@ -1142,10 +1433,12 @@ defaultQuoteInteractions[5].friendComments = [
                 else if(viewName==='home'){ UI.updateStats(); TechniqueOfTheDay.display(); }
                 else if(viewName==='timer') UI.updateTimerDisplay();
                 else if(viewName==='plan'){ UI.renderPlan(); if(DOM.cartCount) DOM.cartCount.textContent=AppState.get().user.plan.length; }
-                else if(viewName==='quotes'){ QuotesManager.render(); QuotesManager.startAutoPlay(); }
+                else if(viewName==='quotes'){ SocialQuoteManager.renderQuotes(); }
                 else if(viewName==='diary'){ MoonPhase.updateUI(); CosmicDiary.renderEntries(); }
                 else if(viewName==='community'){ CommunityQuotes.render(); }
+                else if(viewName==='social'){ renderFeed(); }
                 else if(viewName==='chat'){ ChatUI.renderFriends(); ChatUI.loadChat(); }
+                else if(viewName==='audio'){ AudioPlayer.init(); }
                 else if(viewName==='profile'){
                     const u=AppState.get().user;
                     if(DOM.profileStreak) DOM.profileStreak.textContent=u.streak;
@@ -1165,133 +1458,89 @@ defaultQuoteInteractions[5].friendComments = [
         };
 
         // ==================================================================
-        // 8. QUOTES MANAGER
+        // 8. SOCIAL QUOTE MANAGER
         // ==================================================================
-        const QuotesManager = (()=>{
-            let currentIndex=0, interval;
-            return {
-                render:()=>{
-                    if(!DOM.quoteContainer) return;
-                    DOM.quoteContainer.innerHTML='';
-                    const q=quotes[currentIndex];
-                    const slide=document.createElement('div');
-                    slide.className='quote-slide active';
-                    slide.innerHTML=`<div class="quote-text">“${q.text}”</div><div class="quote-author">— ${q.author}</div>`;
-                    DOM.quoteContainer.appendChild(slide);
-                },
-                next:()=>{ currentIndex=(currentIndex+1)%quotes.length; QuotesManager.render(); },
-                prev:()=>{ currentIndex=(currentIndex-1+quotes.length)%quotes.length; QuotesManager.render(); },
-                startAutoPlay:()=>{ if(interval) clearInterval(interval); interval=setInterval(QuotesManager.next,10000); },
-                stopAutoPlay:()=>{ clearInterval(interval); }
-            };
-        })();
-// ==================================================================
-// 9. SOCIAL QUOTE MANAGER
-// ==================================================================
-const SocialQuoteManager = {
-    renderQuotes() {
-        const container = DOM.quoteContainer;
-        if (!container) return;
-        container.innerHTML = '';
-        quotes.forEach(q => {
-            const interactions = AppState.get().quoteInteractions[q.id];
-            const liked = interactions?.liked || false;
-            const commentCount = interactions?.friendComments?.length || 0;
-            const card = document.createElement('div');
-            card.className = 'quote-card'; // you'll need CSS for this
-            card.dataset.id = q.id;
-            card.innerHTML = `
-                <div class="quote-text">“${q.text}”</div>
-                <div class="quote-author">— ${q.author}</div>
-                <div class="quote-footer">
-                    <button class="quote-like-btn ${liked ? 'liked' : ''}" data-id="${q.id}">
-                        <i class="fa${liked ? 's' : 'r'} fa-heart"></i> <span>${liked ? 'Liked' : 'Like'}</span>
-                    </button>
-                    <span class="quote-comments"><i class="far fa-comment"></i> ${commentCount}</span>
-                </div>
-            `;
-            card.querySelector('.quote-like-btn').addEventListener('click', (e) => {
-                e.stopPropagation();
-                SocialQuoteManager.toggleLike(q.id);
-            });
-            card.addEventListener('click', () => {
-                SocialQuoteManager.showQuoteDetail(q.id);
-            });
-            container.appendChild(card);
-        });
-    },
-    toggleLike(quoteId) {
-        const state = AppState.get();
-        const interactions = state.quoteInteractions[quoteId];
-        interactions.liked = !interactions.liked;
-        AppState.set({ quoteInteractions: state.quoteInteractions });
-        SocialQuoteManager.renderQuotes(); // re-render to update like button
-    },
-    showQuoteDetail(quoteId) {
-        const quote = quotes.find(q => q.id === quoteId);
-        if (!quote) return;
-        DOM.quoteDetailText.textContent = `“${quote.text}”`;
-        DOM.quoteDetailAuthor.textContent = `— ${quote.author}`;
-        DOM.quoteDetailView.dataset.quoteId = quoteId;
-        const interactions = AppState.get().quoteInteractions[quoteId];
-        // Update like button
-        const likeBtn = document.getElementById('likeQuoteBtn');
-        likeBtn.innerHTML = interactions.liked ? '<i class="fas fa-heart"></i> Liked' : '<i class="far fa-heart"></i> Like';
-        // Load personal note
-        DOM.personalNoteInput.value = interactions.personalNote || '';
-        // Load friend comments
-        const commentsList = document.getElementById('friendCommentsList');
-        commentsList.innerHTML = '';
-        interactions.friendComments.forEach(c => {
-            const div = document.createElement('div');
-            div.className = 'friend-comment';
-            div.innerHTML = `<strong>${c.friendName}</strong>: ${c.comment} <span class="time">${new Date(c.timestamp).toLocaleString()}</span>`;
-            commentsList.appendChild(div);
-        });
-        Views.show('quoteDetail');
-    },
-    savePersonalNote() {
-        const quoteId = parseInt(DOM.quoteDetailView.dataset.quoteId);
-        const note = DOM.personalNoteInput.value.trim();
-        const state = AppState.get();
-        state.quoteInteractions[quoteId].personalNote = note;
-        AppState.set({ quoteInteractions: state.quoteInteractions });
-        alert('Personal note saved.');
-    },
-    postComment() {
-        const quoteId = parseInt(DOM.quoteDetailView.dataset.quoteId);
-        const comment = DOM.newCommentInput.value.trim();
-        if (!comment) return;
-        const state = AppState.get();
-        // This comment is from the current user, but we want it visible to friends.
-        // In a real app, we'd store it with the user's ID and name.
-        // For now, we'll add it as if from "You" but with a flag.
-        // To simulate friend visibility, we'll add it to the list.
-        state.quoteInteractions[quoteId].friendComments.push({
-            friendId: 0, // special id for self
-            friendName: 'You',
-            comment: comment,
-            timestamp: Date.now()
-        });
-        AppState.set({ quoteInteractions: state.quoteInteractions });
-        DOM.newCommentInput.value = '';
-        SocialQuoteManager.showQuoteDetail(quoteId); // refresh
-    }
-};
+        const SocialQuoteManager = {
+            renderQuotes(){
+                if(!DOM.quoteContainer) return;
+                DOM.quoteContainer.innerHTML='';
+                quotes.forEach(q=>{
+                    const interactions=AppState.get().quoteInteractions[q.id];
+                    const liked=interactions?.liked||false;
+                    const commentCount=interactions?.friendComments?.length||0;
+                    const card=document.createElement('div');
+                    card.className='quote-card';
+                    card.dataset.id=q.id;
+                    card.innerHTML=`
+                        <div class="quote-text">“${q.text}”</div>
+                        <div class="quote-author">— ${q.author}</div>
+                        <div class="quote-footer">
+                            <button class="quote-like-btn ${liked?'liked':''}" data-id="${q.id}"><i class="fa${liked?'s':'r'} fa-heart"></i> ${liked?'Liked':'Like'}</button>
+                            <span class="quote-comments"><i class="far fa-comment"></i> ${commentCount}</span>
+                        </div>
+                    `;
+                    card.querySelector('.quote-like-btn').addEventListener('click',(e)=>{
+                        e.stopPropagation();
+                        SocialQuoteManager.toggleLike(q.id);
+                    });
+                    card.addEventListener('click',()=>{
+                        SocialQuoteManager.showQuoteDetail(q.id);
+                    });
+                    DOM.quoteContainer.appendChild(card);
+                });
+            },
+            toggleLike(quoteId){
+                const state=AppState.get();
+                state.quoteInteractions[quoteId].liked=!state.quoteInteractions[quoteId].liked;
+                AppState.set({quoteInteractions:state.quoteInteractions});
+                SocialQuoteManager.renderQuotes();
+            },
+            showQuoteDetail(quoteId){
+                const quote=quotes.find(q=>q.id===quoteId);
+                if(!quote) return;
+                DOM.quoteDetailText.textContent=`“${quote.text}”`;
+                DOM.quoteDetailAuthor.textContent=`— ${quote.author}`;
+                DOM.quoteDetailView.dataset.quoteId=quoteId;
+                const interactions=AppState.get().quoteInteractions[quoteId];
+                DOM.likeQuoteBtn.innerHTML=interactions.liked?'<i class="fas fa-heart"></i> Liked':'<i class="far fa-heart"></i> Like';
+                DOM.personalNoteInput.value=interactions.personalNote||'';
+                const commentsList=DOM.friendCommentsList;
+                commentsList.innerHTML='';
+                interactions.friendComments.forEach(c=>{
+                    const div=document.createElement('div');
+                    div.className='friend-comment';
+                    div.innerHTML=`<strong>${c.friendName}</strong>: ${c.comment} <span class="time">${new Date(c.timestamp).toLocaleString()}</span>`;
+                    commentsList.appendChild(div);
+                });
+                Views.show('quoteDetail');
+            },
+            savePersonalNote(){
+                const quoteId=parseInt(DOM.quoteDetailView.dataset.quoteId);
+                const note=DOM.personalNoteInput.value.trim();
+                const state=AppState.get();
+                state.quoteInteractions[quoteId].personalNote=note;
+                AppState.set({quoteInteractions:state.quoteInteractions});
+                alert('Personal note saved.');
+            },
+            postComment(){
+                const quoteId=parseInt(DOM.quoteDetailView.dataset.quoteId);
+                const comment=DOM.newCommentInput.value.trim();
+                if(!comment) return;
+                const state=AppState.get();
+                state.quoteInteractions[quoteId].friendComments.push({
+                    friendId:0,
+                    friendName:'You',
+                    comment:comment,
+                    timestamp:Date.now()
+                });
+                AppState.set({quoteInteractions:state.quoteInteractions});
+                DOM.newCommentInput.value='';
+                SocialQuoteManager.showQuoteDetail(quoteId);
+            }
+        };
 
-// Add event listeners after DOM is ready
-DOM.likeQuoteBtn?.addEventListener('click', () => {
-    const quoteId = parseInt(DOM.quoteDetailView.dataset.quoteId);
-    SocialQuoteManager.toggleLike(quoteId);
-    // Update like button in detail view
-    const interactions = AppState.get().quoteInteractions[quoteId];
-    DOM.likeQuoteBtn.innerHTML = interactions.liked ? '<i class="fas fa-heart"></i> Liked' : '<i class="far fa-heart"></i> Like';
-});
-DOM.savePersonalNote?.addEventListener('click', SocialQuoteManager.savePersonalNote);
-DOM.postCommentBtn?.addEventListener('click', SocialQuoteManager.postComment);
-DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
         // ==================================================================
-        // 9. MOON PHASE & COSMIC WEATHER
+        // 9. MOON PHASE & COSMIC DIARY
         // ==================================================================
         const MoonPhase = {
             phases:[
@@ -1320,17 +1569,13 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
                 if(DOM.meteorShower) DOM.meteorShower.textContent=`Meteors: ${weather.meteor}`;
             }
         };
-
-        // ==================================================================
-        // 10. COSMIC DIARY
-        // ==================================================================
         const CosmicDiary = {
             renderEntries(){
                 if(!DOM.diaryEntriesList) return;
                 const entries=AppState.get().diary||[];
                 DOM.diaryEntriesList.innerHTML='';
                 if(entries.length===0){
-                    DOM.diaryEntriesList.innerHTML='<p>No reflections yet. Your cosmic diary awaits.</p>';
+                    DOM.diaryEntriesList.innerHTML='<p>No reflections yet.</p>';
                     return;
                 }
                 entries.slice().reverse().forEach(entry=>{
@@ -1338,21 +1583,17 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
                     const el=document.createElement('div');
                     el.className='diary-entry';
                     el.innerHTML=`
-                        <div class="diary-entry-header">
-                            <strong>${tech?tech.name:'Unknown Technique'}</strong>
-                            <span>${new Date(entry.date).toLocaleString()}</span>
-                        </div>
+                        <div class="diary-entry-header"><strong>${tech?tech.name:'Unknown'}</strong><span>${new Date(entry.date).toLocaleString()}</span></div>
                         <p>“${entry.reflection}”</p>
                     `;
                     DOM.diaryEntriesList.appendChild(el);
                 });
             },
             saveEntry(){
-                if(!DOM.diaryEntryText) return;
                 const reflection=DOM.diaryEntryText.value.trim();
                 if(!reflection) return;
                 const currentTech=AppState.get().currentTechniqueId;
-                if(!currentTech){ alert('Please select a technique first.'); return; }
+                if(!currentTech){ alert('Select a technique first.'); return; }
                 AppState.addPractice(currentTech,0,reflection);
                 DOM.diaryEntryText.value='';
                 CosmicDiary.renderEntries();
@@ -1360,19 +1601,14 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
         };
 
         // ==================================================================
-        // 11. COMMUNITY QUOTES
+        // 10. COMMUNITY QUOTES
         // ==================================================================
         const CommunityQuotes = (()=>{
             const STORAGE_KEY='community_quotes';
-            let quotes=[];
-            try{
-                const saved=localStorage.getItem(STORAGE_KEY);
-                quotes=saved?JSON.parse(saved):[
-                    {text:"The cosmos is within us. We are made of star-stuff.",author:"Carl Sagan",votes:42},
-                    {text:"Meditation is not a way to make your mind quiet. It is a way to enter into the quiet that is already there.",author:"Osho",votes:37},
-                    {text:"In the middle of difficulty lies opportunity.",author:"Albert Einstein",votes:29}
-                ];
-            }catch(e){ quotes=[]; }
+            let quotes=JSON.parse(localStorage.getItem(STORAGE_KEY))||[
+                {text:"The cosmos is within us.", author:"Carl Sagan", votes:42},
+                {text:"Meditation is not a way to make your mind quiet.", author:"Osho", votes:37}
+            ];
             const save=()=>localStorage.setItem(STORAGE_KEY,JSON.stringify(quotes));
             return{
                 render(){
@@ -1384,10 +1620,7 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
                         el.innerHTML=`
                             <div class="community-quote-text">“${q.text}”</div>
                             <div class="community-quote-author">— ${q.author||'Anonymous'}</div>
-                            <div class="community-quote-votes">
-                                <i class="fas fa-arrow-up" data-index="${idx}"></i>
-                                <span>${q.votes}</span>
-                            </div>
+                            <div class="community-quote-votes"><i class="fas fa-arrow-up" data-index="${idx}"></i> <span>${q.votes}</span></div>
                         `;
                         el.querySelector('.fa-arrow-up').addEventListener('click',()=>{
                             quotes[idx].votes++;
@@ -1407,25 +1640,20 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
         })();
 
         // ==================================================================
-        // 12. CHAT UI
+        // 11. CHAT UI
         // ==================================================================
         const ChatUI = {
             renderFriends(){
                 if(!DOM.friendsList) return;
                 const state=AppState.get();
-                const friends=state.friends;
-                const current=state.currentChatFriend;
                 DOM.friendsList.innerHTML='';
-                friends.forEach(f=>{
+                state.friends.forEach(f=>{
                     const card=document.createElement('div');
-                    card.className=`friend-card ${current===f.id?'active':''}`;
+                    card.className=`friend-card ${state.currentChatFriend===f.id?'active':''}`;
                     card.dataset.id=f.id;
                     card.innerHTML=`
                         <div class="friend-avatar">${f.avatar}</div>
-                        <div class="friend-info">
-                            <div class="friend-name">${f.name}</div>
-                            <div class="friend-status">${f.status==='online'?'🟢 online':f.status==='offline'?`⚫ offline ${f.lastSeen||''}`:'🔴 offline'}</div>
-                        </div>
+                        <div class="friend-info"><div class="friend-name">${f.name}</div><div class="friend-status">${f.status}</div></div>
                     `;
                     card.addEventListener('click',()=>{
                         AppState.setCurrentChatFriend(f.id);
@@ -1439,7 +1667,7 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
                 const state=AppState.get();
                 const friendId=state.currentChatFriend;
                 if(!friendId){
-                    DOM.chatHeader.textContent='Select a friend to start chatting';
+                    DOM.chatHeader.textContent='Select a friend';
                     DOM.chatMessages.innerHTML='';
                     DOM.chatInput.disabled=true;
                     DOM.chatSendBtn.disabled=true;
@@ -1452,64 +1680,109 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
                 this.renderMessages(friendId);
             },
             renderMessages(friendId){
-                if(!DOM.chatMessages) return;
                 const msgs=AppState.get().messages[friendId]||[];
                 DOM.chatMessages.innerHTML='';
                 msgs.forEach(m=>{
-                    const msgDiv=document.createElement('div');
-                    msgDiv.className=`chat-message ${m.from==='me'?'sent':'received'}`;
-                    const time=new Date(m.time).toLocaleTimeString([],{hour:'2-digit', minute:'2-digit'});
-                    if(m.from!=='me'){
-                        msgDiv.innerHTML=`<div class="message-sender">${m.from==='friend'?AppState.get().friends.find(f=>f.id===friendId)?.name:'Friend'}</div>`;
-                    }
-                    msgDiv.innerHTML+=`<div>${m.text}</div><div class="message-time">${time}</div>`;
-                    DOM.chatMessages.appendChild(msgDiv);
+                    const div=document.createElement('div');
+                    div.className=`chat-message ${m.from==='me'?'sent':'received'}`;
+                    const time=new Date(m.time).toLocaleTimeString();
+                    if(m.from!=='me') div.innerHTML+=`<div class="message-sender">${AppState.get().friends.find(f=>f.id===friendId)?.name}</div>`;
+                    div.innerHTML+=`<div>${m.text}</div><div class="message-time">${time}</div>`;
+                    DOM.chatMessages.appendChild(div);
                 });
                 DOM.chatMessages.scrollTop=DOM.chatMessages.scrollHeight;
             },
             sendMessage(){
-                const input=DOM.chatInput;
-                const text=input.value.trim();
+                const text=DOM.chatInput.value.trim();
                 if(!text) return;
                 const friendId=AppState.get().currentChatFriend;
                 if(!friendId) return;
                 AppState.sendMessage(friendId,text);
-                input.value='';
+                DOM.chatInput.value='';
                 this.renderMessages(friendId);
             }
         };
 
         // ==================================================================
-        // 13. ACHIEVEMENTS & CALENDAR
+        // 12. SOCIAL FEED
+        // ==================================================================
+        function renderFeed(){
+            const feedPosts = [
+                { user:'Sarah', avatar:'S', content:'Just finished a 20‑min session of Witnessing the Breath. Felt incredible!', time:Date.now()-3600000 },
+                { user:'Michael', avatar:'M', content:'Loving the new Heart Center meditation.', time:Date.now()-7200000 },
+                { user:'Elena', avatar:'E', content:'7‑day streak! 🔥', time:Date.now()-86400000 }
+            ];
+            if(!DOM.feedPosts) return;
+            DOM.feedPosts.innerHTML='';
+            feedPosts.forEach(p=>{
+                const post=document.createElement('div');
+                post.className='feed-post';
+                post.innerHTML=`
+                    <div class="post-header"><div class="post-avatar">${p.avatar}</div><div><strong>${p.user}</strong> <span class="post-time">${new Date(p.time).toLocaleString()}</span></div></div>
+                    <div class="post-content">${p.content}</div>
+                `;
+                DOM.feedPosts.appendChild(post);
+            });
+        }
+
+        // ==================================================================
+        // 13. AUDIO PLAYER
+        // ==================================================================
+        const AudioPlayer = {
+            audio: new Audio(),
+            currentTrack:0,
+            tracks:[
+                { name:'Witnessing the Breath', file:'track1.mp3' },
+                { name:'Heart Center Meditation', file:'track2.mp3' },
+                { name:'Inner Sound Meditation', file:'track3.mp3' }
+            ],
+            init(){
+                document.querySelectorAll('.track-item').forEach((el,i)=>{
+                    el.addEventListener('click',()=>this.playTrack(i));
+                });
+                document.getElementById('playPauseBtn')?.addEventListener('click',()=>this.togglePlay());
+            },
+            playTrack(index){
+                this.currentTrack=index;
+                this.audio.src=this.tracks[index].file;
+                this.audio.play();
+                document.getElementById('trackName').textContent=this.tracks[index].name;
+                document.getElementById('playPauseBtn').innerHTML='<i class="fas fa-pause"></i>';
+            },
+            togglePlay(){
+                if(this.audio.paused){
+                    this.audio.play();
+                    document.getElementById('playPauseBtn').innerHTML='<i class="fas fa-pause"></i>';
+                } else {
+                    this.audio.pause();
+                    document.getElementById('playPauseBtn').innerHTML='<i class="fas fa-play"></i>';
+                }
+            }
+        };
+
+        // ==================================================================
+        // 14. ACHIEVEMENTS & CALENDAR
         // ==================================================================
         const achievements = [
             {id:'first', title:'First Step', desc:'Complete your first practice', icon:'🌱', condition:u=>u.totalPractices>=1},
-            {id:'ten', title:'Tenfold', desc:'10 practices completed', icon:'🌿', condition:u=>u.totalPractices>=10},
+            {id:'ten', title:'Tenfold', desc:'10 practices', icon:'🌿', condition:u=>u.totalPractices>=10},
             {id:'hundred', title:'Century', desc:'100 practices', icon:'🌳', condition:u=>u.totalPractices>=100},
             {id:'week', title:'Weekly Warrior', desc:'7-day streak', icon:'🔥', condition:u=>u.streak>=7},
-            {id:'month', title:'Monthly Master', desc:'30-day streak', icon:'⚡', condition:u=>u.streak>=30},
-            {id:'year', title:'Year-long Yogi', desc:'365-day streak', icon:'🌟', condition:u=>u.streak>=365},
-            {id:'minutes100', title:'100 Minutes', desc:'100 total minutes', icon:'⏳', condition:u=>u.totalMinutes>=100},
-            {id:'minutes1000', title:'1000 Minutes', desc:'1,000 total minutes', icon:'⌛', condition:u=>u.totalMinutes>=1000},
-            {id:'diary', title:'Cosmic Scribe', desc:'Write 5 diary entries', icon:'📓', condition:u=>(u.history.filter(h=>h.reflection).length)>=5},
-            {id:'favorite', title:'First Favorite', desc:'Favorite a technique', icon:'❤️', condition:u=>u.favorites.length>=1},
-            {id:'chat', title:'Social Butterfly', desc:'Send 10 chat messages', icon:'💬', condition:u=>{ /* not tracked yet */ return false; }}
+            {id:'diary', title:'Cosmic Scribe', desc:'5 diary entries', icon:'📓', condition:u=> (u.history.filter(h=>h.reflection).length)>=5}
         ];
-
-        function renderAchievements() {
+        function renderAchievements(){
             if(!DOM.achievementsGrid) return;
-            const user=AppState.get().user;
+            const u=AppState.get().user;
             DOM.achievementsGrid.innerHTML='';
             achievements.forEach(ach=>{
-                const unlocked=ach.condition(user);
+                const unlocked=ach.condition(u);
                 const card=document.createElement('div');
                 card.className=`achievement-card ${unlocked?'':'achievement-locked'}`;
                 card.innerHTML=`<div class="achievement-icon">${ach.icon}</div><div class="achievement-title">${ach.title}</div><div class="achievement-desc">${ach.desc}</div>`;
                 DOM.achievementsGrid.appendChild(card);
             });
         }
-
-        function renderCalendar() {
+        function renderCalendar(){
             if(!DOM.practiceCalendar) return;
             const history=AppState.get().user.history||[];
             const last28Days=[];
@@ -1530,48 +1803,79 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
                 DOM.practiceCalendar.appendChild(cell);
             });
         }
-
-        function renderEnhancedProfile() {
-            const user=AppState.get().user;
-            if(DOM.profileTotalPractices) DOM.profileTotalPractices.textContent=user.totalPractices;
-            if(DOM.profileTotalMinutes) DOM.profileTotalMinutes.textContent=user.totalMinutes;
-            if(DOM.profileStreakDays) DOM.profileStreakDays.textContent=user.streak;
+        function renderEnhancedProfile(){
+            const u=AppState.get().user;
+            if(DOM.profileTotalPractices) DOM.profileTotalPractices.textContent=u.totalPractices;
+            if(DOM.profileTotalMinutes) DOM.profileTotalMinutes.textContent=u.totalMinutes;
+            if(DOM.profileStreakDays) DOM.profileStreakDays.textContent=u.streak;
+            const xpForNext=u.level*100;
+            const percent=(u.xp%100)/100*100;
+            if(DOM.xpFill) DOM.xpFill.style.width=percent+'%';
+            if(DOM.level) DOM.level.textContent=u.level;
+            if(DOM.xp) DOM.xp.textContent=u.xp%100;
             renderAchievements();
             renderCalendar();
+            // Liked quotes
+            const likedQuotes=Object.entries(AppState.get().quoteInteractions).filter(([id,int])=>int.liked).map(([id])=>quotes.find(q=>q.id==id));
+            if(DOM.likedQuotesList){
+                DOM.likedQuotesList.innerHTML='';
+                likedQuotes.forEach(q=>{
+                    const el=document.createElement('div'); el.className='plan-item';
+                    el.innerHTML=`<span>“${q.text.substring(0,50)}…”</span><span>${q.author}</span>`;
+                    DOM.likedQuotesList.appendChild(el);
+                });
+            }
             if(DOM.profileRecentActivity){
                 DOM.profileRecentActivity.innerHTML='';
-                user.history.slice(0,5).forEach(h=>{
+                u.history.slice(0,5).forEach(h=>{
                     const tech=techniques[h.techniqueId];
                     const el=document.createElement('div'); el.className='plan-item';
                     el.innerHTML=`<span>${tech?tech.name:'Unknown'}</span><span>${new Date(h.date).toLocaleDateString()} · ${h.minutes}m</span>`;
                     DOM.profileRecentActivity.appendChild(el);
                 });
             }
+            // Progress chart
+            const ctx=DOM.progressChart?.getContext('2d');
+            if(ctx){
+                const last7=[];
+                for(let i=6;i>=0;i--){
+                    const d=new Date(); d.setDate(d.getDate()-i);
+                    const dayStr=d.toDateString();
+                    const total=u.history.filter(h=>new Date(h.date).toDateString()===dayStr).reduce((acc,h)=>acc+h.minutes,0);
+                    last7.push(total);
+                }
+                new Chart(ctx,{
+                    type:'line',
+                    data:{
+                        labels:['6d','5d','4d','3d','2d','1d','today'],
+                        datasets:[{ label:'Minutes', data:last7, borderColor:AppState.get().accentColor, tension:0.3 }]
+                    }
+                });
+            }
         }
 
         // ==================================================================
-        // 14. TECHNIQUE OF THE DAY
+        // 15. TECHNIQUE OF THE DAY
         // ==================================================================
         const TechniqueOfTheDay = {
             get(){
-                const lastDate=localStorage.getItem('totd_date');
+                const last=localStorage.getItem('totd_date');
                 const today=new Date().toDateString();
-                if(lastDate===today) return parseInt(localStorage.getItem('totd_id'))||1;
+                if(last===today) return parseInt(localStorage.getItem('totd_id'))||1;
                 const ids=Object.keys(techniques);
-                const randomId=parseInt(ids[Math.floor(Math.random()*ids.length)]);
+                const id=parseInt(ids[Math.floor(Math.random()*ids.length)]);
                 localStorage.setItem('totd_date',today);
-                localStorage.setItem('totd_id',randomId);
-                return randomId;
+                localStorage.setItem('totd_id',id);
+                return id;
             },
             display(){
                 const id=this.get();
                 const tech=techniques[id];
                 if(!tech) return;
-                const homeView=document.getElementById('homeView');
-                if(!homeView) return;
-                const oldBadge=document.querySelector('.totd-badge');
-                if(oldBadge) oldBadge.remove();
-                const hero=homeView.querySelector('.hero-content');
+                const home=document.getElementById('homeView');
+                const old=document.querySelector('.totd-badge');
+                if(old) old.remove();
+                const hero=home.querySelector('.hero-content');
                 if(hero){
                     const badge=document.createElement('div');
                     badge.className='totd-badge';
@@ -1582,9 +1886,9 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
         };
 
         // ==================================================================
-        // 15. EVENT LISTENERS
+        // 16. EVENT LISTENERS
         // ==================================================================
-        function initEvents() {
+        function initEvents(){
             DOM.navLinks.forEach(l=>l.addEventListener('click',(e)=>{ e.preventDefault(); Views.show(l.dataset.view); }));
             DOM.footerLinks.forEach(l=>l.addEventListener('click',(e)=>{ e.preventDefault(); Views.show(l.dataset.view); }));
             DOM.themeToggle.addEventListener('click',()=>{
@@ -1616,10 +1920,10 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
                     if(cur>0){ AppState.setTimer(cur-1, AppState.get().timer.preset); UI.updateTimerDisplay(); }
                     else{
                         clearInterval(timerInterval); AppState.setTimerRunning(false);
-                        const r=prompt('✨ Meditation complete. Any reflections? (optional)');
+                        const r=prompt('Reflections?');
                         const last=AppState.get().currentTechniqueId||1;
                         AppState.addPractice(last, AppState.get().timer.preset, r||'');
-                        UI.updateStats(); alert('🕊️ Well done. Practice recorded.');
+                        UI.updateStats(); alert('Practice recorded.');
                     }
                 },1000);
             });
@@ -1632,236 +1936,131 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
             DOM.applyPromoBtn?.addEventListener('click',()=>{
                 const code=DOM.promoInput?.value.trim().toUpperCase();
                 if(code && AppState.applyPromo(code)) UI.renderPlan();
-                else alert('✨ Invalid code. Try DAILY10, COSMIC20, or LOVE25');
+                else alert('Invalid code');
             });
             DOM.checkoutBtn?.addEventListener('click',()=>{
-                if(AppState.get().user.plan.length===0) alert('Add some techniques first.');
-                else{ alert('🌟 Your plan is ready! Go to Timer to begin.'); Views.show('timer'); }
+                if(AppState.get().user.plan.length===0) alert('Add techniques first.');
+                else { alert('Plan ready!'); Views.show('timer'); }
             });
             document.querySelector('.cart-icon')?.addEventListener('click',()=>Views.show('plan'));
-            // Quotes
-            DOM.prevQuote?.addEventListener('click',()=>{ QuotesManager.prev(); QuotesManager.stopAutoPlay(); QuotesManager.startAutoPlay(); });
-            DOM.nextQuote?.addEventListener('click',()=>{ QuotesManager.next(); QuotesManager.stopAutoPlay(); QuotesManager.startAutoPlay(); });
             // Diary
             DOM.saveDiaryEntry?.addEventListener('click',CosmicDiary.saveEntry);
             // Community
             DOM.submitCommunityQuote?.addEventListener('click',()=>{
-                const text=DOM.communityQuoteText?.value;
-                const author=DOM.communityQuoteAuthor?.value;
-                CommunityQuotes.add(text,author);
-                if(DOM.communityQuoteText) DOM.communityQuoteText.value='';
-                if(DOM.communityQuoteAuthor) DOM.communityQuoteAuthor.value='';
+                CommunityQuotes.add(DOM.communityQuoteText.value, DOM.communityQuoteAuthor.value);
+                DOM.communityQuoteText.value=''; DOM.communityQuoteAuthor.value='';
             });
             // Chat
             DOM.chatSendBtn?.addEventListener('click',()=>ChatUI.sendMessage());
             DOM.chatInput?.addEventListener('keypress',(e)=>{ if(e.key==='Enter') ChatUI.sendMessage(); });
-        }
-
-        // ==================================================================
-// 16. GARGANTUA BLACK HOLE – INTERSTELLAR EDITION
-// ==================================================================
-(function initBlackHole() {
-    const canvas = document.getElementById('blackholeCanvas');
-    if (!canvas) return;
-
-    let ctx = canvas.getContext('2d');
-    let width, height;
-    let time = 0;
-
-    // Particles for accretion disk (simulates glowing gas)
-    const particleCount = 800;
-    let particles = [];
-
-    function resize() {
-        const container = canvas.parentElement;
-        width = container.clientWidth;
-        height = container.clientHeight;
-        canvas.width = width;
-        canvas.height = height;
-        initParticles();
-    }
-
-    function initParticles() {
-        particles = [];
-        const centerX = width / 2;
-        const centerY = height / 2;
-        const maxR = Math.min(width, height) * 0.45; // outer disk radius
-
-        for (let i = 0; i < particleCount; i++) {
-            // Radius between event horizon and outer disk
-            const r = maxR * (0.4 + Math.random() * 0.6);
-            const angle = Math.random() * Math.PI * 2;
-            const speed = 0.02 + Math.random() * 0.03; // orbital speed (angular)
-            // Color based on velocity (Doppler effect: approaching = blue, receding = red)
-            // We'll set hue: 0=red, 240=blue. Approaching side (angle near 90°) gets blue.
-            // Simplification: hue based on cosine of angle
-            const hue = 240 + 120 * Math.cos(angle); // blue (240) when cos=1, red (360) when cos=-1
-            particles.push({
-                x: centerX + Math.cos(angle) * r,
-                y: centerY + Math.sin(angle) * r,
-                r: r,
-                angle: angle,
-                speed: speed,
-                size: 1 + Math.random() * 2,
-                hue: hue,
-                saturation: 80 + Math.random() * 20,
-                lightness: 50 + Math.random() * 30
+            // Quote detail
+            DOM.likeQuoteBtn?.addEventListener('click',()=>{
+                const id=parseInt(DOM.quoteDetailView.dataset.quoteId);
+                SocialQuoteManager.toggleLike(id);
+                const liked=AppState.get().quoteInteractions[id].liked;
+                DOM.likeQuoteBtn.innerHTML=liked?'<i class="fas fa-heart"></i> Liked':'<i class="far fa-heart"></i> Like';
+            });
+            DOM.savePersonalNote?.addEventListener('click',SocialQuoteManager.savePersonalNote);
+            DOM.postCommentBtn?.addEventListener('click',SocialQuoteManager.postComment);
+            DOM.backFromQuoteDetail?.addEventListener('click',()=>Views.show('quotes'));
+            // Export diary
+            DOM.exportDiaryBtn?.addEventListener('click',()=>{
+                const data=JSON.stringify(AppState.get().diary, null, 2);
+                const blob=new Blob([data],{type:'application/json'});
+                const url=URL.createObjectURL(blob);
+                const a=document.createElement('a');
+                a.href=url; a.download='cosmic_diary.json'; a.click();
+            });
+            // Color picker
+            document.querySelectorAll('.color-dot').forEach(dot=>{
+                dot.addEventListener('click',()=>{
+                    document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active'));
+                    dot.classList.add('active');
+                    const color=dot.dataset.color;
+                    document.documentElement.style.setProperty('--accent-blue', color);
+                    AppState.set({accentColor:color});
+                });
             });
         }
-    }
 
-    function drawBlackHole() {
-        ctx.clearRect(0, 0, width, height);
-
-        const centerX = width / 2;
-        const centerY = height / 2;
-        const maxR = Math.min(width, height) * 0.4;
-        const eventHorizon = maxR * 0.3; // black sphere radius
-
-        // 1. Event Horizon (pure black, with slight gravitational redshift effect)
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, eventHorizon, 0, Math.PI * 2);
-        ctx.fillStyle = '#000000';
-        ctx.shadowColor = '#000';
-        ctx.shadowBlur = 40;
-        ctx.fill();
-
-        // 2. Photon Ring (thin bright ring just outside event horizon)
-        ctx.shadowBlur = 60;
-        ctx.shadowColor = '#ffaa33';
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, eventHorizon * 1.5, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(255, 220, 150, 0.8)';
-        ctx.lineWidth = 4;
-        ctx.stroke();
-
-        // 3. Inner accretion disk (hot, dense) – drawn as particles
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = '#ffaa33';
-        // Update particle positions (orbital motion)
-        particles.forEach(p => {
-            // Orbital velocity decreases with radius (Keplerian: v ~ 1/sqrt(r))
-            const speedFactor = 1 / Math.sqrt(p.r / maxR);
-            p.angle += p.speed * speedFactor * 0.5; // slower for outer particles
-            p.x = centerX + Math.cos(p.angle) * p.r;
-            p.y = centerY + Math.sin(p.angle) * p.r;
-        });
-
-        // Sort particles by distance from center (for depth effect – closer particles draw over)
-        particles.sort((a, b) => {
-            const da = Math.hypot(a.x - centerX, a.y - centerY);
-            const db = Math.hypot(b.x - centerX, b.y - centerY);
-            return db - da; // far first, near last
-        });
-
-        particles.forEach(p => {
-            // Gravitational lensing effect: particles behind the black hole are stretched
-            const dx = p.x - centerX;
-            const dy = p.y - centerY;
-            const dist = Math.hypot(dx, dy);
-            let scale = 1;
-            if (dist < eventHorizon * 2) {
-                // Lensing: stretch tangentially
-                scale = 1 + (eventHorizon * 2 - dist) / eventHorizon;
+        // ==================================================================
+        // 17. GARGANTUA BLACK HOLE CANVAS (Interstellar edition)
+        // ==================================================================
+        (function initBlackHole(){
+            const canvas=document.getElementById('blackholeCanvas');
+            if(!canvas) return;
+            let ctx=canvas.getContext('2d'), w, h, time=0;
+            const particles=[];
+            const particleCount=600;
+            function resize(){
+                const r=canvas.parentElement;
+                w=r.clientWidth; h=r.clientHeight;
+                canvas.width=w; canvas.height=h;
+                initParticles();
             }
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.scale(scale, 1);
-            ctx.beginPath();
-            ctx.arc(0, 0, p.size, 0, Math.PI * 2);
-            // Doppler shift: approaching side (angle near 90°) brighter and bluer
-            const angleToCenter = Math.atan2(dy, dx);
-            const relativeAngle = (angleToCenter - p.angle) % (2*Math.PI);
-            // Approaching if relativeAngle near PI/2
-            const approaching = Math.abs(relativeAngle - Math.PI/2) < 0.5 || Math.abs(relativeAngle - 3*Math.PI/2) < 0.5;
-            let hue = p.hue;
-            let lightness = p.lightness;
-            if (approaching) {
-                hue = 240; // blue
-                lightness += 20;
-            } else {
-                hue = 0; // red
-            }
-            ctx.fillStyle = `hsl(${hue}, ${p.saturation}%, ${lightness}%)`;
-            ctx.shadowColor = `hsl(${hue}, 80%, 60%)`;
-            ctx.shadowBlur = 15;
-            ctx.fill();
-            ctx.restore();
-        });
-
-        // 4. Gravitational lensing of background stars
-        ctx.shadowBlur = 0;
-        for (let i = 0; i < 100; i++) {
-            // Generate random stars in a ring around the black hole
-            const angle = Math.random() * Math.PI * 2;
-            const dist = eventHorizon * (1.5 + Math.random() * 2);
-            const x = centerX + Math.cos(angle) * dist;
-            const y = centerY + Math.sin(angle) * dist;
-            // Lensing: star appears stretched radially near the black hole
-            const dx = x - centerX;
-            const dy = y - centerY;
-            const d = Math.hypot(dx, dy);
-            let brightness = 0.3 + Math.random() * 0.5;
-            if (d < eventHorizon * 2.5) {
-                // Einstein ring effect: multiple images
-                for (let j = 0; j < 2; j++) {
-                    const offsetAngle = (j === 0 ? 0.1 : -0.1);
-                    const ex = centerX + Math.cos(angle + offsetAngle) * (eventHorizon * 2);
-                    const ey = centerY + Math.sin(angle + offsetAngle) * (eventHorizon * 2);
-                    ctx.beginPath();
-                    ctx.arc(ex, ey, 1.5, 0, 2*Math.PI);
-                    ctx.fillStyle = `rgba(255, 255, 200, ${brightness*0.8})`;
-                    ctx.fill();
+            function initParticles(){
+                particles.length=0;
+                const cx=w/2, cy=h/2, maxR=Math.min(w,h)*0.4;
+                for(let i=0;i<particleCount;i++){
+                    const r=maxR*(0.4+Math.random()*0.6);
+                    const angle=Math.random()*2*Math.PI;
+                    const speed=0.02+Math.random()*0.03;
+                    particles.push({
+                        r, angle, speed,
+                        size:1+Math.random()*2,
+                        hue:240+120*Math.cos(angle),
+                        sat:80+Math.random()*20,
+                        light:50+Math.random()*30
+                    });
                 }
             }
-            ctx.beginPath();
-            ctx.arc(x, y, 1, 0, 2*Math.PI);
-            ctx.fillStyle = `rgba(255, 255, 200, ${brightness})`;
-            ctx.fill();
-        }
-
-        // 5. Outer accretion disk glow (diffuse)
-        const gradient = ctx.createRadialGradient(centerX, centerY, eventHorizon*1.5, centerX, centerY, maxR*0.9);
-        gradient.addColorStop(0, 'rgba(255, 200, 100, 0.3)');
-        gradient.addColorStop(0.5, 'rgba(150, 100, 255, 0.2)');
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, maxR*0.9, 0, 2*Math.PI);
-        ctx.fillStyle = gradient;
-        ctx.fill();
-
-        // 6. Turbulence: random bright streaks
-        if (Math.random() < 0.1) { // occasional flare
-            const flareAngle = Math.random() * 2 * Math.PI;
-            const flareDist = eventHorizon * (1.8 + Math.random() * 0.5);
-            const fx = centerX + Math.cos(flareAngle) * flareDist;
-            const fy = centerY + Math.sin(flareAngle) * flareDist;
-            ctx.beginPath();
-            ctx.arc(fx, fy, 10, 0, 2*Math.PI);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-            ctx.shadowBlur = 40;
-            ctx.shadowColor = 'white';
-            ctx.fill();
-        }
-
-        time++;
-        requestAnimationFrame(drawBlackHole);
-    }
-
-    window.addEventListener('resize', () => {
-        resize();
-        drawBlackHole(); // redraw with new size
-    });
-
-    resize();
-    initParticles();
-    drawBlackHole();
-})();
+            function draw(){
+                ctx.clearRect(0,0,w,h);
+                const cx=w/2, cy=h/2, maxR=Math.min(w,h)*0.4, eh=maxR*0.3;
+                // Event horizon
+                ctx.beginPath(); ctx.arc(cx,cy,eh,0,2*Math.PI);
+                ctx.fillStyle='#000'; ctx.shadowBlur=40; ctx.fill();
+                // Photon ring
+                ctx.shadowBlur=60; ctx.shadowColor='#ffaa33';
+                ctx.beginPath(); ctx.arc(cx,cy,eh*1.5,0,2*Math.PI);
+                ctx.strokeStyle='rgba(255,220,150,0.8)'; ctx.lineWidth=4; ctx.stroke();
+                // Particles
+                ctx.shadowBlur=20;
+                particles.forEach(p=>{
+                    const speedFactor=1/Math.sqrt(p.r/maxR);
+                    p.angle+=p.speed*speedFactor*0.5;
+                    const x=cx+Math.cos(p.angle)*p.r;
+                    const y=cy+Math.sin(p.angle)*p.r;
+                    const dx=x-cx, dy=y-cy, dist=Math.hypot(dx,dy);
+                    let scale=1;
+                    if(dist<eh*2) scale=1+(eh*2-dist)/eh;
+                    ctx.save(); ctx.translate(x,y); ctx.scale(scale,1);
+                    ctx.beginPath(); ctx.arc(0,0,p.size,0,2*Math.PI);
+                    const hue = (Math.abs(p.angle-Math.PI/2)<0.5||Math.abs(p.angle-3*Math.PI/2)<0.5)?240:0;
+                    ctx.fillStyle=`hsl(${hue},${p.sat}%,${p.light}%)`;
+                    ctx.shadowColor=`hsl(${hue},80%,60%)`;
+                    ctx.fill(); ctx.restore();
+                });
+                // Stars lensing
+                ctx.shadowBlur=0;
+                for(let i=0;i<80;i++){
+                    const ang=Math.random()*2*Math.PI;
+                    const d=eh*(1.5+Math.random()*2);
+                    const x=cx+Math.cos(ang)*d, y=cy+Math.sin(ang)*d;
+                    ctx.beginPath(); ctx.arc(x,y,1,0,2*Math.PI);
+                    ctx.fillStyle=`rgba(255,255,200,${0.3+Math.random()*0.5})`;
+                    ctx.fill();
+                }
+                time++; requestAnimationFrame(draw);
+            }
+            window.addEventListener('resize',resize);
+            resize(); initParticles(); draw();
+        })();
 
         // ==================================================================
-        // 17. METEOR SHOWER CANVAS
+        // 18. METEOR SHOWER CANVAS
         // ==================================================================
-        (function initCosmicCanvas() {
+        (function initCosmicCanvas(){
             const canvas=document.getElementById('cosmic-canvas');
             if(!canvas) return;
             let ctx=canvas.getContext('2d'), w, h;
@@ -1869,13 +2068,10 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
             function resize(){ w=window.innerWidth; h=window.innerHeight; canvas.width=w; canvas.height=h; }
             function createMeteor(){
                 return{
-                    x:Math.random()*w,
-                    y:Math.random()*h*0.3,
-                    len:Math.random()*80+20,
-                    speed:Math.random()*5+2,
+                    x:Math.random()*w, y:Math.random()*h*0.3,
+                    len:Math.random()*80+20, speed:Math.random()*5+2,
                     angle:Math.PI/4+(Math.random()-0.5)*0.2,
-                    opacity:Math.random()*0.5+0.3,
-                    color:Math.random()*0.7+0.3
+                    opacity:Math.random()*0.5+0.3, color:Math.random()*0.7+0.3
                 };
             }
             for(let i=0;i<5;i++) meteors.push(createMeteor());
@@ -1887,13 +2083,10 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
                     ctx.lineTo(m.x+Math.cos(m.angle)*m.len, m.y+Math.sin(m.angle)*m.len);
                     ctx.strokeStyle=`rgba(173,255,255,${m.opacity})`;
                     ctx.lineWidth=2; ctx.stroke();
-                    ctx.beginPath();
-                    ctx.arc(m.x,m.y,2,0,2*Math.PI);
-                    ctx.fillStyle=`rgba(255,255,255,${m.color})`;
-                    ctx.fill();
-                    m.x+=Math.cos(m.angle)*m.speed;
-                    m.y+=Math.sin(m.angle)*m.speed;
-                    if(m.x>w+100 || m.y>h+100) meteors[i]=createMeteor();
+                    ctx.beginPath(); ctx.arc(m.x,m.y,2,0,2*Math.PI);
+                    ctx.fillStyle=`rgba(255,255,255,${m.color})`; ctx.fill();
+                    m.x+=Math.cos(m.angle)*m.speed; m.y+=Math.sin(m.angle)*m.speed;
+                    if(m.x>w+100||m.y>h+100) meteors[i]=createMeteor();
                 });
                 requestAnimationFrame(draw);
             }
@@ -1902,9 +2095,40 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
         })();
 
         // ==================================================================
-        // 18. INIT
+        // 19. AURORA BOREALIS CANVAS
         // ==================================================================
-        (function init() {
+        (function initAurora(){
+            const canvas=document.getElementById('aurora-canvas');
+            if(!canvas) return;
+            let ctx=canvas.getContext('2d'), w, h, time=0;
+            function resize(){ w=window.innerWidth; h=window.innerHeight; canvas.width=w; canvas.height=h; }
+            function draw(){
+                ctx.clearRect(0,0,w,h);
+                const grad=ctx.createLinearGradient(0,0,0,h);
+                grad.addColorStop(0,'rgba(58,110,255,0.2)');
+                grad.addColorStop(0.5,'rgba(0,127,255,0.1)');
+                grad.addColorStop(1,'rgba(173,255,255,0.05)');
+                ctx.fillStyle=grad; ctx.fillRect(0,0,w,h);
+                ctx.beginPath();
+                for(let i=0;i<5;i++){
+                    const y=h*0.3+Math.sin(time*0.02+i)*30;
+                    ctx.moveTo(0,y);
+                    for(let x=0;x<w;x+=50){
+                        ctx.lineTo(x, y+Math.sin(x*0.01+time*0.05)*20);
+                    }
+                }
+                ctx.strokeStyle='rgba(173,255,255,0.3)';
+                ctx.lineWidth=2; ctx.stroke();
+                time++; requestAnimationFrame(draw);
+            }
+            window.addEventListener('resize',resize);
+            resize(); draw();
+        })();
+
+        // ==================================================================
+        // 20. INIT
+        // ==================================================================
+        (function init(){
             UI.applyTheme(AppState.get().theme);
             UI.updateStats();
             UI.renderFeatured();
@@ -1914,4 +2138,4 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
         })();
     </script>
 </body>
-    </html>
+</html>
