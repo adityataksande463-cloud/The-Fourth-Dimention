@@ -619,6 +619,16 @@
                     duration: '5-15 min',
                     tags: ['beginner', 'student', 'employee'],
                     essence: 'Watch your natural breath without control.',
+                    <!-- Inside <div class="detail-view">, before <div class="detail-content"> -->
+<div id="breathVisual" class="breath-visual hidden">
+    <h3>Breathing Guide</h3>
+    <div class="breath-circle-container">
+        <div class="breath-circle" id="breathCircle"></div>
+        <div class="breath-phase" id="breathPhase">Inhale</div>
+        <div class="breath-timer" id="breathTimer">4</div>
+    </div>
+    <button class="btn-outline" id="startBreathBtn">Start Breathing</button>
+</div>
                     steps: [
                         'Sit comfortably with eyes closed.',
                         'Bring attention to the inflow and outflow of breath.',
