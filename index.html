@@ -663,6 +663,8 @@
             <h3>Achievements</h3>
             <div class="achievement-grid" id="achievementsGrid"></div>
             <h3>Practice Calendar (last 28 days)</h3>
+            <h3>My Liked Quotes</h3>
+<div id="likedQuotesList"></div>
             <div class="calendar-grid" id="practiceCalendar"></div>
             <h3>Recent Activity</h3>
             <div id="profileRecentActivity"></div>
@@ -1656,40 +1658,205 @@ DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
         }
 
         // ==================================================================
-        // 16. GARGANTUA BLACK HOLE CANVAS
-        // ==================================================================
-        (function initBlackHole() {
-            const canvas=document.getElementById('blackholeCanvas');
-            if(!canvas) return;
-            let ctx=canvas.getContext('2d'), w, h, time=0;
-            function resize(){ const r=canvas.parentElement; w=r.clientWidth; h=r.clientHeight; canvas.width=w; canvas.height=h; }
-            function draw(){
-                ctx.clearRect(0,0,w,h);
-                const cx=w/2, cy=h/2, maxR=Math.min(w,h)*0.4;
-                // Event horizon
-                ctx.beginPath(); ctx.arc(cx,cy,maxR*0.3,0,2*Math.PI);
-                ctx.fillStyle='#000'; ctx.shadowColor='#000'; ctx.shadowBlur=30; ctx.fill(); ctx.shadowBlur=0;
-                // Inner accretion disk
-                const grad1=ctx.createRadialGradient(cx,cy,maxR*0.36,cx,cy,maxR*0.8);
-                grad1.addColorStop(0,'rgba(58,110,255,0.9)'); grad1.addColorStop(0.3,'rgba(0,127,255,0.7)'); grad1.addColorStop(0.6,'rgba(15,82,186,0.4)'); grad1.addColorStop(1,'rgba(0,20,50,0)');
-                ctx.beginPath(); ctx.arc(cx,cy,maxR*0.8,0,2*Math.PI); ctx.fillStyle=grad1; ctx.fill();
-                // Outer accretion disk
-                const grad2=ctx.createRadialGradient(cx,cy,maxR*0.5,cx,cy,maxR*0.95);
-                grad2.addColorStop(0,'rgba(173,255,255,0.5)'); grad2.addColorStop(0.5,'rgba(0,127,255,0.3)'); grad2.addColorStop(1,'rgba(20,30,50,0)');
-                ctx.beginPath(); ctx.arc(cx,cy,maxR*0.95,0,2*Math.PI); ctx.fillStyle=grad2; ctx.fill();
-                // Swirl lines
-                ctx.save(); ctx.translate(cx,cy); ctx.rotate(time*0.01);
-                for(let i=0;i<8;i++){
-                    const ang=(i/8)*2*Math.PI;
-                    ctx.beginPath(); ctx.arc(0,0,maxR*0.5, ang, ang+0.3); ctx.strokeStyle='rgba(255,255,255,0.3)'; ctx.lineWidth=2; ctx.stroke();
-                    ctx.beginPath(); ctx.arc(0,0,maxR*0.8, ang, ang+0.2); ctx.strokeStyle='rgba(173,255,255,0.4)'; ctx.lineWidth=3; ctx.stroke();
-                }
-                ctx.restore();
-                time++; requestAnimationFrame(draw);
+// 16. GARGANTUA BLACK HOLE – INTERSTELLAR EDITION
+// ==================================================================
+(function initBlackHole() {
+    const canvas = document.getElementById('blackholeCanvas');
+    if (!canvas) return;
+
+    let ctx = canvas.getContext('2d');
+    let width, height;
+    let time = 0;
+
+    // Particles for accretion disk (simulates glowing gas)
+    const particleCount = 800;
+    let particles = [];
+
+    function resize() {
+        const container = canvas.parentElement;
+        width = container.clientWidth;
+        height = container.clientHeight;
+        canvas.width = width;
+        canvas.height = height;
+        initParticles();
+    }
+
+    function initParticles() {
+        particles = [];
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const maxR = Math.min(width, height) * 0.45; // outer disk radius
+
+        for (let i = 0; i < particleCount; i++) {
+            // Radius between event horizon and outer disk
+            const r = maxR * (0.4 + Math.random() * 0.6);
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 0.02 + Math.random() * 0.03; // orbital speed (angular)
+            // Color based on velocity (Doppler effect: approaching = blue, receding = red)
+            // We'll set hue: 0=red, 240=blue. Approaching side (angle near 90°) gets blue.
+            // Simplification: hue based on cosine of angle
+            const hue = 240 + 120 * Math.cos(angle); // blue (240) when cos=1, red (360) when cos=-1
+            particles.push({
+                x: centerX + Math.cos(angle) * r,
+                y: centerY + Math.sin(angle) * r,
+                r: r,
+                angle: angle,
+                speed: speed,
+                size: 1 + Math.random() * 2,
+                hue: hue,
+                saturation: 80 + Math.random() * 20,
+                lightness: 50 + Math.random() * 30
+            });
+        }
+    }
+
+    function drawBlackHole() {
+        ctx.clearRect(0, 0, width, height);
+
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const maxR = Math.min(width, height) * 0.4;
+        const eventHorizon = maxR * 0.3; // black sphere radius
+
+        // 1. Event Horizon (pure black, with slight gravitational redshift effect)
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, eventHorizon, 0, Math.PI * 2);
+        ctx.fillStyle = '#000000';
+        ctx.shadowColor = '#000';
+        ctx.shadowBlur = 40;
+        ctx.fill();
+
+        // 2. Photon Ring (thin bright ring just outside event horizon)
+        ctx.shadowBlur = 60;
+        ctx.shadowColor = '#ffaa33';
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, eventHorizon * 1.5, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255, 220, 150, 0.8)';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // 3. Inner accretion disk (hot, dense) – drawn as particles
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#ffaa33';
+        // Update particle positions (orbital motion)
+        particles.forEach(p => {
+            // Orbital velocity decreases with radius (Keplerian: v ~ 1/sqrt(r))
+            const speedFactor = 1 / Math.sqrt(p.r / maxR);
+            p.angle += p.speed * speedFactor * 0.5; // slower for outer particles
+            p.x = centerX + Math.cos(p.angle) * p.r;
+            p.y = centerY + Math.sin(p.angle) * p.r;
+        });
+
+        // Sort particles by distance from center (for depth effect – closer particles draw over)
+        particles.sort((a, b) => {
+            const da = Math.hypot(a.x - centerX, a.y - centerY);
+            const db = Math.hypot(b.x - centerX, b.y - centerY);
+            return db - da; // far first, near last
+        });
+
+        particles.forEach(p => {
+            // Gravitational lensing effect: particles behind the black hole are stretched
+            const dx = p.x - centerX;
+            const dy = p.y - centerY;
+            const dist = Math.hypot(dx, dy);
+            let scale = 1;
+            if (dist < eventHorizon * 2) {
+                // Lensing: stretch tangentially
+                scale = 1 + (eventHorizon * 2 - dist) / eventHorizon;
             }
-            window.addEventListener('resize',()=>{ resize(); draw(); });
-            resize(); draw();
-        })();
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.scale(scale, 1);
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+            // Doppler shift: approaching side (angle near 90°) brighter and bluer
+            const angleToCenter = Math.atan2(dy, dx);
+            const relativeAngle = (angleToCenter - p.angle) % (2*Math.PI);
+            // Approaching if relativeAngle near PI/2
+            const approaching = Math.abs(relativeAngle - Math.PI/2) < 0.5 || Math.abs(relativeAngle - 3*Math.PI/2) < 0.5;
+            let hue = p.hue;
+            let lightness = p.lightness;
+            if (approaching) {
+                hue = 240; // blue
+                lightness += 20;
+            } else {
+                hue = 0; // red
+            }
+            ctx.fillStyle = `hsl(${hue}, ${p.saturation}%, ${lightness}%)`;
+            ctx.shadowColor = `hsl(${hue}, 80%, 60%)`;
+            ctx.shadowBlur = 15;
+            ctx.fill();
+            ctx.restore();
+        });
+
+        // 4. Gravitational lensing of background stars
+        ctx.shadowBlur = 0;
+        for (let i = 0; i < 100; i++) {
+            // Generate random stars in a ring around the black hole
+            const angle = Math.random() * Math.PI * 2;
+            const dist = eventHorizon * (1.5 + Math.random() * 2);
+            const x = centerX + Math.cos(angle) * dist;
+            const y = centerY + Math.sin(angle) * dist;
+            // Lensing: star appears stretched radially near the black hole
+            const dx = x - centerX;
+            const dy = y - centerY;
+            const d = Math.hypot(dx, dy);
+            let brightness = 0.3 + Math.random() * 0.5;
+            if (d < eventHorizon * 2.5) {
+                // Einstein ring effect: multiple images
+                for (let j = 0; j < 2; j++) {
+                    const offsetAngle = (j === 0 ? 0.1 : -0.1);
+                    const ex = centerX + Math.cos(angle + offsetAngle) * (eventHorizon * 2);
+                    const ey = centerY + Math.sin(angle + offsetAngle) * (eventHorizon * 2);
+                    ctx.beginPath();
+                    ctx.arc(ex, ey, 1.5, 0, 2*Math.PI);
+                    ctx.fillStyle = `rgba(255, 255, 200, ${brightness*0.8})`;
+                    ctx.fill();
+                }
+            }
+            ctx.beginPath();
+            ctx.arc(x, y, 1, 0, 2*Math.PI);
+            ctx.fillStyle = `rgba(255, 255, 200, ${brightness})`;
+            ctx.fill();
+        }
+
+        // 5. Outer accretion disk glow (diffuse)
+        const gradient = ctx.createRadialGradient(centerX, centerY, eventHorizon*1.5, centerX, centerY, maxR*0.9);
+        gradient.addColorStop(0, 'rgba(255, 200, 100, 0.3)');
+        gradient.addColorStop(0.5, 'rgba(150, 100, 255, 0.2)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, maxR*0.9, 0, 2*Math.PI);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        // 6. Turbulence: random bright streaks
+        if (Math.random() < 0.1) { // occasional flare
+            const flareAngle = Math.random() * 2 * Math.PI;
+            const flareDist = eventHorizon * (1.8 + Math.random() * 0.5);
+            const fx = centerX + Math.cos(flareAngle) * flareDist;
+            const fy = centerY + Math.sin(flareAngle) * flareDist;
+            ctx.beginPath();
+            ctx.arc(fx, fy, 10, 0, 2*Math.PI);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.shadowBlur = 40;
+            ctx.shadowColor = 'white';
+            ctx.fill();
+        }
+
+        time++;
+        requestAnimationFrame(drawBlackHole);
+    }
+
+    window.addEventListener('resize', () => {
+        resize();
+        drawBlackHole(); // redraw with new size
+    });
+
+    resize();
+    initParticles();
+    drawBlackHole();
+})();
 
         // ==================================================================
         // 17. METEOR SHOWER CANVAS
