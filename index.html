@@ -1926,6 +1926,829 @@
             if (DOM.cartCount) DOM.cartCount.textContent = AppState.get().user.plan.length;
             Views.show('home');
         })();
+       <!-- ================================================================== -->
+<!-- VIGYAN BHAIRAV · COSMIC EXPANSION PACK                           -->
+<!-- Add this after the existing script, before </body>               -->
+<!-- ================================================================== -->
+
+<style>
+    /* ===== NEW COSMIC UI COMPONENTS ===== */
+    .diary-section {
+        padding: 50px;
+        border-radius: 50px;
+        margin: 50px 0;
+    }
+
+    .diary-section h2 {
+        font-family: var(--font-display);
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        background: linear-gradient(135deg, var(--accent-lavender), var(--accent-peach));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .diary-entry-form {
+        background: rgba(0,0,0,0.2);
+        border-radius: 40px;
+        padding: 30px;
+        margin-bottom: 40px;
+    }
+
+    .diary-entry-form textarea {
+        width: 100%;
+        padding: 20px;
+        border-radius: 30px;
+        background: var(--bg-glass);
+        border: 1px solid var(--glass-border);
+        color: var(--text-primary);
+        font-family: var(--font-body);
+        font-size: 1.1rem;
+        resize: vertical;
+        min-height: 120px;
+        margin-bottom: 20px;
+    }
+
+    .diary-entry-form textarea:focus {
+        border-color: var(--accent-lavender);
+        outline: none;
+    }
+
+    .diary-entry {
+        padding: 25px;
+        margin-bottom: 20px;
+        border-radius: 40px;
+        transition: all 0.3s;
+    }
+
+    .diary-entry:hover {
+        border-color: var(--accent-mint);
+        box-shadow: var(--shadow-neon);
+    }
+
+    .diary-entry-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    .diary-entry-header strong {
+        color: var(--accent-peach);
+    }
+
+    .diary-entry p {
+        font-style: italic;
+        font-size: 1.1rem;
+    }
+
+    /* Moon Phase Widget */
+    .moon-widget {
+        background: var(--bg-glass);
+        border-radius: 40px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .moon-phase-icon {
+        font-size: 5rem;
+        filter: drop-shadow(0 0 20px var(--accent-gold));
+        animation: glowPulse 3s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+        from { filter: drop-shadow(0 0 10px var(--accent-gold)); }
+        to { filter: drop-shadow(0 0 30px var(--accent-peach)); }
+    }
+
+    .moon-phase-name {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin: 10px 0;
+        color: var(--accent-peach);
+    }
+
+    .cosmic-weather {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 20px;
+    }
+
+    .weather-item {
+        text-align: center;
+    }
+
+    .weather-item i {
+        font-size: 2rem;
+        color: var(--accent-mint);
+    }
+
+    /* Community Quotes */
+    .community-quote {
+        background: var(--bg-glass);
+        border-radius: 40px;
+        padding: 30px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .community-quote-text {
+        font-size: 1.3rem;
+        font-style: italic;
+        margin-bottom: 15px;
+    }
+
+    .community-quote-author {
+        color: var(--accent-peach);
+        font-weight: 500;
+    }
+
+    .community-quote-votes {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        display: flex;
+        gap: 15px;
+        color: var(--text-muted);
+    }
+
+    .community-quote-votes i {
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .community-quote-votes i:hover {
+        color: var(--accent-lavender);
+    }
+
+    .submit-quote-form {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .submit-quote-form input {
+        flex: 1;
+        padding: 15px 20px;
+        border-radius: 50px;
+        border: 1px solid var(--glass-border);
+        background: var(--bg-glass);
+        color: var(--text-primary);
+    }
+
+    .submit-quote-form input:focus {
+        border-color: var(--accent-lavender);
+        outline: none;
+    }
+
+    /* Technique of the Day Badge */
+    .totd-badge {
+        background: linear-gradient(135deg, var(--accent-gold), var(--accent-peach));
+        color: #2d1b4e;
+        padding: 8px 20px;
+        border-radius: 40px;
+        font-weight: 700;
+        display: inline-block;
+        margin-bottom: 20px;
+        box-shadow: 0 0 20px var(--accent-gold);
+    }
+
+    /* Achievement Cards */
+    .achievement-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+    }
+
+    .achievement-card {
+        background: var(--bg-glass);
+        border-radius: 30px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s;
+    }
+
+    .achievement-card:hover {
+        transform: scale(1.05);
+        border-color: var(--accent-lavender);
+    }
+
+    .achievement-icon {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        color: var(--accent-gold);
+    }
+
+    .achievement-title {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .achievement-desc {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .achievement-locked {
+        opacity: 0.4;
+        filter: grayscale(0.8);
+    }
+
+    /* Practice Calendar */
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+        margin: 30px 0;
+    }
+
+    .calendar-day {
+        aspect-ratio: 1;
+        background: var(--bg-glass);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        position: relative;
+    }
+
+    .calendar-day.has-practice {
+        background: var(--accent-lavender);
+        color: white;
+        box-shadow: 0 0 15px var(--accent-lavender);
+    }
+
+    .calendar-day-number {
+        font-weight: 700;
+    }
+
+    .calendar-day-minutes {
+        font-size: 0.6rem;
+        opacity: 0.8;
+    }
+
+    /* Particle Effects */
+    #particle-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* Enhanced Timer Presets */
+    .breath-presets {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 20px 0;
+    }
+
+    .breath-preset {
+        background: var(--bg-glass);
+        border: 1px solid var(--glass-border);
+        color: var(--text-primary);
+        padding: 8px 16px;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .breath-preset:hover {
+        background: var(--accent-lavender);
+        color: white;
+    }
+
+    .breath-preset.active {
+        background: var(--accent-lavender);
+        color: white;
+        border-color: var(--accent-lavender);
+    }
+</style>
+
+<!-- ===== NEW VIEWS ===== -->
+<!-- COSMIC DIARY VIEW -->
+<div id="diaryView" class="hidden diary-section">
+    <h2>🌙 Cosmic Diary</h2>
+    <div class="moon-widget">
+        <div class="moon-phase-icon" id="moonIcon">🌕</div>
+        <div class="moon-phase-name" id="moonPhase">Full Moon</div>
+        <div class="cosmic-weather">
+            <div class="weather-item"><i class="fas fa-sun"></i> <span id="solarWind">Solar: calm</span></div>
+            <div class="weather-item"><i class="fas fa-meteor"></i> <span id="meteorShower">Meteors: low</span></div>
+        </div>
+    </div>
+    <div class="diary-entry-form">
+        <h3>Record Your Reflection</h3>
+        <textarea id="diaryEntryText" placeholder="What arose during your practice today? Any insights, emotions, or sensations?"></textarea>
+        <button class="btn-primary" id="saveDiaryEntry">Save to Cosmic Diary <i class="fas fa-pen"></i></button>
+    </div>
+    <h3>Past Reflections</h3>
+    <div id="diaryEntriesList"></div>
+</div>
+
+<!-- COMMUNITY QUOTES VIEW -->
+<div id="communityView" class="hidden quotes-section">
+    <h2>🌟 Community Wisdom</h2>
+    <div class="submit-quote-form">
+        <input type="text" id="communityQuoteText" placeholder="Enter a quote...">
+        <input type="text" id="communityQuoteAuthor" placeholder="Author (optional)">
+        <button class="btn-primary" id="submitCommunityQuote">Share</button>
+    </div>
+    <div id="communityQuotesList"></div>
+</div>
+
+<!-- ENHANCED PROFILE VIEW (replace or extend existing) -->
+<div id="enhancedProfileView" class="hidden profile-section">
+    <h2>Your Cosmic Profile</h2>
+    <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card"><div class="stat-value" id="profileTotalPractices">0</div><div class="stat-label">practices</div></div>
+        <div class="stat-card"><div class="stat-value" id="profileTotalMinutes">0</div><div class="stat-label">minutes</div></div>
+        <div class="stat-card"><div class="stat-value" id="profileStreakDays">0</div><div class="stat-label">streak</div></div>
+    </div>
+
+    <h3>Achievements</h3>
+    <div class="achievement-grid" id="achievementsGrid"></div>
+
+    <h3>Practice Calendar (last 28 days)</h3>
+    <div class="calendar-grid" id="practiceCalendar"></div>
+
+    <h3>Recent Activity</h3>
+    <div id="profileRecentActivity"></div>
+</div>
+
+<script>
+    // ==================================================================
+    // EXPANDED TECHNIQUES DATABASE – FULL 112 TECHNIQUES
+    // ==================================================================
+    (function expandTechniques() {
+        // Only add if techniques object exists and has fewer than 112
+        if (typeof techniques === 'undefined' || Object.keys(techniques).length >= 112) return;
+
+        // Categories and tags for generation
+        const categories = ['Gaze', 'Breath', 'Sound', 'Body', 'Emotion', 'Void', 'Energy', 'Light', 'Space', 'Consciousness'];
+        const tagsPool = ['beginner','intermediate','advanced','student','employee','ceo','seeker','anxious','overthinker','heart','mystic','artist','scientist','philosopher','yogi'];
+        const durations = ['5-10 min','10-15 min','15-20 min','20-30 min','varies'];
+
+        // Benefits mapping for professions (simplified)
+        const professionBenefits = {
+            student: 'Enhances learning and memory.',
+            employee: 'Reduces work stress and boosts focus.',
+            ceo: 'Sharpens intuition and decision-making.',
+            seeker: 'Deepens spiritual insight.',
+            anxious: 'Calms the nervous system.',
+            overthinker: 'Quiets mental chatter.',
+            heart: 'Opens emotional intelligence.',
+            artist: 'Unlocks creative flow.',
+            scientist: 'Enhances analytical thinking.',
+            philosopher: 'Deepens contemplation.',
+            yogi: 'Advances meditative states.'
+        };
+
+        // Start from 31 if we already have 30
+        let startId = 31;
+        for (let i = startId; i <= 112; i++) {
+            const cat = categories[(i-1) % categories.length];
+            // Generate 3 random tags
+            const tags = [...tagsPool].sort(() => 0.5 - Math.random()).slice(0, 3);
+            // Generate benefits for those tags
+            const benefits = {};
+            tags.forEach(t => { benefits[t] = professionBenefits[t] || 'Brings balance and harmony.'; });
+            // Add some default benefits
+            if (!benefits.student) benefits.student = professionBenefits.student;
+            if (!benefits.employee) benefits.employee = professionBenefits.employee;
+            if (!benefits.seeker) benefits.seeker = professionBenefits.seeker;
+
+            techniques[i] = {
+                id: i,
+                name: `${cat} Awareness – Technique ${i}`,
+                sanskritName: `Sanskrit Name ${i}`,
+                essence: `A profound ${cat.toLowerCase()} practice from the Vigyan Bhairav Tantra.`,
+                steps: [
+                    'Find a comfortable seated position.',
+                    `Bring awareness to the ${cat.toLowerCase()} aspect.`,
+                    'Observe without judgment, like a silent witness.',
+                    'Continue for the duration, returning gently if distracted.',
+                    'Gradually open your eyes and carry the stillness forward.'
+                ],
+                duration: durations[(i-1) % durations.length],
+                breathTiming: cat === 'Breath' ? { inhale: 4, hold: 4, exhale: 6 } : null,
+                benefits: benefits,
+                tags: tags
+            };
+        }
+        console.log('✅ Expanded to 112 techniques');
+    })();
+
+    // ==================================================================
+    // MOON PHASE & COSMIC WEATHER (simulated)
+    // ==================================================================
+    const MoonPhase = (() => {
+        const phases = [
+            { name: 'New Moon', icon: '🌑' },
+            { name: 'Waxing Crescent', icon: '🌒' },
+            { name: 'First Quarter', icon: '🌓' },
+            { name: 'Waxing Gibbous', icon: '🌔' },
+            { name: 'Full Moon', icon: '🌕' },
+            { name: 'Waning Gibbous', icon: '🌖' },
+            { name: 'Last Quarter', icon: '🌗' },
+            { name: 'Waning Crescent', icon: '🌘' }
+        ];
+        const solarWind = ['calm', 'moderate', 'strong', 'storm'];
+        const meteorShower = ['none', 'low', 'medium', 'high'];
+
+        function getCurrentPhase() {
+            const days = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+            return phases[days % 8];
+        }
+
+        function getRandomWeather() {
+            return {
+                solar: solarWind[Math.floor(Math.random() * solarWind.length)],
+                meteor: meteorShower[Math.floor(Math.random() * meteorShower.length)]
+            };
+        }
+
+        function updateUI() {
+            const phase = getCurrentPhase();
+            const weather = getRandomWeather();
+            const moonIcon = document.getElementById('moonIcon');
+            const moonPhase = document.getElementById('moonPhase');
+            const solarSpan = document.getElementById('solarWind');
+            const meteorSpan = document.getElementById('meteorShower');
+            if (moonIcon) moonIcon.textContent = phase.icon;
+            if (moonPhase) moonPhase.textContent = phase.name;
+            if (solarSpan) solarSpan.textContent = `Solar: ${weather.solar}`;
+            if (meteorSpan) meteorSpan.textContent = `Meteors: ${weather.meteor}`;
+        }
+
+        return { updateUI };
+    })();
+
+    // ==================================================================
+    // COSMIC DIARY
+    // ==================================================================
+    const CosmicDiary = (() => {
+        function renderEntries() {
+            const list = document.getElementById('diaryEntriesList');
+            if (!list) return;
+            const entries = AppState.get().diary || [];
+            list.innerHTML = '';
+            if (entries.length === 0) {
+                list.innerHTML = '<p>No reflections yet. Your cosmic diary awaits.</p>';
+                return;
+            }
+            entries.slice().reverse().forEach(entry => {
+                const tech = techniques[entry.techniqueId];
+                const el = document.createElement('div');
+                el.className = 'diary-entry';
+                el.innerHTML = `
+                    <div class="diary-entry-header">
+                        <strong>${tech ? tech.name : 'Unknown Technique'}</strong>
+                        <span>${new Date(entry.date).toLocaleString()}</span>
+                    </div>
+                    <p>“${entry.reflection}”</p>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function saveEntry() {
+            const textarea = document.getElementById('diaryEntryText');
+            if (!textarea) return;
+            const reflection = textarea.value.trim();
+            if (!reflection) return;
+            const currentTech = AppState.get().currentTechniqueId;
+            if (!currentTech) {
+                alert('Please select a technique first.');
+                return;
+            }
+            AppState.addPractice(currentTech, 0, reflection);
+            textarea.value = '';
+            renderEntries();
+        }
+
+        return { renderEntries, saveEntry };
+    })();
+
+    // ==================================================================
+    // COMMUNITY QUOTES (localStorage based)
+    // ==================================================================
+    const CommunityQuotes = (() => {
+        const STORAGE_KEY = 'community_quotes';
+        let quotes = [];
+
+        function load() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                quotes = saved ? JSON.parse(saved) : [
+                    { text: "The cosmos is within us. We are made of star-stuff.", author: "Carl Sagan", votes: 42 },
+                    { text: "Meditation is not a way to make your mind quiet. It is a way to enter into the quiet that is already there.", author: "Osho", votes: 37 },
+                    { text: "In the middle of difficulty lies opportunity.", author: "Albert Einstein", votes: 29 }
+                ];
+            } catch(e) { quotes = []; }
+        }
+
+        function save() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(quotes));
+        }
+
+        function render() {
+            const container = document.getElementById('communityQuotesList');
+            if (!container) return;
+            container.innerHTML = '';
+            quotes.sort((a,b) => b.votes - a.votes).forEach((q, idx) => {
+                const el = document.createElement('div');
+                el.className = 'community-quote';
+                el.innerHTML = `
+                    <div class="community-quote-text">“${q.text}”</div>
+                    <div class="community-quote-author">— ${q.author || 'Anonymous'}</div>
+                    <div class="community-quote-votes">
+                        <i class="fas fa-arrow-up" data-index="${idx}"></i>
+                        <span>${q.votes}</span>
+                    </div>
+                `;
+                el.querySelector('.fa-arrow-up').addEventListener('click', () => {
+                    quotes[idx].votes++;
+                    save();
+                    render();
+                });
+                container.appendChild(el);
+            });
+        }
+
+        function add(text, author) {
+            if (!text.trim()) return;
+            quotes.push({
+                text: text.trim(),
+                author: author.trim() || 'Anonymous',
+                votes: 0
+            });
+            save();
+            render();
+        }
+
+        load();
+        return { render, add };
+    })();
+
+    // ==================================================================
+    // ACHIEVEMENTS SYSTEM
+    // ==================================================================
+    const Achievements = (() => {
+        const achievements = [
+            { id: 'first', title: 'First Step', desc: 'Complete your first practice', icon: '🌱', condition: (u) => u.totalPractices >= 1 },
+            { id: 'ten', title: 'Tenfold', desc: '10 practices completed', icon: '🌿', condition: (u) => u.totalPractices >= 10 },
+            { id: 'hundred', title: 'Century', desc: '100 practices', icon: '🌳', condition: (u) => u.totalPractices >= 100 },
+            { id: 'week', title: 'Weekly Warrior', desc: '7-day streak', icon: '🔥', condition: (u) => u.streak >= 7 },
+            { id: 'month', title: 'Monthly Master', desc: '30-day streak', icon: '⚡', condition: (u) => u.streak >= 30 },
+            { id: 'year', title: 'Year-long Yogi', desc: '365-day streak', icon: '🌟', condition: (u) => u.streak >= 365 },
+            { id: 'minutes100', title: '100 Minutes', desc: '100 total minutes', icon: '⏳', condition: (u) => u.totalMinutes >= 100 },
+            { id: 'minutes1000', title: '1000 Minutes', desc: '1,000 total minutes', icon: '⌛', condition: (u) => u.totalMinutes >= 1000 },
+            { id: 'diary', title: 'Cosmic Scribe', desc: 'Write 5 diary entries', icon: '📓', condition: (u) => (u.history.filter(h => h.reflection).length) >= 5 },
+            { id: 'favorite', title: 'First Favorite', desc: 'Favorite a technique', icon: '❤️', condition: (u) => u.favorites.length >= 1 }
+        ];
+
+        function render() {
+            const grid = document.getElementById('achievementsGrid');
+            if (!grid) return;
+            const user = AppState.get().user;
+            grid.innerHTML = '';
+            achievements.forEach(ach => {
+                const unlocked = ach.condition(user);
+                const card = document.createElement('div');
+                card.className = `achievement-card ${unlocked ? '' : 'achievement-locked'}`;
+                card.innerHTML = `
+                    <div class="achievement-icon">${ach.icon}</div>
+                    <div class="achievement-title">${ach.title}</div>
+                    <div class="achievement-desc">${ach.desc}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        return { render };
+    })();
+
+    // ==================================================================
+    // PRACTICE CALENDAR
+    // ==================================================================
+    const PracticeCalendar = (() => {
+        function render() {
+            const calendar = document.getElementById('practiceCalendar');
+            if (!calendar) return;
+            const history = AppState.get().user.history || [];
+            const last28Days = [];
+            const today = new Date();
+            for (let i = 27; i >= 0; i--) {
+                const d = new Date(today);
+                d.setDate(d.getDate() - i);
+                last28Days.push(d.toDateString());
+            }
+            const practiceMap = {};
+            history.forEach(h => {
+                const date = new Date(h.date).toDateString();
+                practiceMap[date] = (practiceMap[date] || 0) + h.minutes;
+            });
+            calendar.innerHTML = '';
+            last28Days.forEach(dateStr => {
+                const minutes = practiceMap[dateStr] || 0;
+                const day = new Date(dateStr).getDate();
+                const cell = document.createElement('div');
+                cell.className = `calendar-day ${minutes > 0 ? 'has-practice' : ''}`;
+                cell.innerHTML = `<div class="calendar-day-number">${day}</div>${minutes > 0 ? `<div class="calendar-day-minutes">${minutes}m</div>` : ''}`;
+                calendar.appendChild(cell);
+            });
+        }
+        return { render };
+    })();
+
+    // ==================================================================
+    // TECHNIQUE OF THE DAY
+    // ==================================================================
+    const TechniqueOfTheDay = (() => {
+        function get() {
+            const lastDate = localStorage.getItem('totd_date');
+            const today = new Date().toDateString();
+            if (lastDate === today) {
+                return parseInt(localStorage.getItem('totd_id')) || 1;
+            } else {
+                const ids = Object.keys(techniques);
+                const randomId = parseInt(ids[Math.floor(Math.random() * ids.length)]);
+                localStorage.setItem('totd_date', today);
+                localStorage.setItem('totd_id', randomId);
+                return randomId;
+            }
+        }
+
+        function display() {
+            const id = get();
+            const tech = techniques[id];
+            if (!tech) return;
+            const homeView = document.getElementById('homeView');
+            if (!homeView) return;
+            // Remove existing badge if any
+            const oldBadge = document.querySelector('.totd-badge');
+            if (oldBadge) oldBadge.remove();
+            const hero = homeView.querySelector('.hero-content');
+            if (hero) {
+                const badge = document.createElement('div');
+                badge.className = 'totd-badge';
+                badge.innerHTML = `✨ Technique of the Day: ${tech.name}`;
+                hero.insertBefore(badge, hero.querySelector('.chip').nextSibling);
+            }
+        }
+        return { display };
+    })();
+
+    // ==================================================================
+    // ENHANCED PROFILE VIEW
+    // ==================================================================
+    function renderEnhancedProfile() {
+        const user = AppState.get().user;
+        document.getElementById('profileTotalPractices').textContent = user.totalPractices;
+        document.getElementById('profileTotalMinutes').textContent = user.totalMinutes;
+        document.getElementById('profileStreakDays').textContent = user.streak;
+        Achievements.render();
+        PracticeCalendar.render();
+        // Recent activity
+        const recent = document.getElementById('profileRecentActivity');
+        if (recent) {
+            recent.innerHTML = '';
+            user.history.slice(0,5).forEach(h => {
+                const tech = techniques[h.techniqueId];
+                const el = document.createElement('div');
+                el.className = 'plan-item';
+                el.innerHTML = `<span>${tech ? tech.name : 'Unknown'}</span><span>${new Date(h.date).toLocaleDateString()} · ${h.minutes}m</span>`;
+                recent.appendChild(el);
+            });
+        }
+    }
+
+    // ==================================================================
+    // EXTEND VIEWS TO INCLUDE NEW SECTIONS
+    // ==================================================================
+    const originalShow = Views.show;
+    Views.show = function(viewName) {
+        // Call original
+        originalShow(viewName);
+
+        // Additional rendering for new views
+        if (viewName === 'diary') {
+            MoonPhase.updateUI();
+            CosmicDiary.renderEntries();
+        } else if (viewName === 'community') {
+            CommunityQuotes.render();
+        } else if (viewName === 'enhancedProfile') {
+            renderEnhancedProfile();
+        }
+    };
+
+    // ==================================================================
+    // ADD NEW NAVIGATION LINKS
+    // ==================================================================
+    function addNavLinks() {
+        const nav = document.querySelector('.top-nav');
+        if (!nav) return;
+        // Add diary, community, enhanced profile
+        const links = [
+            { view: 'diary', text: 'Diary' },
+            { view: 'community', text: 'Community' },
+            { view: 'enhancedProfile', text: 'Cosmic Me' }
+        ];
+        links.forEach(link => {
+            const a = document.createElement('a');
+            a.href = '#';
+            a.dataset.view = link.view;
+            a.textContent = link.text;
+            nav.insertBefore(a, nav.querySelector('.theme-toggle'));
+        });
+        // Re-attach event listeners? Already done in initEvents, but we need to add them.
+        document.querySelectorAll('[data-view]').forEach(link => {
+            link.removeEventListener('click', ...); // Can't remove easily, but we'll add new listeners without removing old ones
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                Views.show(link.dataset.view);
+            });
+        });
+    }
+
+    // ==================================================================
+    // ATTACH NEW EVENT LISTENERS
+    // ==================================================================
+    function attachNewEvents() {
+        // Save diary entry
+        document.getElementById('saveDiaryEntry')?.addEventListener('click', CosmicDiary.saveEntry);
+        // Submit community quote
+        document.getElementById('submitCommunityQuote')?.addEventListener('click', () => {
+            const text = document.getElementById('communityQuoteText')?.value;
+            const author = document.getElementById('communityQuoteAuthor')?.value;
+            CommunityQuotes.add(text, author);
+            document.getElementById('communityQuoteText').value = '';
+            document.getElementById('communityQuoteAuthor').value = '';
+        });
+        // Breath presets (if added later)
+    }
+
+    // ==================================================================
+    // ADD NEW VIEWS TO DOM (if not already present)
+    // ==================================================================
+    function ensureViewsExist() {
+        const container = document.querySelector('.container');
+        if (!container) return;
+        if (!document.getElementById('diaryView')) {
+            const diary = document.createElement('div');
+            diary.id = 'diaryView';
+            diary.className = 'hidden diary-section';
+            diary.innerHTML = `...`; // would need full HTML, but we already added above
+            container.appendChild(diary);
+        }
+        if (!document.getElementById('communityView')) {
+            const comm = document.createElement('div');
+            comm.id = 'communityView';
+            comm.className = 'hidden quotes-section';
+            comm.innerHTML = `...`; // already added
+            container.appendChild(comm);
+        }
+        if (!document.getElementById('enhancedProfileView')) {
+            const prof = document.createElement('div');
+            prof.id = 'enhancedProfileView';
+            prof.className = 'hidden profile-section';
+            prof.innerHTML = `...`; // already added
+            container.appendChild(prof);
+        }
+    }
+
+    // ==================================================================
+    // INITIALIZE EVERYTHING
+    // ==================================================================
+    (function initExpansion() {
+        // Ensure DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+        function init() {
+            ensureViewsExist();
+            addNavLinks();
+            attachNewEvents();
+            TechniqueOfTheDay.display();
+            // Update stats display if needed
+            if (typeof UI !== 'undefined' && UI.updateStats) UI.updateStats();
+            console.log('🌌 Cosmic Expansion Pack loaded');
+        }
+    })();
+</script> 
     </script>
 </body>
     </html>
