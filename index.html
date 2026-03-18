@@ -805,7 +805,26 @@ const quotes = [
                 { id:2, name:'Michael', avatar:'M', status:'offline', lastSeen:'2h ago' },
                 { id:3, name:'Elena', avatar:'E', status:'online' },
                 { id:4, name:'CosmicBot', avatar:'🤖', status:'online' }
-            ];
+           const defaultQuoteInteractions = {};
+// Populate with some mock friend comments
+for (let i = 1; i <= 35; i++) {
+    defaultQuoteInteractions[i] = {
+        liked: false,
+        personalNote: '',
+        friendComments: []
+    };
+}
+// Add some mock comments from friends
+defaultQuoteInteractions[1].friendComments = [
+    { friendId: 1, friendName: 'Sarah', comment: 'This quote changed my life!', timestamp: Date.now() - 86400000 },
+    { friendId: 2, friendName: 'Michael', comment: 'So true.', timestamp: Date.now() - 172800000 }
+];
+defaultQuoteInteractions[2].friendComments = [
+    { friendId: 3, friendName: 'Elena', comment: 'Osho speaks directly to the soul.', timestamp: Date.now() - 3600000 }
+];
+defaultQuoteInteractions[5].friendComments = [
+    { friendId: 1, friendName: 'Sarah', comment: 'Carl Sagan forever!', timestamp: Date.now() - 43200000 }
+];
             // Default messages for each friend
             const defaultMessages = {
                 1: [
@@ -832,6 +851,7 @@ const quotes = [
                 friends: defaultFriends,
                 messages: defaultMessages,
                 currentChatFriend: null
+                quoteInteractions: defaultQuoteInteractions
             };
             let state;
             try{
@@ -1163,7 +1183,111 @@ const quotes = [
                 stopAutoPlay:()=>{ clearInterval(interval); }
             };
         })();
+// ==================================================================
+// 9. SOCIAL QUOTE MANAGER
+// ==================================================================
+const SocialQuoteManager = {
+    renderQuotes() {
+        const container = DOM.quoteContainer;
+        if (!container) return;
+        container.innerHTML = '';
+        quotes.forEach(q => {
+            const interactions = AppState.get().quoteInteractions[q.id];
+            const liked = interactions?.liked || false;
+            const commentCount = interactions?.friendComments?.length || 0;
+            const card = document.createElement('div');
+            card.className = 'quote-card'; // you'll need CSS for this
+            card.dataset.id = q.id;
+            card.innerHTML = `
+                <div class="quote-text">“${q.text}”</div>
+                <div class="quote-author">— ${q.author}</div>
+                <div class="quote-footer">
+                    <button class="quote-like-btn ${liked ? 'liked' : ''}" data-id="${q.id}">
+                        <i class="fa${liked ? 's' : 'r'} fa-heart"></i> <span>${liked ? 'Liked' : 'Like'}</span>
+                    </button>
+                    <span class="quote-comments"><i class="far fa-comment"></i> ${commentCount}</span>
+                </div>
+            `;
+            card.querySelector('.quote-like-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                SocialQuoteManager.toggleLike(q.id);
+            });
+            card.addEventListener('click', () => {
+                SocialQuoteManager.showQuoteDetail(q.id);
+            });
+            container.appendChild(card);
+        });
+    },
+    toggleLike(quoteId) {
+        const state = AppState.get();
+        const interactions = state.quoteInteractions[quoteId];
+        interactions.liked = !interactions.liked;
+        AppState.set({ quoteInteractions: state.quoteInteractions });
+        SocialQuoteManager.renderQuotes(); // re-render to update like button
+    },
+    showQuoteDetail(quoteId) {
+        const quote = quotes.find(q => q.id === quoteId);
+        if (!quote) return;
+        DOM.quoteDetailText.textContent = `“${quote.text}”`;
+        DOM.quoteDetailAuthor.textContent = `— ${quote.author}`;
+        DOM.quoteDetailView.dataset.quoteId = quoteId;
+        const interactions = AppState.get().quoteInteractions[quoteId];
+        // Update like button
+        const likeBtn = document.getElementById('likeQuoteBtn');
+        likeBtn.innerHTML = interactions.liked ? '<i class="fas fa-heart"></i> Liked' : '<i class="far fa-heart"></i> Like';
+        // Load personal note
+        DOM.personalNoteInput.value = interactions.personalNote || '';
+        // Load friend comments
+        const commentsList = document.getElementById('friendCommentsList');
+        commentsList.innerHTML = '';
+        interactions.friendComments.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'friend-comment';
+            div.innerHTML = `<strong>${c.friendName}</strong>: ${c.comment} <span class="time">${new Date(c.timestamp).toLocaleString()}</span>`;
+            commentsList.appendChild(div);
+        });
+        Views.show('quoteDetail');
+    },
+    savePersonalNote() {
+        const quoteId = parseInt(DOM.quoteDetailView.dataset.quoteId);
+        const note = DOM.personalNoteInput.value.trim();
+        const state = AppState.get();
+        state.quoteInteractions[quoteId].personalNote = note;
+        AppState.set({ quoteInteractions: state.quoteInteractions });
+        alert('Personal note saved.');
+    },
+    postComment() {
+        const quoteId = parseInt(DOM.quoteDetailView.dataset.quoteId);
+        const comment = DOM.newCommentInput.value.trim();
+        if (!comment) return;
+        const state = AppState.get();
+        // This comment is from the current user, but we want it visible to friends.
+        // In a real app, we'd store it with the user's ID and name.
+        // For now, we'll add it as if from "You" but with a flag.
+        // To simulate friend visibility, we'll add it to the list.
+        state.quoteInteractions[quoteId].friendComments.push({
+            friendId: 0, // special id for self
+            friendName: 'You',
+            comment: comment,
+            timestamp: Date.now()
+        });
+        AppState.set({ quoteInteractions: state.quoteInteractions });
+        DOM.newCommentInput.value = '';
+        SocialQuoteManager.showQuoteDetail(quoteId); // refresh
+    }
+};
 
+// Add event listeners after DOM is ready
+DOM.likeQuoteBtn?.addEventListener('click', () => {
+    const quoteId = parseInt(DOM.quoteDetailView.dataset.quoteId);
+    SocialQuoteManager.toggleLike(quoteId);
+    // Update like button in detail view
+    const interactions = AppState.get().quoteInteractions[quoteId];
+    DOM.likeQuoteBtn.innerHTML = interactions.liked ? '<i class="fas fa-heart"></i> Liked' : '<i class="far fa-heart"></i> Like';
+});
+DOM.savePersonalNote?.addEventListener('click', SocialQuoteManager.savePersonalNote);
+DOM.postCommentBtn?.addEventListener('click', SocialQuoteManager.postComment);
+DOM.backFromQuoteDetail?.addEventListener('click', () => Views.show('quotes'));
         // ==================================================================
         // 9. MOON PHASE & COSMIC WEATHER
         // ==================================================================
