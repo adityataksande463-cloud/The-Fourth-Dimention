@@ -104,7 +104,9 @@ const techniques = (function() {
             beginner: 'Perfect introduction to meditation.'
         },
         category: 'Breath'
-    };
+    }, 
+        
+    breathTiming: { inhale: 4, hold: 4, exhale: 6 }
     
     techniques[15] = {
         id: 15,
@@ -126,7 +128,9 @@ const techniques = (function() {
             advanced: 'Leads to profound stillness.'
         },
         category: 'Breath / Void'
-    };
+    }, 
+        
+    breathTiming: { inhale: 4, hold: 4, exhale: 6 }
     
     techniques[42] = {
         id: 42,
@@ -148,7 +152,8 @@ const techniques = (function() {
             heart: 'Deepens emotional awareness.'
         },
         category: 'Emotion'
-    };
+    }, 
+     breathTiming: { inhale: 4, hold: 4, exhale: 6 }
     
     techniques[48] = {
         id: 48,
@@ -169,7 +174,9 @@ const techniques = (function() {
             heart: 'Expands capacity for joy.'
         },
         category: 'Emotion'
-    };
+    }, 
+        
+    breathTiming: { inhale: 4, hold: 4, exhale: 6 }
     
     // Add more real techniques as needed (up to 112)
     return techniques;
