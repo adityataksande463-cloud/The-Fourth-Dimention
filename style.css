@@ -1,8 +1,8 @@
 /* ============================================
    VIGYAN BHAIRAV · COSMIC MEDITATION APP
-   Pure Imagination of Art
+   style.css – Pure Imagination Edition
    ============================================
-   A symphony of glassmorphism, gradients, 
+   A symphony of glassmorphism, gradients,
    and celestial animations. Dark & light themes.
    Fully responsive, fully alive.
    ============================================ */
@@ -425,46 +425,14 @@ body::before {
     align-items: center;
 }
 
-.orbit-circle {
-    position: absolute;
-    width: 220px;
-    height: 220px;
+.blackhole-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, var(--accent-lavender), #2a1b55);
-    box-shadow: 0 0 100px var(--accent-lavender);
-    animation: pulseGlow 6s infinite alternate;
-}
-
-.orbit-circle.small {
-    width: 130px;
-    height: 130px;
-    background: radial-gradient(circle at 40% 40%, var(--accent-peach), #b84a2c);
-    box-shadow: 0 0 80px var(--accent-peach);
-    top: 20px;
-    right: 20px;
-    animation: floatAround 14s infinite alternate;
-}
-
-.floating-shiva {
-    font-size: 6rem;
-    filter: drop-shadow(0 0 30px var(--accent-gold));
+    background: transparent;
+    position: relative;
     z-index: 2;
-    animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
-}
-
-@keyframes pulseGlow {
-    0% { opacity: 0.6; transform: scale(1); }
-    100% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 150px var(--accent-lavender); }
-}
-
-@keyframes floatAround {
-    0% { transform: translate(0,0) scale(1); }
-    100% { transform: translate(40px, -30px) scale(1.15); }
 }
 
 /* --------------------------------------------
@@ -912,7 +880,7 @@ body::before {
 .profession-tag {
     display: inline-block;
     background: var(--accent-peach);
-    color: #1a1a2e;
+    color: #2d1b4e;
     padding: 5px 15px;
     border-radius: 30px;
     font-weight: 700;
@@ -972,7 +940,7 @@ body::before {
     color: white;
     text-shadow: 0 0 20px black;
     z-index: 2;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     padding: 8px 24px;
     border-radius: 50px;
     backdrop-filter: blur(5px);
@@ -997,7 +965,6 @@ body::before {
     padding: 60px 40px;
     margin: 50px 0;
     border-radius: 60px;
-    background: var(--bg-glass);
     position: relative;
     overflow: hidden;
 }
@@ -1061,13 +1028,13 @@ body::before {
 /* --------------------------------------------
    15. PLAN SECTION – Cosmic Cart
 -------------------------------------------- */
-.plan-section, .profile-section, .diary-section {
+.plan-section, .profile-section {
     padding: 50px;
     border-radius: 50px;
     margin: 50px 0;
 }
 
-.plan-section h2, .profile-section h2, .diary-section h2 {
+.plan-section h2, .profile-section h2 {
     font-family: var(--font-display);
     font-size: 2.5rem;
     margin-bottom: 30px;
@@ -1148,7 +1115,7 @@ body::before {
     font-size: 1.4rem;
     margin-top: 30px;
     padding: 20px;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 30px;
 }
 
@@ -1167,7 +1134,7 @@ body::before {
 }
 
 /* --------------------------------------------
-   16. DIARY ENTRIES – Reflections
+   16. DIARY ENTRIES – Reflections (optional)
 -------------------------------------------- */
 .diary-entry {
     padding: 25px;
@@ -1271,22 +1238,6 @@ body::before {
     .breath-circle-container { width: 200px; height: 200px; }
     .breath-phase { font-size: 1.5rem; }
     .breath-timer { font-size: 2rem; }
-                                 }
-.blackhole-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    border-radius: 50%;          /* optional, if you want a circular mask */
-    background: transparent;
-    position: relative;
-    z-index: 2;
-}
-
-.hero-illustration {
-    position: relative;
-    height: 350px;               /* adjust to your preferred size */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;             /* keeps everything inside */
-}
+    .search-box { width: 100%; }
+    .search-box:focus { width: 100%; }
+   }
