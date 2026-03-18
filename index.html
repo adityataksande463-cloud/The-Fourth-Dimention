@@ -263,38 +263,9 @@
             transition: background 0.2s;
             cursor: pointer;
         }
-        .btn-outline:hover { background: rgba(255,255,255,0.05); }
-        .hero-illustration {
-            position: relative;
-            height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .orbit-circle {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, var(--accent-lavender), #1f1950);
-            box-shadow: 0 0 80px var(--accent-lavender);
-            animation: pulseGlow 6s infinite alternate;
-        }
-        .orbit-circle.small {
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle at 40% 40%, var(--accent-peach), #b86f2c);
-            box-shadow: 0 0 80px var(--accent-peach);
-            top: 20px;
-            right: 20px;
-            animation: floatAround 12s infinite alternate;
-        }
-        .floating-shiva {
-            font-size: 5rem;
-            filter: drop-shadow(0 0 25px gold);
-            z-index: 2;
-            animation: float 5s ease-in-out infinite;
-        }
+        <div class="hero-illustration">
+    <canvas id="blackholeCanvas" class="blackhole-canvas"></canvas>
+</div>
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
         @keyframes pulseGlow { 0%{opacity:0.7;transform:scale(1)} 100%{opacity:1;transform:scale(1.1)} }
         @keyframes floatAround { 0%{transform:translate(0,0)} 100%{transform:translate(30px,-20px)} }
