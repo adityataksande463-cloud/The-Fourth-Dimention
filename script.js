@@ -24,170 +24,696 @@
 (function() {
     "use strict";
 
-    // ==============================================================
-    // 1. TECHNIQUES DATABASE – 112 Portals of Awareness
-    //    Each technique is a universe with steps, essence, benefits,
-    //    and optional breath timing for the visualizer.
-    // ==============================================================
-    const techniques = (function createTechniqueLibrary() {
-        // Base elements for generative techniques (for the full 112)
-        const categories = ['Gaze', 'Breath', 'Sound', 'Body', 'Emotion', 'Void'];
-        const tagsPool = ['beginner', 'student', 'employee', 'ceo', 'seeker', 'anxious', 'overthinker', 'heart', 'advanced', 'mystic'];
-        const durations = ['2-5 min', '5-15 min', '10-20 min', '15-30 min'];
-        
-        // Helper: random tags (deterministic based on index for consistency)
-        const getTagsForIndex = (i) => {
-            const seed = i * 7;
-            const shuffled = [...tagsPool].sort((a, b) => ((seed + a.length) % 10) - ((seed + b.length) % 10));
-            return shuffled.slice(0, 3);
-        };
+/**
+ * ==================================================================
+ * VIGYAN BHAIRAV · 30 TECHNIQUES
+ * Pure Imagination – A Living Database of Meditations
+ * ==================================================================
+ * Each technique is a doorway: with name, essence, steps, benefits,
+ * and breath-timing for the visualizer. Crafted from the ancient
+ * text, ready for the modern seeker.
+ * 
+ * "In the pause between breaths, the universe reveals itself."
+ * ==================================================================
+ */
 
-        // Helper: generate benefit text for a profession
-        const getBenefit = (profession, techId) => {
-            const benefitsMap = {
-                student: '✨ Sharpens focus and memory – ideal for learning.',
-                employee: '🌀 Melts workplace stress and restores clarity.',
-                ceo: '🌟 Sharpens intuition and strategic vision.',
-                seeker: '🔮 Deepens spiritual connection and inner stillness.',
-                anxious: '🌊 Calms the nervous system like a gentle stream.',
-                overthinker: '☁️ Dissolves mental chatter, reveals silence.',
-                heart: '❤️ Opens emotional intelligence and compassion.',
-                beginner: '🌱 Perfect first step into meditation.',
-                advanced: '⛰️ Leads to profound states of absorption.',
-                mystic: '🌌 Unlocks transcendent awareness.'
-            };
-            return benefitsMap[profession] || '🌀 Brings balance and harmony.';
-        };
+const techniques = {
+  1: {
+    id: 1,
+    name: 'Witnessing the Breath',
+    sanskritName: 'Śvāsa–Praśvāsa Dharana',
+    essence: 'Breath awareness anchors consciousness in the present moment.',
+    steps: [
+      'Take a slow inhale through the nose – 4 seconds.',
+      'Take a slow exhale through the nose – 4–5 seconds.',
+      'Do not force breathing. Let it become natural.',
+      'Bring full attention to the breath: feel air entering and leaving the nostrils.',
+      'If thoughts appear, gently return to breath.'
+    ],
+    duration: '10–20 minutes',
+    breathTiming: { inhale: 4, exhale: 4 },  // initial pattern, then natural
+    benefits: {
+      student: '📚 Improves concentration and memory – ideal for studies.',
+      employee: '💼 Reduces workplace stress and increases focus.',
+      anxious: '🌿 Calms the nervous system and stabilizes emotions.',
+      overthinker: '🧠 Quiets mental chatter.',
+      beginner: '🌈 Perfect introduction to meditation.'
+    },
+    tags: ['beginner', 'breath', 'student', 'employee', 'anxious']
+  },
 
-        const lib = {};
-        
-        // Generate 112 techniques
-        for (let i = 1; i <= 112; i++) {
-            const category = categories[(i-1) % categories.length];
-            const tags = getTagsForIndex(i);
-            const benefits = {};
-            // Ensure each tag gets a benefit
-            tags.forEach(tag => { benefits[tag] = getBenefit(tag, i); });
-            // Add default benefits for common roles
-            if (!benefits.student) benefits.student = getBenefit('student', i);
-            if (!benefits.employee) benefits.employee = getBenefit('employee', i);
-            if (!benefits.seeker) benefits.seeker = getBenefit('seeker', i);
-            
-            lib[i] = {
-                id: i,
-                name: `${category} Awareness – Technique ${i}`,
-                duration: durations[(i-1) % durations.length],
-                tags: tags,
-                essence: `A profound ${category.toLowerCase()} practice from the Vigyan Bhairav Tantra.`,
-                steps: [
-                    `🧘 Find a comfortable seated position.`,
-                    `👁️ Bring awareness to the ${category.toLowerCase()} aspect.`,
-                    `🌬️ Observe without judgment, like a silent witness.`,
-                    `⏳ Continue for the duration, returning gently if distracted.`,
-                    `🕊️ Gradually open your eyes and carry the stillness forward.`
-                ],
-                benefits: benefits,
-                category: category,
-                // Most breath techniques have natural timing; we'll add specific ones later
-                breathTiming: category === 'Breath' ? { inhale: 4, hold: 4, exhale: 6 } : null
-            };
-        }
+  2: {
+    id: 2,
+    name: 'Awareness of the Gap Between Breaths',
+    sanskritName: 'Madhya Dharana',
+    essence: 'The doorway to stillness lies in the pause between breaths.',
+    steps: [
+      'Inhale slowly – 4–5 seconds.',
+      'At the top of inhalation, notice the tiny pause.',
+      'Exhale slowly – 4–5 seconds.',
+      'At the end of exhalation, notice another pause.',
+      'Focus on those two silent gaps. Do not hold breath intentionally; just observe.'
+    ],
+    duration: '15 minutes',
+    breathTiming: { inhale: 4, exhale: 4 },  // pause is natural, no hold
+    benefits: {
+      ceo: '🔮 Accesses deep intuition beyond logic.',
+      seeker: '∞ Opens to the formless dimension.',
+      overthinker: '⏸️ Breaks the chain of thoughts.',
+      advanced: '🌌 Leads to profound stillness.'
+    },
+    tags: ['advanced', 'breath', 'ceo', 'seeker', 'overthinker']
+  },
 
-        // Override first few with handcrafted, detailed techniques
-        lib[1] = {
-            id: 1,
-            name: 'Witnessing the Breath',
-            duration: '5-15 min',
-            tags: ['beginner', 'student', 'employee'],
-            essence: 'Watch your natural breath without any control – like a river flowing by.',
-            steps: [
-                'Sit comfortably with eyes closed, spine erect.',
-                'Bring attention to the inflow and outflow of breath at the nostrils.',
-                'Do not manipulate; just observe the natural rhythm.',
-                'If thoughts arise, gently return to the sensation of breathing.',
-                'Continue for 5-15 minutes, then rest in silence.'
-            ],
-            benefits: {
-                student: '📚 Improves concentration and memory retention.',
-                employee: '💼 Reduces stress and increases focus during work.',
-                ceo: '🎯 Enhances decision-making clarity.',
-                anxious: '🌿 Calms the nervous system.',
-                overthinker: '🧠 Quiets mental chatter.',
-                beginner: '🌈 Perfect introduction to meditation.'
-            },
-            category: 'Breath',
-            breathTiming: { inhale: 4, hold: 4, exhale: 6 }
-        };
+  3: {
+    id: 3,
+    name: 'Breath Traveling Through the Spine',
+    sanskritName: 'Sushumna Dharana',
+    essence: 'Breath carries awareness through the body’s central channel.',
+    steps: [
+      'Sit with spine very straight.',
+      'Inhale slowly (5 sec): imagine energy moving from base of spine to top of head.',
+      'Hold breath gently (2 sec).',
+      'Exhale slowly (5 sec): imagine energy flowing from head back to base of spine.',
+      'Repeat continuously.'
+    ],
+    duration: '10–15 minutes',
+    breathTiming: { inhale: 5, hold: 2, exhale: 5 },
+    benefits: {
+      student: '⚡ Improves focus and vitality.',
+      employee: '🌀 Increases energy and reduces fatigue.',
+      seeker: '🌟 Awakens subtle body awareness.',
+      beginner: '🌱 Builds concentration.'
+    },
+    tags: ['breath', 'energy', 'spine', 'intermediate']
+  },
 
-        lib[15] = {
-            id: 15,
-            name: 'The Pause Between Breaths',
-            duration: '5-15 min',
-            tags: ['advanced', 'ceo', 'seeker'],
-            essence: 'Become aware of the natural gap after each exhale – the doorway to the formless.',
-            steps: [
-                'Exhale completely and gently.',
-                'Notice the stillness before the next inhale arises.',
-                'Rest in that gap, without trying to prolong it.',
-                'Allow the breath to resume naturally.',
-                'With each cycle, deepen your repose in the pause.'
-            ],
-            benefits: {
-                ceo: '🔮 Accesses deep intuition beyond logic.',
-                seeker: '∞ Opens to the formless dimension.',
-                overthinker: '⏸️ Breaks the chain of thoughts.',
-                advanced: '🌌 Leads to profound stillness.'
-            },
-            category: 'Breath / Void',
-            breathTiming: { inhale: 4, hold: 4, exhale: 6 }
-        };
+  4: {
+    id: 4,
+    name: 'Concentration on the Third Eye',
+    sanskritName: 'Bhrūmadhya Dharana',
+    essence: 'Attention becomes powerful when gathered in one point.',
+    steps: [
+      'Sit comfortably, eyes closed.',
+      'Bring attention to the point between eyebrows.',
+      'Do not strain your eyes.',
+      'Breathe naturally.',
+      'If thoughts arise, gently bring attention back.'
+    ],
+    duration: '10–20 minutes',
+    breathTiming: null,
+    benefits: {
+      student: '🎯 Powerful concentration training – improves memory.',
+      employee: '🧠 Increases mental stability.',
+      seeker: '🔮 Deepens meditation and intuition.',
+      overthinker: '🧘 Focuses scattered thoughts.'
+    },
+    tags: ['focus', 'third eye', 'intermediate', 'student', 'overthinker']
+  },
 
-        lib[42] = {
-            id: 42,
-            name: 'Heart Center Awareness',
-            duration: '5-15 min',
-            tags: ['heart', 'employee', 'seeker'],
-            essence: 'Focus on the heart space as a source of unconditional love.',
-            steps: [
-                'Bring attention to the center of the chest.',
-                'Feel the heartbeat, the warmth, the subtle vibration.',
-                'Imagine it radiating a soft, rose-gold light.',
-                'With each inhale, the light expands; with each exhale, it soothes.',
-                'Rest in that loving presence, allowing it to envelop you.'
-            ],
-            benefits: {
-                employee: '🤝 Cultivates compassion and patience at work.',
-                seeker: '💖 Opens the heart chakra to universal love.',
-                anxious: '⚖️ Brings emotional balance and security.',
-                heart: '🌈 Deepens capacity for joy and connection.'
-            },
-            category: 'Emotion'
-        };
+  5: {
+    id: 5,
+    name: 'Witnessing Thoughts',
+    sanskritName: 'Sākṣī Bhāva',
+    essence: 'You are the observer, not the thinker.',
+    steps: [
+      'Sit comfortably with eyes closed.',
+      'Relax your breathing.',
+      'Watch thoughts as they appear – do not suppress or follow.',
+      'Just observe each thought disappear.',
+      'Continue observing the next thought.'
+    ],
+    duration: '15 minutes',
+    breathTiming: null,
+    benefits: {
+      overthinker: '🧘 Freedom from overthinking.',
+      anxious: '🌊 Emotional stability.',
+      ceo: '🎯 Improved clarity and decision-making.',
+      seeker: '💫 Deeper self-awareness.'
+    },
+    tags: ['witness', 'mindfulness', 'intermediate', 'overthinker', 'anxious']
+  },
 
-        lib[48] = {
-            id: 48,
-            name: 'The Delight of Meeting',
-            duration: '2-10 min',
-            tags: ['heart', 'seeker', 'employee'],
-            essence: 'Feel the joy of connection as pure energy, independent of any person.',
-            steps: [
-                'Recall a moment of meeting someone with genuine joy.',
-                'Separate that joy from the person or event – feel it as a vibration in your body.',
-                'Let that vibration expand and fill your whole being.',
-                'Merge with the vibration; become the joy itself.',
-                'Carry this essence into your interactions.'
-            ],
-            benefits: {
-                employee: '🤗 Improves interpersonal relationships and team spirit.',
-                seeker: '🌟 Recognizes the universal nature of love.',
-                heart: '💞 Expands capacity for joy and gratitude.'
-            },
-            category: 'Emotion'
-        };
+  6: {
+    id: 6,
+    name: 'Listening to External Sounds Without Labeling',
+    sanskritName: 'Śabda Dharana',
+    essence: 'Sound becomes a gateway to silence when the mind stops labeling it.',
+    steps: [
+      'Sit comfortably in a natural environment.',
+      'Relax your breathing.',
+      'Listen to all surrounding sounds – wind, traffic, birds, footsteps.',
+      'Do not name the sounds; experience them as raw vibration.',
+      'Let sounds come to you naturally.'
+    ],
+    duration: '15–20 minutes',
+    breathTiming: null,
+    benefits: {
+      employee: '👂 Reduces mental chatter and improves focus.',
+      student: '🔊 Enhances sensory awareness.',
+      anxious: '🌿 Calms the mind through open listening.',
+      beginner: '🎧 Easy entry to mindfulness.'
+    },
+    tags: ['sound', 'mindfulness', 'beginner', 'employee', 'anxious']
+  },
 
-        return lib;
-    })();
+  7: {
+    id: 7,
+    name: 'Inner Sound Meditation',
+    sanskritName: 'Anāhata Nāda Dharana',
+    essence: 'Within silence the body itself produces subtle sound.',
+    steps: [
+      'Sit in a quiet room, spine straight.',
+      'Gently close your ears with fingers or earplugs.',
+      'Bring attention inside the head.',
+      'Listen carefully – you may hear humming, ringing, buzzing.',
+      'Do not analyze; simply listen deeply.'
+    ],
+    duration: '10–15 minutes',
+    breathTiming: null,
+    benefits: {
+      seeker: '🎵 Deep inward awareness.',
+      advanced: '🌀 Quiets mental noise.',
+      mystic: '✨ Prepares mind for deep meditation.'
+    },
+    tags: ['sound', 'inner', 'advanced', 'seeker']
+  },
 
+  8: {
+    id: 8,
+    name: 'Gazing Into Darkness',
+    sanskritName: 'Śūnya Dharana',
+    essence: 'Darkness is not empty – it is a field of awareness.',
+    steps: [
+      'Sit comfortably, eyes closed gently.',
+      'Observe the dark space behind the eyelids.',
+      'Do not imagine anything.',
+      'Watch the darkness like a sky – ignore any patterns or lights.',
+      'Stay with the background darkness.'
+    ],
+    duration: '15 minutes',
+    breathTiming: null,
+    benefits: {
+      overthinker: '🌑 Deep relaxation and quiet mind.',
+      anxious: '🌙 Calms the nervous system.',
+      seeker: '🌟 Increases inner awareness.',
+      beginner: '🌌 Easy and profound.'
+    },
+    tags: ['darkness', 'stillness', 'beginner', 'overthinker', 'anxious']
+  },
+
+  9: {
+    id: 9,
+    name: 'Sudden Awareness Technique',
+    sanskritName: 'Kṣaṇika Smriti',
+    essence: 'A moment of full awareness can break hours of unconscious living.',
+    steps: [
+      'During daily life, suddenly stop whatever you are doing.',
+      'Become aware of your body, breathing, surroundings, sounds, posture.',
+      'Observe everything simultaneously for 5–10 seconds.',
+      'Then continue your activity.',
+      'Practice 10–20 times per day – while walking, studying, eating, using phone.'
+    ],
+    duration: '5–10 seconds per session',
+    breathTiming: null,
+    benefits: {
+      employee: '⏰ Powerful mindfulness training in daily life.',
+      student: '📚 Breaks unconscious habits.',
+      ceo: '💡 Increases presence and awareness.'
+    },
+    tags: ['mindfulness', 'daily life', 'beginner', 'employee', 'student']
+  },
+
+  10: {
+    id: 10,
+    name: 'Mantra with Breath',
+    sanskritName: 'So-Ham Dharana',
+    essence: 'Breath and awareness become one continuous flow.',
+    steps: [
+      'Sit comfortably.',
+      'Inhale slowly (4 sec) and silently think “So”.',
+      'Exhale slowly (5 sec) and silently think “Ham”.',
+      'Continue naturally, letting the mantra synchronize with breath.',
+      'With practice, the mantra becomes automatic.'
+    ],
+    duration: '15–20 minutes',
+    breathTiming: { inhale: 4, exhale: 5 },
+    benefits: {
+      student: '🔤 Deep concentration and memory.',
+      employee: '🧘 Emotional balance and calm.',
+      anxious: '🌊 Calms nervous system.',
+      seeker: '🕉️ Connects breath with mantra.'
+    },
+    tags: ['mantra', 'breath', 'beginner', 'student', 'anxious']
+  },
+
+  11: {
+    id: 11,
+    name: 'Sky Awareness Meditation',
+    sanskritName: 'Ākāśa Dharana',
+    essence: 'Mind becomes as vast and open as the sky.',
+    steps: [
+      'Sit or stand where you can see the open sky.',
+      'Relax the eyes and gaze softly into the vast sky.',
+      'Do not focus on any object like clouds or birds.',
+      'Breathe slowly and naturally.',
+      'Let your awareness expand with the vastness of the sky.'
+    ],
+    duration: '10–20 minutes',
+    breathTiming: { inhale: 4, exhale: 5 },
+    benefits: {
+      overthinker: '🌤️ Expands awareness, reduces mental pressure.',
+      employee: '🌥️ Induces deep calmness.',
+      seeker: '🌦️ Improves concentration.'
+    },
+    tags: ['gaze', 'sky', 'beginner', 'overthinker', 'employee']
+  },
+
+  12: {
+    id: 12,
+    name: 'Candle Flame Concentration',
+    sanskritName: 'Trataka Dharana',
+    essence: 'Single-pointed focus stabilizes the mind.',
+    steps: [
+      'Place a candle at eye level about 1–1.5 meters away.',
+      'Sit with a straight spine.',
+      'Gaze steadily at the flame without blinking.',
+      'If tears come, gently close eyes and visualize the flame internally.',
+      'Open eyes and continue gazing.'
+    ],
+    duration: '5–15 minutes',
+    breathTiming: null,
+    benefits: {
+      student: '🔥 Strong concentration and memory.',
+      ceo: '🎯 Improves focus and decision clarity.',
+      overthinker: '🧠 Calms mental restlessness.'
+    },
+    tags: ['gaze', 'trataka', 'intermediate', 'student', 'ceo']
+  },
+
+  13: {
+    id: 13,
+    name: 'Heart Center Meditation',
+    sanskritName: 'Hridaya Dharana',
+    essence: 'Awareness in the heart awakens inner harmony.',
+    steps: [
+      'Sit comfortably with eyes closed.',
+      'Place awareness in the center of the chest (heart area).',
+      'Breathe slowly and gently.',
+      'Feel the subtle sensation or warmth in the heart region.',
+      'Remain aware of this center.'
+    ],
+    duration: '15–20 minutes',
+    breathTiming: { inhale: 5, exhale: 5 },
+    benefits: {
+      employee: '❤️ Emotional balance and reduced stress.',
+      seeker: '🌟 Compassion and empathy.',
+      anxious: '🌿 Inner calmness.'
+    },
+    tags: ['heart', 'emotion', 'intermediate', 'employee', 'seeker']
+  },
+
+  14: {
+    id: 14,
+    name: 'Body Sensation Awareness',
+    sanskritName: 'Sharira Smriti Dharana',
+    essence: 'Conscious awareness dissolves bodily tension.',
+    steps: [
+      'Sit or lie down comfortably.',
+      'Close the eyes.',
+      'Slowly move awareness through the body: head → neck → shoulders → arms → chest → abdomen → legs → feet.',
+      'Observe sensations without reacting.',
+      'Feel each part with gentle attention.'
+    ],
+    duration: '15–20 minutes',
+    breathTiming: null,
+    benefits: {
+      employee: '🧘 Deep relaxation, reduces physical tension.',
+      anxious: '🌊 Calms nervous system.',
+      beginner: '🦶 Improves body awareness.'
+    },
+    tags: ['body scan', 'relaxation', 'beginner', 'employee', 'anxious']
+  },
+
+  15: {
+    id: 15,
+    name: 'Slow Breath Meditation',
+    sanskritName: 'Prāṇa Śānti Dharana',
+    essence: 'Slow breath creates a calm and steady mind.',
+    steps: [
+      'Sit with spine straight.',
+      'Slowly inhale through the nose (5 sec).',
+      'Slowly exhale through the nose, slightly longer than inhale (7 sec).',
+      'Maintain a smooth, gentle rhythm.',
+      'Continue for 10–20 minutes.'
+    ],
+    duration: '10–20 minutes',
+    breathTiming: { inhale: 5, exhale: 7 },
+    benefits: {
+      anxious: '🌬️ Deep relaxation, reduces anxiety.',
+      employee: '🧘 Improves oxygen efficiency.',
+      overthinker: '🌊 Stabilizes mind.'
+    },
+    tags: ['breath', 'calming', 'beginner', 'anxious', 'employee']
+  },
+
+  16: {
+    id: 16,
+    name: 'Walking Awareness Meditation',
+    sanskritName: 'Chalana Smriti Dharana',
+    essence: 'Every step becomes an act of awareness.',
+    steps: [
+      'Walk slowly in a quiet place.',
+      'Keep spine straight and body relaxed.',
+      'Bring full awareness to the movement of the feet.',
+      'Feel the heel touching ground, then sole, then toes lifting.',
+      'Synchronize breath naturally with steps.'
+    ],
+    duration: '10–20 minutes',
+    breathTiming: null,
+    benefits: {
+      employee: '🚶 Improves mindfulness in daily life.',
+      student: '🧠 Enhances body coordination.',
+      anxious: '🌿 Reduces mental distraction.'
+    },
+    tags: ['walking', 'mindfulness', 'beginner', 'employee', 'anxious']
+  },
+
+  17: {
+    id: 17,
+    name: 'Observation of Emotions',
+    sanskritName: 'Bhāva Avalokana Dharana',
+    essence: 'Observing emotions dissolves their control over the mind.',
+    steps: [
+      'Sit comfortably, eyes closed.',
+      'Bring attention to the present emotional state.',
+      'If an emotion arises (anger, joy, sadness), observe it without suppression.',
+      'Notice how it moves through the body.',
+      'Allow it to dissolve naturally without reacting.'
+    ],
+    duration: '10–15 minutes',
+    breathTiming: { inhale: 4, exhale: 5 },
+    benefits: {
+      employee: '🧘 Emotional stability and reduced impulsive reactions.',
+      overthinker: '🌀 Greater self-understanding.',
+      heart: '❤️ Increased mental clarity.'
+    },
+    tags: ['emotion', 'witness', 'intermediate', 'employee', 'overthinker']
+  },
+
+  18: {
+    id: 18,
+    name: 'Listening to Silence',
+    sanskritName: 'Mauna Śravaṇa Dharana',
+    essence: 'Silence is the background of all sound.',
+    steps: [
+      'Sit in a quiet environment.',
+      'Close eyes and relax body.',
+      'Listen to surrounding sounds first.',
+      'Gradually shift attention to the silence behind the sounds.',
+      'Remain aware of that silence.'
+    ],
+    duration: '15–20 minutes',
+    breathTiming: null,
+    benefits: {
+      seeker: '🔇 Deep inner calm and heightened perception.',
+      overthinker: '🌌 Reduces mental noise.',
+      advanced: '🧘 Improves concentration.'
+    },
+    tags: ['silence', 'sound', 'advanced', 'seeker', 'overthinker']
+  },
+
+  19: {
+    id: 19,
+    name: 'Whole-Body Awareness',
+    sanskritName: 'Sarva Sharira Bodha Dharana',
+    essence: 'The body becomes a single field of awareness.',
+    steps: [
+      'Sit comfortably, eyes closed.',
+      'Relax the entire body.',
+      'Bring awareness to the body as a whole, not individual parts.',
+      'Feel the entire body simultaneously as one field of sensation.',
+      'Maintain steady awareness.'
+    ],
+    duration: '15 minutes',
+    breathTiming: null,
+    benefits: {
+      employee: '🧘 Integration of body and mind, deep relaxation.',
+      anxious: '🌊 Increased sensory awareness.',
+      beginner: '🦶 Stabilizes attention.'
+    },
+    tags: ['body', 'awareness', 'beginner', 'employee', 'anxious']
+  },
+
+  20: {
+    id: 20,
+    name: 'Breath Touch Awareness',
+    sanskritName: 'Nāsa Sparsha Dharana',
+    essence: 'Subtle sensations anchor the mind in the present moment.',
+    steps: [
+      'Sit comfortably, eyes closed.',
+      'Focus attention on the tip of the nose.',
+      'Feel the sensation of air touching the nostrils during inhalation and exhalation.',
+      'Maintain steady awareness of this subtle contact.'
+    ],
+    duration: '15–20 minutes',
+    breathTiming: { inhale: 4, exhale: 5 },
+    benefits: {
+      student: '👃 Strong concentration and improved breath awareness.',
+      overthinker: '🧠 Reduces mental wandering.',
+      beginner: '🌬️ Increases mindfulness.'
+    },
+    tags: ['breath', 'focus', 'beginner', 'student', 'overthinker']
+  },
+
+  21: {
+    id: 21,
+    name: 'Expansion of Awareness',
+    sanskritName: 'Vistāra Dharana',
+    essence: 'Awareness is not limited to the body.',
+    steps: [
+      'Sit comfortably, eyes closed.',
+      'Relax body completely.',
+      'Become aware of your body and breathing.',
+      'Gradually imagine your awareness expanding beyond the body.',
+      'Extend this awareness into surrounding space, outward without limit.'
+    ],
+    duration: '15–20 minutes',
+    breathTiming: { inhale: 5, exhale: 6 },
+    benefits: {
+      seeker: '🌌 Reduces feeling of limitation, expands perception.',
+      ceo: '🎯 Creates deep calmness and mental openness.',
+      advanced: '🌀 Improves meditation depth.'
+    },
+    tags: ['expansion', 'awareness', 'advanced', 'seeker', 'ceo']
+  },
+
+  22: {
+    id: 22,
+    name: 'Spine Awareness Meditation',
+    sanskritName: 'Meru Smriti Dharana',
+    essence: 'The spine becomes a pathway of awareness.',
+    steps: [
+      'Sit with spine straight.',
+      'Close eyes and relax body.',
+      'Bring awareness to the spinal column.',
+      'Slowly move attention from base of spine upward to the neck.',
+      'Repeat this upward and downward awareness along the spine.'
+    ],
+    duration: '15 minutes',
+    breathTiming: { inhale: 5, exhale: 5 },
+    benefits: {
+      employee: '🧘 Improves posture and energy flow.',
+      student: '⚡ Enhances body awareness and focus.'
+    },
+    tags: ['spine', 'energy', 'intermediate', 'employee', 'student']
+  },
+
+  23: {
+    id: 23,
+    name: 'Total Relaxation Meditation',
+    sanskritName: 'Vishrānti Dharana',
+    essence: 'Complete relaxation opens the mind to awareness.',
+    steps: [
+      'Lie down comfortably on your back.',
+      'Close eyes.',
+      'Relax each body part gradually: feet → legs → abdomen → chest → arms → neck → face.',
+      'Release all muscular tension.',
+      'Remain aware of the relaxed body.'
+    ],
+    duration: '15–20 minutes',
+    breathTiming: null,
+    benefits: {
+      anxious: '🛌 Deep physical relaxation, stress reduction.',
+      employee: '😴 Improves sleep quality.',
+      beginner: '🌙 Releases body tension.'
+    },
+    tags: ['relaxation', 'body scan', 'beginner', 'anxious', 'employee']
+  },
+
+  24: {
+    id: 24,
+    name: 'Awareness at the Edge of Sleep',
+    sanskritName: 'Nidra Anta Smriti Dharana',
+    essence: 'Awareness continues even at the boundary of sleep.',
+    steps: [
+      'Lie down comfortably before sleep.',
+      'Close eyes and relax body.',
+      'Observe the mind as it slowly moves toward sleep.',
+      'Watch thoughts and images appearing before sleep.',
+      'Maintain awareness until sleep naturally occurs.'
+    ],
+    duration: 'Until sleep',
+    breathTiming: null,
+    benefits: {
+      seeker: '🌙 Improves sleep awareness and dream recall.',
+      anxious: '💤 Deep relaxation.',
+      advanced: '🧘 Develops subtle mental observation.'
+    },
+    tags: ['sleep', 'awareness', 'advanced', 'seeker', 'anxious']
+  },
+
+  25: {
+    id: 25,
+    name: 'Momentary Breath Suspension',
+    sanskritName: 'Kumbhaka Kṣaṇa Dharana',
+    essence: 'Still breath creates still awareness.',
+    steps: [
+      'Sit with spine straight.',
+      'Inhale deeply (5 sec).',
+      'Hold breath gently for a short moment (3 sec).',
+      'Observe the stillness inside the body.',
+      'Slowly exhale (6 sec).',
+      'Repeat.'
+    ],
+    duration: '10–15 minutes',
+    breathTiming: { inhale: 5, hold: 3, exhale: 6 },
+    benefits: {
+      ceo: '⏸️ Deepens concentration and mental clarity.',
+      seeker: '🌀 Increases inner stillness.',
+      advanced: '🌌 Improves breath control.'
+    },
+    tags: ['breath', 'kumbhaka', 'advanced', 'ceo', 'seeker']
+  },
+
+  26: {
+    id: 26,
+    name: 'Awareness of Space Around the Body',
+    sanskritName: 'Āvaraṇa Śūnya Dharana',
+    essence: 'Awareness expands beyond the physical body.',
+    steps: [
+      'Sit with spine straight, eyes closed.',
+      'First feel the body normally.',
+      'Then shift awareness to the space surrounding the body.',
+      'Sense the empty space around head, shoulders, entire body.',
+      'Maintain awareness of this surrounding space rather than the body.'
+    ],
+    duration: '15–20 minutes',
+    breathTiming: { inhale: 5, exhale: 6 },
+    benefits: {
+      seeker: '🌌 Expands spatial awareness, reduces body identification.',
+      ceo: '🧘 Creates mental calmness.',
+      advanced: '🌀 Improves meditation depth.'
+    },
+    tags: ['space', 'awareness', 'advanced', 'seeker', 'ceo']
+  },
+
+  27: {
+    id: 27,
+    name: 'Mindful Eating Meditation',
+    sanskritName: 'Āhāra Smriti Dharana',
+    essence: 'Eating becomes a conscious act of awareness.',
+    steps: [
+      'Sit calmly while eating.',
+      'Observe the food carefully before eating.',
+      'Take a small bite.',
+      'Chew slowly, feeling texture and taste.',
+      'Notice smell, flavor, and chewing movement.',
+      'Eat without distraction or conversation.'
+    ],
+    duration: 'During the entire meal',
+    breathTiming: null,
+    benefits: {
+      employee: '🍽️ Improves digestion and mindfulness.',
+      student: '🧠 Prevents overeating, enhances sensory awareness.',
+      beginner: '🥗 Develops present-moment attention.'
+    },
+    tags: ['mindfulness', 'eating', 'beginner', 'employee', 'student']
+  },
+
+  28: {
+    id: 28,
+    name: 'Present Moment Awareness',
+    sanskritName: 'Vartamāna Smriti Dharana',
+    essence: 'Complete awareness exists only in the present moment.',
+    steps: [
+      'Bring full attention to whatever activity you are doing.',
+      'Observe body movement, breath, and environment simultaneously.',
+      'Avoid thinking about past or future.',
+      'Continue the activity with complete awareness.'
+    ],
+    duration: 'Throughout daily activities',
+    breathTiming: null,
+    benefits: {
+      employee: '⏰ Improves focus and reduces mental stress.',
+      student: '📚 Enhances productivity and mindfulness.',
+      ceo: '🎯 Strengthens present-moment awareness.'
+    },
+    tags: ['mindfulness', 'daily life', 'beginner', 'employee', 'student']
+  },
+
+  29: {
+    id: 29,
+    name: 'Inner Light Meditation',
+    sanskritName: 'Jyoti Antar Dharana',
+    essence: 'Inner awareness reveals subtle light within consciousness.',
+    steps: [
+      'Sit comfortably, eyes closed.',
+      'Focus attention behind the closed eyelids.',
+      'Observe subtle light patterns appearing in the mind.',
+      'Do not imagine or force any image.',
+      'Simply watch the natural light phenomena.'
+    ],
+    duration: '15–20 minutes',
+    breathTiming: { inhale: 4, exhale: 5 },
+    benefits: {
+      seeker: '✨ Deep inward concentration and subtle perception.',
+      advanced: '🌟 Enhances mental clarity.',
+      mystic: '🌀 Develops meditation depth.'
+    },
+    tags: ['light', 'inner', 'advanced', 'seeker', 'mystic']
+  },
+
+  30: {
+    id: 30,
+    name: 'Total Witnessing Meditation',
+    sanskritName: 'Sākṣī Sarva Dharana',
+    essence: 'Pure witnessing reveals the true nature of awareness.',
+    steps: [
+      'Sit comfortably, eyes closed.',
+      'Observe breathing, thoughts, sensations, and sounds simultaneously.',
+      'Do not interfere with any experience.',
+      'Maintain the role of a silent observer.',
+      'Allow everything to arise and pass naturally.'
+    ],
+    duration: '20 minutes',
+    breathTiming: null,
+    benefits: {
+      seeker: '🧘 Deep self-awareness, freedom from mental attachment.',
+      ceo: '🎯 Increased emotional stability.',
+      advanced: '🌌 Advanced meditation state.'
+    },
+    tags: ['witness', 'awareness', 'advanced', 'seeker', 'ceo']
+  }
+};
+
+// ==================================================================
+// To use: replace the existing 'techniques' object in your script
+// with this one. It integrates seamlessly with the existing
+// AppState, UI, and BreathVisual modules. Each technique includes
+// breathTiming where applicable, which triggers the breathing
+// visualizer in the detail view.
+// ==================================================================
     // ==============================================================
     // 2. APP STATE – Persistent cosmic memory (localStorage)
     // ==============================================================
