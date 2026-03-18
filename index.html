@@ -533,7 +533,34 @@
                 <button class="quote-btn" id="nextQuote"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
-
+<!-- QUOTE DETAIL VIEW -->
+<div id="quoteDetailView" class="hidden quotes-section">
+    <div class="detail-header">
+        <h2 id="quoteDetailTitle">Quote</h2>
+        <button class="back-btn" id="backFromQuoteDetail"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+    <div class="quote-detail-card">
+        <div class="quote-text-large" id="quoteDetailText"></div>
+        <div class="quote-author-large" id="quoteDetailAuthor"></div>
+        <div class="quote-actions">
+            <button class="btn-outline" id="likeQuoteBtn"><i class="far fa-heart"></i> Like</button>
+            <span id="likeCount">0</span>
+        </div>
+        <div class="personal-note-section">
+            <h3>📝 Personal Note (private)</h3>
+            <textarea id="personalNoteInput" placeholder="Write your private thoughts..."></textarea>
+            <button class="btn-primary" id="savePersonalNote">Save Note</button>
+        </div>
+        <div class="friend-comments-section">
+            <h3>💬 Friends' Comments</h3>
+            <div id="friendCommentsList"></div>
+            <div class="add-comment">
+                <input type="text" id="newCommentInput" placeholder="Add a comment visible to friends...">
+                <button class="btn-primary" id="postCommentBtn">Post</button>
+            </div>
+        </div>
+    </div>
+</div>
         <!-- COSMIC DIARY VIEW -->
         <div id="diaryView" class="hidden diary-section">
             <h2>🌙 Cosmic Diary</h2>
