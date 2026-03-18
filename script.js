@@ -1402,3 +1402,132 @@ const techniques = {
 
     document.addEventListener('DOMContentLoaded', init);
 })();
+/**
+ * Gargantua Black Hole – Inspired by Interstellar
+ * Pure canvas animation, responsive, with glowing accretion disk.
+ */
+(function initBlackHole() {
+    const canvas = document.getElementById('blackholeCanvas');
+    if (!canvas) return;
+
+    let ctx = canvas.getContext('2d');
+    let width, height;
+    let time = 0;
+
+    function resize() {
+        const container = canvas.parentElement;
+        width = container.clientWidth;
+        height = container.clientHeight;
+        canvas.width = width;
+        canvas.height = height;
+    }
+
+    function drawBlackHole() {
+        ctx.clearRect(0, 0, width, height);
+
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const maxRadius = Math.min(width, height) * 0.4; // 40% of smallest dimension
+
+        // 1. Event Horizon (pure black sphere)
+        const horizonRadius = maxRadius * 0.3;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, horizonRadius, 0, Math.PI * 2);
+        ctx.fillStyle = '#000000';
+        ctx.shadowColor = '#000';
+        ctx.shadowBlur = 30;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // 2. Inner accretion disk – hottest, brightest (white/yellow)
+        const innerGradient = ctx.createRadialGradient(
+            centerX, centerY, horizonRadius * 1.2,
+            centerX, centerY, maxRadius * 0.6
+        );
+        innerGradient.addColorStop(0, 'rgba(255, 255, 200, 0.9)'); // white-hot
+        innerGradient.addColorStop(0.3, 'rgba(255, 200, 100, 0.7)');
+        innerGradient.addColorStop(0.6, 'rgba(200, 100, 50, 0.4)');
+        innerGradient.addColorStop(1, 'rgba(100, 50, 20, 0)');
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, maxRadius * 0.8, 0, Math.PI * 2);
+        ctx.fillStyle = innerGradient;
+        ctx.fill();
+
+        // 3. Outer accretion disk – cooler, more diffuse
+        const outerGradient = ctx.createRadialGradient(
+            centerX, centerY, maxRadius * 0.5,
+            centerX, centerY, maxRadius * 0.9
+        );
+        outerGradient.addColorStop(0, 'rgba(150, 100, 255, 0.5)'); // purple/blue
+        outerGradient.addColorStop(0.5, 'rgba(100, 50, 150, 0.3)');
+        outerGradient.addColorStop(1, 'rgba(50, 20, 80, 0)');
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, maxRadius * 0.9, 0, Math.PI * 2);
+        ctx.fillStyle = outerGradient;
+        ctx.fill();
+
+        // 4. Accretion disk texture – swirling lines (simulated with arcs)
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(time * 0.02); // slow rotation
+
+        for (let i = 0; i < 8; i++) {
+            const angle = (i / 8) * Math.PI * 2;
+            const radius1 = maxRadius * 0.5;
+            const radius2 = maxRadius * 0.8;
+
+            ctx.beginPath();
+            ctx.arc(0, 0, radius1, angle, angle + 0.3);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(0, 0, radius2, angle, angle + 0.2);
+            ctx.strokeStyle = 'rgba(200, 180, 255, 0.4)';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+
+        // 5. Einstein ring – thin bright ring around the black hole
+        ctx.beginPath();
+        ctx.arc(0, 0, horizonRadius * 1.8, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255, 220, 150, 0.6)';
+        ctx.lineWidth = 4;
+        ctx.shadowColor = '#ffaa00';
+        ctx.shadowBlur = 20;
+        ctx.stroke();
+
+        ctx.restore();
+
+        // 6. Gravitational lensing effect – stretched stars (simulated with tiny arcs)
+        ctx.shadowBlur = 0;
+        for (let s = 0; s < 30; s++) {
+            const dist = 0.3 + Math.random() * 0.6;
+            const ang = Math.random() * Math.PI * 2;
+            const x = centerX + Math.cos(ang) * maxRadius * dist;
+            const y = centerY + Math.sin(ang) * maxRadius * dist;
+            const lensFactor = 1 + (maxRadius / (Math.hypot(x - centerX, y - centerY) || 1)) * 0.5;
+            ctx.beginPath();
+            ctx.arc(x, y, 1 * lensFactor, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${0.3 + Math.random() * 0.5})`;
+            ctx.fill();
+        }
+    }
+
+    function animate() {
+        time += 1;
+        drawBlackHole();
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+        resize();
+        drawBlackHole();
+    });
+
+    resize();
+    animate();
+})();
