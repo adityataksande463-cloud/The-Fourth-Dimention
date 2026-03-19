@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vigyan Bhairav · Next‑Gen Cosmic Portal</title>
+    <title>Vigyan Bhairav · Ultimate Cosmic Portal</title>
     <meta name="description" content="112 authentic meditation techniques, social feed, guided audio, challenges, and cinematic 3D black hole.">
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -789,7 +789,7 @@
             </nav>
         </header>
 
-        <!-- HOME VIEW (main visible section) -->
+        <!-- HOME VIEW -->
         <div id="homeView">
             <!-- Hero with 3D Black Hole -->
             <section class="hero">
@@ -882,7 +882,7 @@
                     </div>
                     <div class="lighting-card">
                         <h4>Light Type</h4>
-                        <div style="display: flex; gap: 20px; margin-top: 20px;">
+                        <div style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
                             <span><i class="fas fa-lightbulb"></i> Spot</span>
                             <span><i class="fas fa-sun"></i> Area</span>
                             <span><i class="fas fa-bullseye"></i> Target</span>
@@ -945,18 +945,79 @@
             </section>
         </div>
 
-        <!-- Other views (hidden initially) – simplified placeholders -->
-        <div id="techniquesView" class="hidden">...</div>
-        <div id="quotesView" class="hidden">...</div>
-        <div id="diaryView" class="hidden">...</div>
-        <div id="socialView" class="hidden">...</div>
-        <div id="chatView" class="hidden">...</div>
-        <div id="audioView" class="hidden">...</div>
-        <div id="challengesView" class="hidden">...</div>
-        <div id="timerView" class="hidden">...</div>
-        <div id="planView" class="hidden">...</div>
-        <div id="profileView" class="hidden">...</div>
-        <div id="enhancedProfileView" class="hidden">...</div>
+        <!-- TECHNIQUES VIEW (simplified placeholder) -->
+        <div id="techniquesView" class="hidden">
+            <div class="section-header"><h3>All 112 Techniques</h3><input type="text" placeholder="Search..." class="search-box"></div>
+            <div class="tech-grid" id="allTechniquesGrid"></div>
+        </div>
+
+        <!-- QUOTES VIEW (simplified) -->
+        <div id="quotesView" class="hidden quotes-section">
+            <h2>Infinite Wisdom</h2>
+            <div id="quoteContainer"></div>
+        </div>
+
+        <!-- DIARY VIEW (simplified) -->
+        <div id="diaryView" class="hidden diary-section">
+            <h2>🌙 Cosmic Diary</h2>
+            <div class="moon-widget">
+                <div class="moon-phase-icon" id="moonIcon">🌕</div>
+                <div class="moon-phase-name" id="moonPhase">Full Moon</div>
+            </div>
+            <div class="diary-entry-form">
+                <textarea id="diaryEntryText" placeholder="Your reflection..."></textarea>
+                <button class="btn-primary">Save</button>
+            </div>
+            <div id="diaryEntriesList"></div>
+        </div>
+
+        <!-- SOCIAL VIEW (simplified) -->
+        <div id="socialView" class="hidden social-section">
+            <h2>🌐 Cosmic Feed</h2>
+            <div id="feedPosts"></div>
+        </div>
+
+        <!-- CHAT VIEW (simplified) -->
+        <div id="chatView" class="hidden chat-section">
+            <h2>💬 Chat</h2>
+            <div>Placeholder</div>
+        </div>
+
+        <!-- AUDIO VIEW (simplified) -->
+        <div id="audioView" class="hidden audio-section">
+            <h2>🎧 Audio</h2>
+            <div>Placeholder</div>
+        </div>
+
+        <!-- CHALLENGES VIEW (simplified) -->
+        <div id="challengesView" class="hidden challenge-section">
+            <h2>🏆 Challenges</h2>
+            <div>Placeholder</div>
+        </div>
+
+        <!-- TIMER VIEW (simplified) -->
+        <div id="timerView" class="hidden timer-section">
+            <h2>⏱️ Timer</h2>
+            <div>Placeholder</div>
+        </div>
+
+        <!-- MY PLAN VIEW (simplified) -->
+        <div id="planView" class="hidden plan-section">
+            <h2>📋 My Plan</h2>
+            <div>Placeholder</div>
+        </div>
+
+        <!-- BASIC PROFILE VIEW (simplified) -->
+        <div id="profileView" class="hidden profile-section">
+            <h2>👤 Profile</h2>
+            <div>Placeholder</div>
+        </div>
+
+        <!-- ENHANCED PROFILE VIEW (simplified) -->
+        <div id="enhancedProfileView" class="hidden profile-section">
+            <h2>✨ Cosmic Me</h2>
+            <div>Placeholder</div>
+        </div>
 
         <!-- FOOTER -->
         <footer class="footer-minimal">
@@ -1127,14 +1188,13 @@
         }
 
         // ==================================================================
-        // SIMPLE APP STATE & UI (for demonstration)
+        // MOCK TECHNIQUES (for featured grid)
         // ==================================================================
-        // Mock techniques (just for featured grid)
         const techniques = {
-            1: { id:1, name:'Witnessing the Breath', essence:'Breath awareness anchors consciousness.', duration:'10–20 min', tags:['beginner','breath'], benefits:{}, steps:[] },
-            2: { id:2, name:'Pause Between Breaths', essence:'The doorway to stillness.', duration:'15 min', tags:['advanced','breath'], benefits:{}, steps:[] },
-            3: { id:3, name:'Spinal Breath', essence:'Authentic spinal breath practice.', duration:'15–20 min', tags:['intermediate','mystic'], benefits:{}, steps:[] },
-            4: { id:4, name:'Third Eye Focus', essence:'Authentic third eye focus practice.', duration:'20–30 min', tags:['beginner','seeker'], benefits:{}, steps:[] }
+            1: { id:1, name:'Witnessing the Breath', essence:'Breath awareness anchors consciousness.', duration:'10–20 min', tags:['beginner','breath'] },
+            2: { id:2, name:'Pause Between Breaths', essence:'The doorway to stillness.', duration:'15 min', tags:['advanced','breath'] },
+            3: { id:3, name:'Spinal Breath', essence:'Authentic spinal breath practice.', duration:'15–20 min', tags:['intermediate','mystic'] },
+            4: { id:4, name:'Third Eye Focus', essence:'Authentic third eye focus practice.', duration:'20–30 min', tags:['beginner','seeker'] }
         };
 
         function renderFeatured() {
@@ -1157,7 +1217,9 @@
         }
         renderFeatured();
 
-        // Chart.js for power consumption
+        // ==================================================================
+        // POWER CONSUMPTION CHART
+        // ==================================================================
         const ctx = document.getElementById('powerChart')?.getContext('2d');
         if (ctx) {
             new Chart(ctx, {
@@ -1166,8 +1228,7 @@
                     labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
                     datasets: [{
                         label: 'kWh',
-                        data: [65, 59
-                               , 80, 81, 56, 55, 72, 68, 63, 70, 75, 80],
+                        data: [65, 59, 80, 81, 56, 55, 72, 68, 63, 70, 75, 80],
                         backgroundColor: 'rgba(157,123,255,0.6)',
                         borderColor: 'rgba(157,123,255,1)',
                         borderWidth: 1
@@ -1177,7 +1238,9 @@
             });
         }
 
-        // Theme toggle
+        // ==================================================================
+        // THEME TOGGLE & NAVIGATION (simplified)
+        // ==================================================================
         const themeToggle = document.getElementById('themeToggle');
         themeToggle.addEventListener('click', () => {
             const current = document.documentElement.getAttribute('data-theme');
@@ -1186,47 +1249,40 @@
             themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
         });
 
-        // Daily technique (random)
         document.getElementById('dailyBtn')?.addEventListener('click', () => {
             alert('Daily technique: Witnessing the Breath (placeholder)');
         });
 
-        // Explore button
         document.getElementById('exploreBtn')?.addEventListener('click', () => {
             alert('Explore techniques (placeholder)');
         });
+
+        // Simple view switching
+        document.querySelectorAll('[data-view]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const view = link.dataset.view;
+                document.querySelectorAll('#homeView, #techniquesView, #quotesView, #diaryView, #socialView, #chatView, #audioView, #challengesView, #timerView, #planView, #profileView, #enhancedProfileView').forEach(el => el.classList.add('hidden'));
+                const target = document.getElementById(view + 'View');
+                if (target) target.classList.remove('hidden');
+                else document.getElementById('homeView').classList.remove('hidden');
+            });
+        });
     </script>
 
-    <!-- Additional script for non-module features -->
+    <!-- Additional script for non-module features (theme persistence) -->
     <script>
-        // Non-module scripts (theme persistence, etc.)
         (function() {
-            // Load theme from localStorage if needed
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
             document.getElementById('themeToggle').innerHTML = savedTheme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
 
-            // Update localStorage on toggle
             const observer = new MutationObserver(() => {
                 const theme = document.documentElement.getAttribute('data-theme');
                 localStorage.setItem('theme', theme);
             });
             observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
-            // Simple view navigation (just for demonstration)
-            document.querySelectorAll('[data-view]').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const view = link.dataset.view;
-                    if (view === 'home') {
-                        document.querySelectorAll('#homeView, #techniquesView, #quotesView, #diaryView, #socialView, #chatView, #audioView, #challengesView, #timerView, #planView, #profileView, #enhancedProfileView').forEach(el => el.classList.add('hidden'));
-                        document.getElementById('homeView').classList.remove('hidden');
-                    } else {
-                        alert(`View ${view} is a placeholder.`);
-                    }
-                });
-            });
         })();
     </script>
 </body>
-                    </html>
+    </html>
