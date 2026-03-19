@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Vigyan Bhairav · Cosmic Awakening</title>
-  <!-- Google Fonts -->
+  <title>Vigyan Bhairav · Cosmic AI · Next‑Gen Meditation</title>
+  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <!-- Three.js -->
+  <!-- Three.js (core) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Tween.js for smooth animations -->
+  <script src="https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.6.4/dist/tween.umd.js"></script>
   <style>
     /* ========== RESET & COSMIC VARIABLES ========== */
     * {
@@ -67,7 +66,7 @@
       position: relative;
     }
 
-    /* ========== 3D CANVAS (BLACK HOLE + STARS) ========== */
+    /* ========== 3D CANVAS (UNIVERSE + BLACK HOLE) ========== */
     #universe-canvas {
       position: fixed;
       top: 0;
@@ -121,9 +120,9 @@
     /* ========== GLASSMORPHISM BASE ========== */
     .glass-header, .stat-card, .path-card, .tech-card, .modal-content, .timer-section,
     .profile-section, .plan-section, .quotes-section, .diary-section,
-    .challenge-section, .audio-section, .filter-section,
-    .challenge-card, .audio-card, .quote-card, .diary-entry,
-    .achievement-card, .timer-pill, .plan-item, .xp-bar {
+    .challenge-section, .audio-section, .filter-section, .challenge-card, .audio-card,
+    .quote-card, .diary-entry, .achievement-card, .timer-pill, .plan-item, .xp-bar,
+    .ai-guide, .chakra-card, .unlock-section {
       background: var(--bg-glass);
       backdrop-filter: blur(16px) saturate(200%);
       -webkit-backdrop-filter: blur(16px) saturate(200%);
@@ -339,6 +338,42 @@
       overflow: hidden;
     }
 
+    /* ========== AI GUIDE ========== */
+    .ai-guide {
+      padding: 20px;
+      margin: 40px 0;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .ai-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+    .ai-message {
+      flex: 1;
+      font-size: 1.2rem;
+      font-style: italic;
+    }
+    .ai-input {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--glass-border);
+      border-radius: 40px;
+      padding: 10px 20px;
+      color: var(--text-primary);
+      width: 200px;
+      outline: none;
+    }
+    .ai-input:focus {
+      border-color: var(--accent-primary);
+    }
+
     /* ========== STATS CARDS ========== */
     .stats-grid {
       display: grid;
@@ -383,39 +418,42 @@
       transition: width 0.5s;
     }
 
-    /* ========== SECTION HEADERS ========== */
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 40px 0 20px;
+    /* ========== UNLOCK SYSTEM ========== */
+    .unlock-section {
+      padding: 25px;
+      margin: 40px 0;
+      text-align: center;
     }
-    .section-header h3 {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .unlock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
     }
-    .view-all {
-      color: var(--accent-secondary);
-      text-decoration: none;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border-radius: 40px;
-      background: rgba(157, 123, 255, 0.1);
+    .unlock-item {
+      padding: 15px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border);
     }
-    .view-all:hover {
-      background: var(--accent-primary);
-      color: white;
-      box-shadow: var(--shadow-glow);
+    .unlock-item.locked {
+      opacity: 0.4;
+      filter: grayscale(0.8);
+    }
+    .unlock-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
 
-    /* ========== PATH CARDS (16 PROFESSIONS) ========== */
+    /* ========== CHAKRA VISUALIZATION ========== */
+    #chakra-canvas {
+      width: 100%;
+      height: 300px;
+      border-radius: var(--border-radius-card);
+      margin: 20px 0;
+    }
+
+    /* ========== PATH CARDS ========== */
     .path-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -799,148 +837,75 @@
       flex-wrap: wrap;
     }
 
-    /* ========== AUDIO ========== */
+    /* ========== AUDIO PLAYER (Spotify‑like) ========== */
     .audio-player {
+      background: rgba(0,0,0,0.3);
+      border-radius: 60px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    .track-info {
       display: flex;
       align-items: center;
-      gap: 15px;
-      padding: 15px;
+      gap: 20px;
     }
-    .audio-controls button {
+    .track-cover {
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    }
+    .track-title {
+      font-weight: 600;
+      font-size: 1.4rem;
+    }
+    .track-artist {
+      color: var(--text-secondary);
+    }
+    .player-controls {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .player-controls button {
       background: none;
       border: none;
       color: var(--accent-secondary);
       font-size: 2rem;
       cursor: pointer;
     }
-    .audio-progress {
-      flex: 1;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 3px;
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
       overflow: hidden;
+      margin: 15px 0;
     }
-    .audio-progress-fill {
+    .progress-fill {
       height: 100%;
       width: 0%;
       background: var(--accent-primary);
+      transition: width 0.1s linear;
     }
     .track-list {
-      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
     .track-item {
-      padding: 10px;
+      padding: 10px 20px;
+      border-radius: 40px;
+      background: rgba(255,255,255,0.05);
       cursor: pointer;
-      border-radius: 30px;
-    }
-    .track-item:hover {
-      background: rgba(157, 123, 255, 0.2);
-    }
-
-    /* ========== CHALLENGES ========== */
-    .challenge-card {
-      padding: 20px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .challenge-progress {
-      width: 100%;
-      height: 10px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 5px;
-      margin: 10px 0;
-      overflow: hidden;
-    }
-    .challenge-progress-fill {
-      height: 100%;
-      background: var(--accent-tertiary);
-    }
-
-    /* ========== PLAN ========== */
-    .plan-item {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 20px 25px;
-      margin-bottom: 15px;
-      border-radius: 40px;
-    }
-    .plan-item-price {
-      color: var(--accent-secondary);
-      font-weight: 700;
-    }
-    .remove-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.3rem;
-      cursor: pointer;
-    }
-    .remove-btn:hover {
-      color: var(--accent-secondary);
-      transform: scale(1.2);
-    }
-    .promo-code {
-      display: flex;
       gap: 15px;
-      margin: 30px 0;
-      flex-wrap: wrap;
     }
-    .promo-code input {
-      flex: 1;
-      min-width: 200px;
-      padding: 15px 25px;
-      border-radius: 50px;
-      background: var(--bg-glass);
-      border: 1px solid var(--glass-border);
-      color: var(--text-primary);
-      outline: none;
-    }
-    .promo-code input:focus {
-      border-color: var(--accent-primary);
-    }
-    .total-section {
-      text-align: right;
-      font-size: 1.4rem;
-      margin-top: 30px;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 30px;
-    }
-
-    /* ========== DIARY ========== */
-    .diary-entry-form {
-      padding: 30px;
-      border-radius: 40px;
-      margin-bottom: 30px;
-    }
-    .diary-entry-form textarea {
-      width: 100%;
-      padding: 20px;
-      border-radius: 30px;
-      background: var(--bg-glass);
-      border: 1px solid var(--glass-border);
-      color: var(--text-primary);
-      font-size: 1.1rem;
-      resize: vertical;
-      min-height: 120px;
-      margin-bottom: 20px;
-      outline: none;
-    }
-    .diary-entry-form textarea:focus {
-      border-color: var(--accent-primary);
-    }
-    .diary-entry {
-      padding: 25px;
-      margin-bottom: 20px;
-      border-radius: 40px;
-    }
-    .diary-entry-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      color: var(--text-muted);
-      font-size: 0.9rem;
+    .track-item.active {
+      background: var(--accent-primary);
+      color: white;
     }
 
     /* ========== QUOTES (INFINITE CAROUSEL) ========== */
@@ -1003,6 +968,85 @@
       transform: scale(1.1);
     }
 
+    /* ========== CHALLENGES ========== */
+    .challenge-card {
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .challenge-progress {
+      width: 100%;
+      height: 10px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 5px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+    .challenge-progress-fill {
+      height: 100%;
+      background: var(--accent-tertiary);
+    }
+
+    /* ========== PLAN ========== */
+    .plan-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 25px;
+      margin-bottom: 15px;
+      border-radius: 40px;
+    }
+    .plan-item-price {
+      color: var(--accent-secondary);
+      font-weight: 700;
+    }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+    .remove-btn:hover {
+      color: var(--accent-secondary);
+      transform: scale(1.2);
+    }
+
+    /* ========== DIARY ========== */
+    .diary-entry-form {
+      padding: 30px;
+      border-radius: 40px;
+      margin-bottom: 30px;
+    }
+    .diary-entry-form textarea {
+      width: 100%;
+      padding: 20px;
+      border-radius: 30px;
+      background: var(--bg-glass);
+      border: 1px solid var(--glass-border);
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      resize: vertical;
+      min-height: 120px;
+      margin-bottom: 20px;
+      outline: none;
+    }
+    .diary-entry-form textarea:focus {
+      border-color: var(--accent-primary);
+    }
+    .diary-entry {
+      padding: 25px;
+      margin-bottom: 20px;
+      border-radius: 40px;
+    }
+    .diary-entry-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
     /* ========== ACHIEVEMENTS ========== */
     .achievement-grid {
       display: grid;
@@ -1054,83 +1098,37 @@
 
     /* ========== RESPONSIVE ========== */
     @media (max-width: 1024px) {
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      .hero-content {
-        margin: 0 auto;
-      }
-      .hero-buttons {
-        justify-content: center;
-      }
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero-content { margin: 0 auto; }
+      .hero-buttons { justify-content: center; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
-      .container {
-        padding: 15px;
-      }
-      .glass-header {
-        flex-direction: column;
-        gap: 20px;
-        border-radius: 40px;
-      }
-      .top-nav {
-        justify-content: center;
-      }
-      .hero h2 {
-        font-size: 2.8rem;
-      }
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-      .path-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .tech-grid {
-        grid-template-columns: 1fr;
-      }
-      .filter-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .search-box {
-        width: 100%;
-      }
-      .timer-display {
-        font-size: 4rem;
-      }
-      .quote-text {
-        font-size: 1.5rem;
-      }
+      .container { padding: 15px; }
+      .glass-header { flex-direction: column; gap: 20px; border-radius: 40px; }
+      .top-nav { justify-content: center; }
+      .hero h2 { font-size: 2.8rem; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .path-grid { grid-template-columns: repeat(2, 1fr); }
+      .tech-grid { grid-template-columns: 1fr; }
+      .filter-header { flex-direction: column; align-items: flex-start; }
+      .search-box { width: 100%; }
+      .timer-display { font-size: 4rem; }
+      .quote-text { font-size: 1.5rem; }
     }
     @media (max-width: 480px) {
-      .hero h2 {
-        font-size: 2.2rem;
-      }
-      .btn-primary, .btn-outline {
-        width: 100%;
-        justify-content: center;
-      }
-      .path-grid {
-        grid-template-columns: 1fr;
-      }
-      .timer-display {
-        font-size: 3rem;
-      }
-      .footer-minimal {
-        flex-direction: column;
-        text-align: center;
-      }
+      .hero h2 { font-size: 2.2rem; }
+      .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+      .path-grid { grid-template-columns: 1fr; }
+      .timer-display { font-size: 3rem; }
+      .footer-minimal { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <!-- 3D Universe Canvas (Black Hole + Stars) -->
+  <!-- 3D Universe Canvas -->
   <canvas id="universe-canvas"></canvas>
-  <!-- CSS Star Layers (extra twinkling) -->
+  <!-- CSS Star Layers -->
   <div class="stars"></div>
   <div class="twinkling"></div>
 
@@ -1175,7 +1173,7 @@
           <span class="chip">🌀 today's cosmic · witness the breath</span>
           <div class="totd-badge" id="totdBadge">🔒 Technique of the Day: Breath Awareness</div>
           <h2>Journey Through <span class="gradient-text">Infinite Consciousness</span></h2>
-          <p class="hero-sub">112 authentic meditation techniques, cosmic diary, wisdom quotes, and a living universe.</p>
+          <p class="hero-sub">112 authentic meditation techniques, AI guide, cosmic diary, and a living universe.</p>
           <div class="hero-buttons">
             <button class="btn-primary" id="exploreBtn">Begin Voyage →</button>
             <button class="btn-outline" id="dailyBtn">Daily Technique</button>
@@ -1183,15 +1181,45 @@
         </div>
         <div class="hero-illustration"></div>
       </section>
+
+      <!-- AI Meditation Guide -->
+      <div class="ai-guide">
+        <div class="ai-avatar">🧠</div>
+        <div class="ai-message" id="aiMessage">Hello, I'm your cosmic guide. How are you feeling today?</div>
+        <input type="text" class="ai-input" id="aiInput" placeholder="e.g., anxious, stressed, curious...">
+        <button class="btn-primary" id="aiAskBtn">Ask</button>
+      </div>
+
+      <!-- Stats -->
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-value" id="totalPracticed">1,248</div><div class="stat-label">PRACTICES</div></div>
         <div class="stat-card"><div class="stat-value" id="totalMinutes">6,304</div><div class="stat-label">MINUTES</div></div>
         <div class="stat-card"><div class="stat-value" id="currentStreak">1</div><div class="stat-label">DAY STREAK</div></div>
       </div>
+
+      <!-- XP Bar & Unlock System -->
+      <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:45%;"></div></div>
+      <div class="unlock-section">
+        <h3>🔓 Unlockable Techniques</h3>
+        <div class="unlock-grid" id="unlockGrid">
+          <div class="unlock-item" data-level="1"><div class="unlock-icon">🧘</div><div>Level 1</div></div>
+          <div class="unlock-item locked" data-level="2"><div class="unlock-icon">🌀</div><div>Level 2</div></div>
+          <div class="unlock-item locked" data-level="3"><div class="unlock-icon">🌟</div><div>Level 3</div></div>
+          <div class="unlock-item locked" data-level="4"><div class="unlock-icon">🌌</div><div>Level 4</div></div>
+          <div class="unlock-item locked" data-level="5"><div class="unlock-icon">🕉️</div><div>Level 5</div></div>
+        </div>
+      </div>
+
+      <!-- 3D Chakra Visualization (canvas will be injected) -->
+      <canvas id="chakra-canvas" width="600" height="300"></canvas>
+
+      <!-- Path Cards -->
       <section>
         <div class="section-header"><h3>choose your path →</h3></div>
         <div class="path-grid" id="pathGrid"></div>
       </section>
+
+      <!-- Featured Techniques -->
       <section>
         <div class="section-header"><h3>featured techniques</h3><a href="#" class="view-all" data-view="techniques">view all 112 →</a></div>
         <div class="tech-grid" id="featuredGrid"></div>
@@ -1224,12 +1252,30 @@
       <div id="diaryEntriesList"></div>
     </div>
 
-    <!-- AUDIO VIEW -->
+    <!-- AUDIO VIEW (Spotify‑like) -->
     <div id="audioView" class="hidden audio-section">
-      <h2>🎧 guided audio</h2>
-      <div class="audio-card">
-        <div class="audio-player"><div class="audio-controls"><button id="playPauseBtn"><i class="fas fa-play"></i></button></div><span id="trackName">witnessing breath</span><div class="audio-progress"><div id="audioProgressFill" class="audio-progress-fill"></div></div></div>
-        <div class="track-list"><div class="track-item" data-track="0">1. witnessing breath (10min)</div><div class="track-item" data-track="1">2. heart center (12min)</div><div class="track-item" data-track="2">3. inner sound (15min)</div></div>
+      <h2>🎧 Guided Audio</h2>
+      <div class="audio-player">
+        <div class="track-info">
+          <div class="track-cover"></div>
+          <div>
+            <div class="track-title" id="currentTrackTitle">Witnessing Breath</div>
+            <div class="track-artist" id="currentTrackArtist">Vigyan Bhairav</div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button id="prevTrackBtn"><i class="fas fa-step-backward"></i></button>
+          <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+          <button id="nextTrackBtn"><i class="fas fa-step-forward"></i></button>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="audioProgressFill"></div></div>
+        <div class="track-list" id="trackList">
+          <div class="track-item active" data-track="0"><span>1.</span> Witnessing Breath (10min)</div>
+          <div class="track-item" data-track="1"><span>2.</span> Heart Center (12min)</div>
+          <div class="track-item" data-track="2"><span>3.</span> Inner Sound (15min)</div>
+          <div class="track-item" data-track="3"><span>4.</span> Void Gazing (8min)</div>
+          <div class="track-item" data-track="4"><span>5.</span> Chakra Awakening (20min)</div>
+        </div>
       </div>
     </div>
 
@@ -1434,6 +1480,52 @@
       }
     })();
 
+    // ========== SIMPLE 3D CHAKRA VISUALIZATION ==========
+    (function initChakra() {
+      const canvas = document.getElementById('chakra-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width, h = canvas.height;
+      const chakras = [
+        { y: 0.8, color: '#ff4d4d', name: 'Root' },
+        { y: 0.65, color: '#ff8c42', name: 'Sacral' },
+        { y: 0.5, color: '#ffd966', name: 'Solar Plexus' },
+        { y: 0.35, color: '#7fdbda', name: 'Heart' },
+        { y: 0.2, color: '#9d7bff', name: 'Throat' },
+        { y: 0.1, color: '#6c5ce7', name: 'Third Eye' },
+        { y: 0.02, color: '#ffffff', name: 'Crown' }
+      ];
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        // Draw body outline (simple)
+        ctx.beginPath();
+        ctx.moveTo(w*0.3, h*0.9);
+        ctx.lineTo(w*0.3, h*0.1);
+        ctx.lineTo(w*0.7, h*0.1);
+        ctx.lineTo(w*0.7, h*0.9);
+        ctx.closePath();
+        ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        chakras.forEach(c => {
+          const y = h * (1 - c.y); // because y=0 at top
+          ctx.beginPath();
+          ctx.arc(w/2, y, 20, 0, 2*Math.PI);
+          ctx.fillStyle = c.color;
+          ctx.shadowColor = c.color;
+          ctx.shadowBlur = 20;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          ctx.fillStyle = 'white';
+          ctx.font = '12px Outfit';
+          ctx.fillText(c.name, w/2 + 30, y);
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
     // ========== TECHNIQUES DATABASE (112) ==========
     const techniques = {};
     const categories = ['breath','void','body','heart','sound','gaze','energy','light','sleep','emotion'];
@@ -1495,6 +1587,12 @@
       document.getElementById('profileStreak').textContent = user.streak;
       document.getElementById('profilePractices').textContent = user.totalPractices;
       document.getElementById('xpFill').style.width = (user.xp % 100) + '%';
+
+      // Update unlock grid
+      document.querySelectorAll('.unlock-item').forEach((el, idx) => {
+        if (idx + 1 <= user.level) el.classList.remove('locked');
+        else el.classList.add('locked');
+      });
     }
 
     // ========== TECHNIQUE CARD ==========
@@ -1635,7 +1733,6 @@
       document.querySelectorAll('.top-nav a').forEach(a => a.classList.remove('active'));
       document.querySelector(`.top-nav a[data-view="${viewName}"]`)?.classList.add('active');
     }
-    // Navigation links
     document.querySelectorAll('[data-view]').forEach(el => {
       el.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1644,17 +1741,83 @@
         showView(view);
       });
     });
-    // Handle back/forward buttons
     window.addEventListener('popstate', (e) => {
       const view = e.state?.view || 'home';
       showView(view);
     });
-    // Initial load
     const initialView = location.pathname.substring(1) || 'home';
     if (views[initialView]) showView(initialView);
     else showView('home');
 
-    // ========== QUOTES (INFINITE CAROUSEL) ==========
+    // ========== AI GUIDE ==========
+    document.getElementById('aiAskBtn').addEventListener('click', () => {
+      const mood = document.getElementById('aiInput').value.trim().toLowerCase();
+      let response = "I recommend the Witnessing Breath technique for clarity.";
+      if (mood.includes('anxious')) response = "For anxiety, try the Pause Between Breaths – it calms the mind.";
+      else if (mood.includes('stress')) response = "Heart Center meditation brings emotional balance.";
+      else if (mood.includes('curious')) response = "Explore Third Eye Gaze – it expands intuition.";
+      document.getElementById('aiMessage').textContent = response;
+    });
+
+    // ========== AUDIO PLAYER ==========
+    const audio = new Audio();
+    const tracks = [
+      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3'
+    ];
+    const trackNames = ['Witnessing Breath', 'Heart Center', 'Inner Sound', 'Void Gazing', 'Chakra Awakening'];
+    let currentTrack = 0;
+
+    function loadTrack(index) {
+      currentTrack = index;
+      audio.src = tracks[index];
+      document.getElementById('currentTrackTitle').textContent = trackNames[index];
+      document.querySelectorAll('.track-item').forEach((el, i) => {
+        if (i === index) el.classList.add('active');
+        else el.classList.remove('active');
+      });
+    }
+    loadTrack(0);
+
+    document.getElementById('playPauseBtn').addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
+      } else {
+        audio.pause();
+        document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i>';
+      }
+    });
+    document.getElementById('prevTrackBtn').addEventListener('click', () => {
+      currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+      loadTrack(currentTrack);
+      audio.play();
+      document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
+    });
+    document.getElementById('nextTrackBtn').addEventListener('click', () => {
+      currentTrack = (currentTrack + 1) % tracks.length;
+      loadTrack(currentTrack);
+      audio.play();
+      document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
+    });
+    document.querySelectorAll('.track-item').forEach((el, i) => {
+      el.addEventListener('click', () => {
+        loadTrack(i);
+        audio.play();
+        document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
+      });
+    });
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        document.getElementById('audioProgressFill').style.width = percent + '%';
+      }
+    });
+
+    // ========== QUOTES ==========
     const quotes = [
       { text:"The mind is everything. What you think you become.", author:"Buddha" },
       { text:"Meditation is not a way to make your mind quiet. It is a way to enter into the quiet that is already there.", author:"Osho" },
@@ -1664,13 +1827,7 @@
       { text:"Drown in the river where no water flows, where no boat sinks, no boatman rows.", author:"Kabir" },
       { text:"When you are in the middle of a story it isn't a story at all, but only a confusion.", author:"Alan Watts" },
       { text:"The only true wisdom is in knowing you know nothing.", author:"Socrates" },
-      { text:"Witnessing is the greatest miracle.", author:"Osho" },
-      { text:"Be the witness of your thoughts. You are not the thinker, but the awareness behind it.", author:"Eckhart Tolle" },
-      { text:"The universe is transformation; our life is what our thoughts make it.", author:"Marcus Aurelius" },
-      { text:"Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.", author:"Rumi" },
-      { text:"Don't grieve. Anything you lose comes round in another form.", author:"Rumi" },
-      { text:"The mind is a continuous chattering. Meditation is the state of no-mind.", author:"Osho" },
-      { text:"If you can simply be silent and alert, the whole existence starts pouring into you.", author:"Osho" }
+      { text:"Witnessing is the greatest miracle.", author:"Osho" }
     ];
     let currentQuoteIndex = 0;
     function renderQuotes() {
@@ -1721,27 +1878,6 @@
     });
     document.getElementById('pauseTimer').addEventListener('click', () => { clearInterval(timerInterval); timerRunning = false; });
     document.getElementById('resetTimer').addEventListener('click', () => { clearInterval(timerInterval); timerRunning = false; timerSeconds = 300; timerDisplay.textContent = '05:00'; timerMessage.textContent = ''; });
-
-    // ========== AUDIO ==========
-    const audio = new Audio(); let currentTrack = 0;
-    const tracks = [
-      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
-    ];
-    document.querySelectorAll('.track-item').forEach((el,i) => el.addEventListener('click',()=>{
-      currentTrack=i; audio.src=tracks[i]; audio.play();
-      document.getElementById('playPauseBtn').innerHTML='<i class="fas fa-pause"></i>';
-      document.getElementById('trackName').innerText = el.innerText.split(' ')[1];
-      showToast(`playing: ${el.innerText}`);
-    }));
-    document.getElementById('playPauseBtn').addEventListener('click',()=>{
-      if(audio.paused){ audio.play(); document.getElementById('playPauseBtn').innerHTML='<i class="fas fa-pause"></i>'; }
-      else { audio.pause(); document.getElementById('playPauseBtn').innerHTML='<i class="fas fa-play"></i>'; }
-    });
-    audio.addEventListener('timeupdate',()=>{
-      if(audio.duration) document.getElementById('audioProgressFill').style.width = (audio.currentTime/audio.duration*100)+'%';
-    });
 
     // ========== DIARY ==========
     document.getElementById('saveDiaryEntry').addEventListener('click',()=>{
@@ -1839,4 +1975,4 @@
     });
   </script>
 </body>
-</html>
+  </html>
