@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Vigyan Bhairav · Infinite Cosmos</title>
-  <!-- fonts & icons -->
+  <title>Vigyan Bhairav · Gargantua · Complete Cosmic OS</title>
+  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- chart.js -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <!-- three.js core -->
+  <!-- Three.js core (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     /* ========== RESET & COSMIC VARIABLES ========== */
@@ -66,8 +66,8 @@
       position: relative;
     }
 
-    /* ========== 3D CANVAS (UNIVERSE BACKGROUND + BLACK HOLE) ========== */
-    #universe-canvas {
+    /* ========== 3D CANVAS (BLACK HOLE) ========== */
+    #blackhole-canvas {
       position: fixed;
       top: 0;
       left: 0;
@@ -120,7 +120,7 @@
     /* ========== GLASSMORPHISM BASE ========== */
     .glass-header, .stat-card, .path-card, .tech-card, .modal-content, .timer-section,
     .profile-section, .plan-section, .quotes-section, .diary-section,
-    .challenge-section, .audio-section, .filter-section, .feed-post,
+    .challenge-section, .audio-section, .filter-section,
     .challenge-card, .audio-card, .quote-card, .diary-entry,
     .achievement-card, .timer-pill, .plan-item, .xp-bar {
       background: var(--bg-glass);
@@ -341,111 +341,50 @@
       box-shadow: 0 30px 50px -20px black;
     }
 
-<!-- ========== STATS CARDS ========== -->
-<div class="stats-grid">
-  <div class="stat-card">
-    <div class="stat-value" id="totalPracticed">1,248</div>
-    <div class="stat-label">PRACTICES</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-value" id="totalMinutes">6,304</div>
-    <div class="stat-label">MINUTES</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-value" id="currentStreak">1</div>
-    <div class="stat-label">DAY STREAK</div>
-  </div>
-</div>
+    /* ========== STATS CARDS ========== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      padding: 30px;
+      text-align: center;
+      transform-style: preserve-3d;
+    }
+    .stat-card:hover {
+      transform: rotateY(5deg) rotateX(2deg) scale(1.02);
+      box-shadow: var(--shadow-glow);
+    }
+    .stat-value {
+      font-size: 3.5rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+      color: var(--accent-secondary);
+      text-shadow: 0 0 20px var(--accent-primary);
+    }
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
 
-<!-- ========== PATH CARDS (16 PROFESSIONS) ========== -->
-<section>
-  <div class="section-header">
-    <h3>choose your path →</h3>
-  </div>
-  <div class="path-grid">
-    <div class="path-card" data-prof="Student">
-      <i class="fas fa-graduation-cap"></i>
-      <span>Student</span>
-      <small>exam pressure · focus</small>
-    </div>
-    <div class="path-card" data-prof="Employee">
-      <i class="fas fa-briefcase"></i>
-      <span>Employee</span>
-      <small>stress · work-life</small>
-    </div>
-    <div class="path-card" data-prof="CEO">
-      <i class="fas fa-chart-line"></i>
-      <span>CEO</span>
-      <small>clarity · decision fatigue</small>
-    </div>
-    <div class="path-card" data-prof="Seeker">
-      <i class="fas fa-infinity"></i>
-      <span>Seeker</span>
-      <small>spiritual · purpose</small>
-    </div>
-    <div class="path-card" data-prof="Anxious">
-      <i class="fas fa-heartbeat"></i>
-      <span>Anxious</span>
-      <small>calm · anxiety relief</small>
-    </div>
-    <div class="path-card" data-prof="Overthinker">
-      <i class="fas fa-brain"></i>
-      <span>Overthinker</span>
-      <small>still mind</small>
-    </div>
-    <div class="path-card" data-prof="Healthcare">
-      <i class="fas fa-hospital-user"></i>
-      <span>Healthcare</span>
-      <small>compassion fatigue</small>
-    </div>
-    <div class="path-card" data-prof="Teacher">
-      <i class="fas fa-chalkboard-teacher"></i>
-      <span>Teacher</span>
-      <small>patience</small>
-    </div>
-    <div class="path-card" data-prof="Developer">
-      <i class="fas fa-laptop-code"></i>
-      <span>Developer</span>
-      <small>focus</small>
-    </div>
-    <div class="path-card" data-prof="Artist">
-      <i class="fas fa-paint-brush"></i>
-      <span>Artist</span>
-      <small>creative flow</small>
-    </div>
-    <div class="path-card" data-prof="Parent">
-      <i class="fas fa-child"></i>
-      <span>Parent</span>
-      <small>self-care</small>
-    </div>
-    <div class="path-card" data-prof="Entrepreneur">
-      <i class="fas fa-rocket"></i>
-      <span>Entrepreneur</span>
-      <small>resilience</small>
-    </div>
-    <div class="path-card" data-prof="First Responder">
-      <i class="fas fa-fire-extinguisher"></i>
-      <span>First Responder</span>
-      <small>grounding</small>
-    </div>
-    <div class="path-card" data-prof="Retiree">
-      <i class="fas fa-umbrella-beach"></i>
-      <span>Retiree</span>
-      <small>peace</small>
-    </div>
-    <div class="path-card" data-prof="Freelancer">
-      <i class="fas fa-user-tie"></i>
-      <span>Freelancer</span>
-      <small>balance</small>
-    </div>
-    <div class="path-card" data-prof="Athlete">
-      <i class="fas fa-running"></i>
-      <span>Athlete</span>
-      <small>performance</small>
-    </div>
-  </div>
-</section>
-    
+    /* ========== XP BAR ========== */
+    .xp-bar {
+      height: 20px;
+      border-radius: 30px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .xp-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      width: 0%;
+      transition: width 0.5s;
+    }
+
     /* ========== SECTION HEADERS ========== */
     .section-header {
       display: flex;
@@ -478,7 +417,7 @@
       box-shadow: var(--shadow-glow);
     }
 
-    /* ========== PATH CARDS (16 professions) ========== */
+    /* ========== PATH CARDS (16 PROFESSIONS) ========== */
     .path-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -611,110 +550,98 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-<!-- ========== STATS CARDS ========== -->
-<div class="stats-grid">
-  <div class="stat-card">
-    <div class="stat-value" id="totalPracticed">1,248</div>
-    <div class="stat-label">PRACTICES</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-value" id="totalMinutes">6,304</div>
-    <div class="stat-label">MINUTES</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-value" id="currentStreak">1</div>
-    <div class="stat-label">DAY STREAK</div>
-  </div>
-</div>
+      background: radial-gradient(circle, var(--accent-secondary), transparent);
+      animation: breathAnim 4s infinite ease-in-out;
+    }
+    @keyframes breathAnim {
+      0% { transform: scale(0.5); opacity: 0.5; }
+      50% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(0.5); opacity: 0.5; }
+    }
+    .tech-steps-preview {
+      margin: 10px 0 0 20px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .tech-steps-preview li {
+      margin-bottom: 3px;
+    }
+    .tech-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 15px 0;
+    }
+    .tag {
+      background: rgba(157, 123, 255, 0.1);
+      border: 1px solid var(--accent-primary);
+      color: var(--accent-secondary);
+      padding: 4px 10px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+    }
+    .tech-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid var(--glass-border);
+    }
+    .tech-duration {
+      color: var(--text-muted);
+    }
+    .favorite-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--accent-tertiary);
+      cursor: pointer;
+    }
+    .favorite-btn:hover {
+      transform: scale(1.2);
+      color: var(--accent-secondary);
+    }
 
-<!-- ========== PATH CARDS (16 PROFESSIONS) ========== -->
-<section>
-  <div class="section-header">
-    <h3>choose your path →</h3>
-  </div>
-  <div class="path-grid">
-    <div class="path-card" data-prof="Student">
-      <i class="fas fa-graduation-cap"></i>
-      <span>Student</span>
-      <small>exam pressure · focus</small>
-    </div>
-    <div class="path-card" data-prof="Employee">
-      <i class="fas fa-briefcase"></i>
-      <span>Employee</span>
-      <small>stress · work-life</small>
-    </div>
-    <div class="path-card" data-prof="CEO">
-      <i class="fas fa-chart-line"></i>
-      <span>CEO</span>
-      <small>clarity · decision fatigue</small>
-    </div>
-    <div class="path-card" data-prof="Seeker">
-      <i class="fas fa-infinity"></i>
-      <span>Seeker</span>
-      <small>spiritual · purpose</small>
-    </div>
-    <div class="path-card" data-prof="Anxious">
-      <i class="fas fa-heartbeat"></i>
-      <span>Anxious</span>
-      <small>calm · anxiety relief</small>
-    </div>
-    <div class="path-card" data-prof="Overthinker">
-      <i class="fas fa-brain"></i>
-      <span>Overthinker</span>
-      <small>still mind</small>
-    </div>
-    <div class="path-card" data-prof="Healthcare">
-      <i class="fas fa-hospital-user"></i>
-      <span>Healthcare</span>
-      <small>compassion fatigue</small>
-    </div>
-    <div class="path-card" data-prof="Teacher">
-      <i class="fas fa-chalkboard-teacher"></i>
-      <span>Teacher</span>
-      <small>patience</small>
-    </div>
-    <div class="path-card" data-prof="Developer">
-      <i class="fas fa-laptop-code"></i>
-      <span>Developer</span>
-      <small>focus</small>
-    </div>
-    <div class="path-card" data-prof="Artist">
-      <i class="fas fa-paint-brush"></i>
-      <span>Artist</span>
-      <small>creative flow</small>
-    </div>
-    <div class="path-card" data-prof="Parent">
-      <i class="fas fa-child"></i>
-      <span>Parent</span>
-      <small>self-care</small>
-    </div>
-    <div class="path-card" data-prof="Entrepreneur">
-      <i class="fas fa-rocket"></i>
-      <span>Entrepreneur</span>
-      <small>resilience</small>
-    </div>
-    <div class="path-card" data-prof="First Responder">
-      <i class="fas fa-fire-extinguisher"></i>
-      <span>First Responder</span>
-      <small>grounding</small>
-    </div>
-    <div class="path-card" data-prof="Retiree">
-      <i class="fas fa-umbrella-beach"></i>
-      <span>Retiree</span>
-      <small>peace</small>
-    </div>
-    <div class="path-card" data-prof="Freelancer">
-      <i class="fas fa-user-tie"></i>
-      <span>Freelancer</span>
-      <small>balance</small>
-    </div>
-    <div class="path-card" data-prof="Athlete">
-      <i class="fas fa-running"></i>
-      <span>Athlete</span>
-      <small>performance</small>
-    </div>
-  </div>
-</section>
+    /* ========== DETAIL MODAL ========== */
+    .detail-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(20px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+    .detail-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .detail-content {
+      max-width: 800px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 40px;
+      transform: scale(0.9);
+      transition: 0.3s;
+    }
+    .detail-modal.active .detail-content {
+      transform: scale(1);
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
 
     /* ========== FILTER SECTION ========== */
     .filter-section {
@@ -1206,9 +1133,9 @@
   </style>
 </head>
 <body>
-  <!-- UNIVERSE CANVAS (BLACK HOLE + COSMIC EVENTS) -->
-  <canvas id="universe-canvas"></canvas>
-  <!-- STARS BACKGROUND (CSS) -->
+  <!-- BLACK HOLE CANVAS (FIXED, BEHIND EVERYTHING) -->
+  <canvas id="blackhole-canvas"></canvas>
+  <!-- COSMIC BACKGROUND LAYERS -->
   <div class="stars"></div>
   <div class="twinkling"></div>
 
@@ -1228,7 +1155,7 @@
     <header class="glass-header">
       <div class="logo-area">
         <h1>VIGYAN BHAIRAV</h1>
-        <p class="tagline">INFINITE COSMOS · 112 PORTALS</p>
+        <p class="tagline">GARGANTUA · 112 PORTALS</p>
       </div>
       <nav class="top-nav">
         <a href="#" data-view="home" class="active">Home</a>
@@ -1263,17 +1190,31 @@
         <div class="hero-illustration"></div>
       </section>
 
+      <!-- STATS CARDS -->
       <div class="stats-grid">
-        <div class="stat-card"><div class="stat-value" id="totalPracticed">1,248</div><div class="stat-label">PRACTICES</div></div>
-        <div class="stat-card"><div class="stat-value" id="totalMinutes">6,304</div><div class="stat-label">MINUTES</div></div>
-        <div class="stat-card"><div class="stat-value" id="currentStreak">1</div><div class="stat-label">DAY STREAK</div></div>
+        <div class="stat-card">
+          <div class="stat-value" id="totalPracticed">1,248</div>
+          <div class="stat-label">PRACTICES</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="totalMinutes">6,304</div>
+          <div class="stat-label">MINUTES</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="currentStreak">1</div>
+          <div class="stat-label">DAY STREAK</div>
+        </div>
       </div>
 
+      <!-- CHOOSE YOUR PATH (16 PROFESSIONS) -->
       <section>
-        <div class="section-header"><h3>choose your path →</h3></div>
+        <div class="section-header">
+          <h3>choose your path →</h3>
+        </div>
         <div class="path-grid" id="pathGrid"></div>
       </section>
 
+      <!-- FEATURED TECHNIQUES -->
       <section>
         <div class="section-header">
           <h3>featured techniques</h3>
@@ -1420,9 +1361,9 @@
   </div>
 
   <script>
-    // ========== UNIVERSE + BLACK HOLE (Three.js) ==========
-    (function initUniverse() {
-      const canvas = document.getElementById('universe-canvas');
+    // ========== BLACK HOLE (Three.js) - SIMPLIFIED & RELIABLE ==========
+    (function initBlackHole() {
+      const canvas = document.getElementById('blackhole-canvas');
       if (!canvas) return;
 
       try {
@@ -1431,20 +1372,20 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         const scene = new THREE.Scene();
-        scene.background = null; // transparent to let CSS stars show through? We'll set a dark color anyway.
+        scene.background = null; // transparent
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 2, 12);
         camera.lookAt(0, 0, 0);
 
-        // Ambient light
+        // Lights
         const ambient = new THREE.AmbientLight(0x404060);
         scene.add(ambient);
         const pointLight = new THREE.PointLight(0xffaa33, 1, 30);
         pointLight.position.set(5, 5, 5);
         scene.add(pointLight);
 
-        // Starfield (background)
+        // Starfield
         const starGeo = new THREE.BufferGeometry();
         const starCount = 2000;
         const starPositions = new Float32Array(starCount * 3);
@@ -1460,49 +1401,25 @@
         const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.2 }));
         scene.add(stars);
 
-        // Nebula effect (some particles with color)
-        const nebulaGeo = new THREE.BufferGeometry();
-        const nebulaCount = 500;
-        const nebulaPos = new Float32Array(nebulaCount * 3);
-        const nebulaCol = new Float32Array(nebulaCount * 3);
-        for (let i = 0; i < nebulaCount; i++) {
-          const r = 30 + Math.random() * 40;
-          const theta = Math.random() * Math.PI * 2;
-          const phi = Math.acos(2 * Math.random() - 1);
-          nebulaPos[i*3] = Math.sin(phi) * Math.cos(theta) * r;
-          nebulaPos[i*3+1] = Math.sin(phi) * Math.sin(theta) * r;
-          nebulaPos[i*3+2] = Math.cos(phi) * r;
-          const color = new THREE.Color().setHSL(0.7 + Math.random()*0.2, 0.8, 0.5 + Math.random()*0.3);
-          nebulaCol[i*3] = color.r;
-          nebulaCol[i*3+1] = color.g;
-          nebulaCol[i*3+2] = color.b;
-        }
-        nebulaGeo.setAttribute('position', new THREE.BufferAttribute(nebulaPos, 3));
-        nebulaGeo.setAttribute('color', new THREE.BufferAttribute(nebulaCol, 3));
-        const nebulaMat = new THREE.PointsMaterial({ size: 0.5, vertexColors: true, transparent: true, blending: THREE.AdditiveBlending });
-        const nebula = new THREE.Points(nebulaGeo, nebulaMat);
-        scene.add(nebula);
-
-        // BLACK HOLE
-        // Event horizon
+        // Event horizon (black sphere)
         const horizonGeo = new THREE.SphereGeometry(1.5, 64, 64);
         const horizonMat = new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x220000, roughness: 0.2, metalness: 0.8, emissiveIntensity: 0.5 });
         const horizon = new THREE.Mesh(horizonGeo, horizonMat);
         scene.add(horizon);
 
-        // Photon ring (thin bright ring)
+        // Photon ring
         const ringGeo = new THREE.TorusGeometry(1.8, 0.03, 32, 128);
         const ringMat = new THREE.MeshStandardMaterial({ color: 0xffaa33, emissive: 0xff5500, emissiveIntensity: 2, transparent: true, opacity: 0.8, side: THREE.DoubleSide });
         const ring = new THREE.Mesh(ringGeo, ringMat);
         ring.rotation.x = Math.PI / 2;
         scene.add(ring);
 
-        // Accretion disk (particles)
-        const diskParticleCount = 8000;
+        // Accretion disk particles
+        const particleCount = 8000;
         const diskGeo = new THREE.BufferGeometry();
-        const diskPos = new Float32Array(diskParticleCount * 3);
-        const diskCol = new Float32Array(diskParticleCount * 3);
-        for (let i = 0; i < diskParticleCount; i++) {
+        const diskPos = new Float32Array(particleCount * 3);
+        const diskCol = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount; i++) {
           const r = 1.8 + Math.random() * 3.2;
           const angle = Math.random() * Math.PI * 2;
           const y = (Math.random() - 0.5) * 0.3 * (1 - (r-1.8)/3.2);
@@ -1529,8 +1446,8 @@
         diskGeo.setAttribute('position', new THREE.BufferAttribute(diskPos, 3));
         diskGeo.setAttribute('color', new THREE.BufferAttribute(diskCol, 3));
         const diskMat = new THREE.PointsMaterial({ size: 0.08, vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true });
-        const diskParticles = new THREE.Points(diskGeo, diskMat);
-        scene.add(diskParticles);
+        const disk = new THREE.Points(diskGeo, diskMat);
+        scene.add(disk);
 
         // Outer torus (glow)
         const torusGeo = new THREE.TorusGeometry(3.0, 0.5, 32, 128);
@@ -1541,11 +1458,10 @@
 
         function animate() {
           requestAnimationFrame(animate);
-          diskParticles.rotation.y += 0.001;
+          disk.rotation.y += 0.001;
           ring.rotation.y += 0.002;
           torus.rotation.y += 0.001;
           stars.rotation.y += 0.0001;
-          nebula.rotation.y += 0.0003;
           renderer.render(scene, camera);
         }
         animate();
@@ -1556,10 +1472,10 @@
           renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        console.log('Universe + black hole initialized');
+        console.log('Black hole initialized');
       } catch (e) {
         console.error('Three.js error:', e);
-        // Fallback: draw a gradient on canvas
+        // Fallback: draw a simple gradient
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -1784,16 +1700,32 @@
       renderTechniques(active, e.target.value);
     });
 
-    // ========== PATH CARDS (16 professions) ==========
-    const profs = ['Student','Employee','CEO','Seeker','Anxious','Overthinker','Healthcare','Teacher','Developer','Artist','Parent','Entrepreneur','First Responder','Retiree','Freelancer','Athlete'];
-    const desc = {
-      Student:'exam pressure · focus', Employee:'stress · work-life', CEO:'clarity · decision fatigue',
-      Seeker:'spiritual · purpose', Anxious:'calm · anxiety relief', Overthinker:'still mind',
-      Healthcare:'compassion fatigue', Teacher:'patience', Developer:'focus', Artist:'creative flow',
-      Parent:'self-care', Entrepreneur:'resilience', 'First Responder':'grounding', Retiree:'peace',
-      Freelancer:'balance', Athlete:'performance'
-    };
-    document.getElementById('pathGrid').innerHTML = profs.map(p => `<div class="path-card" data-prof="${p}"><i class="fas fa-user"></i><span>${p}</span><small>${desc[p]}</small></div>`).join('');
+    // ========== PATH CARDS (16 PROFESSIONS) ==========
+    const profs = [
+      { name:'Student', icon:'fa-graduation-cap', desc:'exam pressure · focus' },
+      { name:'Employee', icon:'fa-briefcase', desc:'stress · work-life' },
+      { name:'CEO', icon:'fa-chart-line', desc:'clarity · decision fatigue' },
+      { name:'Seeker', icon:'fa-infinity', desc:'spiritual · purpose' },
+      { name:'Anxious', icon:'fa-heartbeat', desc:'calm · anxiety relief' },
+      { name:'Overthinker', icon:'fa-brain', desc:'still mind' },
+      { name:'Healthcare', icon:'fa-hospital-user', desc:'compassion fatigue' },
+      { name:'Teacher', icon:'fa-chalkboard-teacher', desc:'patience' },
+      { name:'Developer', icon:'fa-laptop-code', desc:'focus' },
+      { name:'Artist', icon:'fa-paint-brush', desc:'creative flow' },
+      { name:'Parent', icon:'fa-child', desc:'self-care' },
+      { name:'Entrepreneur', icon:'fa-rocket', desc:'resilience' },
+      { name:'First Responder', icon:'fa-fire-extinguisher', desc:'grounding' },
+      { name:'Retiree', icon:'fa-umbrella-beach', desc:'peace' },
+      { name:'Freelancer', icon:'fa-user-tie', desc:'balance' },
+      { name:'Athlete', icon:'fa-running', desc:'performance' }
+    ];
+    document.getElementById('pathGrid').innerHTML = profs.map(p => 
+      `<div class="path-card" data-prof="${p.name}">
+        <i class="fas ${p.icon}"></i>
+        <span>${p.name}</span>
+        <small>${p.desc}</small>
+      </div>`
+    ).join('');
     document.querySelectorAll('.path-card').forEach(card => card.addEventListener('click', ()=>{
       const prof = card.dataset.prof;
       showToast(`showing techniques for ${prof}`);
@@ -2020,4 +1952,4 @@
     });
   </script>
 </body>
-  </html>
+</html>
