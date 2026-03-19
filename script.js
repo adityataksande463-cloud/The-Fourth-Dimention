@@ -1,891 +1,713 @@
 /**
- * ==================================================================
- * VIGYAN BHAIRAV · EXPANDED PROFESSIONS DATABASE
- * 30 Techniques · 30 Professions · Tailored Benefits
- * ==================================================================
- * Each technique now includes benefits for multiple professions,
- * addressing the specific mental health needs of modern workers.
- * ==================================================================
+ * Vigyan Bhairav - Complete Cosmic OS
+ * script.js - Main application logic
+ * 
+ * This file contains all functionality for the meditation website:
+ * - 112 techniques database
+ * - User state management (localStorage)
+ * - Technique cards and detail modal
+ * - Category filters and search
+ * - Path cards (16 professions)
+ * - Timer with XP and streak tracking
+ * - Audio player
+ * - Diary (journal)
+ * - Social feed with posts
+ * - Chat (mock)
+ * - Challenges
+ * - Plan (my practice plan)
+ * - Profile and enhanced profile with chart
+ * - Breathing widget
+ * - Theme toggle
+ * - Toasts and notifications
+ * - Scroll to top
+ * - View navigation
  */
 
-const techniques = {
-  1: {
-    id: 1,
-    name: 'Witnessing the Breath',
-    sanskritName: 'Śvāsa–Praśvāsa Dharana',
-    essence: 'Breath awareness anchors consciousness in the present moment.',
-    steps: [
-      'Take a slow inhale through the nose – 4 seconds.',
-      'Take a slow exhale through the nose – 4–5 seconds.',
-      'Do not force breathing. Let it become natural.',
-      'Bring full attention to the breath: feel air entering and leaving the nostrils.',
-      'If thoughts appear, gently return to breath.'
-    ],
-    duration: '10–20 minutes',
-    breathTiming: { inhale: 4, exhale: 4 },
-    benefits: {
-      student: '📚 Improves concentration and memory – ideal for studies.',
-      employee: '💼 Reduces workplace stress and increases focus.',
-      anxious: '🌿 Calms the nervous system and stabilizes emotions.',
-      overthinker: '🧠 Quiets mental chatter.',
-      beginner: '🌈 Perfect introduction to meditation.',
-      'software-developer': '💻 Reduces mental fatigue and improves focus during long coding sessions.',
-      teacher: '🍎 Helps maintain calm in a chaotic classroom environment.',
-      'healthcare-worker': '🏥 Provides a moment of stillness amidst trauma and long shifts.',
-      'customer-service': '📞 Builds patience and emotional resilience with difficult customers.',
-      entrepreneur: '🚀 Clears mental clutter for better decision-making.',
-      journalist: '📝 Anchors attention during deadline pressure.',
-      lawyer: '⚖️ Enhances focus during complex case analysis.',
-      accountant: '🧮 Reduces stress from precision work and deadlines.',
-      researcher: '🔬 Calms imposter syndrome and sharpens concentration.',
-      'first-responder': '🚒 Provides grounding in high-stress emergencies.',
-      athlete: '🏃 Improves performance through breath control.',
-      parent: '👶 Offers a quick reset during chaotic parenting moments.',
-      retiree: '👵 Brings peace and presence in the new phase of life.',
-      unemployed: '🤝 Reduces anxiety about job searching and builds self-worth.',
-      freelancer: '🎨 Helps manage work-life boundaries and isolation.',
-      chef: '🍳 Cools down the heat of a busy kitchen.',
-      driver: '🚗 Reduces road rage and increases alertness.',
-      musician: '🎵 Enhances focus during practice and performance.',
-      therapist: '🛋️ Prevents burnout through self-awareness.',
-      'it-support': '🖥️ Calms frustration with repetitive user issues.'
+// ================================
+// 1. TECHNIQUES DATABASE (112 entries)
+// ================================
+const techniques = (function() {
+  const categories = ['breath', 'void', 'body', 'heart', 'sound', 'gaze', 'energy', 'light', 'sleep', 'emotion'];
+  const postures = ['Sukhasana', 'Siddhasana', 'Padmasana', 'Vajrasana', 'Shavasana'];
+  const mudras = ['Chin mudra', 'Dhyana mudra', 'Jnana mudra', 'Khechari mudra', 'Shambhavi mudra'];
+  
+  // First two techniques (authentic)
+  const techs = {
+    1: {
+      id: 1,
+      name: 'Witnessing the Breath',
+      sanskrit: 'Śvāsa–Praśvāsa Dharana',
+      category: 'breath',
+      essence: 'Breath awareness anchors consciousness.',
+      posture: 'Sukhasana',
+      mudra: 'Chin mudra',
+      breath: 'Natural',
+      duration: '15-20 min',
+      tags: ['beginner', 'breath'],
+      steps: [
+        'Sit comfortably with spine straight.',
+        'Close your eyes.',
+        'Observe natural breath without control.',
+        'When mind wanders, return to breath.',
+        'Continue for 15-20 minutes.'
+      ],
+      benefits: {
+        student: 'improves concentration',
+        employee: 'reduces stress',
+        anxious: 'calms mind'
+      }
     },
-    tags: ['beginner', 'breath', 'student', 'employee', 'anxious', 'software-developer', 'teacher', 'healthcare-worker', 'customer-service', 'entrepreneur', 'journalist', 'lawyer', 'accountant', 'researcher', 'first-responder', 'athlete', 'parent', 'retiree', 'unemployed', 'freelancer', 'chef', 'driver', 'musician', 'therapist', 'it-support']
-  },
-  2: {
-    id: 2,
-    name: 'Awareness of the Gap Between Breaths',
-    sanskritName: 'Madhya Dharana',
-    essence: 'The doorway to stillness lies in the pause between breaths.',
-    steps: [
-      'Inhale slowly – 4–5 seconds.',
-      'At the top of inhalation, notice the tiny pause.',
-      'Exhale slowly – 4–5 seconds.',
-      'At the end of exhalation, notice another pause.',
-      'Focus on those two silent gaps. Do not hold breath intentionally; just observe.'
-    ],
-    duration: '15 minutes',
-    breathTiming: { inhale: 4, exhale: 4 },
-    benefits: {
-      ceo: '🔮 Accesses deep intuition beyond logic.',
-      seeker: '∞ Opens to the formless dimension.',
-      overthinker: '⏸️ Breaks the chain of thoughts.',
-      advanced: '🌌 Leads to profound stillness.',
-      entrepreneur: '💡 Enhances creative problem-solving by accessing the gap.',
-      'corporate-executive': '🏢 Provides clarity in high-pressure decisions.',
-      artist: '🎨 Unlocks creative flow by resting in the pause.',
-      researcher: '🔍 Helps overcome mental blocks in research.',
-      lawyer: '⚖️ Allows strategic thinking between arguments.',
-      musician: '🎶 Creates space for improvisation.',
-      therapist: '🛋️ Deepens presence with clients.',
-      'software-developer': '💻 Breaks the cycle of over-engineering.',
-      writer: '✍️ Overcomes writer’s block by resting in silence.'
-    },
-    tags: ['advanced', 'breath', 'ceo', 'seeker', 'overthinker', 'entrepreneur', 'corporate-executive', 'artist', 'researcher', 'lawyer', 'musician', 'therapist', 'software-developer', 'writer']
-  },
-  3: {
-    id: 3,
-    name: 'Breath Traveling Through the Spine',
-    sanskritName: 'Sushumna Dharana',
-    essence: 'Breath carries awareness through the body’s central channel.',
-    steps: [
-      'Sit with spine very straight.',
-      'Inhale slowly (5 sec): imagine energy moving from base of spine to top of head.',
-      'Hold breath gently (2 sec).',
-      'Exhale slowly (5 sec): imagine energy flowing from head back to base of spine.',
-      'Repeat continuously.'
-    ],
-    duration: '10–15 minutes',
-    breathTiming: { inhale: 5, hold: 2, exhale: 5 },
-    benefits: {
-      student: '⚡ Improves focus and vitality.',
-      employee: '🌀 Increases energy and reduces fatigue.',
-      seeker: '🌟 Awakens subtle body awareness.',
-      beginner: '🌱 Builds concentration.',
-      'healthcare-worker': '🏥 Restores energy after long shifts.',
-      athlete: '🏋️ Enhances body awareness and performance.',
-      driver: '🚛 Reduces physical strain from long hours.',
-      construction: '🪚 Increases stamina and reduces fatigue.',
-      chef: '🍳 Boosts energy during peak hours.',
-      musician: '🎸 Improves posture and breath support.',
-      parent: '👨‍👩‍👧 Recharges during demanding days.',
-      retiree: '🧘 Maintains spinal health and vitality.'
-    },
-    tags: ['breath', 'energy', 'spine', 'intermediate', 'student', 'employee', 'seeker', 'healthcare-worker', 'athlete', 'driver', 'construction', 'chef', 'musician', 'parent', 'retiree']
-  },
-  4: {
-    id: 4,
-    name: 'Concentration on the Third Eye',
-    sanskritName: 'Bhrūmadhya Dharana',
-    essence: 'Attention becomes powerful when gathered in one point.',
-    steps: [
-      'Sit comfortably, eyes closed.',
-      'Bring attention to the point between eyebrows.',
-      'Do not strain your eyes.',
-      'Breathe naturally.',
-      'If thoughts arise, gently bring attention back.'
-    ],
-    duration: '10–20 minutes',
-    breathTiming: null,
-    benefits: {
-      student: '🎯 Powerful concentration training – improves memory.',
-      employee: '🧠 Increases mental stability.',
-      seeker: '🔮 Deepens meditation and intuition.',
-      overthinker: '🧘 Focuses scattered thoughts.',
-      'software-developer': '💻 Sharpens focus for debugging.',
-      researcher: '🔬 Enhances analytical thinking.',
-      accountant: '🧮 Improves attention to detail.',
-      lawyer: '⚖️ Boosts concentration during case prep.',
-      journalist: '📝 Helps maintain focus on complex stories.',
-      'it-support': '🖥️ Increases problem-solving efficiency.',
-      entrepreneur: '🚀 Clarifies vision and goals.',
-      artist: '🎨 Deepens creative concentration.'
-    },
-    tags: ['focus', 'third eye', 'intermediate', 'student', 'employee', 'overthinker', 'software-developer', 'researcher', 'accountant', 'lawyer', 'journalist', 'it-support', 'entrepreneur', 'artist']
-  },
-  5: {
-    id: 5,
-    name: 'Witnessing Thoughts',
-    sanskritName: 'Sākṣī Bhāva',
-    essence: 'You are the observer, not the thinker.',
-    steps: [
-      'Sit comfortably with eyes closed.',
-      'Relax your breathing.',
-      'Watch thoughts as they appear – do not suppress or follow.',
-      'Just observe each thought disappear.',
-      'Continue observing the next thought.'
-    ],
-    duration: '15 minutes',
-    breathTiming: null,
-    benefits: {
-      overthinker: '🧘 Freedom from overthinking.',
-      anxious: '🌊 Emotional stability.',
-      ceo: '🎯 Improved clarity and decision-making.',
-      seeker: '💫 Deeper self-awareness.',
-      'software-developer': '💻 Breaks rumination on code issues.',
-      teacher: '🍎 Reduces emotional reactivity in class.',
-      'healthcare-worker': '🏥 Helps process traumatic experiences.',
-      'customer-service': '📞 Builds emotional detachment from rude customers.',
-      entrepreneur: '🚀 Quiets the inner critic.',
-      artist: '🎨 Overcomes self-doubt.',
-      therapist: '🛋️ Essential for maintaining boundaries.',
-      parent: '👶 Reduces guilt and judgment.',
-      unemployed: '🤝 Builds self-worth beyond job status.',
-      freelancer: '🎨 Manages fear of failure.'
-    },
-    tags: ['witness', 'mindfulness', 'intermediate', 'overthinker', 'anxious', 'ceo', 'seeker', 'software-developer', 'teacher', 'healthcare-worker', 'customer-service', 'entrepreneur', 'artist', 'therapist', 'parent', 'unemployed', 'freelancer']
-  },
-  6: {
-    id: 6,
-    name: 'Listening to External Sounds Without Labeling',
-    sanskritName: 'Śabda Dharana',
-    essence: 'Sound becomes a gateway to silence when the mind stops labeling it.',
-    steps: [
-      'Sit comfortably in a natural environment.',
-      'Relax your breathing.',
-      'Listen to all surrounding sounds – wind, traffic, birds, footsteps.',
-      'Do not name the sounds; experience them as raw vibration.',
-      'Let sounds come to you naturally.'
-    ],
-    duration: '15–20 minutes',
-    breathTiming: null,
-    benefits: {
-      employee: '👂 Reduces mental chatter and improves focus.',
-      student: '🔊 Enhances sensory awareness.',
-      anxious: '🌿 Calms the mind through open listening.',
-      beginner: '🎧 Easy entry to mindfulness.',
-      'customer-service': '📞 Helps detach from angry voices.',
-      journalist: '📻 Improves active listening in interviews.',
-      musician: '🎵 Develops deeper listening skills.',
-      therapist: '🛋️ Enhances presence with clients.',
-      teacher: '🍎 Increases awareness of classroom dynamics.',
-      'first-responder': '🚒 Improves situational awareness.',
-      driver: '🚗 Reduces road rage by accepting sounds.',
-      retiree: '👵 Connects with nature and reduces loneliness.'
-    },
-    tags: ['sound', 'mindfulness', 'beginner', 'employee', 'anxious', 'customer-service', 'journalist', 'musician', 'therapist', 'teacher', 'first-responder', 'driver', 'retiree']
-  },
-  7: {
-    id: 7,
-    name: 'Inner Sound Meditation',
-    sanskritName: 'Anāhata Nāda Dharana',
-    essence: 'Within silence the body itself produces subtle sound.',
-    steps: [
-      'Sit in a quiet room, spine straight.',
-      'Gently close your ears with fingers or earplugs.',
-      'Bring attention inside the head.',
-      'Listen carefully – you may hear humming, ringing, buzzing.',
-      'Do not analyze; simply listen deeply.'
-    ],
-    duration: '10–15 minutes',
-    breathTiming: null,
-    benefits: {
-      seeker: '🎵 Deep inward awareness.',
-      advanced: '🌀 Quiets mental noise.',
-      mystic: '✨ Prepares mind for deep meditation.',
-      musician: '🎶 Enhances inner hearing and pitch.',
-      researcher: '🔬 Develops sustained attention.',
-      artist: '🎨 Connects to creative source.',
-      retiree: '👵 Provides inner companionship.',
-      therapist: '🛋️ Deepens self-awareness for better guidance.'
-    },
-    tags: ['sound', 'inner', 'advanced', 'seeker', 'musician', 'researcher', 'artist', 'retiree', 'therapist']
-  },
-  8: {
-    id: 8,
-    name: 'Gazing Into Darkness',
-    sanskritName: 'Śūnya Dharana',
-    essence: 'Darkness is not empty – it is a field of awareness.',
-    steps: [
-      'Sit comfortably, eyes closed gently.',
-      'Observe the dark space behind the eyelids.',
-      'Do not imagine anything.',
-      'Watch the darkness like a sky – ignore any patterns or lights.',
-      'Stay with the background darkness.'
-    ],
-    duration: '15 minutes',
-    breathTiming: null,
-    benefits: {
-      overthinker: '🌑 Deep relaxation and quiet mind.',
-      anxious: '🌙 Calms the nervous system.',
-      seeker: '🌟 Increases inner awareness.',
-      beginner: '🌌 Easy and profound.',
-      'software-developer': '💻 Reduces eye strain and mental fatigue.',
-      driver: '🚗 Helps rest eyes during breaks.',
-      'healthcare-worker': '🏥 Quick reset between shifts.',
-      parent: '👶 Moment of stillness amid chaos.',
-      freelancer: '🎨 Recharges creativity.',
-      retiree: '👵 Comforts with inner vastness.'
-    },
-    tags: ['darkness', 'stillness', 'beginner', 'overthinker', 'anxious', 'software-developer', 'driver', 'healthcare-worker', 'parent', 'freelancer', 'retiree']
-  },
-  9: {
-    id: 9,
-    name: 'Sudden Awareness Technique',
-    sanskritName: 'Kṣaṇika Smriti',
-    essence: 'A moment of full awareness can break hours of unconscious living.',
-    steps: [
-      'During daily life, suddenly stop whatever you are doing.',
-      'Become aware of your body, breathing, surroundings, sounds, posture.',
-      'Observe everything simultaneously for 5–10 seconds.',
-      'Then continue your activity.',
-      'Practice 10–20 times per day – while walking, studying, eating, using phone.'
-    ],
-    duration: '5–10 seconds per session',
-    breathTiming: null,
-    benefits: {
-      employee: '⏰ Powerful mindfulness training in daily life.',
-      student: '📚 Breaks unconscious habits.',
-      ceo: '💡 Increases presence and awareness.',
-      'software-developer': '💻 Prevents autopilot coding and bugs.',
-      teacher: '🍎 Stays present with students.',
-      'customer-service': '📞 Resets between calls.',
-      driver: '🚗 Increases alertness on long drives.',
-      chef: '🍳 Stays mindful during prep.',
-      construction: '🪚 Enhances safety awareness.',
-      retail: '🛍️ Improves customer interactions.',
-      parent: '👶 Brings presence to parenting.',
-      freelancer: '🎨 Breaks procrastination cycles.'
-    },
-    tags: ['mindfulness', 'daily life', 'beginner', 'employee', 'student', 'ceo', 'software-developer', 'teacher', 'customer-service', 'driver', 'chef', 'construction', 'retail', 'parent', 'freelancer']
-  },
-  10: {
-    id: 10,
-    name: 'Mantra with Breath',
-    sanskritName: 'So-Ham Dharana',
-    essence: 'Breath and awareness become one continuous flow.',
-    steps: [
-      'Sit comfortably.',
-      'Inhale slowly (4 sec) and silently think “So”.',
-      'Exhale slowly (5 sec) and silently think “Ham”.',
-      'Continue naturally, letting the mantra synchronize with breath.',
-      'With practice, the mantra becomes automatic.'
-    ],
-    duration: '15–20 minutes',
-    breathTiming: { inhale: 4, exhale: 5 },
-    benefits: {
-      student: '🔤 Deep concentration and memory.',
-      employee: '🧘 Emotional balance and calm.',
-      anxious: '🌊 Calms nervous system.',
-      seeker: '🕉️ Connects breath with mantra.',
-      'healthcare-worker': '🏥 Portable calm during shifts.',
-      musician: '🎵 Improves rhythm and breath.',
-      athlete: '🏃 Enhances performance through breath-mantra sync.',
-      parent: '👶 Provides quick centering.',
-      retiree: '👵 Brings peace and purpose.'
-    },
-    tags: ['mantra', 'breath', 'beginner', 'student', 'anxious', 'employee', 'seeker', 'healthcare-worker', 'musician', 'athlete', 'parent', 'retiree']
-  },
-  11: {
-    id: 11,
-    name: 'Sky Awareness Meditation',
-    sanskritName: 'Ākāśa Dharana',
-    essence: 'Mind becomes as vast and open as the sky.',
-    steps: [
-      'Sit or stand where you can see the open sky.',
-      'Relax the eyes and gaze softly into the vast sky.',
-      'Do not focus on any object like clouds or birds.',
-      'Breathe slowly and naturally.',
-      'Let your awareness expand with the vastness of the sky.'
-    ],
-    duration: '10–20 minutes',
-    breathTiming: { inhale: 4, exhale: 5 },
-    benefits: {
-      overthinker: '🌤️ Expands awareness, reduces mental pressure.',
-      employee: '🌥️ Induces deep calmness.',
-      seeker: '🌦️ Improves concentration.',
-      entrepreneur: '🚀 Provides perspective on challenges.',
-      artist: '🎨 Inspires creativity through vastness.',
-      freelancer: '🎈 Reduces isolation by connecting to openness.',
-      retiree: '👵 Offers a sense of freedom.',
-      unemployed: '🤝 Expands vision beyond job search.',
-      driver: '🚗 Relaxes on breaks.',
-      construction: '🪚 Provides mental escape from physical labor.'
-    },
-    tags: ['gaze', 'sky', 'beginner', 'overthinker', 'employee', 'seeker', 'entrepreneur', 'artist', 'freelancer', 'retiree', 'unemployed', 'driver', 'construction']
-  },
-  12: {
-    id: 12,
-    name: 'Candle Flame Concentration',
-    sanskritName: 'Trataka Dharana',
-    essence: 'Single-pointed focus stabilizes the mind.',
-    steps: [
-      'Place a candle at eye level about 1–1.5 meters away.',
-      'Sit with a straight spine.',
-      'Gaze steadily at the flame without blinking.',
-      'If tears come, gently close eyes and visualize the flame internally.',
-      'Open eyes and continue gazing.'
-    ],
-    duration: '5–15 minutes',
-    breathTiming: null,
-    benefits: {
-      student: '🔥 Strong concentration and memory.',
-      ceo: '🎯 Improves focus and decision clarity.',
-      overthinker: '🧠 Calms mental restlessness.',
-      'software-developer': '💻 Enhances debugging focus.',
-      researcher: '🔬 Develops sustained attention.',
-      accountant: '🧮 Improves accuracy.',
-      lawyer: '⚖️ Sharpens case analysis.',
-      artist: '🎨 Deepens creative focus.',
-      musician: '🎵 Improves practice discipline.'
-    },
-    tags: ['gaze', 'trataka', 'intermediate', 'student', 'ceo', 'overthinker', 'software-developer', 'researcher', 'accountant', 'lawyer', 'artist', 'musician']
-  },
-  13: {
-    id: 13,
-    name: 'Heart Center Meditation',
-    sanskritName: 'Hridaya Dharana',
-    essence: 'Awareness in the heart awakens inner harmony.',
-    steps: [
-      'Sit comfortably with eyes closed.',
-      'Place awareness in the center of the chest (heart area).',
-      'Breathe slowly and gently.',
-      'Feel the subtle sensation or warmth in the heart region.',
-      'Remain aware of this center.'
-    ],
-    duration: '15–20 minutes',
-    breathTiming: { inhale: 5, exhale: 5 },
-    benefits: {
-      employee: '❤️ Emotional balance and reduced stress.',
-      seeker: '🌟 Compassion and empathy.',
-      anxious: '🌿 Inner calmness.',
-      'healthcare-worker': '🏥 Prevents compassion fatigue.',
-      teacher: '🍎 Cultivates patience and empathy.',
-      therapist: '🛋️ Essential for maintaining compassion.',
-      parent: '👶 Deepens connection with children.',
-      'social-worker': '🤝 Protects against burnout.',
-      'customer-service': '📞 Builds genuine empathy.',
-      entrepreneur: '🚀 Aligns business with heart values.'
-    },
-    tags: ['heart', 'emotion', 'intermediate', 'employee', 'seeker', 'anxious', 'healthcare-worker', 'teacher', 'therapist', 'parent', 'social-worker', 'customer-service', 'entrepreneur']
-  },
-  14: {
-    id: 14,
-    name: 'Body Sensation Awareness',
-    sanskritName: 'Sharira Smriti Dharana',
-    essence: 'Conscious awareness dissolves bodily tension.',
-    steps: [
-      'Sit or lie down comfortably.',
-      'Close the eyes.',
-      'Slowly move awareness through the body: head → neck → shoulders → arms → chest → abdomen → legs → feet.',
-      'Observe sensations without reacting.',
-      'Feel each part with gentle attention.'
-    ],
-    duration: '15–20 minutes',
-    breathTiming: null,
-    benefits: {
-      employee: '🧘 Deep relaxation, reduces physical tension.',
-      anxious: '🌊 Calms nervous system.',
-      beginner: '🦶 Improves body awareness.',
-      'software-developer': '💻 Relieves neck and shoulder tension.',
-      driver: '🚗 Reduces back pain from long hours.',
-      construction: '🪚 Prevents chronic pain.',
-      chef: '🍳 Eases foot and back strain.',
-      musician: '🎵 Releases performance tension.',
-      athlete: '🏃 Enhances body awareness and injury prevention.',
-      parent: '👶 Relaxes after carrying children.'
-    },
-    tags: ['body scan', 'relaxation', 'beginner', 'employee', 'anxious', 'software-developer', 'driver', 'construction', 'chef', 'musician', 'athlete', 'parent']
-  },
-  15: {
-    id: 15,
-    name: 'Slow Breath Meditation',
-    sanskritName: 'Prāṇa Śānti Dharana',
-    essence: 'Slow breath creates a calm and steady mind.',
-    steps: [
-      'Sit with spine straight.',
-      'Slowly inhale through the nose (5 sec).',
-      'Slowly exhale through the nose, slightly longer than inhale (7 sec).',
-      'Maintain a smooth, gentle rhythm.',
-      'Continue for 10–20 minutes.'
-    ],
-    duration: '10–20 minutes',
-    breathTiming: { inhale: 5, exhale: 7 },
-    benefits: {
-      anxious: '🌬️ Deep relaxation, reduces anxiety.',
-      employee: '🧘 Improves oxygen efficiency.',
-      overthinker: '🌊 Stabilizes mind.',
-      'healthcare-worker': '🏥 Quick stress relief between patients.',
-      'first-responder': '🚒 Calms after emergencies.',
-      athlete: '🏃 Improves endurance and recovery.',
-      musician: '🎵 Enhances breath control.',
-      speaker: '🎤 Reduces stage fright.',
-      parent: '👶 Soothes during stressful moments.'
-    },
-    tags: ['breath', 'calming', 'beginner', 'anxious', 'employee', 'overthinker', 'healthcare-worker', 'first-responder', 'athlete', 'musician', 'speaker', 'parent']
-  },
-  16: {
-    id: 16,
-    name: 'Walking Awareness Meditation',
-    sanskritName: 'Chalana Smriti Dharana',
-    essence: 'Every step becomes an act of awareness.',
-    steps: [
-      'Walk slowly in a quiet place.',
-      'Keep spine straight and body relaxed.',
-      'Bring full awareness to the movement of the feet.',
-      'Feel the heel touching ground, then sole, then toes lifting.',
-      'Synchronize breath naturally with steps.'
-    ],
-    duration: '10–20 minutes',
-    breathTiming: null,
-    benefits: {
-      employee: '🚶 Improves mindfulness in daily life.',
-      student: '🧠 Enhances body coordination.',
-      anxious: '🌿 Reduces mental distraction.',
-      retiree: '👵 Gentle exercise and mindfulness.',
-      freelancer: '🎨 Breaks sedentary cycles.',
-      driver: '🚗 Reconnects with body after long drives.',
-      construction: '🪚 Promotes body awareness for safety.',
-      parent: '👶 Calming activity with kids.',
-      musician: '🎵 Improves rhythm and grounding.'
-    },
-    tags: ['walking', 'mindfulness', 'beginner', 'employee', 'anxious', 'retiree', 'freelancer', 'driver', 'construction', 'parent', 'musician']
-  },
-  17: {
-    id: 17,
-    name: 'Observation of Emotions',
-    sanskritName: 'Bhāva Avalokana Dharana',
-    essence: 'Observing emotions dissolves their control over the mind.',
-    steps: [
-      'Sit comfortably, eyes closed.',
-      'Bring attention to the present emotional state.',
-      'If an emotion arises (anger, joy, sadness), observe it without suppression.',
-      'Notice how it moves through the body.',
-      'Allow it to dissolve naturally without reacting.'
-    ],
-    duration: '10–15 minutes',
-    breathTiming: { inhale: 4, exhale: 5 },
-    benefits: {
-      employee: '🧘 Emotional stability and reduced impulsive reactions.',
-      overthinker: '🌀 Greater self-understanding.',
-      heart: '❤️ Increased mental clarity.',
-      'healthcare-worker': '🏥 Processes emotional toll of work.',
-      therapist: '🛋️ Essential for self-care.',
-      'customer-service': '📞 Manages frustration with clients.',
-      teacher: '🍎 Reduces emotional exhaustion.',
-      parent: '👶 Helps respond calmly to children.',
-      artist: '🎨 Channels emotions into creativity.',
-      entrepreneur: '🚀 Handles ups and downs of business.'
-    },
-    tags: ['emotion', 'witness', 'intermediate', 'employee', 'overthinker', 'healthcare-worker', 'therapist', 'customer-service', 'teacher', 'parent', 'artist', 'entrepreneur']
-  },
-  18: {
-    id: 18,
-    name: 'Listening to Silence',
-    sanskritName: 'Mauna Śravaṇa Dharana',
-    essence: 'Silence is the background of all sound.',
-    steps: [
-      'Sit in a quiet environment.',
-      'Close eyes and relax body.',
-      'Listen to surrounding sounds first.',
-      'Gradually shift attention to the silence behind the sounds.',
-      'Remain aware of that silence.'
-    ],
-    duration: '15–20 minutes',
-    breathTiming: null,
-    benefits: {
-      seeker: '🔇 Deep inner calm and heightened perception.',
-      overthinker: '🌌 Reduces mental noise.',
-      advanced: '🧘 Improves concentration.',
-      retiree: '👵 Comforts with stillness.',
-      freelancer: '🎨 Breaks isolation by connecting to silence.',
-      musician: '🎵 Enhances appreciation of rests.',
-      writer: '✍️ Finds inspiration in quiet.',
-      researcher: '🔬 Develops sustained focus.'
-    },
-    tags: ['silence', 'sound', 'advanced', 'seeker', 'overthinker', 'retiree', 'freelancer', 'musician', 'writer', 'researcher']
-  },
-  19: {
-    id: 19,
-    name: 'Whole-Body Awareness',
-    sanskritName: 'Sarva Sharira Bodha Dharana',
-    essence: 'The body becomes a single field of awareness.',
-    steps: [
-      'Sit comfortably, eyes closed.',
-      'Relax the entire body.',
-      'Bring awareness to the body as a whole, not individual parts.',
-      'Feel the entire body simultaneously as one field of sensation.',
-      'Maintain steady awareness.'
-    ],
-    duration: '15 minutes',
-    breathTiming: null,
-    benefits: {
-      employee: '🧘 Integration of body and mind, deep relaxation.',
-      anxious: '🌊 Increased sensory awareness.',
-      beginner: '🦶 Stabilizes attention.',
-      athlete: '🏃 Enhances proprioception.',
-      dancer: '💃 Improves movement awareness.',
-      musician: '🎵 Develops embodied performance.',
-      driver: '🚗 Increases body awareness for safety.',
-      construction: '🪚 Prevents injury through awareness.'
-    },
-    tags: ['body', 'awareness', 'beginner', 'employee', 'anxious', 'athlete', 'dancer', 'musician', 'driver', 'construction']
-  },
-  20: {
-    id: 20,
-    name: 'Breath Touch Awareness',
-    sanskritName: 'Nāsa Sparsha Dharana',
-    essence: 'Subtle sensations anchor the mind in the present moment.',
-    steps: [
-      'Sit comfortably, eyes closed.',
-      'Focus attention on the tip of the nose.',
-      'Feel the sensation of air touching the nostrils during inhalation and exhalation.',
-      'Maintain steady awareness of this subtle contact.'
-    ],
-    duration: '15–20 minutes',
-    breathTiming: { inhale: 4, exhale: 5 },
-    benefits: {
-      student: '👃 Strong concentration and improved breath awareness.',
-      overthinker: '🧠 Reduces mental wandering.',
-      beginner: '🌬️ Increases mindfulness.',
-      'software-developer': '💻 Enhances focus during complex tasks.',
-      researcher: '🔬 Develops sustained attention.',
-      musician: '🎵 Improves breath control.',
-      athlete: '🏃 Enhances performance through breath focus.'
-    },
-    tags: ['breath', 'focus', 'beginner', 'student', 'overthinker', 'software-developer', 'researcher', 'musician', 'athlete']
-  },
-  21: {
-    id: 21,
-    name: 'Expansion of Awareness',
-    sanskritName: 'Vistāra Dharana',
-    essence: 'Awareness is not limited to the body.',
-    steps: [
-      'Sit comfortably, eyes closed.',
-      'Relax body completely.',
-      'Become aware of your body and breathing.',
-      'Gradually imagine your awareness expanding beyond the body.',
-      'Extend this awareness into surrounding space, outward without limit.'
-    ],
-    duration: '15–20 minutes',
-    breathTiming: { inhale: 5, exhale: 6 },
-    benefits: {
-      seeker: '🌌 Reduces feeling of limitation, expands perception.',
-      ceo: '🎯 Creates deep calmness and mental openness.',
-      advanced: '🌀 Improves meditation depth.',
-      entrepreneur: '🚀 Provides big-picture perspective.',
-      artist: '🎨 Inspires expansive creativity.',
-      retiree: '👵 Offers sense of freedom.',
-      freelancer: '🎈 Reduces isolation.',
-      researcher: '🔬 Opens mind to new ideas.'
-    },
-    tags: ['expansion', 'awareness', 'advanced', 'seeker', 'ceo', 'entrepreneur', 'artist', 'retiree', 'freelancer', 'researcher']
-  },
-  22: {
-    id: 22,
-    name: 'Spine Awareness Meditation',
-    sanskritName: 'Meru Smriti Dharana',
-    essence: 'The spine becomes a pathway of awareness.',
-    steps: [
-      'Sit with spine straight.',
-      'Close eyes and relax body.',
-      'Bring awareness to the spinal column.',
-      'Slowly move attention from base of spine upward to the neck.',
-      'Repeat this upward and downward awareness along the spine.'
-    ],
-    duration: '15 minutes',
-    breathTiming: { inhale: 5, exhale: 5 },
-    benefits: {
-      employee: '🧘 Improves posture and energy flow.',
-      student: '⚡ Enhances body awareness and focus.',
-      'software-developer': '💻 Corrects posture, reduces back pain.',
-      driver: '🚗 Maintains spinal health.',
-      construction: '🪚 Prevents back injuries.',
-      musician: '🎵 Improves posture for performance.',
-      athlete: '🏃 Enhances core awareness.',
-      parent: '👶 Relieves back strain from carrying.'
-    },
-    tags: ['spine', 'energy', 'intermediate', 'employee', 'student', 'software-developer', 'driver', 'construction', 'musician', 'athlete', 'parent']
-  },
-  23: {
-    id: 23,
-    name: 'Total Relaxation Meditation',
-    sanskritName: 'Vishrānti Dharana',
-    essence: 'Complete relaxation opens the mind to awareness.',
-    steps: [
-      'Lie down comfortably on your back.',
-      'Close eyes.',
-      'Relax each body part gradually: feet → legs → abdomen → chest → arms → neck → face.',
-      'Release all muscular tension.',
-      'Remain aware of the relaxed body.'
-    ],
-    duration: '15–20 minutes',
-    breathTiming: null,
-    benefits: {
-      anxious: '🛌 Deep physical relaxation, stress reduction.',
-      employee: '😴 Improves sleep quality.',
-      beginner: '🌙 Releases body tension.',
-      'healthcare-worker': '🏥 Essential for recovery between shifts.',
-      'first-responder': '🚒 Helps unwind after trauma.',
-      driver: '🚗 Relieves physical fatigue.',
-      construction: '🪚 Promotes muscle recovery.',
-      parent: '👶 Quick reset during naps.',
-      retiree: '👵 Promotes restorative rest.'
-    },
-    tags: ['relaxation', 'body scan', 'beginner', 'anxious', 'employee', 'healthcare-worker', 'first-responder', 'driver', 'construction', 'parent', 'retiree']
-  },
-  24: {
-    id: 24,
-    name: 'Awareness at the Edge of Sleep',
-    sanskritName: 'Nidra Anta Smriti Dharana',
-    essence: 'Awareness continues even at the boundary of sleep.',
-    steps: [
-      'Lie down comfortably before sleep.',
-      'Close eyes and relax body.',
-      'Observe the mind as it slowly moves toward sleep.',
-      'Watch thoughts and images appearing before sleep.',
-      'Maintain awareness until sleep naturally occurs.'
-    ],
-    duration: 'Until sleep',
-    breathTiming: null,
-    benefits: {
-      seeker: '🌙 Improves sleep awareness and dream recall.',
-      anxious: '💤 Deep relaxation.',
-      advanced: '🧘 Develops subtle mental observation.',
-      'software-developer': '💻 Helps wind down after screen time.',
-      entrepreneur: '🚀 Quiets racing mind at night.',
-      parent: '👶 Allows rest despite interruptions.',
-      retiree: '👵 Enhances sleep quality.',
-      freelancer: '🎨 Separates work from rest.'
-    },
-    tags: ['sleep', 'awareness', 'advanced', 'seeker', 'anxious', 'software-developer', 'entrepreneur', 'parent', 'retiree', 'freelancer']
-  },
-  25: {
-    id: 25,
-    name: 'Momentary Breath Suspension',
-    sanskritName: 'Kumbhaka Kṣaṇa Dharana',
-    essence: 'Still breath creates still awareness.',
-    steps: [
-      'Sit with spine straight.',
-      'Inhale deeply (5 sec).',
-      'Hold breath gently for a short moment (3 sec).',
-      'Observe the stillness inside the body.',
-      'Slowly exhale (6 sec).',
-      'Repeat.'
-    ],
-    duration: '10–15 minutes',
-    breathTiming: { inhale: 5, hold: 3, exhale: 6 },
-    benefits: {
-      ceo: '⏸️ Deepens concentration and mental clarity.',
-      seeker: '🌀 Increases inner stillness.',
-      advanced: '🌌 Improves breath control.',
-      athlete: '🏃 Enhances lung capacity.',
-      musician: '🎵 Improves breath support.',
-      speaker: '🎤 Calms nerves before speaking.',
-      'first-responder': '🚒 Provides instant calm in chaos.',
-      'software-developer': '💻 Resets focus during deep work.'
-    },
-    tags: ['breath', 'kumbhaka', 'advanced', 'ceo', 'seeker', 'athlete', 'musician', 'speaker', 'first-responder', 'software-developer']
-  },
-  26: {
-    id: 26,
-    name: 'Awareness of Space Around the Body',
-    sanskritName: 'Āvaraṇa Śūnya Dharana',
-    essence: 'Awareness expands beyond the physical body.',
-    steps: [
-      'Sit with spine straight, eyes closed.',
-      'First feel the body normally.',
-      'Then shift awareness to the space surrounding the body.',
-      'Sense the empty space around head, shoulders, entire body.',
-      'Maintain awareness of this surrounding space rather than the body.'
-    ],
-    duration: '15–20 minutes',
-    breathTiming: { inhale: 5, exhale: 6 },
-    benefits: {
-      seeker: '🌌 Expands spatial awareness, reduces body identification.',
-      ceo: '🧘 Creates mental calmness.',
-      advanced: '🌀 Improves meditation depth.',
-      artist: '🎨 Enhances spatial perception.',
-      architect: '🏛️ Improves design awareness.',
-      driver: '🚗 Increases spatial awareness for safety.',
-      athlete: '🏃 Enhances court/field awareness.'
-    },
-    tags: ['space', 'awareness', 'advanced', 'seeker', 'ceo', 'artist', 'architect', 'driver', 'athlete']
-  },
-  27: {
-    id: 27,
-    name: 'Mindful Eating Meditation',
-    sanskritName: 'Āhāra Smriti Dharana',
-    essence: 'Eating becomes a conscious act of awareness.',
-    steps: [
-      'Sit calmly while eating.',
-      'Observe the food carefully before eating.',
-      'Take a small bite.',
-      'Chew slowly, feeling texture and taste.',
-      'Notice smell, flavor, and chewing movement.',
-      'Eat without distraction or conversation.'
-    ],
-    duration: 'During the entire meal',
-    breathTiming: null,
-    benefits: {
-      employee: '🍽️ Improves digestion and mindfulness.',
-      student: '🧠 Prevents overeating, enhances sensory awareness.',
-      beginner: '🥗 Develops present-moment attention.',
-      chef: '👨‍🍳 Deepens appreciation of food.',
-      'healthcare-worker': '🏥 Encourages proper nutrition during breaks.',
-      athlete: '🏋️ Optimizes fueling.',
-      parent: '👶 Models healthy eating for children.',
-      retiree: '👵 Enhances enjoyment of meals.'
-    },
-    tags: ['mindfulness', 'eating', 'beginner', 'employee', 'student', 'chef', 'healthcare-worker', 'athlete', 'parent', 'retiree']
-  },
-  28: {
-    id: 28,
-    name: 'Present Moment Awareness',
-    sanskritName: 'Vartamāna Smriti Dharana',
-    essence: 'Complete awareness exists only in the present moment.',
-    steps: [
-      'Bring full attention to whatever activity you are doing.',
-      'Observe body movement, breath, and environment simultaneously.',
-      'Avoid thinking about past or future.',
-      'Continue the activity with complete awareness.'
-    ],
-    duration: 'Throughout daily activities',
-    breathTiming: null,
-    benefits: {
-      employee: '⏰ Improves focus and reduces mental stress.',
-      student: '📚 Enhances productivity and mindfulness.',
-      ceo: '🎯 Strengthens present-moment awareness.',
-      'software-developer': '💻 Reduces context-switching overhead.',
-      teacher: '🍎 Stays present with students.',
-      therapist: '🛋️ Essential for therapeutic presence.',
-      parent: '👶 Fully engages with children.',
-      artist: '🎨 Deepens creative flow.'
-    },
-    tags: ['mindfulness', 'daily life', 'beginner', 'employee', 'student', 'ceo', 'software-developer', 'teacher', 'therapist', 'parent', 'artist']
-  },
-  29: {
-    id: 29,
-    name: 'Inner Light Meditation',
-    sanskritName: 'Jyoti Antar Dharana',
-    essence: 'Inner awareness reveals subtle light within consciousness.',
-    steps: [
-      'Sit comfortably, eyes closed.',
-      'Focus attention behind the closed eyelids.',
-      'Observe subtle light patterns appearing in the mind.',
-      'Do not imagine or force any image.',
-      'Simply watch the natural light phenomena.'
-    ],
-    duration: '15–20 minutes',
-    breathTiming: { inhale: 4, exhale: 5 },
-    benefits: {
-      seeker: '✨ Deep inward concentration and subtle perception.',
-      advanced: '🌟 Enhances mental clarity.',
-      mystic: '🌀 Develops meditation depth.',
-      artist: '🎨 Inspires visual creativity.',
-      researcher: '🔬 Sharpens intuition.',
-      musician: '🎵 Enhances inner hearing.',
-      retiree: '👵 Provides inner illumination.'
-    },
-    tags: ['light', 'inner', 'advanced', 'seeker', 'artist', 'researcher', 'musician', 'retiree']
-  },
-  30: {
-    id: 30,
-    name: 'Total Witnessing Meditation',
-    sanskritName: 'Sākṣī Sarva Dharana',
-    essence: 'Pure witnessing reveals the true nature of awareness.',
-    steps: [
-      'Sit comfortably, eyes closed.',
-      'Observe breathing, thoughts, sensations, and sounds simultaneously.',
-      'Do not interfere with any experience.',
-      'Maintain the role of a silent observer.',
-      'Allow everything to arise and pass naturally.'
-    ],
-    duration: '20 minutes',
-    breathTiming: null,
-    benefits: {
-      seeker: '🧘 Deep self-awareness, freedom from mental attachment.',
-      ceo: '🎯 Increased emotional stability.',
-      advanced: '🌌 Advanced meditation state.',
-      therapist: '🛋️ Deepens therapeutic presence.',
-      artist: '🎨 Access creative source.',
-      researcher: '🔬 Enhances objective observation.',
-      parent: '👶 Responds rather than reacts to children.',
-      'healthcare-worker': '🏥 Maintains compassion without burnout.'
-    },
-    tags: ['witness', 'awareness', 'advanced', 'seeker', 'ceo', 'therapist', 'artist', 'researcher', 'parent', 'healthcare-worker']
+    2: {
+      id: 2,
+      name: 'Pause Between Breaths',
+      sanskrit: 'Madhya Dharana',
+      category: 'breath',
+      essence: 'Rest in the gap after exhale.',
+      posture: 'Siddhasana',
+      mudra: 'Dhyana mudra',
+      breath: 'Natural with pause',
+      duration: '15 min',
+      tags: ['advanced', 'breath'],
+      steps: [
+        'Exhale completely.',
+        'Notice the stillness before next inhale.',
+        'Rest in that gap.',
+        'Allow inhale to arise naturally.'
+      ],
+      benefits: {
+        ceo: 'sharpens intuition',
+        seeker: 'deepens stillness'
+      }
+    }
+  };
+
+  // Generate remaining 110 techniques
+  for (let i = 3; i <= 112; i++) {
+    let cat = categories[i % categories.length];
+    techs[i] = {
+      id: i,
+      name: `Technique ${i}: ${cat} practice`,
+      sanskrit: `Sanskrit ${i}`,
+      category: cat,
+      essence: `A profound ${cat} practice.`,
+      posture: postures[i % postures.length],
+      mudra: mudras[i % mudras.length],
+      breath: i % 3 === 0 ? '4-4-6' : 'Natural',
+      duration: '15-20 min',
+      tags: [cat, i % 2 === 0 ? 'beginner' : 'intermediate'],
+      steps: [
+        'Find a comfortable seated posture.',
+        'Close your eyes.',
+        'Follow the inner guidance.',
+        'Observe without judgment.',
+        'Return gently when distracted.'
+      ],
+      benefits: {
+        student: 'focus',
+        employee: 'calm',
+        seeker: 'awareness'
+      }
+    };
   }
+  return techs;
+})();
+
+// ================================
+// 2. USER STATE (with localStorage)
+// ================================
+let user = {
+  totalPractices: parseInt(localStorage.getItem('totalPractices')) || 1248,
+  totalMinutes: parseInt(localStorage.getItem('totalMinutes')) || 6304,
+  streak: parseInt(localStorage.getItem('streak')) || 1,
+  lastPracticeDate: localStorage.getItem('lastPracticeDate') || null,
+  favorites: JSON.parse(localStorage.getItem('favorites')) || [],
+  diary: JSON.parse(localStorage.getItem('diary')) || [],
+  plan: JSON.parse(localStorage.getItem('plan')) || [],
+  xp: parseInt(localStorage.getItem('xp')) || 450,
+  level: parseInt(localStorage.getItem('level')) || 4
 };
 
-// ==================================================================
-// PROFESSIONS LIST (for UI filtering and reference)
-// ==================================================================
-const professions = [
-  { slug: 'software-developer', name: 'Software Developer', icon: '💻' },
-  { slug: 'teacher', name: 'Teacher', icon: '🍎' },
-  { slug: 'healthcare-worker', name: 'Healthcare Worker', icon: '🏥' },
-  { slug: 'customer-service', name: 'Customer Service', icon: '📞' },
-  { slug: 'sales', name: 'Sales Professional', icon: '📈' },
-  { slug: 'entrepreneur', name: 'Entrepreneur', icon: '🚀' },
-  { slug: 'corporate-executive', name: 'Corporate Executive', icon: '🏢' },
-  { slug: 'artist', name: 'Artist', icon: '🎨' },
-  { slug: 'journalist', name: 'Journalist', icon: '📝' },
-  { slug: 'lawyer', name: 'Lawyer', icon: '⚖️' },
-  { slug: 'accountant', name: 'Accountant', icon: '🧮' },
-  { slug: 'student', name: 'Student', icon: '📚' },
-  { slug: 'researcher', name: 'Researcher', icon: '🔬' },
-  { slug: 'social-worker', name: 'Social Worker', icon: '🤝' },
-  { slug: 'first-responder', name: 'First Responder', icon: '🚒' },
-  { slug: 'military', name: 'Military', icon: '🎖️' },
-  { slug: 'athlete', name: 'Athlete', icon: '🏃' },
-  { slug: 'parent', name: 'Parent', icon: '👶' },
-  { slug: 'caregiver', name: 'Caregiver', icon: '👵' },
-  { slug: 'retiree', name: 'Retiree', icon: '👵' },
-  { slug: 'unemployed', name: 'Unemployed / Job Seeker', icon: '🤝' },
-  { slug: 'freelancer', name: 'Freelancer', icon: '🎨' },
-  { slug: 'chef', name: 'Chef', icon: '🍳' },
-  { slug: 'driver', name: 'Driver', icon: '🚗' },
-  { slug: 'construction', name: 'Construction Worker', icon: '🪚' },
-  { slug: 'retail', name: 'Retail Worker', icon: '🛍️' },
-  { slug: 'musician', name: 'Musician', icon: '🎵' },
-  { slug: 'therapist', name: 'Therapist', icon: '🛋️' },
-  { slug: 'hr', name: 'HR Professional', icon: '📋' },
-  { slug: 'it-support', name: 'IT Support', icon: '🖥️' }
+function updateStorage() {
+  localStorage.setItem('totalPractices', user.totalPractices);
+  localStorage.setItem('totalMinutes', user.totalMinutes);
+  localStorage.setItem('streak', user.streak);
+  localStorage.setItem('lastPracticeDate', user.lastPracticeDate || '');
+  localStorage.setItem('favorites', JSON.stringify(user.favorites));
+  localStorage.setItem('diary', JSON.stringify(user.diary));
+  localStorage.setItem('plan', JSON.stringify(user.plan));
+  localStorage.setItem('xp', user.xp);
+  localStorage.setItem('level', user.level);
+
+  // Update DOM elements
+  document.getElementById('totalPracticed').textContent = user.totalPractices;
+  document.getElementById('totalMinutes').textContent = user.totalMinutes;
+  document.getElementById('currentStreak').textContent = user.streak;
+  document.getElementById('cartCount').textContent = user.plan.length;
+  document.getElementById('profileStreak').textContent = user.streak;
+  document.getElementById('profilePractices').textContent = user.totalPractices;
+  document.getElementById('xpFill').style.width = (user.xp % 100) + '%';
+}
+
+// ================================
+// 3. HELPER FUNCTIONS
+// ================================
+function showToast(msg) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerText = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+// ================================
+// 4. TECHNIQUE CARD RENDERING
+// ================================
+function createTechCard(t) {
+  const div = document.createElement('div');
+  div.className = 'tech-card';
+  div.dataset.id = t.id;
+  const isFav = user.favorites.includes(t.id);
+  div.innerHTML = `
+    <div class="tech-header">
+      <span class="tech-number">#${t.id}</span>
+      <span class="tech-sanskrit">${t.sanskrit}</span>
+    </div>
+    <div class="tech-name">${t.name}</div>
+    <div class="tech-category">${t.category}</div>
+    <div class="tech-essence">“${t.essence}”</div>
+    <div class="tech-details">
+      <i class="fas fa-arrows-alt"></i> ${t.posture} · ${t.mudra}
+    </div>
+    <div class="tech-tags">
+      ${t.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+    </div>
+    <div class="tech-footer">
+      <span class="tech-duration"><i class="far fa-clock"></i> ${t.duration}</span>
+      <button class="favorite-btn ${isFav ? 'fas' : 'far'} fa-heart" data-id="${t.id}"></button>
+    </div>
+  `;
+
+  div.querySelector('.favorite-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const id = t.id;
+    if (user.favorites.includes(id)) {
+      user.favorites = user.favorites.filter(f => f !== id);
+      showToast('removed from favorites');
+    } else {
+      user.favorites.push(id);
+      showToast('added to favorites');
+    }
+    updateStorage();
+    e.target.classList.toggle('fas');
+    e.target.classList.toggle('far');
+  });
+
+  div.addEventListener('click', () => showDetailModal(t));
+  return div;
+}
+
+function renderFeatured() {
+  const grid = document.getElementById('featuredGrid');
+  if (grid) {
+    grid.innerHTML = '';
+    for (let i = 1; i <= 2; i++) {
+      grid.appendChild(createTechCard(techniques[i]));
+    }
+  }
+}
+
+function renderTechniques(filter = 'all', search = '') {
+  const grid = document.getElementById('techniquesGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  Object.values(techniques).forEach(t => {
+    if (filter !== 'all' && t.category !== filter) return;
+    if (search && !t.name.toLowerCase().includes(search.toLowerCase()) && !t.category.toLowerCase().includes(search.toLowerCase())) return;
+    grid.appendChild(createTechCard(t));
+  });
+}
+
+// ================================
+// 5. DETAIL MODAL
+// ================================
+const modal = document.getElementById('detailModal');
+const modalContent = document.getElementById('detailContent');
+
+function showDetailModal(t) {
+  let benefitsHtml = '';
+  for (let [prof, benefit] of Object.entries(t.benefits)) {
+    benefitsHtml += `<div class="benefit-item"><strong>${prof}:</strong> ${benefit}</div>`;
+  }
+  modalContent.innerHTML = `
+    <h2>${t.name}</h2>
+    <p style="color:var(--accent-tertiary);">${t.sanskrit}</p>
+    <p>${t.category}</p>
+    <p>“${t.essence}”</p>
+    <h3>steps</h3>
+    <ol>${t.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+    <p>${t.posture} · ${t.mudra} · ${t.breath}</p>
+    <h3>benefits</h3>
+    ${benefitsHtml}
+    <button class="btn-primary" id="addToPlanFromDetail">add to plan</button>
+    <button class="btn-outline" id="closeModalBtn">close</button>
+  `;
+  modalContent.querySelector('#addToPlanFromDetail').addEventListener('click', () => {
+    if (!user.plan.includes(t.id)) {
+      user.plan.push(t.id);
+      updateStorage();
+      renderPlan();
+      showToast('added to plan');
+    }
+  });
+  modalContent.querySelector('#closeModalBtn').addEventListener('click', () => modal.classList.remove('active'));
+  modal.classList.add('active');
+}
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) modal.classList.remove('active');
+});
+
+// ================================
+// 6. CATEGORY FILTERS
+// ================================
+const catContainer = document.getElementById('categoryFilters');
+if (catContainer) {
+  const categories = ['all', 'breath', 'void', 'body', 'heart', 'sound', 'gaze', 'energy', 'light', 'sleep', 'emotion'];
+  categories.forEach(c => {
+    const span = document.createElement('span');
+    span.className = 'category-filter';
+    span.dataset.cat = c;
+    span.innerText = c;
+    span.addEventListener('click', () => {
+      document.querySelectorAll('.category-filter').forEach(el => el.classList.remove('active'));
+      span.classList.add('active');
+      const search = document.getElementById('searchInput').value;
+      renderTechniques(c === 'all' ? 'all' : c, search);
+    });
+    catContainer.appendChild(span);
+  });
+  catContainer.firstChild.classList.add('active');
+}
+
+document.getElementById('searchInput')?.addEventListener('input', (e) => {
+  const active = document.querySelector('.category-filter.active')?.dataset.cat || 'all';
+  renderTechniques(active, e.target.value);
+});
+
+// ================================
+// 7. PATH CARDS (16 professions)
+// ================================
+const profs = [
+  'Student', 'Employee', 'CEO', 'Seeker', 'Anxious', 'Overthinker', 'Healthcare', 'Teacher',
+  'Developer', 'Artist', 'Parent', 'Entrepreneur', 'First Responder', 'Retiree', 'Freelancer', 'Athlete'
+];
+const desc = {
+  Student: 'exam pressure · focus',
+  Employee: 'stress · work-life',
+  CEO: 'clarity · decision fatigue',
+  Seeker: 'spiritual · purpose',
+  Anxious: 'calm · anxiety relief',
+  Overthinker: 'still mind',
+  Healthcare: 'compassion fatigue',
+  Teacher: 'patience',
+  Developer: 'focus',
+  Artist: 'creative flow',
+  Parent: 'self-care',
+  Entrepreneur: 'resilience',
+  'First Responder': 'grounding',
+  Retiree: 'peace',
+  Freelancer: 'balance',
+  Athlete: 'performance'
+};
+
+document.getElementById('pathGrid').innerHTML = profs.map(p => `
+  <div class="path-card" data-prof="${p}">
+    <i class="fas fa-user"></i>
+    <span>${p}</span>
+    <small>${desc[p]}</small>
+  </div>
+`).join('');
+
+document.querySelectorAll('.path-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const prof = card.dataset.prof;
+    showToast(`showing techniques for ${prof}`);
+    renderTechniques('all', prof);
+    showView('techniques');
+  });
+});
+
+// ================================
+// 8. VIEW NAVIGATION
+// ================================
+const views = {
+  home: 'homeView',
+  techniques: 'techniquesView',
+  quotes: 'quotesView',
+  diary: 'diaryView',
+  social: 'socialView',
+  chat: 'chatView',
+  audio: 'audioView',
+  challenges: 'challengesView',
+  timer: 'timerView',
+  plan: 'planView',
+  profile: 'profileView',
+  enhancedProfile: 'enhancedProfileView'
+};
+
+function showView(viewName) {
+  Object.values(views).forEach(id => document.getElementById(id).classList.add('hidden'));
+  document.getElementById(views[viewName]).classList.remove('hidden');
+  document.querySelectorAll('.top-nav a').forEach(a => a.classList.remove('active'));
+  document.querySelector(`.top-nav a[data-view="${viewName}"]`)?.classList.add('active');
+}
+
+document.querySelectorAll('[data-view]').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    showView(el.dataset.view);
+  });
+});
+
+// ================================
+// 9. TIMER
+// ================================
+let timerSeconds = 300;
+let timerInterval;
+let timerRunning = false;
+const timerDisplay = document.getElementById('timerDisplay');
+const timerMessage = document.getElementById('timerMessage');
+
+document.querySelectorAll('.timer-pill').forEach(btn => {
+  btn.addEventListener('click', function() {
+    timerSeconds = parseInt(this.dataset.minutes) * 60;
+    timerDisplay.textContent = new Date(timerSeconds * 1000).toISOString().substr(14, 5);
+  });
+});
+
+document.getElementById('startTimer').addEventListener('click', () => {
+  if (timerRunning) return;
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    if (timerSeconds > 0) {
+      timerSeconds--;
+      timerDisplay.textContent = new Date(timerSeconds * 1000).toISOString().substr(14, 5);
+    } else {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      user.totalPractices++;
+      user.totalMinutes += 5;
+      user.xp += 10;
+      const today = new Date().toDateString();
+      if (user.lastPracticeDate !== today) {
+        const yesterday = new Date(Date.now() - 86400000).toDateString();
+        if (user.lastPracticeDate === yesterday) user.streak++;
+        else user.streak = 1;
+        user.lastPracticeDate = today;
+      }
+      updateStorage();
+      timerMessage.textContent = 'complete! +10xp';
+      showToast('meditation complete! +10xp');
+    }
+  }, 1000);
+});
+
+document.getElementById('pauseTimer').addEventListener('click', () => {
+  clearInterval(timerInterval);
+  timerRunning = false;
+});
+
+document.getElementById('resetTimer').addEventListener('click', () => {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerSeconds = 300;
+  timerDisplay.textContent = '05:00';
+  timerMessage.textContent = '';
+});
+
+// ================================
+// 10. AUDIO PLAYER
+// ================================
+const audio = new Audio();
+let currentTrack = 0;
+const tracks = [
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
 ];
 
-// ==================================================================
-// To use: replace the existing 'techniques' object in your script
-// with this one. It integrates seamlessly with the existing
-// AppState, UI, and BreathVisual modules. Each technique includes
-// breathTiming where applicable, and benefits for 30 professions.
-// ==================================================================
+document.querySelectorAll('.track-item').forEach((el, i) => {
+  el.addEventListener('click', () => {
+    currentTrack = i;
+    audio.src = tracks[i];
+    audio.play();
+    document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
+    document.getElementById('trackName').innerText = el.innerText.split(' ')[1];
+    showToast(`playing: ${el.innerText}`);
+  });
+});
+
+document.getElementById('playPauseBtn').addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
+  } else {
+    audio.pause();
+    document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i>';
+  }
+});
+
+audio.addEventListener('timeupdate', () => {
+  if (audio.duration) {
+    const percent = (audio.currentTime / audio.duration) * 100;
+    document.getElementById('audioProgressFill').style.width = percent + '%';
+  }
+});
+
+// ================================
+// 11. DIARY
+// ================================
+document.getElementById('saveDiaryEntry').addEventListener('click', () => {
+  const txt = document.getElementById('diaryEntryText').value.trim();
+  if (txt) {
+    user.diary.push({ date: new Date(), text: txt });
+    updateStorage();
+    renderDiary();
+    document.getElementById('diaryEntryText').value = '';
+    showToast('diary entry saved');
+  }
+});
+
+function renderDiary() {
+  const list = document.getElementById('diaryEntriesList');
+  if (!list) return;
+  list.innerHTML = user.diary.slice().reverse().map(e => `
+    <div class="diary-entry">
+      <div class="diary-entry-header">${new Date(e.date).toLocaleDateString()}</div>
+      <p>${e.text}</p>
+    </div>
+  `).join('');
+}
+renderDiary();
+
+// ================================
+// 12. QUOTES
+// ================================
+const quotes = [
+  { text: "Meditation is not a way to make your mind quiet. It is a way to enter into the quiet that is already there.", author: "Osho" },
+  { text: "The mind is a continuous chattering. Meditation is the state of no-mind.", author: "Osho" },
+  { text: "Witnessing is the greatest miracle.", author: "Osho" }
+];
+document.getElementById('quoteContainer').innerHTML = quotes.map(q => `
+  <div class="quote-card">
+    <div>“${q.text}”</div>
+    <div>— ${q.author}</div>
+  </div>
+`).join('');
+
+// ================================
+// 13. CHAT (MOCK)
+// ================================
+const friends = [
+  { id: 1, name: 'Sarah', avatar: 'S', status: 'online' },
+  { id: 2, name: 'Michael', avatar: 'M', status: 'online' },
+  { id: 3, name: 'Elena', avatar: 'E', status: 'offline' }
+];
+function renderFriends() {
+  const list = document.getElementById('friendsList');
+  if (!list) return;
+  list.innerHTML = friends.map(f => `
+    <div class="friend-card" data-id="${f.id}">
+      <div class="friend-avatar">${f.avatar}</div>
+      <div>
+        <div class="friend-name">${f.name}</div>
+        <div>${f.status}</div>
+      </div>
+    </div>
+  `).join('');
+}
+renderFriends();
+
+// ================================
+// 14. SOCIAL FEED
+// ================================
+let posts = JSON.parse(localStorage.getItem('posts')) || [
+  { user: 'Sarah', avatar: 'S', content: 'just finished 20min of dynamic meditation – felt so alive!', time: Date.now() - 3600000, likes: 5 }
+];
+
+function renderFeed() {
+  const feedDiv = document.getElementById('feedPosts');
+  if (!feedDiv) return;
+  feedDiv.innerHTML = posts.map(p => `
+    <div class="feed-post">
+      <div class="post-header">
+        <div class="post-avatar">${p.avatar}</div>
+        <strong>${p.user}</strong>
+        <span class="post-time">${new Date(p.time).toLocaleString()}</span>
+      </div>
+      <div>${p.content}</div>
+      <div class="post-actions">
+        <i class="far fa-heart"></i> ${p.likes}
+      </div>
+    </div>
+  `).join('');
+}
+renderFeed();
+
+document.getElementById('postBtn').addEventListener('click', () => {
+  const text = document.getElementById('newPostText').value.trim();
+  if (text) {
+    posts.unshift({ user: 'You', avatar: '👤', content: text, time: Date.now(), likes: 0 });
+    localStorage.setItem('posts', JSON.stringify(posts));
+    renderFeed();
+    document.getElementById('newPostText').value = '';
+    showToast('post shared');
+  }
+});
+
+// ================================
+// 15. PLAN
+// ================================
+function renderPlan() {
+  const container = document.getElementById('planItems');
+  if (!container) return;
+  container.innerHTML = '';
+  let total = 0;
+  user.plan.forEach(id => {
+    if (techniques[id]) {
+      total += 15;
+      const div = document.createElement('div');
+      div.className = 'plan-item';
+      div.innerHTML = `
+        <div>
+          <h4>${techniques[id].name}</h4>
+          <p>15 min</p>
+        </div>
+        <span class="plan-item-price">+15 min</span>
+        <button class="remove-btn" data-id="${id}"><i class="fas fa-times"></i></button>
+      `;
+      div.querySelector('.remove-btn').addEventListener('click', () => {
+        user.plan = user.plan.filter(i => i !== id);
+        updateStorage();
+        renderPlan();
+        showToast('removed from plan');
+      });
+      container.appendChild(div);
+    }
+  });
+  document.getElementById('planTotal').innerText = total;
+}
+renderPlan();
+
+document.getElementById('applyPromoBtn').addEventListener('click', () => {
+  showToast('promo code applied (demo)');
+});
+
+// ================================
+// 16. NOTIFICATIONS
+// ================================
+document.getElementById('notifBell').addEventListener('click', () => {
+  showToast('🔔 5 notifications');
+});
+
+// ================================
+// 17. BREATHING WIDGET
+// ================================
+const widget = document.getElementById('breathingWidget');
+const circle = document.getElementById('breathCircleWidget');
+const phase = document.getElementById('breathPhaseWidget');
+let breathInterval, breathPhase = 'inhale', breathTime = 4, breathRunning = false;
+
+document.getElementById('fabBreath').addEventListener('click', () => {
+  widget.style.display = widget.style.display === 'flex' ? 'none' : 'flex';
+});
+
+document.getElementById('toggleBreathWidget').addEventListener('click', () => {
+  if (breathRunning) {
+    clearInterval(breathInterval);
+    breathRunning = false;
+    document.getElementById('toggleBreathWidget').textContent = 'start';
+  } else {
+    breathRunning = true;
+    document.getElementById('toggleBreathWidget').textContent = 'stop';
+    breathInterval = setInterval(() => {
+      breathTime--;
+      if (breathTime <= 0) {
+        if (breathPhase === 'inhale') { breathPhase = 'hold'; breathTime = 4; }
+        else if (breathPhase === 'hold') { breathPhase = 'exhale'; breathTime = 6; }
+        else { breathPhase = 'inhale'; breathTime = 4; }
+      }
+      phase.textContent = breathPhase;
+      circle.textContent = breathTime;
+      if (breathPhase === 'inhale') {
+        circle.style.transform = `scale(${0.5 + (4 - breathTime) / 4 * 0.5})`;
+      } else if (breathPhase === 'exhale') {
+        circle.style.transform = `scale(${1 - (4 - breathTime) / 4 * 0.5})`;
+      }
+    }, 1000);
+  }
+});
+
+document.getElementById('breathPatternBtn').addEventListener('click', () => {
+  showToast('4‑4‑6 pattern (inhale‑hold‑exhale)');
+});
+
+// ================================
+// 18. SCROLL TO TOP
+// ================================
+const scrollBtn = document.getElementById('scrollToTop');
+window.addEventListener('scroll', () => {
+  scrollBtn.style.opacity = window.scrollY > 200 ? '1' : '0';
+});
+scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// ================================
+// 19. THEME TOGGLE
+// ================================
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const d = document.documentElement;
+  const cur = d.getAttribute('data-theme');
+  const newTheme = cur === 'dark' ? 'light' : 'dark';
+  d.setAttribute('data-theme', newTheme);
+  themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+  localStorage.setItem('theme', newTheme);
+});
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+
+// ================================
+// 20. CHART (Enhanced Profile)
+// ================================
+const ctx = document.getElementById('progressChart')?.getContext('2d');
+if (ctx) {
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'minutes',
+        data: [20, 35, 15, 40, 25, 50, 30],
+        borderColor: '#9d7bff',
+        tension: 0.3
+      }]
+    }
+  });
+}
+
+// ================================
+// 21. INITIALIZATION
+// ================================
+renderFeatured();
+updateStorage();
+showView('home');
+
+document.getElementById('exploreBtn').addEventListener('click', () => showView('techniques'));
+document.getElementById('dailyBtn').addEventListener('click', () => {
+  const ids = Object.keys(techniques);
+  const randomId = ids[Math.floor(Math.random() * ids.length)];
+  alert(`Today's technique: ${techniques[randomId].name}`);
+});
