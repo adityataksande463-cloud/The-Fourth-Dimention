@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Vigyan Bhairav · Gargantua Black Hole · Complete OS</title>
+  <title>Vigyan Bhairav · 112 Portals · Cosmic OS</title>
   <!-- fonts & icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,11 +14,13 @@
   <!-- three.js core (lightweight) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
+    /* ========== RESET & COSMIC VARIABLES ========== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     :root {
       --bg-deep: #0a0f1f;
       --bg-card: #1a1f35;
@@ -39,6 +41,7 @@
       --border-radius-card: 32px;
       --border-radius-pill: 60px;
     }
+
     [data-theme="light"] {
       --bg-deep: #f0f5ff;
       --bg-card: #ffffff;
@@ -52,6 +55,7 @@
       --accent-glow: #ffb347;
       --glass-border: rgba(0, 0, 0, 0.06);
     }
+
     body {
       font-family: var(--font-body);
       background: var(--bg-deep);
@@ -61,7 +65,8 @@
       overflow-x: hidden;
       position: relative;
     }
-    /* Black hole canvas – fullscreen, behind everything */
+
+    /* ========== 3D CANVAS (BLACK HOLE) ========== */
     #blackhole-canvas {
       position: fixed;
       top: 0;
@@ -71,8 +76,8 @@
       z-index: 0;
       display: block;
       pointer-events: none;
-      background: #0a0f1f; /* fallback color */
     }
+
     .stars, .twinkling {
       position: fixed;
       top: 0;
@@ -83,7 +88,7 @@
       pointer-events: none;
     }
     .stars {
-      background: #0a0f1f url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIxLjUiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuOCIgLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSI4MCIgcj0iMSIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC42IiAvPjwvc3ZnPg==') repeat;
+      background: #0a0f1f url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIxLjUiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuOCIgLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSI4MCByPSIxIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjYiIC8+PC9zdmc+') repeat;
       background-size: 200px 200px;
       animation: starMove 120s linear infinite;
       opacity: 0.5;
@@ -103,6 +108,7 @@
       50% { opacity: 0.7; }
     }
 
+    /* ========== MAIN CONTAINER ========== */
     .container {
       max-width: 1400px;
       margin: 0 auto;
@@ -111,11 +117,12 @@
       z-index: 10;
     }
 
+    /* ========== GLASSMORPHISM BASE ========== */
     .glass-header, .stat-card, .path-card, .tech-card, .modal-content, .timer-section,
     .profile-section, .plan-section, .quotes-section, .diary-section, .chat-section,
     .social-section, .challenge-section, .audio-section, .filter-section, .feed-post,
     .friend-card, .chat-message, .challenge-card, .audio-card, .quote-card, .diary-entry,
-    .achievement-card, .timer-pill, .plan-item, .xp-bar {
+    .achievement-card, .timer-pill, .plan-item, .xp-bar, .design-card, .law-card, .persona-card {
       background: var(--bg-glass);
       backdrop-filter: blur(16px) saturate(200%);
       -webkit-backdrop-filter: blur(16px) saturate(200%);
@@ -125,6 +132,7 @@
       transition: all var(--transition);
     }
 
+    /* ========== HEADER ========== */
     .glass-header {
       display: flex;
       justify-content: space-between;
@@ -163,6 +171,7 @@
       font-weight: 500;
       position: relative;
       padding: 5px 0;
+      cursor: pointer;
     }
     .top-nav a:hover, .top-nav a.active {
       color: var(--accent-secondary);
@@ -222,7 +231,7 @@
       margin-left: 10px;
     }
 
-    /* hero */
+    /* ========== HERO SECTION ========== */
     .hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -267,6 +276,16 @@
     @keyframes hueRotate {
       0% { filter: hue-rotate(0deg); }
       50% { filter: hue-rotate(20deg); }
+    }
+    .hero-sub {
+      color: var(--text-secondary);
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
     }
     .btn-primary, .btn-outline {
       padding: 16px 36px;
@@ -322,6 +341,7 @@
       box-shadow: 0 30px 50px -20px black;
     }
 
+    /* ========== STATS CARDS ========== */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -351,6 +371,7 @@
       letter-spacing: 2px;
     }
 
+    /* ========== XP BAR ========== */
     .xp-bar {
       height: 20px;
       border-radius: 30px;
@@ -364,6 +385,7 @@
       transition: width 0.5s;
     }
 
+    /* ========== SECTION HEADERS ========== */
     .section-header {
       display: flex;
       justify-content: space-between;
@@ -395,6 +417,7 @@
       box-shadow: var(--shadow-glow);
     }
 
+    /* ========== PATH CARDS (16 professions) ========== */
     .path-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -430,6 +453,7 @@
       font-size: 0.85rem;
     }
 
+    /* ========== TECHNIQUE CARDS ========== */
     .tech-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
@@ -579,7 +603,7 @@
       color: var(--accent-secondary);
     }
 
-    /* detail modal */
+    /* ========== DETAIL MODAL ========== */
     .detail-modal {
       position: fixed;
       top: 0;
@@ -619,7 +643,7 @@
       margin: 20px 0;
     }
 
-    /* filter */
+    /* ========== FILTER SECTION ========== */
     .filter-section {
       padding: 25px;
       margin-bottom: 40px;
@@ -662,7 +686,7 @@
       border-color: var(--accent-primary);
     }
 
-    /* breathing widget */
+    /* ========== BREATHING WIDGET ========== */
     #breathingWidget {
       position: fixed;
       bottom: 100px;
@@ -700,7 +724,7 @@
       box-shadow: 0 0 50px var(--accent-primary);
     }
 
-    /* toast */
+    /* ========== TOAST ========== */
     .toast {
       position: fixed;
       bottom: 20px;
@@ -720,9 +744,12 @@
       100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
     }
 
+    /* ========== HIDDEN UTILITY ========== */
     .hidden {
       display: none !important;
     }
+
+    /* ========== SCROLL TO TOP ========== */
     #scrollToTop {
       position: fixed;
       bottom: 30px;
@@ -740,7 +767,7 @@
       box-shadow: 0 0 20px var(--accent-primary);
     }
 
-    /* timer */
+    /* ========== TIMER SECTION ========== */
     .timer-section {
       text-align: center;
       padding: 60px 40px;
@@ -777,7 +804,7 @@
       flex-wrap: wrap;
     }
 
-    /* audio */
+    /* ========== AUDIO SECTION ========== */
     .audio-player {
       display: flex;
       align-items: center;
@@ -815,7 +842,7 @@
       background: rgba(108, 92, 231, 0.2);
     }
 
-    /* chat */
+    /* ========== CHAT SECTION ========== */
     .chat-container {
       display: flex;
       gap: 30px;
@@ -918,7 +945,7 @@
       box-shadow: 0 0 20px var(--accent-secondary);
     }
 
-    /* social feed */
+    /* ========== SOCIAL FEED ========== */
     .feed-post {
       padding: 20px;
       margin-bottom: 15px;
@@ -953,7 +980,7 @@
       cursor: pointer;
     }
 
-    /* challenges */
+    /* ========== CHALLENGES ========== */
     .challenge-card {
       padding: 20px;
       text-align: center;
@@ -972,7 +999,7 @@
       background: var(--accent-tertiary);
     }
 
-    /* plan */
+    /* ========== PLAN SECTION ========== */
     .plan-item {
       display: flex;
       justify-content: space-between;
@@ -1024,7 +1051,7 @@
       border-radius: 30px;
     }
 
-    /* diary */
+    /* ========== DIARY SECTION ========== */
     .diary-entry-form {
       padding: 30px;
       border-radius: 40px;
@@ -1059,7 +1086,7 @@
       font-size: 0.9rem;
     }
 
-    /* quotes */
+    /* ========== QUOTES SECTION ========== */
     .quote-card {
       padding: 20px;
     }
@@ -1073,7 +1100,7 @@
       text-align: right;
     }
 
-    /* achievements */
+    /* ========== ACHIEVEMENTS ========== */
     .achievement-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -1098,6 +1125,7 @@
       filter: grayscale(0.8);
     }
 
+    /* ========== FOOTER ========== */
     .footer-minimal {
       display: flex;
       justify-content: space-between;
@@ -1115,11 +1143,61 @@
     .footer-links a {
       color: var(--text-muted);
       text-decoration: none;
+      cursor: pointer;
     }
     .footer-links a:hover {
       color: var(--accent-primary);
     }
 
+    /* ========== DESIGN SYSTEM CARDS (for psychology/ux) ========== */
+    .design-card {
+      padding: 25px;
+    }
+    .law-card {
+      padding: 20px;
+      border-left: 4px solid var(--accent-secondary);
+      margin-bottom: 20px;
+    }
+    .persona-card {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      padding: 20px;
+    }
+    .persona-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+    .color-palette {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .color-box {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    .color-box span {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px 8px;
+      border-radius: 20px;
+      margin-top: 5px;
+    }
+
+    /* ========== RESPONSIVE ========== */
     @media (max-width: 1024px) {
       .hero {
         grid-template-columns: 1fr;
@@ -1200,13 +1278,13 @@
   </style>
 </head>
 <body>
-  <!-- Black hole canvas (absolutely positioned behind everything) -->
+  <!-- BLACK HOLE CANVAS (FIXED, BEHIND EVERYTHING) -->
   <canvas id="blackhole-canvas"></canvas>
-  <!-- Stars layers (optional, enhance background) -->
+  <!-- COSMIC BACKGROUND LAYERS -->
   <div class="stars"></div>
   <div class="twinkling"></div>
 
-  <!-- floating widgets -->
+  <!-- FLOATING WIDGETS -->
   <button id="scrollToTop" class="btn-outline"><i class="fas fa-arrow-up"></i></button>
   <div id="breathingWidget">
     <h4>🌬️ breath guide</h4>
@@ -1216,7 +1294,9 @@
   </div>
   <button id="fabBreath" style="position:fixed; bottom:100px; right:30px; width:60px; height:60px; border-radius:50%; background:var(--accent-secondary); color:white; border:none; font-size:2rem; cursor:pointer; z-index:998; box-shadow:0 0 30px var(--accent-secondary);"><i class="fas fa-lungs"></i></button>
 
+  <!-- MAIN CONTAINER -->
   <div class="container">
+    <!-- HEADER -->
     <header class="glass-header">
       <div class="logo-area">
         <h1>VIGYAN BHAIRAV</h1>
@@ -1235,6 +1315,7 @@
         <a href="#" data-view="plan">My Plan</a>
         <a href="#" data-view="profile">Profile</a>
         <a href="#" data-view="enhancedProfile">Cosmic Me</a>
+        <a href="#" data-view="design">Design System</a>
         <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
         <span class="user-greeting">Hi, Seeker</span>
         <div class="notif-icon" id="notifBell"><i class="fas fa-bell"></i><span class="notif-count">5</span></div>
@@ -1249,7 +1330,7 @@
           <span class="chip">📅 today's special · witness the breath</span>
           <div class="totd-badge" id="totdBadge">🔒 Technique of the Day: Breath Awareness</div>
           <h2>Explore Your <span class="gradient-text">Inner Cosmos</span></h2>
-          <p class="hero-sub" style="color:var(--text-secondary);">112 authentic techniques, social feed, chat, audio, challenges, timer, diary, quotes & cosmic visuals.</p>
+          <p class="hero-sub">112 authentic techniques, social feed, chat, audio, challenges, timer, diary, quotes & cosmic visuals.</p>
           <div class="hero-buttons">
             <button class="btn-primary" id="exploreBtn">Start Journey →</button>
             <button class="btn-outline" id="dailyBtn">Daily Technique</button>
@@ -1298,7 +1379,7 @@
     <!-- QUOTES VIEW -->
     <div id="quotesView" class="hidden quotes-section">
       <h2>🌠 infinite wisdom</h2>
-      <div id="quoteContainer" class="quotes-grid"></div>
+      <div id="quoteContainer" class="quotes-grid" style="display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));"></div>
     </div>
 
     <!-- DIARY VIEW -->
@@ -1424,35 +1505,109 @@
       <div id="achievementsGrid" class="achievement-grid"></div>
     </div>
 
+    <!-- DESIGN SYSTEM VIEW (UI/UX psychology, personas, etc.) -->
+    <div id="designView" class="hidden">
+      <h2 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 30px;">🎨 UI/UX Design System</h2>
+      <div class="grid-2">
+        <div class="design-card">
+          <h3>High-Fidelity vs Low-Fidelity</h3>
+          <p style="color: var(--text-secondary);">High: polished, final colors, animations. Low: wireframes, quick prototypes.</p>
+        </div>
+        <div class="design-card">
+          <h3>Layout</h3>
+          <p>8px grid, consistent spacing, responsive.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="design-card">
+          <h3>Colors</h3>
+          <div class="color-palette">
+            <div class="color-box" style="background:#6c5ce7;">#6c5ce7<span>Primary</span></div>
+            <div class="color-box" style="background:#ffb3a0;">#ffb3a0<span>Secondary</span></div>
+            <div class="color-box" style="background:#7fdbda;">#7fdbda<span>Tertiary</span></div>
+            <div class="color-box" style="background:#0a0f1f;">#0a0f1f<span>Deep</span></div>
+          </div>
+        </div>
+        <div class="design-card">
+          <h3>Typography</h3>
+          <p style="font-family: 'Outfit', sans-serif; font-weight:800;">Outfit (Headings)</p>
+          <p style="font-family: 'Inter', sans-serif;">Inter (Body)</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="design-card">
+          <h3>Iconography</h3>
+          <div style="font-size:2rem; display:flex; gap:10px;">
+            <i class="fas fa-home"></i><i class="fas fa-heart"></i><i class="fas fa-brain"></i><i class="fas fa-lungs"></i>
+          </div>
+        </div>
+        <div class="design-card">
+          <h3>Spacing</h3>
+          <p>4,8,16,24,32,48,64px</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="design-card">
+          <h3>User Personas</h3>
+          <div class="persona-card">
+            <div class="persona-avatar">👨‍🎓</div>
+            <div><h4>Alex, 22</h4><p>Student, needs focus</p></div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-avatar">👩‍💼</div>
+            <div><h4>Maya, 35</h4><p>CEO, decision fatigue</p></div>
+          </div>
+        </div>
+        <div class="design-card">
+          <h3>User Flows</h3>
+          <p>Home → Techniques → Filter → Select → Start Timer</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="design-card">
+          <h3>Design Psychology</h3>
+          <div class="law-card"><strong>Hick's Law</strong> – fewer choices, faster decisions</div>
+          <div class="law-card"><strong>Fitts's Law</strong> – larger buttons, easy to tap</div>
+          <div class="law-card"><strong>Gestalt Principles</strong> – grouping, proximity</div>
+          <div class="law-card"><strong>Color Psychology</strong> – purple (spirituality), peach (warmth)</div>
+        </div>
+        <div class="design-card">
+          <h3>Visual Branding</h3>
+          <p>Cosmic, serene, mysterious – with black hole as centerpiece</p>
+        </div>
+      </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="footer-minimal">
       <div class="footer-links">
         <a href="#" data-view="home">Home</a>
         <a href="#" data-view="techniques">Techniques</a>
         <a href="#" data-view="quotes">Quotes</a>
+        <a href="#" data-view="design">Design</a>
         <a href="#" data-view="enhancedProfile">Cosmic Me</a>
       </div>
-      <div>© 2026 · 112 portals of imagination</div>
+      <div>© 2026 · 112 portals of imagination · intertoons.com</div>
     </footer>
   </div>
 
   <script>
-    // ========== BLACK HOLE (Three.js) - SIMPLIFIED & GUARANTEED VISIBLE ==========
+    // ========== BLACK HOLE (Three.js) - RELIABLE & VISIBLE ==========
     (function initBlackHole() {
       const canvas = document.getElementById('blackhole-canvas');
       if (!canvas) return;
 
       try {
-        // Basic Three.js setup
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0a0f1f); // dark blue-black
+        scene.background = new THREE.Color(0x0a0f1f); // match dark theme
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 0, 12);
+        camera.position.set(0, 2, 12);
+        camera.lookAt(0, 0, 0);
 
         // Lights
         const ambient = new THREE.AmbientLight(0x404060);
@@ -1463,7 +1618,7 @@
 
         // Starfield (simple)
         const starGeo = new THREE.BufferGeometry();
-        const starCount = 1500;
+        const starCount = 2000;
         const starPositions = new Float32Array(starCount * 3);
         for (let i = 0; i < starCount; i++) {
           const r = 50 + Math.random() * 80;
@@ -1514,7 +1669,6 @@
         const particles = new THREE.Points(particleGeo, particleMat);
         scene.add(particles);
 
-        // Simple animation
         function animate() {
           requestAnimationFrame(animate);
           disk.rotation.y += 0.002;
@@ -1534,28 +1688,18 @@
         console.log('Black hole initialized');
       } catch (e) {
         console.error('Three.js error:', e);
-        // Fallback: draw a simple circle on canvas
+        // Fallback: simple canvas gradient
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         function drawFallback() {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.fillStyle = '#0a0f1f';
+          const gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 10, canvas.width/2, canvas.height/2, 300);
+          gradient.addColorStop(0, '#000');
+          gradient.addColorStop(0.5, '#6c5ce7');
+          gradient.addColorStop(1, '#0a0f1f');
+          ctx.fillStyle = gradient;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
-          const cx = canvas.width / 2;
-          const cy = canvas.height / 2;
-          const radius = Math.min(canvas.width, canvas.height) * 0.2;
-          ctx.beginPath();
-          ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
-          ctx.fillStyle = 'black';
-          ctx.fill();
-          ctx.shadowColor = '#ffaa33';
-          ctx.shadowBlur = 50;
-          ctx.beginPath();
-          ctx.arc(cx, cy, radius * 1.5, 0, 2 * Math.PI);
-          ctx.strokeStyle = '#ffaa33';
-          ctx.lineWidth = 4;
-          ctx.stroke();
           requestAnimationFrame(drawFallback);
         }
         drawFallback();
@@ -1568,6 +1712,7 @@
     const postures = ['Sukhasana','Siddhasana','Padmasana','Vajrasana','Shavasana'];
     const mudras = ['Chin mudra','Dhyana mudra','Jnana mudra','Khechari mudra','Shambhavi mudra'];
 
+    // Authentic first two
     techniques[1] = {
       id:1,
       name:'Witnessing the Breath',
@@ -1587,11 +1732,7 @@
         'When thoughts arise, gently return to the breath.',
         'Continue for 15-20 minutes.'
       ],
-      benefits:{
-        student:'improves concentration',
-        employee:'reduces stress',
-        anxious:'calms the mind'
-      }
+      benefits:{ student:'improves concentration', employee:'reduces stress', anxious:'calms the mind' }
     };
     techniques[2] = {
       id:2,
@@ -1611,10 +1752,7 @@
         'Allow the inhale to arise naturally.',
         'Continue for 15 minutes.'
       ],
-      benefits:{
-        ceo:'sharpens intuition',
-        seeker:'deepens stillness'
-      }
+      benefits:{ ceo:'sharpens intuition', seeker:'deepens stillness' }
     };
     // Generate remaining 110
     for (let i = 3; i <= 112; i++) {
@@ -1663,7 +1801,7 @@
       localStorage.setItem('plan', JSON.stringify(user.plan));
       localStorage.setItem('xp', user.xp);
       localStorage.setItem('level', user.level);
-
+      // Update DOM
       document.getElementById('totalPracticed').textContent = user.totalPractices;
       document.getElementById('totalMinutes').textContent = user.totalMinutes;
       document.getElementById('currentStreak').textContent = user.streak;
@@ -1796,7 +1934,8 @@
     const views = {
       home: 'homeView', techniques: 'techniquesView', quotes: 'quotesView', diary: 'diaryView',
       social: 'socialView', chat: 'chatView', audio: 'audioView', challenges: 'challengesView',
-      timer: 'timerView', plan: 'planView', profile: 'profileView', enhancedProfile: 'enhancedProfileView'
+      timer: 'timerView', plan: 'planView', profile: 'profileView', enhancedProfile: 'enhancedProfileView',
+      design: 'designView'
     };
     function showView(v) {
       Object.values(views).forEach(id => document.getElementById(id).classList.add('hidden'));
