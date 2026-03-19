@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Vigyan Bhairav · Cosmic OS · 3D ultimate</title>
+  <title>Vigyan Bhairav · Cosmic OS · Physical practices · Ultimate</title>
   <!-- fonts & icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,6 @@
     }
   </script>
   <style>
-    /* ----- reset & advanced cosmic variables ----- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg-deep: #0a0718;
@@ -79,11 +78,11 @@
     .container { max-width: 1400px; margin: 0 auto; padding: 20px 30px; position: relative; z-index: 20; }
 
     /* glassmorphism with 3D depth */
-    .glass-header, .stat-card, .path-card, .tech-card, .modal-content, .timer-section,
+    .glass-header, .stat-card, .path-card, .tech-card, .physical-card, .modal-content, .timer-section,
     .profile-section, .plan-section, .quotes-section, .diary-section, .chat-section,
     .social-section, .challenge-section, .audio-section, .filter-section, .moon-widget,
     .feed-post, .friend-card, .chat-message, .challenge-card, .audio-card, .quote-card,
-    .diary-entry, .achievement-card, .timer-pill, .plan-item, .community-quote, .xp-bar {
+    .diary-entry, .achievement-card, .timer-pill, .plan-item, .community-quote, .xp-bar, .routine-card, .mood-card {
       background: var(--bg-glass);
       backdrop-filter: blur(16px) saturate(200%);
       -webkit-backdrop-filter: blur(16px) saturate(200%);
@@ -93,7 +92,6 @@
       transition: all var(--transition);
     }
 
-    /* header with interactive 3D tilt */
     .glass-header {
       display: flex; justify-content: space-between; align-items: center; padding: 12px 30px;
       border-radius: var(--border-radius-pill); margin-bottom: 40px;
@@ -136,7 +134,7 @@
     }
     .user-greeting { font-weight: 600; color: var(--accent-secondary); margin-left: 10px; }
 
-    /* hero with interactive 3D blackhole */
+    /* hero */
     .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-bottom: 60px; }
     .hero-content { max-width: 550px; }
     .chip, .totd-badge {
@@ -203,23 +201,23 @@
     }
     .path-card i { font-size: 3rem; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-    /* technique cards */
-    .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px,1fr)); gap: 25px; }
-    .tech-card {
+    /* technique & physical cards */
+    .tech-grid, .physical-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px,1fr)); gap: 25px; }
+    .tech-card, .physical-card {
       padding: 25px; cursor: pointer; transform-style: preserve-3d; transition: transform 0.3s, box-shadow 0.3s;
       position: relative; overflow: hidden;
     }
-    .tech-card:hover {
+    .tech-card:hover, .physical-card:hover {
       transform: perspective(600px) rotateX(1deg) rotateY(2deg) translateY(-8px);
       box-shadow: 0 30px 40px -15px black, 0 0 40px var(--accent-primary);
       border-color: var(--accent-primary);
     }
-    .tech-card::after {
+    .tech-card::after, .physical-card::after {
       content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
       background: radial-gradient(circle at 50% 50%, rgba(157,123,255,0.2), transparent 70%);
       opacity: 0; transition: opacity 0.5s; pointer-events: none;
     }
-    .tech-card:hover::after { opacity: 1; }
+    .tech-card:hover::after, .physical-card:hover::after { opacity: 1; }
 
     /* floating breathing widget */
     #breathingWidget {
@@ -258,6 +256,17 @@
     .challenge-progress { height: 10px; background: rgba(255,255,255,0.2); border-radius: 5px; margin: 10px 0; overflow: hidden; }
     .challenge-progress-fill { height: 100%; background: var(--accent-tertiary); }
 
+    /* routine builder */
+    .routine-builder { padding: 30px; border-radius: 40px; margin: 30px 0; }
+    .selected-practices { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+    .practice-chip { background: var(--accent-primary); padding: 8px 16px; border-radius: 40px; display: inline-flex; align-items: center; gap: 8px; }
+    .practice-chip i { cursor: pointer; }
+
+    /* mood tracker */
+    .mood-selector { display: flex; gap: 15px; justify-content: center; margin: 20px 0; }
+    .mood-emoji { font-size: 2.5rem; cursor: pointer; transition: 0.2s; }
+    .mood-emoji:hover { transform: scale(1.2); }
+
     /* footer */
     .footer-minimal {
       display: flex; justify-content: space-between; align-items: center; padding: 40px 0;
@@ -282,7 +291,11 @@
     }
 
     .hidden { display: none !important; }
-    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--accent-primary); color: white; padding: 12px 24px; border-radius: 40px; z-index: 3000; animation: fadeInOut 3s; }
+    .toast {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: var(--accent-primary); color: white; padding: 12px 24px;
+      border-radius: 40px; z-index: 3000; animation: fadeInOut 3s;
+    }
     @keyframes fadeInOut { 0% { opacity:0; } 10% { opacity:1; } 90% { opacity:1; } 100% { opacity:0; } }
   </style>
 </head>
@@ -310,7 +323,9 @@
       </div>
       <nav class="top-nav">
         <a href="#" data-view="home" class="active">Home</a>
-        <a href="#" data-view="techniques">Techniques</a>
+        <a href="#" data-view="techniques">Meditations</a>
+        <a href="#" data-view="physical">Physical</a>
+        <a href="#" data-view="routines">Routines</a>
         <a href="#" data-view="quotes">Quotes</a>
         <a href="#" data-view="diary">Diary</a>
         <a href="#" data-view="social">Social</a>
@@ -323,7 +338,7 @@
         <a href="#" data-view="enhancedProfile">Cosmic Me</a>
         <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
         <span class="user-greeting">Hi, Gabriel</span>
-        <div class="notif-icon" id="notifBell"><i class="fas fa-bell"></i><span class="notif-count">3</span></div>
+        <div class="notif-icon" id="notifBell"><i class="fas fa-bell"></i><span class="notif-count">5</span></div>
         <div class="cart-icon" data-view="plan"><i class="fas fa-shopping-bag"></i><span class="cart-count" id="cartCount">0</span></div>
       </nav>
     </header>
@@ -335,7 +350,7 @@
           <span class="chip">📅 today's special · witness the breath</span>
           <div class="totd-badge" id="totdBadge">🔍 Breath Awareness (technique #1)</div>
           <h2>Explore Your <span class="gradient-text">Inner Cosmos</span></h2>
-          <p class="hero-sub" style="color:var(--text-secondary);">112 authentic portals · social · chat · audio · challenges · timer · diary · quotes</p>
+          <p class="hero-sub" style="color:var(--text-secondary);">112 meditations · 30+ physical practices · routines · social · chat · audio · challenges · timer · diary · quotes</p>
           <div class="hero-buttons">
             <button class="btn-primary" id="exploreBtn">Start Journey <i class="fas fa-arrow-right"></i></button>
             <button class="btn-outline" id="dailyBtn">Daily Technique</button>
@@ -350,19 +365,62 @@
         <div class="stat-card"><div class="stat-value" id="totalMinutes">6,304</div><div class="stat-label">MINUTES</div></div>
         <div class="stat-card"><div class="stat-value" id="currentStreak">1</div><div class="stat-label">DAY STREAK</div></div>
       </div>
+      <!-- Mood tracker quick -->
+      <div class="mood-card" style="padding:20px; margin-bottom:30px; text-align:center;">
+        <h4>How are you feeling right now?</h4>
+        <div class="mood-selector">
+          <span class="mood-emoji" data-mood="amazing">😊</span>
+          <span class="mood-emoji" data-mood="good">🙂</span>
+          <span class="mood-emoji" data-mood="neutral">😐</span>
+          <span class="mood-emoji" data-mood="tired">😴</span>
+          <span class="mood-emoji" data-mood="stressed">😰</span>
+        </div>
+      </div>
       <!-- Recommended for you -->
-      <section><div class="section-header" style="display:flex; justify-content:space-between; align-items:center; margin:40px 0 20px;"><h3>✨ recommended for you</h3><a href="#" class="view-all" data-view="techniques">more →</a></div><div class="tech-grid" id="recommendedGrid"></div></section>
+      <section><div class="section-header" style="display:flex; justify-content:space-between; align-items:center; margin:40px 0 20px;"><h3>✨ recommended meditations</h3><a href="#" class="view-all" data-view="techniques">more →</a></div><div class="tech-grid" id="recommendedGrid"></div></section>
+      <section><div class="section-header" style="display:flex; justify-content:space-between; align-items:center; margin:40px 0 20px;"><h3>🧘 recommended physical practices</h3><a href="#" class="view-all" data-view="physical">more →</a></div><div class="physical-grid" id="recommendedPhysicalGrid"></div></section>
       <section><div class="section-header" style="display:flex; justify-content:space-between; align-items:center; margin:40px 0 20px;"><h3>choose your path <span style="font-size:2rem; margin-left:10px;">→</span></h3></div><div class="path-grid" id="pathGrid"></div></section>
-      <section><div class="section-header" style="display:flex; justify-content:space-between; align-items:center; margin:40px 0 20px;"><h3>featured techniques</h3><a href="#" class="view-all" data-view="techniques">view all 112 →</a></div><div class="tech-grid" id="featuredGrid"></div></section>
     </div>
 
-    <!-- TECHNIQUES VIEW -->
+    <!-- TECHNIQUES VIEW (Meditations) -->
     <div id="techniquesView" class="hidden">
       <div class="filter-section" style="padding:25px; margin-bottom:40px;">
-        <div class="filter-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;"><h3>All 112 techniques</h3><input type="text" id="searchInput" class="search-box" placeholder="🔭 search by name or category..."></div>
-        <div class="category-filters" id="categoryFilters" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;"><span class="category-filter active" data-cat="all">All</span></div>
+        <div class="filter-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;"><h3>All 112 meditations</h3><input type="text" id="searchInput" class="search-box" placeholder="🔭 search..."></div>
+        <div class="category-filters" id="categoryFilters" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;"></div>
       </div>
       <div class="tech-grid" id="techniquesGrid"></div>
+    </div>
+
+    <!-- PHYSICAL PRACTICES VIEW -->
+    <div id="physicalView" class="hidden">
+      <div class="filter-section" style="padding:25px; margin-bottom:40px;">
+        <div class="filter-header"><h3>Physical practices (asanas, mudras, pranayama)</h3><input type="text" id="physicalSearch" class="search-box" placeholder="🔭 search..."></div>
+        <div class="category-filters" id="physicalCategoryFilters" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;">
+          <span class="category-filter active" data-cat="all">All</span>
+          <span class="category-filter" data-cat="asana">Asana</span>
+          <span class="category-filter" data-cat="pranayama">Pranayama</span>
+          <span class="category-filter" data-cat="mudra">Mudra</span>
+          <span class="category-filter" data-cat="kriya">Kriya</span>
+        </div>
+      </div>
+      <div class="physical-grid" id="physicalGrid"></div>
+    </div>
+
+    <!-- ROUTINES VIEW -->
+    <div id="routinesView" class="hidden">
+      <h2>🧘 Daily Routine Builder</h2>
+      <div class="routine-builder">
+        <h3>Create your own practice sequence</h3>
+        <div class="selected-practices" id="selectedPractices"></div>
+        <div style="display:flex; gap:15px; flex-wrap:wrap;">
+          <button class="btn-outline" id="addMeditationBtn">Add meditation</button>
+          <button class="btn-outline" id="addPhysicalBtn">Add physical practice</button>
+          <button class="btn-primary" id="startRoutineBtn">Start routine</button>
+          <button class="btn-outline" id="saveRoutineBtn">Save routine</button>
+        </div>
+      </div>
+      <h3>Your saved routines</h3>
+      <div id="savedRoutines" class="tech-grid"></div>
     </div>
 
     <!-- QUOTES VIEW -->
@@ -379,9 +437,10 @@
     <div id="socialView" class="hidden social-section">
       <h2>🌐 cosmic feed</h2>
       <div id="feedPosts"></div>
+      <div style="margin-top:30px;"><textarea id="newPostText" placeholder="Share your experience..." style="width:100%; padding:15px; border-radius:30px; background:var(--bg-glass); border:1px solid var(--glass-border); color:var(--text-primary);"></textarea><button class="btn-primary" id="postBtn" style="margin-top:10px;">Post</button></div>
     </div>
 
-    <!-- CHAT VIEW -->
+    <!-- CHAT VIEW (mock) -->
     <div id="chatView" class="hidden chat-section">
       <h2>💬 cosmic chat</h2>
       <div class="chat-container" style="display:flex; gap:30px; height:600px;"><div class="friends-list" id="friendsList" style="width:280px; overflow-y:auto; padding:15px; border-radius:40px;"></div><div class="chat-area" style="flex:1; display:flex; flex-direction:column; border-radius:40px; overflow:hidden;"><div class="chat-header" id="chatHeader" style="padding:20px; border-bottom:1px solid var(--glass-border);">select friend</div><div class="chat-messages" id="chatMessages" style="flex:1; overflow-y:auto; padding:20px;"></div><div class="chat-input-area" style="display:flex; gap:10px; padding:20px;"><input type="text" id="chatInput" placeholder="..." disabled style="flex:1; padding:12px 20px; border-radius:40px; background:var(--bg-glass); border:1px solid var(--glass-border); color:var(--text-primary);"><button id="chatSendBtn" disabled style="width:50px; height:50px; border-radius:50%; background:var(--accent-primary); color:white; border:none;"><i class="fas fa-paper-plane"></i></button></div></div></div>
@@ -396,15 +455,16 @@
     <!-- CHALLENGES VIEW -->
     <div id="challengesView" class="hidden challenge-section">
       <h2>🏆 challenges</h2>
-      <div class="challenge-card" style="padding:20px; margin-bottom:20px;"><h3>7‑day streak</h3><p>Meditate every day for a week</p><div class="challenge-progress"><div class="challenge-progress-fill" style="width:28%"></div></div><span>2/7 days completed</span><button class="btn-outline join-challenge" style="margin-top:10px;">join</button></div>
-      <div class="challenge-card" style="padding:20px; margin-bottom:20px;"><h3>30‑min total</h3><p>30 minutes of practice</p><div class="challenge-progress"><div class="challenge-progress-fill" style="width:60%"></div></div><span>18/30 min</span><button class="btn-outline join-challenge" style="margin-top:10px;">join</button></div>
+      <div class="challenge-card" style="padding:20px; margin-bottom:20px;"><h3>7‑day meditation streak</h3><p>Meditate every day for a week</p><div class="challenge-progress"><div class="challenge-progress-fill" style="width:28%"></div></div><span>2/7 days completed</span><button class="btn-outline join-challenge" data-challenge="med7">join</button></div>
+      <div class="challenge-card" style="padding:20px; margin-bottom:20px;"><h3>30‑min total physical</h3><p>30 minutes of asanas</p><div class="challenge-progress"><div class="challenge-progress-fill" style="width:60%"></div></div><span>18/30 min</span><button class="btn-outline join-challenge" data-challenge="phys30">join</button></div>
+      <div class="challenge-card" style="padding:20px; margin-bottom:20px;"><h3>Morning routine</h3><p>Complete 5 morning practices</p><div class="challenge-progress"><div class="challenge-progress-fill" style="width:40%"></div></div><span>2/5</span><button class="btn-outline join-challenge" data-challenge="morning">join</button></div>
     </div>
 
     <!-- TIMER VIEW -->
     <div id="timerView" class="hidden timer-section" style="text-align:center; padding:60px 40px;">
       <h2>⏱️ meditation timer</h2>
       <div class="timer-display" id="timerDisplay" style="font-size:6rem; font-family:var(--font-display); font-weight:800; color:var(--accent-secondary); margin:20px 0;">05:00</div>
-      <div class="timer-options" style="display:flex; gap:15px; justify-content:center; margin:20px 0;"><button class="timer-pill" data-minutes="5" style="padding:12px 24px; border-radius:50px; cursor:pointer;">5 min</button><button class="timer-pill" data-minutes="10">10 min</button><button class="timer-pill" data-minutes="15">15 min</button><button class="timer-pill" data-minutes="20">20 min</button></div>
+      <div class="timer-options" style="display:flex; gap:15px; justify-content:center; margin:20px 0;"><button class="timer-pill" data-minutes="5">5 min</button><button class="timer-pill" data-minutes="10">10 min</button><button class="timer-pill" data-minutes="15">15 min</button><button class="timer-pill" data-minutes="20">20 min</button></div>
       <div class="timer-controls" style="display:flex; gap:20px; justify-content:center; margin:20px 0;"><button class="btn-primary" id="startTimer">start</button><button class="btn-outline" id="pauseTimer">pause</button><button class="btn-outline" id="resetTimer">reset</button></div>
       <p id="timerMessage"></p>
     </div>
@@ -421,9 +481,11 @@
       <div class="stats-grid"><div class="stat-card"><span id="profileTotalPractices">0</span><div>practices</div></div><div class="stat-card"><span id="profileTotalMinutes">0</span><div>minutes</div></div><div class="stat-card"><span id="profileStreakDays">0</span><div>streak</div></div></div>
       <canvas id="progressChart" width="400" height="200" style="margin:30px 0; width:100%; height:auto;"></canvas>
       <div id="achievementsGrid" class="achievement-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:20px; margin:30px 0;"></div>
+      <h3>Mood history</h3>
+      <div id="moodHistory" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px;"></div>
     </div>
 
-    <footer class="footer-minimal"><div class="footer-links" style="display:flex; gap:30px; flex-wrap:wrap;"><a href="#" data-view="home">Home</a><a href="#" data-view="techniques">Techniques</a><a href="#" data-view="enhancedProfile">Cosmic Me</a></div><div>© 2026 · 112 dimensions</div></footer>
+    <footer class="footer-minimal"><div class="footer-links" style="display:flex; gap:30px; flex-wrap:wrap;"><a href="#" data-view="home">Home</a><a href="#" data-view="techniques">Meditations</a><a href="#" data-view="physical">Physical</a><a href="#" data-view="enhancedProfile">Cosmic Me</a></div><div>© 2026 · 112 dimensions</div></footer>
   </div>
 
   <script type="module">
@@ -433,18 +495,15 @@
     import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
     import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
     
-    // Setup main three canvas
     const canvas = document.getElementById('three-canvas');
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     
-    const scene = new THREE.Scene();
-    scene.background = null;
+    const scene = new THREE.Scene(); scene.background = null;
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 0, 15);
     
-    // lights
     const ambient = new THREE.AmbientLight(0x404060); scene.add(ambient);
     const dirLight = new THREE.DirectionalLight(0xffffff, 0.8); dirLight.position.set(1, 1, 1); scene.add(dirLight);
     
@@ -466,20 +525,16 @@
     starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     starGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     const starMat = new THREE.PointsMaterial({ size: 0.1, vertexColors: true, transparent: true, blending: THREE.AdditiveBlending });
-    const stars = new THREE.Points(starGeo, starMat);
-    scene.add(stars);
+    const stars = new THREE.Points(starGeo, starMat); scene.add(stars);
     
-    // central glow
     const coreGeo = new THREE.SphereGeometry(1.2, 32, 32);
     const coreMat = new THREE.MeshStandardMaterial({ color: 0x9d7bff, emissive: 0x4a2b9c, emissiveIntensity: 1.5 });
     const core = new THREE.Mesh(coreGeo, coreMat); scene.add(core);
     
-    // rings
     const ringGeo = new THREE.TorusGeometry(2.5, 0.1, 16, 100);
     const ringMat = new THREE.MeshStandardMaterial({ color: 0xffb3a0, emissive: 0xff6b4a, emissiveIntensity: 2, transparent: true, opacity: 0.7 });
     const ring = new THREE.Mesh(ringGeo, ringMat); ring.rotation.x = Math.PI / 2; scene.add(ring);
     
-    // floating particles
     const pCount = 2000;
     const pGeo = new THREE.BufferGeometry();
     const pPos = new Float32Array(pCount * 3);
@@ -495,14 +550,12 @@
     const pMat = new THREE.PointsMaterial({ color: 0x7fdbda, size: 0.05, blending: THREE.AdditiveBlending });
     const particles = new THREE.Points(pGeo, pMat); scene.add(particles);
     
-    // post-processing bloom
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
     bloomPass.threshold = 0.1; bloomPass.strength = 1.2; bloomPass.radius = 0.2;
     const composer = new EffectComposer(renderer);
     composer.addPass(renderScene); composer.addPass(bloomPass);
     
-    // interactive mouse rotation
     let mouseX = 0, mouseY = 0;
     window.addEventListener('mousemove', (e) => {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -526,23 +579,36 @@
       composer.setSize(window.innerWidth, window.innerHeight);
     });
     
-    // ========== TECHNIQUES DATABASE (112) ==========
+    // ========== TECHNIQUES DATABASE (112 meditations) ==========
     const techniques = {};
     const categories = ['breath','void','body','heart','sound','gaze','energy','light','sleep','emotion'];
     for (let i = 1; i <= 112; i++) {
       let cat = categories[i % categories.length];
       techniques[i] = {
-        id: i,
+        id: i, type: 'meditation',
         name: i <= 4 ? ['Witnessing the Breath','Pause Between Breaths','Heart Practice','Sound Practice'][i-1] : `Technique ${i}: ${cat} portal`,
         sanskrit: i <= 4 ? ['Śvāsa–Praśvāsa Dharana','Madhya Dharana','Sanskrit 3','Sanskrit 4'][i-1] : `Sanskrit ${i}`,
         category: cat,
         essence: i <= 2 ? ['Breath awareness anchors consciousness.','Rest in the gap after exhale.'][i-1] : `A profound ${cat} practice.`,
         sitting: i % 2 ? 'Sukhasana' : 'Siddhasana',
         mudra: i % 2 ? 'Chin mudra' : 'Dhyana mudra',
-        breath: 'Natural',
+        duration: 15,
         benefits: { student:'focus', employee:'calm', ceo:'clarity', seeker:'insight' },
         tags: [cat, i < 3 ? 'beginner' : 'advanced']
       };
+    }
+    
+    // ========== PHYSICAL PRACTICES DATABASE ==========
+    const physicalPractices = {
+      1: { id:1, type:'physical', name:'Tadasana (Mountain Pose)', category:'asana', sanskrit:'Tadasana', essence:'Stand tall, ground through feet.', duration:2, difficulty:'beginner', instructions:['Stand with feet together','Arms by sides','Lift kneecaps','Reach crown upward'] },
+      2: { id:2, type:'physical', name:'Adho Mukha Svanasana', category:'asana', sanskrit:'Adho Mukha Svanasana', essence:'Downward facing dog', duration:3, difficulty:'intermediate', instructions:['On hands and knees','Lift hips up','Press heels down'] },
+      3: { id:3, type:'physical', name:'Nadi Shodhana', category:'pranayama', sanskrit:'Nadi Shodhana', essence:'Alternate nostril breathing', duration:5, difficulty:'beginner', instructions:['Sit comfortably','Close right nostril','Inhale left','Close left, exhale right'] },
+      4: { id:4, type:'physical', name:'Jnana Mudra', category:'mudra', sanskrit:'Jnana Mudra', essence:'Gesture of knowledge', duration:10, difficulty:'beginner', instructions:['Touch index to thumb','Extend other fingers','Rest on knees'] },
+      5: { id:5, type:'physical', name:'Kapalabhati', category:'kriya', sanskrit:'Kapalabhati', essence:'Skull shining breath', duration:3, difficulty:'advanced', instructions:['Sit upright','Forceful exhales','Passive inhales'] },
+    };
+    for (let i=6; i<=30; i++) {
+      let cat = ['asana','pranayama','mudra','kriya'][i%4];
+      physicalPractices[i] = { id:i, type:'physical', name:`Physical ${i} (${cat})`, category:cat, sanskrit:`Sanskrit ${i}`, essence:`A profound ${cat} practice.`, duration:5, difficulty:i%3===0?'beginner':'intermediate', instructions:['Step 1','Step 2','Step 3'] };
     }
     
     // ========== USER STATE ==========
@@ -557,7 +623,15 @@
       likedQuotes: [],
       xp: 450,
       level: 4,
-      achievements: ['first_breath','streak_7']
+      achievements: ['first_breath','streak_7'],
+      moodEntries: [], // { date, mood }
+      routines: [], // saved routines
+      currentRoutine: [], // list of practice IDs
+      feed: [
+        { id:1, user:'Sarah', content:'Just finished a 20‑min session. Felt incredible!', time:Date.now()-3600000, likes:5 },
+        { id:2, user:'Michael', content:'Loving the new Heart Center meditation.', time:Date.now()-7200000, likes:2 },
+        { id:3, user:'Elena', content:'7‑day streak! 🔥', time:Date.now()-86400000, likes:12 }
+      ]
     };
     
     // ========== UI RENDERING FUNCTIONS ==========
@@ -565,65 +639,80 @@
       const div = document.createElement('div'); div.className = 'tech-card'; div.dataset.id = t.id;
       const isFav = user.favorites.includes(t.id);
       div.innerHTML = `
-        <div class="tech-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid var(--glass-border); padding-bottom:12px;"><span class="tech-number" style="color:var(--accent-secondary); font-weight:700;">#${t.id}</span><span class="tech-sanskrit" style="color:var(--accent-tertiary);">${t.sanskrit}</span></div>
+        <div class="tech-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><span class="tech-number" style="color:var(--accent-secondary); font-weight:700;">#${t.id}</span><span class="tech-sanskrit" style="color:var(--accent-tertiary);">${t.sanskrit}</span></div>
         <div class="tech-name" style="font-size:1.6rem; font-weight:700; margin-bottom:10px;">${t.name}</div><div class="tech-category" style="display:inline-block; background:rgba(127,219,218,0.15); color:var(--accent-tertiary); padding:4px 12px; border-radius:40px; font-size:0.8rem; margin-bottom:15px;">${t.category}</div>
-        <div class="tech-essence" style="font-style:italic; color:var(--text-secondary); margin-bottom:18px; border-left:3px solid var(--accent-secondary); padding-left:15px;">“${t.essence}”</div>
-        <div class="tech-details" style="background:rgba(0,0,0,0.2); border-radius:20px; padding:15px; margin-bottom:15px;"><i class="fas fa-arrows-alt" style="color:var(--accent-secondary); margin-right:10px;"></i> ${t.sitting} · ${t.mudra}</div>
-        <div class="tech-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:15px; padding-top:15px; border-top:1px solid var(--glass-border);">
-          <span class="tech-duration" style="color:var(--text-muted);"><i class="far fa-clock"></i> 15-20 min</span>
-          <button class="favorite-btn ${isFav ? 'fas' : 'far'} fa-heart" data-id="${t.id}" style="background:none; border:none; font-size:1.5rem; color:var(--accent-tertiary); cursor:pointer;"></button>
+        <div class="tech-essence" style="font-style:italic; color:var(--text-secondary); margin-bottom:18px;">“${t.essence}”</div>
+        <div class="tech-details" style="background:rgba(0,0,0,0.2); border-radius:20px; padding:15px; margin-bottom:15px;"><i class="fas fa-arrows-alt"></i> ${t.sitting} · ${t.mudra}</div>
+        <div class="tech-footer" style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="tech-duration"><i class="far fa-clock"></i> ${t.duration} min</span>
+          <button class="favorite-btn ${isFav ? 'fas' : 'far'} fa-heart" data-id="${t.id}" style="background:none; border:none; font-size:1.5rem; color:var(--accent-tertiary);"></button>
         </div>`;
       div.querySelector('.favorite-btn').addEventListener('click', (e) => {
         e.stopPropagation();
-        const id = t.id;
-        if (user.favorites.includes(id)) user.favorites = user.favorites.filter(f => f !== id);
-        else user.favorites.push(id);
-        updateStorage();
-        e.target.classList.toggle('fas'); e.target.classList.toggle('far');
-        showToast(isFav ? 'Removed from favorites' : 'Added to favorites');
+        if (user.favorites.includes(t.id)) user.favorites = user.favorites.filter(f => f !== t.id);
+        else user.favorites.push(t.id);
+        updateStorage(); e.target.classList.toggle('fas'); e.target.classList.toggle('far');
+        showToast(t.favorites ? 'Removed' : 'Added to favorites');
       });
-      div.addEventListener('click', () => { showModal(t); });
+      div.addEventListener('click', () => { alert(`✨ ${t.name}\n\n${t.essence}\n\nBenefits: focus, calm`); });
       return div;
     }
     
-    function showModal(t) {
-      alert(`✨ ${t.name}\n\n${t.essence}\n\nBenefits: focus, calm, clarity\n\nSit in ${t.sitting} with ${t.mudra}`);
-    }
-    
-    function showToast(msg) {
-      const toast = document.createElement('div'); toast.className = 'toast'; toast.innerText = msg;
-      document.body.appendChild(toast);
-      setTimeout(() => toast.remove(), 3000);
+    function createPhysicalCard(p) {
+      const div = document.createElement('div'); div.className = 'physical-card'; div.dataset.id = p.id;
+      div.innerHTML = `
+        <div style="display:flex; justify-content:space-between;"><span class="tech-number" style="color:var(--accent-tertiary);">#${p.id}</span><span class="tech-sanskrit">${p.sanskrit}</span></div>
+        <div style="font-size:1.6rem; font-weight:700; margin:10px 0;">${p.name}</div>
+        <div class="tech-category" style="background:rgba(255,179,160,0.15); color:var(--accent-secondary);">${p.category}</div>
+        <div style="margin:15px 0;">${p.essence}</div>
+        <div><i class="fas fa-hourglass-half"></i> ${p.duration} min · ${p.difficulty}</div>
+        <button class="btn-outline add-to-routine" style="margin-top:15px; width:100%;">Add to routine</button>`;
+      div.querySelector('.add-to-routine').addEventListener('click', (e) => {
+        e.stopPropagation();
+        user.currentRoutine.push(p.id);
+        renderRoutineBuilder();
+        showToast('Added to current routine');
+      });
+      div.addEventListener('click', () => { alert(`🧘 ${p.name}\n\n${p.instructions.join('\n')}`); });
+      return div;
     }
     
     function renderFeatured() {
-      const g = document.getElementById('featuredGrid'); if (g) { g.innerHTML = ''; for (let i = 1; i <= 4; i++) g.appendChild(createTechCard(techniques[i])); }
+      const g = document.getElementById('featuredGrid'); if(g) { g.innerHTML = ''; for(let i=1;i<=4;i++) g.appendChild(createTechCard(techniques[i])); }
     }
     function renderRecommended() {
-      const g = document.getElementById('recommendedGrid'); if (g) { g.innerHTML = ''; for (let i = 5; i <= 8; i++) g.appendChild(createTechCard(techniques[i])); }
+      const g = document.getElementById('recommendedGrid'); if(g) { g.innerHTML = ''; for(let i=5;i<=8;i++) g.appendChild(createTechCard(techniques[i])); }
     }
-    function renderTechniques(filter = 'all', search = '') {
-      const g = document.getElementById('techniquesGrid'); if (!g) return;
-      g.innerHTML = '';
+    function renderRecommendedPhysical() {
+      const g = document.getElementById('recommendedPhysicalGrid'); if(g) { g.innerHTML = ''; for(let i=1;i<=4;i++) g.appendChild(createPhysicalCard(physicalPractices[i])); }
+    }
+    function renderTechniques(filter='all', search='') {
+      const g = document.getElementById('techniquesGrid'); if(!g) return; g.innerHTML = '';
       Object.values(techniques).forEach(t => {
-        if (filter !== 'all' && t.category !== filter) return;
-        if (search && !t.name.toLowerCase().includes(search.toLowerCase()) && !t.category.toLowerCase().includes(search.toLowerCase())) return;
+        if(filter!=='all' && t.category!==filter) return;
+        if(search && !t.name.toLowerCase().includes(search.toLowerCase())) return;
         g.appendChild(createTechCard(t));
       });
     }
-    renderFeatured(); renderRecommended();
+    function renderPhysical(filter='all', search='') {
+      const g = document.getElementById('physicalGrid'); if(!g) return; g.innerHTML = '';
+      Object.values(physicalPractices).forEach(p => {
+        if(filter!=='all' && p.category!==filter) return;
+        if(search && !p.name.toLowerCase().includes(search.toLowerCase())) return;
+        g.appendChild(createPhysicalCard(p));
+      });
+    }
+    renderFeatured(); renderRecommended(); renderRecommendedPhysical();
     
-    // category filters
+    // category filters for techniques
     const catContainer = document.getElementById('categoryFilters');
-    if (catContainer) {
+    if(catContainer) {
       ['all', ...categories].forEach(c => {
         const span = document.createElement('span'); span.className = 'category-filter'; span.dataset.cat = c; span.innerText = c.charAt(0).toUpperCase() + c.slice(1);
-        span.style.padding = '8px 16px'; span.style.borderRadius = '40px'; span.style.cursor = 'pointer'; span.style.transition = '0.2s';
         span.addEventListener('click', () => {
           document.querySelectorAll('.category-filter').forEach(el => el.classList.remove('active'));
           span.classList.add('active');
-          const search = document.getElementById('searchInput').value;
-          renderTechniques(c === 'all' ? 'all' : c, search);
+          renderTechniques(c==='all'?'all':c, document.getElementById('searchInput').value);
         });
         catContainer.appendChild(span);
       });
@@ -633,9 +722,25 @@
       renderTechniques(active, e.target.value);
     });
     
+    // physical category filters
+    const physCat = document.getElementById('physicalCategoryFilters');
+    if(physCat) {
+      physCat.querySelectorAll('.category-filter').forEach(el => {
+        el.addEventListener('click', () => {
+          physCat.querySelectorAll('.category-filter').forEach(x => x.classList.remove('active'));
+          el.classList.add('active');
+          renderPhysical(el.dataset.cat, document.getElementById('physicalSearch').value);
+        });
+      });
+    }
+    document.getElementById('physicalSearch')?.addEventListener('input', (e) => {
+      const active = document.querySelector('#physicalCategoryFilters .active')?.dataset.cat || 'all';
+      renderPhysical(active, e.target.value);
+    });
+    
     // path cards (16 professions)
     const profs = ['Student','Employee','CEO','Seeker','Anxious','Overthinker','Healthcare','Teacher','Developer','Artist','Parent','Entrepreneur','First Responder','Retiree','Freelancer','Athlete'];
-    document.getElementById('pathGrid').innerHTML = profs.map(p => `<div class="path-card" data-prof="${p}" style="padding:30px 15px; text-align:center; cursor:pointer;"><i class="fas fa-user" style="font-size:3rem; margin-bottom:15px;"></i><span style="display:block; font-weight:700; font-size:1.3rem;">${p}</span><small style="color:var(--text-muted);">path</small></div>`).join('');
+    document.getElementById('pathGrid').innerHTML = profs.map(p => `<div class="path-card" data-prof="${p}"><i class="fas fa-user"></i><span>${p}</span><small>path</small></div>`).join('');
     document.querySelectorAll('.path-card').forEach(card => card.addEventListener('click', ()=>{
       showToast(`Showing techniques for ${card.dataset.prof}`);
       renderTechniques('all', card.dataset.prof);
@@ -643,7 +748,7 @@
     }));
     
     // view navigation
-    const views = { home:'homeView', techniques:'techniquesView', quotes:'quotesView', diary:'diaryView', social:'socialView', chat:'chatView', audio:'audioView', challenges:'challengesView', timer:'timerView', plan:'planView', profile:'profileView', enhancedProfile:'enhancedProfileView' };
+    const views = { home:'homeView', techniques:'techniquesView', physical:'physicalView', routines:'routinesView', quotes:'quotesView', diary:'diaryView', social:'socialView', chat:'chatView', audio:'audioView', challenges:'challengesView', timer:'timerView', plan:'planView', profile:'profileView', enhancedProfile:'enhancedProfileView' };
     function showView(v) {
       Object.keys(views).forEach(key => document.getElementById(views[key]).classList.add('hidden'));
       document.getElementById(views[v]).classList.remove('hidden');
@@ -652,7 +757,7 @@
     }
     document.querySelectorAll('[data-view]').forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); showView(el.dataset.view); }));
     
-    // timer
+    // timer (same as before)
     let timerSeconds = 300, timerInterval, timerRunning = false;
     const timerDisplay = document.getElementById('timerDisplay');
     document.querySelectorAll('.timer-pill').forEach(b => b.addEventListener('click', function() {
@@ -663,10 +768,8 @@
       if (timerRunning) return;
       timerRunning = true;
       timerInterval = setInterval(() => {
-        if (timerSeconds > 0) {
-          timerSeconds--;
-          timerDisplay.textContent = new Date(timerSeconds * 1000).toISOString().substr(14, 5);
-        } else {
+        if (timerSeconds > 0) { timerSeconds--; timerDisplay.textContent = new Date(timerSeconds * 1000).toISOString().substr(14, 5); }
+        else {
           clearInterval(timerInterval); timerRunning = false;
           user.totalPractices++; user.totalMinutes += 5; user.xp += 10;
           updateStorage(); document.getElementById('timerMessage').innerText = 'complete! +10xp'; showToast('Meditation complete! +10xp');
@@ -689,12 +792,12 @@
     });
     function renderDiary() {
       const list = document.getElementById('diaryEntriesList');
-      if (list) list.innerHTML = user.diary.slice().reverse().map(e => `<div class="diary-entry" style="padding:25px; margin-bottom:20px; border-radius:40px;">${new Date(e.date).toLocaleDateString()}: ${e.text}</div>`).join('');
+      if (list) list.innerHTML = user.diary.slice().reverse().map(e => `<div class="diary-entry">${new Date(e.date).toLocaleDateString()}: ${e.text}</div>`).join('');
     }
     
     // quotes
-    const quotes = ['The mind is everything. What you think you become.','Meditation is not a way to make your mind quiet.','The cosmos is within us.','In the middle of difficulty lies opportunity.','The quieter you become, the more you can hear.'];
-    document.getElementById('quoteContainer').innerHTML = quotes.map(q => `<div class="quote-card" style="padding:20px;">“${q}”</div>`).join('');
+    const quotes = ['The mind is everything.','Meditation is the key.','The cosmos is within us.','Stillness speaks.','Witness it all.'];
+    document.getElementById('quoteContainer').innerHTML = quotes.map(q => `<div class="quote-card">“${q}”</div>`).join('');
     
     // theme toggle
     const themeToggle = document.getElementById('themeToggle');
@@ -723,9 +826,8 @@
     let breathInterval, breathPhase = 'inhale', breathTime = 4, breathRunning = false;
     document.getElementById('fabBreath').addEventListener('click', () => { widget.style.display = widget.style.display === 'flex' ? 'none' : 'flex'; });
     document.getElementById('toggleBreathWidget').addEventListener('click', () => {
-      if (breathRunning) {
-        clearInterval(breathInterval); breathRunning = false; document.getElementById('toggleBreathWidget').textContent = 'start';
-      } else {
+      if (breathRunning) { clearInterval(breathInterval); breathRunning = false; document.getElementById('toggleBreathWidget').textContent = 'start'; }
+      else {
         breathRunning = true; document.getElementById('toggleBreathWidget').textContent = 'stop';
         breathInterval = setInterval(() => {
           breathTime--;
@@ -734,8 +836,7 @@
             else if (breathPhase === 'hold') { breathPhase = 'exhale'; breathTime = 6; }
             else { breathPhase = 'inhale'; breathTime = 4; }
           }
-          phase.textContent = breathPhase;
-          circle.textContent = breathTime;
+          phase.textContent = breathPhase; circle.textContent = breathTime;
           if (breathPhase === 'inhale') circle.style.transform = `scale(${0.5 + (4 - breathTime) / 4 * 0.5})`;
           else if (breathPhase === 'exhale') circle.style.transform = `scale(${1 - (4 - breathTime) / 4 * 0.5})`;
         }, 1000);
@@ -748,37 +849,90 @@
     document.getElementById('scrollToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     
     // notifications
-    document.getElementById('notifBell').addEventListener('click', () => { showToast('🔔 3 notifications: friend request, challenge update, new technique'); });
+    document.getElementById('notifBell').addEventListener('click', () => { showToast('🔔 5 notifications: friend request, 2 challenge updates, new techniques'); });
     
     // join challenges
     document.querySelectorAll('.join-challenge').forEach(btn => btn.addEventListener('click', () => showToast('Joined challenge! +20 XP')));
+    
+    // mood tracker
+    document.querySelectorAll('.mood-emoji').forEach(emoji => {
+      emoji.addEventListener('click', () => {
+        const mood = emoji.dataset.mood;
+        user.moodEntries.push({ date: new Date(), mood });
+        updateStorage();
+        showToast(`Mood recorded: ${mood}`);
+      });
+    });
+    
+    // routine builder
+    function renderRoutineBuilder() {
+      const container = document.getElementById('selectedPractices');
+      if(!container) return;
+      container.innerHTML = '';
+      user.currentRoutine.forEach(id => {
+        const p = physicalPractices[id] || techniques[id];
+        if(p) {
+          const chip = document.createElement('span'); chip.className = 'practice-chip';
+          chip.innerHTML = `${p.name} <i class="fas fa-times" data-id="${id}"></i>`;
+          chip.querySelector('i').addEventListener('click', () => {
+            user.currentRoutine = user.currentRoutine.filter(i => i !== id);
+            renderRoutineBuilder();
+          });
+          container.appendChild(chip);
+        }
+      });
+    }
+    document.getElementById('addMeditationBtn')?.addEventListener('click', () => {
+      showView('techniques'); // let user pick, then we'd need a more complex picker; simplified
+    });
+    document.getElementById('addPhysicalBtn')?.addEventListener('click', () => { showView('physical'); });
+    document.getElementById('startRoutineBtn')?.addEventListener('click', () => {
+      if(user.currentRoutine.length === 0) { showToast('Add some practices first'); return; }
+      // simulate guided session with voice
+      const utterance = new SpeechSynthesisUtterance('Starting your routine. Follow along.');
+      speechSynthesis.speak(utterance);
+      showToast('Guided routine started (voice guidance)');
+    });
+    document.getElementById('saveRoutineBtn')?.addEventListener('click', () => {
+      if(user.currentRoutine.length === 0) return;
+      user.routines.push([...user.currentRoutine]);
+      updateStorage();
+      showToast('Routine saved');
+    });
+    
+    // social feed
+    function renderFeed() {
+      const feedDiv = document.getElementById('feedPosts');
+      if(!feedDiv) return;
+      feedDiv.innerHTML = user.feed.map(p => `
+        <div class="feed-post"><div class="post-header"><strong>${p.user}</strong> <span class="post-time">${new Date(p.time).toLocaleString()}</span></div>
+        <div class="post-content">${p.content}</div>
+        <div class="post-actions"><i class="fas fa-heart ${p.liked ? 'liked' : ''}"></i> ${p.likes} <i class="fas fa-comment"></i></div></div>
+      `).join('');
+    }
+    document.getElementById('postBtn')?.addEventListener('click', () => {
+      const txt = document.getElementById('newPostText').value.trim();
+      if(txt) {
+        user.feed.unshift({ id: Date.now(), user:'Gabriel', content:txt, time:Date.now(), likes:0 });
+        renderFeed();
+        document.getElementById('newPostText').value = '';
+        showToast('Posted to feed');
+      }
+    });
+    renderFeed();
+    
+    // chat mock
+    const friends = ['Sarah','Michael','Elena','CosmicBot'];
+    document.getElementById('friendsList').innerHTML = friends.map(f => `<div class="friend-card">${f}</div>`).join('');
+    
+    // show toast helper
+    function showToast(msg) { const t = document.createElement('div'); t.className='toast'; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
     
     // init
     setTimeout(() => document.getElementById('loading').style.opacity = '0', 2000);
     showView('home');
     renderDiary();
-    
-    // plan functions (simple)
-    window.addToPlan = function(id) {
-      if (!user.plan.includes(id)) { user.plan.push(id); updateStorage(); renderPlan(); }
-    };
-    function renderPlan() {
-      const container = document.getElementById('planItems'); if(!container) return;
-      container.innerHTML = '';
-      let total = 0;
-      user.plan.forEach(id => {
-        if(techniques[id]) {
-          total += 15;
-          const div = document.createElement('div'); div.className = 'plan-item'; div.style.display = 'flex'; div.style.justifyContent = 'space-between'; div.style.alignItems = 'center'; div.style.padding = '20px 25px'; div.style.marginBottom = '15px'; div.style.borderRadius = '40px';
-          div.innerHTML = `<div><h4>${techniques[id].name}</h4><p>15 min</p></div><span class="plan-item-price">+15 min</span><button class="remove-btn" data-id="${id}" style="background:none; border:none; color:var(--text-muted); font-size:1.3rem; cursor:pointer;"><i class="fas fa-times"></i></button>`;
-          div.querySelector('.remove-btn').addEventListener('click', () => { user.plan = user.plan.filter(i => i !== id); updateStorage(); renderPlan(); });
-          container.appendChild(div);
-        }
-      });
-      document.getElementById('planTotal').innerText = total;
-    }
-    renderPlan();
-    document.getElementById('applyPromoBtn')?.addEventListener('click', () => { showToast('Promo applied (demo)'); });
+    renderRoutineBuilder();
   </script>
 </body>
   </html>
