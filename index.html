@@ -341,32 +341,110 @@
             opacity: 0;
             transition: opacity 0.4s;
         }
-        .path-card:hover::before { opacity: 0.15; }
-        .path-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--accent-blue); box-shadow: var(--shadow-glow); }
-        .path-card i { font-size: 3rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-azure)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; transition: transform 0.3s; }
-        .path-card:hover i { transform: scale(1.1) rotate(5deg); }
-        .path-card span { display: block; font-weight: 700; font-size: 1.3rem; margin-bottom: 5px; }
-        .path-card small { color: var(--text-muted); font-size: 0.85rem; }
-        /* Technique cards */
-        .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 25px; margin-bottom: 50px; }
-        .tech-card { padding: 25px; transition: all 0.4s; cursor: pointer; position: relative; overflow: hidden; }
-        .tech-card:hover { transform: translateY(-8px); border-color: var(--accent-blue); box-shadow: var(--shadow-glow); }
-        .tech-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .tech-number { color: var(--accent-azure); font-weight: 700; font-size: 1.3rem; background: rgba(58,110,255,0.15); padding: 4px 12px; border-radius: 40px; }
-        .favorite-btn { background: none; border: none; font-size: 1.5rem; color: var(--accent-celeste); cursor: pointer; transition: transform 0.2s; filter: drop-shadow(0 0 5px var(--accent-celeste)); }
-        .favorite-btn:hover { transform: scale(1.2); color: var(--accent-azure); }
-        .favorite-btn.fas { color: var(--accent-celeste); animation: heartBeat 0.4s; }
-        @keyframes heartBeat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
-        .tech-card h4 { font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; }
-        .tech-essence { font-style: italic; color: var(--text-secondary); margin-bottom: 18px; font-size: 0.95rem; border-left: 2px solid var(--accent-azure); padding-left: 10px; }
-        .tech-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
-        .tag { background: rgba(58,110,255,0.1); border: 1px solid var(--accent-blue); color: var(--accent-azure); padding: 5px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 600; backdrop-filter: blur(4px); }
-        .tech-footer { display: flex; justify-content: space-between; align-items: center; }
-        .tech-duration { color: var(--text-muted); font-size: 0.95rem; display: flex; align-items: center; gap: 6px; }
-        .add-to-plan-btn { background: none; border: none; color: var(--accent-celeste); font-size: 1.3rem; cursor: pointer; transition: transform 0.2s; margin-right: 15px; }
-        .add-to-plan-btn:hover { transform: scale(1.2); color: var(--accent-azure); }
-        .tech-link { color: var(--accent-blue); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.2s; }
-        .tech-link:hover { gap: 10px; color: var(--accent-azure); }
+<!-- QUICK PATHS – Expanded for Mental Wellness -->
+<section class="quick-paths">
+    <div class="section-header">
+        <h3>choose your path <span class="arrow">→</span></h3>
+    </div>
+    <div class="path-grid">
+        <!-- Student – high stress, need focus -->
+        <div class="path-card" data-persona="student">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Student</span>
+            <small>exam pressure · focus</small>
+        </div>
+        <!-- Employee – workplace stress, burnout -->
+        <div class="path-card" data-persona="employee">
+            <i class="fas fa-briefcase"></i>
+            <span>Employee</span>
+            <small>stress · work-life balance</small>
+        </div>
+        <!-- CEO – high-stakes decisions, isolation -->
+        <div class="path-card" data-persona="ceo">
+            <i class="fas fa-chart-line"></i>
+            <span>CEO</span>
+            <small>clarity · decision fatigue</small>
+        </div>
+        <!-- Seeker – spiritual, existential -->
+        <div class="path-card" data-persona="seeker">
+            <i class="fas fa-infinity"></i>
+            <span>Seeker</span>
+            <small>spiritual · purpose</small>
+        </div>
+        <!-- Anxious – general anxiety, panic -->
+        <div class="path-card" data-persona="anxious">
+            <i class="fas fa-heartbeat"></i>
+            <span>Anxious</span>
+            <small>calm · anxiety relief</small>
+        </div>
+        <!-- Overthinker – rumination, analysis paralysis -->
+        <div class="path-card" data-persona="overthinker">
+            <i class="fas fa-brain"></i>
+            <span>Overthinker</span>
+            <small>still mind · quiet thoughts</small>
+        </div>
+        <!-- Healthcare Worker – trauma, long shifts, compassion fatigue -->
+        <div class="path-card" data-persona="healthcare">
+            <i class="fas fa-hospital-user"></i>
+            <span>Healthcare</span>
+            <small>compassion fatigue · resilience</small>
+        </div>
+        <!-- Teacher – emotional labor, classroom stress -->
+        <div class="path-card" data-persona="teacher">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span>Teacher</span>
+            <small>patience · emotional balance</small>
+        </div>
+        <!-- Software Developer – screen fatigue, imposter syndrome -->
+        <div class="path-card" data-persona="developer">
+            <i class="fas fa-laptop-code"></i>
+            <span>Developer</span>
+            <small>focus · mental clarity</small>
+        </div>
+        <!-- Artist – creative blocks, self-doubt -->
+        <div class="path-card" data-persona="artist">
+            <i class="fas fa-paint-brush"></i>
+            <span>Artist</span>
+            <small>creative flow · inspiration</small>
+        </div>
+        <!-- Parent – parenting stress, exhaustion -->
+        <div class="path-card" data-persona="parent">
+            <i class="fas fa-child"></i>
+            <span>Parent</span>
+            <small>patience · self-care</small>
+        </div>
+        <!-- Entrepreneur – uncertainty, high pressure -->
+        <div class="path-card" data-persona="entrepreneur">
+            <i class="fas fa-rocket"></i>
+            <span>Entrepreneur</span>
+            <small>resilience · decision clarity</small>
+        </div>
+        <!-- First Responder – trauma, hypervigilance -->
+        <div class="path-card" data-persona="first-responder">
+            <i class="fas fa-fire-extinguisher"></i>
+            <span>First Responder</span>
+            <small>PTSD · grounding</small>
+        </div>
+        <!-- Retiree – isolation, purpose -->
+        <div class="path-card" data-persona="retiree">
+            <i class="fas fa-umbrella-beach"></i>
+            <span>Retiree</span>
+            <small>peace · new purpose</small>
+        </div>
+        <!-- Freelancer – isolation, inconsistent income -->
+        <div class="path-card" data-persona="freelancer">
+            <i class="fas fa-user-tie"></i>
+            <span>Freelancer</span>
+            <small>balance · self-worth</small>
+        </div>
+        <!-- Student-Athlete – performance pressure, injury recovery -->
+        <div class="path-card" data-persona="athlete">
+            <i class="fas fa-running"></i>
+            <span>Athlete</span>
+            <small>performance · recovery</small>
+        </div>
+    </div>
+</section>
         /* Search */
         .search-box { padding: 14px 24px; border-radius: 50px; width: 280px; background: var(--bg-glass); border: 1px solid var(--glass-border); color: var(--text-primary); font-size: 1rem; outline: none; transition: all 0.3s; }
         .search-box:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 4px rgba(58,110,255,0.2); width: 320px; }
