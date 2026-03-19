@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Vigyan Bhairav · Ultimate Cosmic OS · 112 portals</title>
+  <title>Vigyan Bhairav · Gargantua Black Hole · Cosmic OS</title>
   <!-- fonts & icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,6 @@
     }
   </script>
   <style>
-    /* ==================== RESET & COSMIC VARIABLES ==================== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg-deep: #0a0718;
@@ -525,7 +524,7 @@
   <div class="stars"></div>
   <div class="twinkling"></div>
 
-  <!-- floating widgets -->
+  <!-- floating widgets (optional) -->
   <button id="scrollToTop" class="btn-outline"><i class="fas fa-arrow-up"></i></button>
   <div id="breathingWidget">
     <h4>🌬️ breath guide</h4>
@@ -562,7 +561,7 @@
       </nav>
     </header>
 
-    <!-- HOME VIEW -->
+    <!-- HOME VIEW (exactly as in images) -->
     <div id="homeView">
       <section class="hero">
         <div class="hero-content">
@@ -576,28 +575,34 @@
           </div>
         </div>
         <div class="hero-illustration">
-          <!-- black hole canvas is behind -->
+          <!-- black hole canvas is behind, so this div is empty -->
         </div>
       </section>
-      <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:45%;"></div></div>
+
+      <!-- stats -->
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-value" id="totalPracticed">1,248</div><div class="stat-label">PRACTICES</div></div>
         <div class="stat-card"><div class="stat-value" id="totalMinutes">6,304</div><div class="stat-label">MINUTES</div></div>
         <div class="stat-card"><div class="stat-value" id="currentStreak">1</div><div class="stat-label">DAY STREAK</div></div>
       </div>
 
+      <!-- choose your path (16 professions) -->
       <section>
         <div class="section-header"><h3>choose your path →</h3></div>
         <div class="path-grid" id="pathGrid"></div>
       </section>
 
+      <!-- featured techniques (first two) -->
       <section>
-        <div class="section-header"><h3>featured techniques</h3><a href="#" class="view-all" data-view="techniques">view all 112 →</a></div>
+        <div class="section-header">
+          <h3>featured techniques</h3>
+          <a href="#" class="view-all" data-view="techniques">view all 112 →</a>
+        </div>
         <div class="tech-grid" id="featuredGrid"></div>
       </section>
     </div>
 
-    <!-- TECHNIQUES VIEW -->
+    <!-- TECHNIQUES VIEW (full list) -->
     <div id="techniquesView" class="hidden">
       <div class="filter-section">
         <div class="filter-header">
@@ -614,136 +619,17 @@
       <div class="detail-content" id="detailContent"></div>
     </div>
 
-    <!-- QUOTES VIEW -->
-    <div id="quotesView" class="hidden quotes-section">
-      <h2>🌠 infinite wisdom</h2>
-      <div id="quoteContainer" class="quotes-grid" style="display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));"></div>
-    </div>
-
-    <!-- DIARY VIEW -->
-    <div id="diaryView" class="hidden diary-section">
-      <h2>🌙 cosmic diary</h2>
-      <div class="diary-entry-form" style="padding:30px; border-radius:40px; margin-bottom:30px;">
-        <textarea id="diaryEntryText" placeholder="your reflection..." style="width:100%; padding:20px; border-radius:30px; background:var(--bg-glass); border:1px solid var(--glass-border); color:var(--text-primary); min-height:120px; margin-bottom:20px;"></textarea>
-        <button class="btn-primary" id="saveDiaryEntry">save</button>
-      </div>
-      <div id="diaryEntriesList"></div>
-    </div>
-
-    <!-- SOCIAL FEED VIEW -->
-    <div id="socialView" class="hidden social-section">
-      <h2>🌐 community feed</h2>
-      <div id="feedPosts"></div>
-      <div style="margin-top:30px;">
-        <textarea id="newPostText" placeholder="share your experience..." style="width:100%; padding:15px; border-radius:30px; background:var(--bg-glass); border:1px solid var(--glass-border); color:var(--text-primary);"></textarea>
-        <button class="btn-primary" id="postBtn" style="margin-top:10px;">post</button>
-      </div>
-    </div>
-
-    <!-- CHAT VIEW -->
-    <div id="chatView" class="hidden chat-section">
-      <h2>💬 sangha chat</h2>
-      <div class="chat-container">
-        <div class="friends-list" id="friendsList"></div>
-        <div class="chat-area">
-          <div class="chat-header" id="chatHeader">select a friend</div>
-          <div class="chat-messages" id="chatMessages"></div>
-          <div class="chat-input-area">
-            <input type="text" id="chatInput" class="chat-input" placeholder="type..." disabled>
-            <button id="chatSendBtn" class="chat-send-btn" disabled><i class="fas fa-paper-plane"></i></button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- AUDIO VIEW -->
-    <div id="audioView" class="hidden audio-section">
-      <h2>🎧 guided audio</h2>
-      <div class="audio-card" style="padding:20px;">
-        <div class="audio-player">
-          <div class="audio-controls"><button id="playPauseBtn"><i class="fas fa-play"></i></button></div>
-          <span id="trackName">witnessing breath</span>
-          <div class="audio-progress"><div id="audioProgressFill" class="audio-progress-fill"></div></div>
-        </div>
-        <div class="track-list">
-          <div class="track-item" data-track="0">1. witnessing breath (10min)</div>
-          <div class="track-item" data-track="1">2. heart center (12min)</div>
-          <div class="track-item" data-track="2">3. inner sound (15min)</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CHALLENGES VIEW -->
-    <div id="challengesView" class="hidden challenge-section">
-      <h2>🏆 challenges</h2>
-      <div class="challenge-card">
-        <h3>7‑day streak</h3>
-        <p>meditate daily for a week</p>
-        <div class="challenge-progress"><div class="challenge-progress-fill" style="width:28%"></div></div>
-        <span>2/7 days</span>
-        <button class="btn-outline join-challenge">join</button>
-      </div>
-      <div class="challenge-card">
-        <h3>30‑min awareness</h3>
-        <p>accumulate 30 minutes</p>
-        <div class="challenge-progress"><div class="challenge-progress-fill" style="width:60%"></div></div>
-        <span>18/30 min</span>
-        <button class="btn-outline join-challenge">join</button>
-      </div>
-    </div>
-
-    <!-- TIMER VIEW -->
-    <div id="timerView" class="hidden timer-section">
-      <h2>⏱️ meditation timer</h2>
-      <div class="timer-display" id="timerDisplay">05:00</div>
-      <div class="timer-options">
-        <button class="timer-pill" data-minutes="5">5 min</button>
-        <button class="timer-pill" data-minutes="10">10 min</button>
-        <button class="timer-pill" data-minutes="15">15 min</button>
-        <button class="timer-pill" data-minutes="20">20 min</button>
-      </div>
-      <div class="timer-controls">
-        <button class="btn-primary" id="startTimer">start</button>
-        <button class="btn-outline" id="pauseTimer">pause</button>
-        <button class="btn-outline" id="resetTimer">reset</button>
-      </div>
-      <p id="timerMessage"></p>
-    </div>
-
-    <!-- MY PLAN VIEW -->
-    <div id="planView" class="hidden plan-section">
-      <h2>📋 my practice plan</h2>
-      <div id="planItems" class="plan-items" style="margin:30px 0;"></div>
-      <div class="promo-code" style="display:flex; gap:15px; margin:30px 0;">
-        <input id="promoInput" class="search-box" placeholder="promo code" style="flex:1;">
-        <button id="applyPromoBtn" class="btn-outline">apply</button>
-      </div>
-      <div class="total-section" style="text-align:right; font-size:1.4rem; margin-top:30px; padding:20px; background:rgba(0,0,0,0.2); border-radius:30px;">
-        total: <span id="planTotal">0</span> min
-      </div>
-    </div>
-
-    <!-- PROFILE VIEW -->
-    <div id="profileView" class="hidden profile-section">
-      <h2>your profile</h2>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-value" id="profileStreak">1</div><div>streak</div></div>
-        <div class="stat-card"><div class="stat-value" id="profilePractices">1248</div><div>practices</div></div>
-      </div>
-      <div id="recentActivity"></div>
-    </div>
-
-    <!-- ENHANCED PROFILE VIEW -->
-    <div id="enhancedProfileView" class="hidden profile-section">
-      <h2>cosmic me</h2>
-      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
-        <div class="stat-card"><span id="profileTotalPractices">0</span><div>practices</div></div>
-        <div class="stat-card"><span id="profileTotalMinutes">0</span><div>minutes</div></div>
-        <div class="stat-card"><span id="profileStreakDays">0</span><div>streak</div></div>
-      </div>
-      <canvas id="progressChart" width="400" height="200" style="margin:30px 0; width:100%; height:auto;"></canvas>
-      <div id="achievementsGrid" class="achievement-grid"></div>
-    </div>
+    <!-- other views (simplified placeholders) -->
+    <div id="quotesView" class="hidden quotes-section"><h2>🌠 infinite wisdom</h2><div id="quoteContainer"></div></div>
+    <div id="diaryView" class="hidden diary-section"><h2>🌙 cosmic diary</h2><div class="diary-entry-form"><textarea id="diaryEntryText" placeholder="your reflection..."></textarea><button class="btn-primary" id="saveDiaryEntry">save</button></div><div id="diaryEntriesList"></div></div>
+    <div id="socialView" class="hidden social-section"><h2>🌐 community feed</h2><div id="feedPosts"></div><div><textarea id="newPostText" placeholder="share your experience..."></textarea><button class="btn-primary" id="postBtn">post</button></div></div>
+    <div id="chatView" class="hidden chat-section"><h2>💬 sangha chat</h2><div class="chat-container"><div class="friends-list" id="friendsList"></div><div class="chat-area"><div class="chat-header" id="chatHeader">select a friend</div><div class="chat-messages" id="chatMessages"></div><div class="chat-input-area"><input type="text" id="chatInput" placeholder="type..." disabled><button id="chatSendBtn" disabled><i class="fas fa-paper-plane"></i></button></div></div></div></div>
+    <div id="audioView" class="hidden audio-section"><h2>🎧 guided audio</h2><div class="audio-card"><div class="audio-player"><button id="playPauseBtn"><i class="fas fa-play"></i></button><span id="trackName">witnessing breath</span><div class="audio-progress"><div id="audioProgressFill"></div></div></div><div class="track-list"><div class="track-item" data-track="0">1. witnessing breath (10min)</div><div class="track-item" data-track="1">2. heart center (12min)</div><div class="track-item" data-track="2">3. inner sound (15min)</div></div></div></div>
+    <div id="challengesView" class="hidden challenge-section"><h2>🏆 challenges</h2><div class="challenge-card"><h3>7‑day streak</h3><p>meditate daily for a week</p><div class="challenge-progress"><div class="challenge-progress-fill" style="width:28%"></div></div><span>2/7 days</span><button class="btn-outline join-challenge">join</button></div><div class="challenge-card"><h3>30‑min awareness</h3><p>accumulate 30 minutes</p><div class="challenge-progress"><div class="challenge-progress-fill" style="width:60%"></div></div><span>18/30 min</span><button class="btn-outline join-challenge">join</button></div></div>
+    <div id="timerView" class="hidden timer-section"><h2>⏱️ meditation timer</h2><div class="timer-display" id="timerDisplay">05:00</div><div class="timer-options"><button class="timer-pill" data-minutes="5">5 min</button><button class="timer-pill" data-minutes="10">10 min</button><button class="timer-pill" data-minutes="15">15 min</button><button class="timer-pill" data-minutes="20">20 min</button></div><div class="timer-controls"><button class="btn-primary" id="startTimer">start</button><button class="btn-outline" id="pauseTimer">pause</button><button class="btn-outline" id="resetTimer">reset</button></div><p id="timerMessage"></p></div>
+    <div id="planView" class="hidden plan-section"><h2>📋 my practice plan</h2><div id="planItems"></div><div class="promo-code"><input id="promoInput" placeholder="promo code"><button id="applyPromoBtn">apply</button></div><div class="total-section">total: <span id="planTotal">0</span> min</div></div>
+    <div id="profileView" class="hidden profile-section"><h2>your profile</h2><div class="stats-grid"><div class="stat-card"><div class="stat-value" id="profileStreak">1</div><div>streak</div></div><div class="stat-card"><div class="stat-value" id="profilePractices">1248</div><div>practices</div></div></div><div id="recentActivity"></div></div>
+    <div id="enhancedProfileView" class="hidden profile-section"><h2>cosmic me</h2><div class="stats-grid"><div class="stat-card"><span id="profileTotalPractices">0</span><div>practices</div></div><div class="stat-card"><span id="profileTotalMinutes">0</span><div>minutes</div></div><div class="stat-card"><span id="profileStreakDays">0</span><div>streak</div></div></div><canvas id="progressChart" width="400" height="200"></canvas><div id="achievementsGrid"></div></div>
 
     <!-- FOOTER -->
     <footer class="footer-minimal">
@@ -979,7 +865,7 @@
     const postures = ['Sukhasana','Siddhasana','Padmasana','Vajrasana','Shavasana'];
     const mudras = ['Chin mudra','Dhyana mudra','Jnana mudra','Khechari mudra','Shambhavi mudra'];
 
-    // First 4 accurate
+    // Accurate first two (as shown in image)
     techniques[1] = {
       id:1, name:'Witnessing the Breath', sanskrit:'Śvāsa–Praśvāsa Dharana', category:'breath',
       essence:'Breath awareness anchors consciousness.', posture:'Sukhasana', mudra:'Chin mudra',
@@ -994,22 +880,8 @@
       steps:['Exhale completely.','Notice the stillness before next inhale.','Rest in that gap.','Allow inhale to arise naturally.'],
       benefits:{ ceo:'sharpens intuition', seeker:'deepens stillness' }
     };
-    techniques[3] = {
-      id:3, name:'Spinal Breath', sanskrit:'Sushumna Dharana', category:'energy',
-      essence:'Feel breath moving up and down the spine.', posture:'Padmasana', mudra:'Khechari mudra',
-      breath:'4-4-6', duration:'15-20 min', tags:['intermediate','energy'],
-      steps:['Inhale, imagine energy rising from base to crown.','Hold gently.','Exhale, energy descending.'],
-      benefits:{ yogi:'activates kundalini', seeker:'awakens energy' }
-    };
-    techniques[4] = {
-      id:4, name:'Third Eye Gaze', sanskrit:'Bhrūmadhya Dharana', category:'gaze',
-      essence:'Focus between eyebrows gathers scattered energy.', posture:'Sukhasana', mudra:'Shambhavi mudra',
-      breath:'Natural', duration:'10-20 min', tags:['intermediate','gaze'],
-      steps:['Bring attention to space between eyebrows.','Gaze softly without straining.','If thoughts arise, return focus.'],
-      benefits:{ student:'enhances concentration', ceo:'intuitive clarity' }
-    };
-    // Generate remaining 108
-    for (let i = 5; i <= 112; i++) {
+    // Generate remaining 110 (dummy)
+    for (let i = 3; i <= 112; i++) {
       let cat = categories[i % categories.length];
       techniques[i] = {
         id:i, name:`Technique ${i}: ${cat} practice`, sanskrit:`Sanskrit ${i}`, category:cat,
@@ -1047,7 +919,7 @@
       document.getElementById('totalMinutes').textContent = user.totalMinutes;
       document.getElementById('currentStreak').textContent = user.streak;
       document.getElementById('cartCount').textContent = user.plan.length;
-      document.getElementById('xpFill').style.width = (user.xp % 100) + '%';
+      // profile stats
       document.getElementById('profileStreak').textContent = user.streak;
       document.getElementById('profilePractices').textContent = user.totalPractices;
     }
@@ -1061,7 +933,7 @@
         <div class="tech-name">${t.name}</div>
         <div class="tech-category">${t.category}</div>
         <div class="tech-essence">“${t.essence}”</div>
-        <div class="tech-details"><i class="fas fa-arrows-alt"></i> ${t.posture} · ${t.mudra}<br>${t.breath !== 'Natural' ? '<i class="fas fa-lungs"></i> ' + t.breath : ''}</div>
+        <div class="tech-details"><i class="fas fa-arrows-alt"></i> ${t.posture} · ${t.mudra}</div>
         <div class="tech-tags">${t.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
         <div class="tech-footer"><span class="tech-duration"><i class="far fa-clock"></i> ${t.duration}</span><button class="favorite-btn ${isFav?'fas':'far'} fa-heart" data-id="${t.id}"></button></div>
       `;
@@ -1084,21 +956,18 @@
     function showDetailModal(t) {
       let benefitsHtml = '';
       for (let [prof, benefit] of Object.entries(t.benefits)) {
-        benefitsHtml += `<div class="benefit-item" style="background:rgba(255,255,255,0.05); padding:10px; border-radius:15px;"><strong>${prof}:</strong> ${benefit}</div>`;
+        benefitsHtml += `<div class="benefit-item"><strong>${prof}:</strong> ${benefit}</div>`;
       }
       modalContent.innerHTML = `
-        <h2 style="margin-bottom:10px;">${t.name}</h2>
-        <p style="color:var(--accent-tertiary); margin-bottom:20px;">${t.sanskrit}</p>
-        <div class="tech-category">${t.category}</div>
-        <p class="tech-essence" style="font-size:1.2rem;">“${t.essence}”</p>
-        <h3 style="margin:20px 0 10px;">🧘 step‑by‑step</h3>
-        <ol>${t.steps.map(s => `<li style="margin-bottom:8px;">${s}</li>`).join('')}</ol>
-        <h3 style="margin:20px 0 10px;">🪷 posture & mudra</h3>
+        <h2>${t.name}</h2>
+        <p style="color:var(--accent-tertiary);">${t.sanskrit}</p>
+        <p>${t.category}</p>
+        <p>“${t.essence}”</p>
+        <h3>steps</h3><ol>${t.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
         <p>${t.posture} · ${t.mudra} · ${t.breath}</p>
-        <h3 style="margin:20px 0 10px;">🌟 benefits</h3>
-        <div class="benefits-grid">${benefitsHtml}</div>
-        <button class="btn-primary" id="addToPlanFromDetail" style="margin-top:20px;">➕ add to my plan</button>
-        <button class="btn-outline" id="closeModalBtn" style="margin-left:10px;">close</button>
+        <h3>benefits</h3>${benefitsHtml}
+        <button class="btn-primary" id="addToPlanFromDetail">add to plan</button>
+        <button class="btn-outline" id="closeModalBtn">close</button>
       `;
       modalContent.querySelector('#addToPlanFromDetail').addEventListener('click', () => {
         if (!user.plan.includes(t.id)) { user.plan.push(t.id); updateStorage(); renderPlan(); showToast('added to plan'); }
@@ -1110,7 +979,8 @@
 
     // ========== RENDER TECHNIQUES ==========
     function renderFeatured() {
-      const g = document.getElementById('featuredGrid'); if (g) { g.innerHTML = ''; for (let i = 1; i <= 4; i++) g.appendChild(createTechCard(techniques[i])); }
+      const g = document.getElementById('featuredGrid');
+      if (g) { g.innerHTML = ''; for (let i = 1; i <= 2; i++) g.appendChild(createTechCard(techniques[i])); }
     }
     function renderTechniques(filter='all', search='') {
       const g = document.getElementById('techniquesGrid'); if (!g) return;
@@ -1127,8 +997,7 @@
     const catContainer = document.getElementById('categoryFilters');
     if (catContainer) {
       ['all', ...categories].forEach(c => {
-        const span = document.createElement('span'); span.className = 'category-filter'; span.dataset.cat = c; span.innerText = c.charAt(0).toUpperCase() + c.slice(1);
-        span.style.padding = '8px 16px'; span.style.borderRadius = '40px'; span.style.cursor = 'pointer'; span.style.transition = '0.2s';
+        const span = document.createElement('span'); span.className = 'category-filter'; span.dataset.cat = c; span.innerText = c;
         span.addEventListener('click', () => {
           document.querySelectorAll('.category-filter').forEach(el => el.classList.remove('active'));
           span.classList.add('active');
@@ -1149,11 +1018,18 @@
       'Student','Employee','CEO','Seeker','Anxious','Overthinker','Healthcare','Teacher',
       'Developer','Artist','Parent','Entrepreneur','First Responder','Retiree','Freelancer','Athlete'
     ];
+    const desc = {
+      Student:'exam pressure · focus', Employee:'stress · work-life', CEO:'clarity · decision fatigue',
+      Seeker:'spiritual · purpose', Anxious:'calm · anxiety relief', Overthinker:'still mind',
+      Healthcare:'compassion fatigue', Teacher:'patience', Developer:'focus', Artist:'creative flow',
+      Parent:'self-care', Entrepreneur:'resilience', 'First Responder':'grounding', Retiree:'peace',
+      Freelancer:'balance', Athlete:'performance'
+    };
     document.getElementById('pathGrid').innerHTML = profs.map(p => `
       <div class="path-card" data-prof="${p}">
         <i class="fas fa-user"></i>
         <span>${p}</span>
-        <small>${p==='Student'?'exam pressure · focus':p==='Employee'?'stress · work-life':p==='CEO'?'clarity · decision fatigue':p==='Seeker'?'spiritual · purpose':p==='Anxious'?'calm · anxiety relief':p==='Overthinker'?'still mind':p==='Healthcare'?'compassion fatigue':p==='Teacher'?'patience':p==='Developer'?'focus':p==='Artist'?'creative flow':p==='Parent'?'self-care':p==='Entrepreneur'?'resilience':p==='First Responder'?'grounding':p==='Retiree'?'peace':p==='Freelancer'?'balance':'performance'}</small>
+        <small>${desc[p]}</small>
       </div>`).join('');
     document.querySelectorAll('.path-card').forEach(card => card.addEventListener('click', ()=>{
       const prof = card.dataset.prof;
@@ -1195,7 +1071,8 @@
           user.totalPractices++; user.totalMinutes += 5; user.xp += 10;
           const today = new Date().toDateString();
           if (user.lastPracticeDate !== today) {
-            if (user.lastPracticeDate === new Date(Date.now()-86400000).toDateString()) user.streak++;
+            const yesterday = new Date(Date.now()-86400000).toDateString();
+            if (user.lastPracticeDate === yesterday) user.streak++;
             else user.streak = 1;
             user.lastPracticeDate = today;
           }
@@ -1244,7 +1121,7 @@
       { text:"The mind is a continuous chattering. Meditation is the state of no-mind.", author:"Osho" },
       { text:"Witnessing is the greatest miracle.", author:"Osho" }
     ];
-    document.getElementById('quoteContainer').innerHTML = quotes.map(q => `<div class="quote-card" style="padding:20px;"><div style="font-size:1.2rem; font-style:italic;">“${q.text}”</div><div style="color:var(--accent-secondary); margin-top:10px;">— ${q.author}</div></div>`).join('');
+    document.getElementById('quoteContainer').innerHTML = quotes.map(q => `<div class="quote-card"><div>“${q.text}”</div><div>— ${q.author}</div></div>`).join('');
 
     // ========== CHAT (mock) ==========
     const friends = [
@@ -1254,7 +1131,7 @@
     ];
     function renderFriends() {
       const list = document.getElementById('friendsList'); if(!list) return;
-      list.innerHTML = friends.map(f => `<div class="friend-card" data-id="${f.id}"><div class="friend-avatar">${f.avatar}</div><div><div class="friend-name">${f.name}</div><div style="font-size:0.75rem;">${f.status}</div></div></div>`).join('');
+      list.innerHTML = friends.map(f => `<div class="friend-card" data-id="${f.id}"><div class="friend-avatar">${f.avatar}</div><div><div class="friend-name">${f.name}</div><div>${f.status}</div></div></div>`).join('');
     }
     renderFriends();
 
@@ -1364,4 +1241,4 @@
     });
   </script>
 </body>
-                                              </html>
+                                                                                                                                                                    </html>
