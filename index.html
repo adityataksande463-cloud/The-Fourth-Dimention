@@ -316,8 +316,375 @@
             backdrop-filter: blur(10px);
         }
         .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--accent-secondary); box-shadow: 0 0 20px var(--accent-secondary); }
-        .hero-illustration { position: relative; height: 350px; display: flex; justify-content: center; align-items: center; }
-        .blackhole-canvas { width: 100%; height: 100%; display: block; border-radius: 50%; background: transparent; position: relative; z-index: 2; }
+        <!-- ================================================ -->
+<!-- BLACK HOLE: INTERSTELLAR EDITION (Three.js)     -->
+<!-- Place this inside your <body>, after the header -->
+<!-- and before the main container? Actually replace -->
+<!-- the existing blackholeCanvas with this.         -->
+<!-- ================================================ -->
+
+<!-- Import Three.js core and extras -->
+<script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+        }
+    }
+</script>
+
+<!-- Container for the 3D black hole (positioned absolutely) -->
+<div id="blackhole-3d" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;"></div>
+
+<script type="module">
+    // ==================================================================
+    // INTERSTELLAR BLACK HOLE – 3D REALISTIC RENDERING
+    // ==================================================================
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+    import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+    import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+
+    // --- Setup scene, camera, renderer ---
+    const container = document.getElementById('blackhole-3d');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x050510); // deep space
+
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 3, 12);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.toneMapping = THREE.ReinhardToneMapping;
+    renderer.toneMappingExposure = 1.2;
+    container.appendChild(renderer.domElement);
+
+    // --- Controls (disabled for automatic rotation, but we'll rotate the disk) ---
+    // const controls = new OrbitControls(camera, renderer.domElement);
+    // controls.enableDamping = true;
+    // controls.enableZoom = false;
+    // controls.enablePan = false;
+    // controls.autoRotate = false;
+
+    // --- Lighting ---
+    const ambientLight = new THREE.AmbientLight(0x404060);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0xffaa33, 1, 30);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
+
+    // --- Starfield (distant stars) ---
+    const starGeometry = new THREE.BufferGeometry();
+    const starCount = 6000;
+    const starPositions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+        const r = 80 + Math.random() * 40; // distance
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        starPositions[i*3] = Math.sin(phi) * Math.cos(theta) * r;
+        starPositions[i*3+1] = Math.sin(phi) * Math.sin(theta) * r;
+        starPositions[i*3+2] = Math.cos(phi) * r;
+    }
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.15, transparent: true, opacity: 0.8 });
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+
+    // --- Black hole sphere (event horizon) ---
+    const eventHorizonGeometry = new THREE.SphereGeometry(1.2, 64, 64);
+    const eventHorizonMaterial = new THREE.MeshStandardMaterial({
+        color: 0x000000,
+        emissive: 0x220000,
+        roughness: 0.1,
+        metalness: 0.8,
+        emissiveIntensity: 0.5
+    });
+    const eventHorizon = new THREE.Mesh(eventHorizonGeometry, eventHorizonMaterial);
+    scene.add(eventHorizon);
+
+    // --- Photon ring (thin glowing ring around event horizon) ---
+    const photonRingGeometry = new THREE.TorusGeometry(1.5, 0.03, 32, 128);
+    const photonRingMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffaa33,
+        emissive: 0xff5500,
+        emissiveIntensity: 2,
+        transparent: true,
+        opacity: 0.8,
+        side: THREE.DoubleSide
+    });
+    const photonRing = new THREE.Mesh(photonRingGeometry, photonRingMaterial);
+    photonRing.rotation.x = Math.PI / 2;
+    scene.add(photonRing);
+
+    // --- Accretion disk: a dense cloud of glowing particles ---
+    const diskParticlesCount = 15000;
+    const diskGeometry = new THREE.BufferGeometry();
+    const diskPositions = new Float32Array(diskParticlesCount * 3);
+    const diskColors = new Float32Array(diskParticlesCount * 3);
+    const diskSizes = new Float32Array(diskParticlesCount);
+
+    const innerRadius = 1.8;
+    const outerRadius = 4.5;
+    const diskThickness = 0.4;
+
+    for (let i = 0; i < diskParticlesCount; i++) {
+        // Random radius
+        const r = innerRadius + Math.random() * (outerRadius - innerRadius);
+        // Angle
+        const angle = Math.random() * Math.PI * 2;
+        // Height (thin disk with some variation)
+        const y = (Math.random() - 0.5) * diskThickness * (1 - (r - innerRadius) / (outerRadius - innerRadius) * 0.5); // taper at edges
+
+        const x = Math.cos(angle) * r;
+        const z = Math.sin(angle) * r;
+
+        diskPositions[i*3] = x;
+        diskPositions[i*3+1] = y;
+        diskPositions[i*3+2] = z;
+
+        // Color based on velocity (Doppler effect) and temperature
+        // Approaching side (angle near 90° or 270°) gets blue/white, receding gets red/orange
+        const isApproaching = Math.abs(angle - Math.PI/2) < 0.5 || Math.abs(angle - 3*Math.PI/2) < 0.5;
+        const temperatureFactor = 1 - (r - innerRadius) / (outerRadius - innerRadius); // hotter inside
+
+        let rColor, gColor, bColor;
+        if (isApproaching) {
+            // blue-white
+            rColor = 0.6 + 0.4 * temperatureFactor;
+            gColor = 0.7 + 0.3 * temperatureFactor;
+            bColor = 1.0;
+        } else {
+            // orange-red
+            rColor = 1.0;
+            gColor = 0.5 + 0.3 * temperatureFactor;
+            bColor = 0.2 + 0.1 * temperatureFactor;
+        }
+        // Add randomness
+        rColor *= 0.8 + 0.4 * Math.random();
+        gColor *= 0.8 + 0.4 * Math.random();
+        bColor *= 0.8 + 0.4 * Math.random();
+
+        diskColors[i*3] = rColor;
+        diskColors[i*3+1] = gColor;
+        diskColors[i*3+2] = bColor;
+
+        // Size varies with distance and temperature
+        diskSizes[i] = 0.05 + Math.random() * 0.1 * (1 + temperatureFactor);
+    }
+
+    diskGeometry.setAttribute('position', new THREE.BufferAttribute(diskPositions, 3));
+    diskGeometry.setAttribute('color', new THREE.BufferAttribute(diskColors, 3));
+    diskGeometry.setAttribute('size', new THREE.BufferAttribute(diskSizes, 1));
+
+    // Custom shader material for points to use size attribute and glow
+    const diskMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+            time: { value: 0 },
+            pointTexture: { value: createSprite() }
+        },
+        vertexShader: `
+            attribute float size;
+            attribute vec3 color;
+            varying vec3 vColor;
+            uniform float time;
+            void main() {
+                vColor = color;
+                vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                gl_PointSize = size * (300.0 / -mvPosition.z) * (1.0 + 0.3 * sin(position.x * 10.0 + time));
+                gl_Position = projectionMatrix * mvPosition;
+            }
+        `,
+        fragmentShader: `
+            varying vec3 vColor;
+            uniform sampler2D pointTexture;
+            void main() {
+                vec4 texColor = texture2D(pointTexture, gl_PointCoord);
+                gl_FragColor = vec4(vColor, 0.9) * texColor;
+            }
+        `,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+    });
+
+    const diskParticles = new THREE.Points(diskGeometry, diskMaterial);
+    scene.add(diskParticles);
+
+    // Helper to create a circular gradient texture for points
+    function createSprite() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        gradient.addColorStop(0, 'rgba(255,255,255,1)');
+        gradient.addColorStop(0.5, 'rgba(255,255,255,0.8)');
+        gradient.addColorStop(0.8, 'rgba(255,255,255,0.2)');
+        gradient.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 32, 32);
+        const texture = new THREE.CanvasTexture(canvas);
+        return texture;
+    }
+
+    // --- Outer thin disk (more structured torus) for additional glow ---
+    const torusGeometry = new THREE.TorusGeometry(3.0, 0.8, 32, 128);
+    const torusMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffaa33,
+        emissive: 0x442200,
+        transparent: true,
+        opacity: 0.15,
+        side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+    });
+    const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+    torus.rotation.x = Math.PI / 2;
+    scene.add(torus);
+
+    // --- Inner hot torus (smaller, brighter) ---
+    const innerTorusGeometry = new THREE.TorusGeometry(2.2, 0.4, 32, 128);
+    const innerTorusMaterial = new THREE.MeshStandardMaterial({
+        color: 0xff8833,
+        emissive: 0xff4400,
+        emissiveIntensity: 2,
+        transparent: true,
+        opacity: 0.3,
+        side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+    });
+    const innerTorus = new THREE.Mesh(innerTorusGeometry, innerTorusMaterial);
+    innerTorus.rotation.x = Math.PI / 2;
+    scene.add(innerTorus);
+
+    // --- Very thin bright ring (Einstein ring) ---
+    const ringGeometry = new THREE.TorusGeometry(2.8, 0.05, 16, 256);
+    const ringMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffdd99,
+        emissive: 0xffaa33,
+        emissiveIntensity: 3,
+        transparent: true,
+        opacity: 0.9,
+        side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending
+    });
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+    ring.rotation.x = Math.PI / 2;
+    scene.add(ring);
+
+    // --- Distant stars lensing effect (fake by adding extra stars near black hole) ---
+    const lensedStarsGeometry = new THREE.BufferGeometry();
+    const lensedCount = 200;
+    const lensedPositions = new Float32Array(lensedCount * 3);
+    for (let i = 0; i < lensedCount; i++) {
+        const r = 1.8 + Math.random() * 3;
+        const angle = Math.random() * Math.PI * 2;
+        const y = (Math.random() - 0.5) * 0.5;
+        lensedPositions[i*3] = Math.cos(angle) * r;
+        lensedPositions[i*3+1] = y;
+        lensedPositions[i*3+2] = Math.sin(angle) * r;
+    }
+    lensedStarsGeometry.setAttribute('position', new THREE.BufferAttribute(lensedPositions, 3));
+    const lensedStarsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1, transparent: true, opacity: 0.6 });
+    const lensedStars = new THREE.Points(lensedStarsGeometry, lensedStarsMaterial);
+    scene.add(lensedStars);
+
+    // --- Post-processing for bloom (glow) ---
+    const renderScene = new RenderPass(scene, camera);
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(container.clientWidth, container.clientHeight), 1.5, 0.4, 0.85);
+    bloomPass.threshold = 0.1;
+    bloomPass.strength = 1.2;
+    bloomPass.radius = 0.5;
+
+    const composer = new EffectComposer(renderer);
+    composer.addPass(renderScene);
+    composer.addPass(bloomPass);
+
+    // FXAA for anti-aliasing
+    const effectFXAA = new ShaderPass(FXAAShader);
+    effectFXAA.uniforms['resolution'].value.set(1 / container.clientWidth, 1 / container.clientHeight);
+    composer.addPass(effectFXAA);
+
+    // --- Animation variables ---
+    let clock = new THREE.Clock();
+
+    // --- Animation loop ---
+    function animate() {
+        const delta = clock.getDelta();
+        const elapsedTime = performance.now() / 1000;
+
+        // Rotate the disk particles (simulate orbital motion)
+        diskParticles.rotation.y += 0.002;
+        torus.rotation.y += 0.0015;
+        innerTorus.rotation.y += 0.0025;
+        ring.rotation.y += 0.003;
+        lensedStars.rotation.y += 0.002;
+
+        // Update shader uniform time for particle twinkling
+        if (diskMaterial.uniforms) diskMaterial.uniforms.time.value = elapsedTime;
+
+        // Slight camera movement for cinematic effect
+        camera.position.x = Math.sin(elapsedTime * 0.1) * 2;
+        camera.position.z = 10 + Math.sin(elapsedTime * 0.2) * 1;
+        camera.lookAt(0, 0, 0);
+
+        // Rotate stars slowly
+        stars.rotation.y += 0.0001;
+
+        // Render via composer
+        composer.render();
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // --- Handle resize ---
+    window.addEventListener('resize', onWindowResize, false);
+    function onWindowResize() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        composer.setSize(container.clientWidth, container.clientHeight);
+        effectFXAA.uniforms['resolution'].value.set(1 / container.clientWidth, 1 / container.clientHeight);
+    }
+
+    // --- Optional: make the container responsive to parent size ---
+    // The container is positioned absolutely; you might need to adjust its size relative to parent.
+    // In your existing code, the hero-illustration has a fixed height. We'll set the container to match.
+    const parent = container.parentElement;
+    function updateContainerSize() {
+        if (parent) {
+            const rect = parent.getBoundingClientRect();
+            container.style.width = rect.width + 'px';
+            container.style.height = rect.height + 'px';
+            camera.aspect = rect.width / rect.height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(rect.width, rect.height);
+            composer.setSize(rect.width, rect.height);
+            effectFXAA.uniforms['resolution'].value.set(1 / rect.width, 1 / rect.height);
+        }
+    }
+    window.addEventListener('resize', updateContainerSize);
+    updateContainerSize();
+
+    // Make sure the canvas is behind other content
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.top = '0';
+    renderer.domElement.style.left = '0';
+    renderer.domElement.style.zIndex = '1';
+    renderer.domElement.style.pointerEvents = 'none';
+</script>
+
+<!-- ================================================ -->
+<!-- END OF BLACK HOLE CODE                           -->
+<!-- ================================================ -->
 
         /* Stats cards */
         .stats-grid {
