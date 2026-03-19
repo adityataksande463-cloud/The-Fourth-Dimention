@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Vigyan Bhairav · Gargantua · Cosmic Awakening</title>
+  <title>Vigyan Bhairav · Gargantua Black Hole · Complete OS</title>
   <!-- fonts & icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,17 +11,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <!-- three.js import map -->
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
-      }
-    }
-  </script>
+  <!-- three.js core (lightweight) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
-    /* ==================== RESET & COSMIC VARIABLES ==================== */
     * {
       margin: 0;
       padding: 0;
@@ -69,15 +61,17 @@
       overflow-x: hidden;
       position: relative;
     }
-    #blackhole-3d {
+    /* Black hole canvas – fullscreen, behind everything */
+    #blackhole-canvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       z-index: 0;
-      pointer-events: none;
       display: block;
+      pointer-events: none;
+      background: #0a0f1f; /* fallback color */
     }
     .stars, .twinkling {
       position: fixed;
@@ -85,26 +79,28 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 0;
+      z-index: 1;
       pointer-events: none;
     }
     .stars {
       background: #0a0f1f url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIxLjUiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuOCIgLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSI4MCIgcj0iMSIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC42IiAvPjwvc3ZnPg==') repeat;
       background-size: 200px 200px;
       animation: starMove 120s linear infinite;
+      opacity: 0.5;
     }
     .twinkling {
       background: transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIyIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjQiIC8+PC9zdmc+') repeat;
       background-size: 300px 300px;
       animation: twinkle 5s ease-in-out infinite;
+      opacity: 0.3;
     }
     @keyframes starMove {
       from { transform: translateY(0); }
       to { transform: translateY(-200px); }
     }
     @keyframes twinkle {
-      0%,100% { opacity: 0.4; }
-      50% { opacity: 1; }
+      0%,100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
     }
 
     .container {
@@ -112,7 +108,7 @@
       margin: 0 auto;
       padding: 20px 30px;
       position: relative;
-      z-index: 20;
+      z-index: 10;
     }
 
     .glass-header, .stat-card, .path-card, .tech-card, .modal-content, .timer-section,
@@ -1204,7 +1200,9 @@
   </style>
 </head>
 <body>
-  <canvas id="blackhole-3d"></canvas>
+  <!-- Black hole canvas (absolutely positioned behind everything) -->
+  <canvas id="blackhole-canvas"></canvas>
+  <!-- Stars layers (optional, enhance background) -->
   <div class="stars"></div>
   <div class="twinkling"></div>
 
@@ -1438,29 +1436,23 @@
     </footer>
   </div>
 
-  <script type="module">
-    // ========== GARGANTUA BLACK HOLE (Three.js) - ENHANCED & RELIABLE ==========
-    import * as THREE from 'three';
-    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+  <script>
+    // ========== BLACK HOLE (Three.js) - SIMPLIFIED & GUARANTEED VISIBLE ==========
+    (function initBlackHole() {
+      const canvas = document.getElementById('blackhole-canvas');
+      if (!canvas) return;
 
-    // Ensure canvas exists
-    const canvas = document.getElementById('blackhole-3d');
-    if (!canvas) {
-      console.error('Black hole canvas not found!');
-    } else {
       try {
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        // Basic Three.js setup
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         const scene = new THREE.Scene();
-        scene.background = null;
+        scene.background = new THREE.Color(0x0a0f1f); // dark blue-black
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 2, 12);
-        camera.lookAt(0, 0, 0);
+        camera.position.set(0, 0, 12);
 
         // Lights
         const ambient = new THREE.AmbientLight(0x404060);
@@ -1469,9 +1461,9 @@
         pointLight.position.set(5, 5, 5);
         scene.add(pointLight);
 
-        // Starfield (simple and fast)
+        // Starfield (simple)
         const starGeo = new THREE.BufferGeometry();
-        const starCount = 2000;
+        const starCount = 1500;
         const starPositions = new Float32Array(starCount * 3);
         for (let i = 0; i < starCount; i++) {
           const r = 50 + Math.random() * 80;
@@ -1485,95 +1477,51 @@
         const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.2 }));
         scene.add(stars);
 
-        // Event horizon (black sphere with slight glow)
+        // Event horizon (black sphere)
         const horizonGeo = new THREE.SphereGeometry(1.5, 64, 64);
         const horizonMat = new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x220000, roughness: 0.2, metalness: 0.8, emissiveIntensity: 0.5 });
         const horizon = new THREE.Mesh(horizonGeo, horizonMat);
         scene.add(horizon);
 
-        // Photon ring (thin bright ring)
-        const ringGeo = new THREE.TorusGeometry(1.8, 0.03, 32, 128);
-        const ringMat = new THREE.MeshStandardMaterial({ color: 0xffaa33, emissive: 0xff5500, emissiveIntensity: 2, transparent: true, opacity: 0.8, side: THREE.DoubleSide });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        ring.rotation.x = Math.PI / 2;
-        scene.add(ring);
-
-        // Accretion disk particles (glowing gas)
-        const particleCount = 8000;
-        const diskGeo = new THREE.BufferGeometry();
-        const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
-        for (let i = 0; i < particleCount; i++) {
-          const r = 1.8 + Math.random() * 3.5;
-          const angle = Math.random() * Math.PI * 2;
-          const y = (Math.random() - 0.5) * 0.3 * (1 - (r-1.8)/3.5);
-          positions[i*3] = Math.cos(angle) * r;
-          positions[i*3+1] = y;
-          positions[i*3+2] = Math.sin(angle) * r;
-
-          // Doppler effect: blue on approaching side, red on receding
-          const isApproaching = Math.abs(angle - Math.PI/2) < 0.5 || Math.abs(angle - 3*Math.PI/2) < 0.5;
-          const temp = 1 - (r-1.8)/3.5;
-          let rC, gC, bC;
-          if (isApproaching) {
-            rC = 0.6 + 0.4 * temp;
-            gC = 0.7 + 0.3 * temp;
-            bC = 1.0;
-          } else {
-            rC = 1.0;
-            gC = 0.5 + 0.3 * temp;
-            bC = 0.2 + 0.1 * temp;
-          }
-          colors[i*3] = rC;
-          colors[i*3+1] = gC;
-          colors[i*3+2] = bC;
-        }
-        diskGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        diskGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-        const diskMat = new THREE.PointsMaterial({ size: 0.08, vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true });
-        const disk = new THREE.Points(diskGeo, diskMat);
+        // Accretion disk (torus)
+        const diskGeo = new THREE.TorusGeometry(2.2, 0.4, 32, 128);
+        const diskMat = new THREE.MeshStandardMaterial({ color: 0xffaa33, emissive: 0xff4400, emissiveIntensity: 2, transparent: true, opacity: 0.7 });
+        const disk = new THREE.Mesh(diskGeo, diskMat);
+        disk.rotation.x = Math.PI / 2;
         scene.add(disk);
 
-        // Outer glow (torus)
-        const torusGeo = new THREE.TorusGeometry(3.2, 0.5, 32, 128);
-        const torusMat = new THREE.MeshStandardMaterial({ color: 0xff8833, emissive: 0xff4400, emissiveIntensity: 1.5, transparent: true, opacity: 0.2, side: THREE.DoubleSide });
-        const torus = new THREE.Mesh(torusGeo, torusMat);
-        torus.rotation.x = Math.PI / 2;
-        scene.add(torus);
+        // Outer ring (fainter)
+        const outerRingGeo = new THREE.TorusGeometry(2.8, 0.2, 32, 128);
+        const outerRingMat = new THREE.MeshStandardMaterial({ color: 0xff8833, emissive: 0xff4400, emissiveIntensity: 1.5, transparent: true, opacity: 0.4 });
+        const outerRing = new THREE.Mesh(outerRingGeo, outerRingMat);
+        outerRing.rotation.x = Math.PI / 2;
+        scene.add(outerRing);
 
-        // Post-processing bloom
-        const renderScene = new RenderPass(scene, camera);
-        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
-        bloomPass.threshold = 0.1;
-        bloomPass.strength = 1.2;
-        bloomPass.radius = 0.5;
+        // Particles for extra glow
+        const particleCount = 2000;
+        const particleGeo = new THREE.BufferGeometry();
+        const particlePos = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount; i++) {
+          const r = 1.8 + Math.random() * 1.5;
+          const angle = Math.random() * Math.PI * 2;
+          const y = (Math.random() - 0.5) * 0.5;
+          particlePos[i*3] = Math.cos(angle) * r;
+          particlePos[i*3+1] = y;
+          particlePos[i*3+2] = Math.sin(angle) * r;
+        }
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+        const particleMat = new THREE.PointsMaterial({ color: 0xffaa33, size: 0.05, blending: THREE.AdditiveBlending });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
 
-        const composer = new EffectComposer(renderer);
-        composer.addPass(renderScene);
-        composer.addPass(bloomPass);
-
-        // Mouse interaction for subtle parallax
-        let mouseX = 0, mouseY = 0;
-        window.addEventListener('mousemove', (e) => {
-          mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-          mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-        });
-
+        // Simple animation
         function animate() {
           requestAnimationFrame(animate);
-          const time = performance.now() / 1000;
-          disk.rotation.y += 0.001;
-          ring.rotation.y += 0.002;
-          torus.rotation.y += 0.001;
+          disk.rotation.y += 0.002;
+          outerRing.rotation.y += 0.0015;
+          particles.rotation.y += 0.001;
           stars.rotation.y += 0.0001;
-
-          // Subtle camera movement based on mouse
-          camera.position.x = Math.sin(time * 0.1) * 2 + mouseX * 2;
-          camera.position.y = 2 + Math.sin(time * 0.2) * 0.5 + mouseY * 1;
-          camera.position.z = 10 + Math.sin(time * 0.15) * 1;
-          camera.lookAt(0, 0, 0);
-
-          composer.render();
+          renderer.render(scene, camera);
         }
         animate();
 
@@ -1581,15 +1529,38 @@
           camera.aspect = window.innerWidth / window.innerHeight;
           camera.updateProjectionMatrix();
           renderer.setSize(window.innerWidth, window.innerHeight);
-          composer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        console.log('Black hole initialized successfully');
+        console.log('Black hole initialized');
       } catch (e) {
         console.error('Three.js error:', e);
-        // Fallback: display a message or static image? Not needed.
+        // Fallback: draw a simple circle on canvas
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        function drawFallback() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = '#0a0f1f';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          const cx = canvas.width / 2;
+          const cy = canvas.height / 2;
+          const radius = Math.min(canvas.width, canvas.height) * 0.2;
+          ctx.beginPath();
+          ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
+          ctx.fillStyle = 'black';
+          ctx.fill();
+          ctx.shadowColor = '#ffaa33';
+          ctx.shadowBlur = 50;
+          ctx.beginPath();
+          ctx.arc(cx, cy, radius * 1.5, 0, 2 * Math.PI);
+          ctx.strokeStyle = '#ffaa33';
+          ctx.lineWidth = 4;
+          ctx.stroke();
+          requestAnimationFrame(drawFallback);
+        }
+        drawFallback();
       }
-    }
+    })();
 
     // ========== TECHNIQUES DATABASE (112) ==========
     const techniques = {};
