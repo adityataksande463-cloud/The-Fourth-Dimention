@@ -21,6 +21,7 @@
     }
   </script>
   <style>
+    /* ==================== RESET & COSMIC VARIABLES ==================== */
     * { margin:0; padding:0; box-sizing:border-box; }
     :root {
       --bg-deep: #0a0718;
@@ -62,6 +63,7 @@
       overflow-x:hidden;
       position:relative;
     }
+    /* 3D canvas (Gargantua) */
     #blackhole-3d {
       position: fixed;
       top: 0;
@@ -87,6 +89,7 @@
 
     .container { max-width:1400px; margin:0 auto; padding:20px 30px; position:relative; z-index:20; }
 
+    /* glassmorphism */
     .glass-header, .stat-card, .path-card, .tech-card, .modal-content, .timer-section,
     .profile-section, .plan-section, .quotes-section, .diary-section, .chat-section,
     .social-section, .challenge-section, .audio-section, .filter-section, .feed-post,
@@ -188,7 +191,9 @@
 
     /* stats */
     .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:25px; margin-bottom:20px; }
-    .stat-card { padding:30px; text-align:center; transform-style:preserve-3d; transition:transform 0.4s; cursor:default; }
+    .stat-card {
+      padding:30px; text-align:center; transform-style:preserve-3d; transition:transform 0.4s; cursor:default;
+    }
     .stat-card:hover { transform:rotateY(5deg) rotateX(2deg) scale(1.02); box-shadow:var(--shadow-glow); }
     .stat-value { font-size:3.5rem; font-weight:800; font-family:var(--font-display); color:var(--accent-secondary); text-shadow:0 0 20px var(--accent-primary); }
     .stat-label { color:var(--text-secondary); font-size:1rem; text-transform:uppercase; letter-spacing:2px; }
@@ -359,6 +364,7 @@
   </style>
 </head>
 <body>
+  <!-- Gargantua 3D canvas -->
   <canvas id="blackhole-3d"></canvas>
   <div class="stars"></div>
   <div class="twinkling"></div>
@@ -378,7 +384,7 @@
     <header class="glass-header">
       <div class="logo-area">
         <h1>VIGYAN BHAIRAV</h1>
-        <p class="tagline">THE COMPLETE COSMIC OS</p>
+        <p class="tagline">GARGANTUA · COMPLETE COSMIC OS</p>
       </div>
       <nav class="top-nav">
         <a href="#" data-view="home" class="active">Home</a>
@@ -414,7 +420,7 @@
           </div>
         </div>
         <div class="hero-illustration">
-          <!-- black hole is behind -->
+          <!-- black hole is behind, but we keep the div for structure -->
         </div>
       </section>
 
@@ -483,7 +489,7 @@
   </div>
 
   <script type="module">
-    // ========== GARGANTUA BLACK HOLE (Three.js) ==========
+    // ========== GARGANTUA BLACK HOLE (Three.js) – INTERSTELLAR EDITION ==========
     import * as THREE from 'three';
     import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
     import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
@@ -491,6 +497,7 @@
     import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
     import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 
+    // Get canvas element
     const canvas = document.getElementById('blackhole-3d');
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -505,14 +512,14 @@
     camera.position.set(0, 2, 12);
     camera.lookAt(0, 0, 0);
 
-    // ambient and point lights
+    // Lights
     const ambient = new THREE.AmbientLight(0x404060);
     scene.add(ambient);
     const pointLight = new THREE.PointLight(0xffaa33, 1, 30);
     pointLight.position.set(5, 5, 5);
     scene.add(pointLight);
 
-    // starfield background
+    // Starfield (distant)
     const starGeo = new THREE.BufferGeometry();
     const starCount = 6000;
     const starPositions = new Float32Array(starCount * 3);
@@ -528,20 +535,20 @@
     const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.15, transparent: true }));
     scene.add(stars);
 
-    // Event horizon
+    // Event horizon (black sphere)
     const horizonGeo = new THREE.SphereGeometry(1.2, 64, 64);
     const horizonMat = new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x220000, roughness: 0.1, metalness: 0.8, emissiveIntensity: 0.5 });
     const eventHorizon = new THREE.Mesh(horizonGeo, horizonMat);
     scene.add(eventHorizon);
 
-    // Photon ring
+    // Photon ring (thin bright ring)
     const ringGeo = new THREE.TorusGeometry(1.5, 0.03, 32, 128);
     const ringMat = new THREE.MeshStandardMaterial({ color: 0xffaa33, emissive: 0xff5500, emissiveIntensity: 2, transparent: true, opacity: 0.8, side: THREE.DoubleSide });
     const photonRing = new THREE.Mesh(ringGeo, ringMat);
     photonRing.rotation.x = Math.PI / 2;
     scene.add(photonRing);
 
-    // Accretion disk particles
+    // Accretion disk particles (glowing gas)
     const particleCount = 15000;
     const diskGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
@@ -562,8 +569,9 @@
       positions[i*3+1] = y;
       positions[i*3+2] = z;
 
+      // Doppler effect: blue on approaching side, red on receding
       const isApproaching = Math.abs(angle - Math.PI/2) < 0.5 || Math.abs(angle - 3*Math.PI/2) < 0.5;
-      const temp = 1 - (r - innerR) / (outerR - innerR);
+      const temp = 1 - (r - innerR) / (outerR - innerR); // hotter inside
       let rC, gC, bC;
       if (isApproaching) {
         rC = 0.6 + 0.4 * temp;
@@ -574,6 +582,7 @@
         gC = 0.5 + 0.3 * temp;
         bC = 0.2 + 0.1 * temp;
       }
+      // Add randomness
       rC *= 0.8 + 0.4 * Math.random();
       gC *= 0.8 + 0.4 * Math.random();
       bC *= 0.8 + 0.4 * Math.random();
@@ -588,6 +597,7 @@
     diskGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     diskGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
+    // Custom shader for particles (glow and twinkling)
     function createSprite() {
       const canvas = document.createElement('canvas');
       canvas.width = 32;
@@ -636,7 +646,7 @@
     const diskParticles = new THREE.Points(diskGeo, diskMaterial);
     scene.add(diskParticles);
 
-    // Outer torus
+    // Outer torus (diffuse glow)
     const torusGeo = new THREE.TorusGeometry(3.0, 0.8, 32, 128);
     const torusMat = new THREE.MeshStandardMaterial({ color: 0xffaa33, emissive: 0x442200, transparent: true, opacity: 0.15, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false });
     const torus = new THREE.Mesh(torusGeo, torusMat);
@@ -650,7 +660,7 @@
     innerTorus.rotation.x = Math.PI / 2;
     scene.add(innerTorus);
 
-    // Post-processing
+    // Post-processing bloom
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
     bloomPass.threshold = 0.1;
@@ -665,6 +675,7 @@
     fxaaPass.uniforms['resolution'].value.set(1 / window.innerWidth, 1 / window.innerHeight);
     composer.addPass(fxaaPass);
 
+    // Mouse interaction
     let mouseX = 0, mouseY = 0;
     window.addEventListener('mousemove', (e) => {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -673,12 +684,14 @@
 
     function animate() {
       const time = performance.now() / 1000;
+      // Rotate accretion disk
       diskParticles.rotation.y += 0.0015;
       torus.rotation.y += 0.001;
       innerTorus.rotation.y += 0.002;
       photonRing.rotation.y += 0.002;
       if (diskMaterial.uniforms) diskMaterial.uniforms.time.value = time;
 
+      // Subtle camera movement based on mouse
       camera.position.x = Math.sin(time * 0.1) * 2 + mouseX * 2;
       camera.position.y = 2 + Math.sin(time * 0.2) * 0.5 + mouseY * 1;
       camera.position.z = 10 + Math.sin(time * 0.15) * 1;
@@ -704,7 +717,7 @@
     const postures = ['Sukhasana','Siddhasana','Padmasana','Vajrasana','Shavasana'];
     const mudras = ['Chin mudra','Dhyana mudra','Jnana mudra','Khechari mudra','Shambhavi mudra'];
 
-    // Accurate first two (as shown in image)
+    // Accurate first two (as shown in images)
     techniques[1] = {
       id:1, name:'Witnessing the Breath', sanskrit:'Śvāsa–Praśvāsa Dharana', category:'breath',
       essence:'Breath awareness anchors consciousness.', posture:'Sukhasana', mudra:'Chin mudra',
@@ -719,7 +732,7 @@
       steps:['Exhale completely.','Notice the stillness before next inhale.','Rest in that gap.','Allow inhale to arise naturally.'],
       benefits:{ ceo:'sharpens intuition', seeker:'deepens stillness' }
     };
-    // Generate remaining 110 (dummy)
+    // Generate remaining 110
     for (let i = 3; i <= 112; i++) {
       let cat = categories[i % categories.length];
       techniques[i] = {
