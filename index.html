@@ -110,9 +110,8 @@
     /* ----- GLASSMORPHISM BASE ----- */
     .glass-header, .stat-card, .path-card, .tech-card, .modal-content,
     .timer-section, .profile-section, .plan-section, .quotes-section, .diary-section,
-    .audio-section, .challenge-section, .filter-section, .challenge-card,
-    .audio-card, .quote-card, .diary-entry, .achievement-card, .timer-pill,
-    .plan-item, .xp-bar {
+    .audio-section, .filter-section, .quote-card, .diary-entry,
+    .timer-pill, .plan-item, .xp-bar {
       background: var(--bg-glass);
       backdrop-filter: blur(16px) saturate(200%);
       -webkit-backdrop-filter: blur(16px) saturate(200%);
@@ -591,6 +590,63 @@
       border-color: var(--accent-primary);
     }
 
+    /* ----- BREATHING WIDGET (ENHANCED) ----- */
+    #breathingWidget {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 300px;
+      padding: 25px;
+      border-radius: 50px;
+      z-index: 999;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--accent-tertiary);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 40px var(--accent-secondary);
+      transform: perspective(800px) rotateY(5deg);
+      animation: float 6s infinite alternate;
+    }
+    @keyframes float {
+      0% { transform: perspective(800px) rotateY(5deg) translateY(0); }
+      100% { transform: perspective(800px) rotateY(5deg) translateY(-15px); }
+    }
+    #breathCircleWidget {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-secondary), transparent 80%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      transition: transform 4s ease;
+      box-shadow: 0 0 50px var(--accent-primary);
+    }
+    .breath-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .pattern-btn {
+      background: var(--bg-glass);
+      border: 1px solid var(--glass-border);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .pattern-btn.active, .pattern-btn:hover {
+      background: var(--accent-primary);
+      color: white;
+    }
+
     /* ----- TOAST ----- */
     .toast {
       position: fixed;
@@ -664,9 +720,7 @@
     }
 
     /* ----- AUDIO PLAYER (simple) ----- */
-    .audio-player {
-      padding: 20px;
-    }
+    .audio-section { padding: 40px; }
     .track-list {
       display: flex;
       flex-direction: column;
@@ -850,6 +904,7 @@
       .search-box { width: 100%; }
       .timer-display { font-size: 4rem; }
       .quote-text { font-size: 1.5rem; }
+      #breathingWidget { width: 260px; right: 15px; }
     }
     @media (max-width: 480px) {
       .hero h2 { font-size: 2.2rem; }
@@ -865,6 +920,22 @@
   <canvas id="blackhole-canvas"></canvas>
   <div class="stars"></div>
   <div class="twinkling"></div>
+
+  <!-- Floating breathing widget (enhanced) -->
+  <div id="breathingWidget">
+    <h4>🌬️ breath guide</h4>
+    <div id="breathCircleWidget">4</div>
+    <div id="breathPhaseWidget">inhale</div>
+    <div class="breath-controls">
+      <button class="pattern-btn active" data-pattern="446">4-4-6</button>
+      <button class="pattern-btn" data-pattern="478">4-7-8</button>
+      <button class="pattern-btn" data-pattern="627">6-2-7</button>
+    </div>
+    <div style="display:flex; gap:10px; margin-top:10px;">
+      <button class="btn-primary" id="toggleBreathWidget">start</button>
+    </div>
+  </div>
+  <button id="fabBreath" style="position:fixed; bottom:100px; right:30px; width:60px; height:60px; border-radius:50%; background:var(--accent-secondary); color:white; border:none; font-size:2rem; cursor:pointer; z-index:998; box-shadow:0 0 30px var(--accent-secondary);"><i class="fas fa-lungs"></i></button>
 
   <!-- Scroll to top button -->
   <button id="scrollToTop" class="btn-outline"><i class="fas fa-arrow-up"></i></button>
@@ -956,13 +1027,11 @@
     <!-- AUDIO VIEW -->
     <div id="audioView" class="hidden audio-section">
       <h2>🎧 guided audio</h2>
-      <div class="audio-card">
-        <div class="track-list" id="trackList">
-          <div class="track-item active" data-track="0"><span>1.</span> Witnessing Breath (10min)</div>
-          <div class="track-item" data-track="1"><span>2.</span> Heart Center (12min)</div>
-          <div class="track-item" data-track="2"><span>3.</span> Inner Sound (15min)</div>
-          <div class="track-item" data-track="3"><span>4.</span> Void Gazing (8min)</div>
-        </div>
+      <div class="track-list" id="trackList">
+        <div class="track-item active" data-track="0"><span>1.</span> Witnessing Breath (10min)</div>
+        <div class="track-item" data-track="1"><span>2.</span> Heart Center (12min)</div>
+        <div class="track-item" data-track="2"><span>3.</span> Inner Sound (15min)</div>
+        <div class="track-item" data-track="3"><span>4.</span> Void Gazing (8min)</div>
       </div>
     </div>
 
@@ -1028,7 +1097,7 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         const scene = new THREE.Scene();
-        scene.background = null; // transparent
+        scene.background = null;
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 2, 12);
@@ -1346,6 +1415,9 @@
       });
     });
 
+    // ========== EXPLORE BUTTON (fixed) ==========
+    document.getElementById('exploreBtn').addEventListener('click', () => showView('techniques'));
+
     // ========== QUOTES ==========
     const quotes = [
       { text:"The mind is everything. What you think you become.", author:"Buddha" },
@@ -1463,6 +1535,88 @@
     renderPlan();
     document.getElementById('applyPromoBtn').addEventListener('click', () => showToast('promo code applied (demo)'));
 
+    // ========== BREATHING WIDGET (ENHANCED) ==========
+    const widget = document.getElementById('breathingWidget');
+    const circle = document.getElementById('breathCircleWidget');
+    const phase = document.getElementById('breathPhaseWidget');
+    let breathInterval, breathPhase = 'inhale', breathTime = 4, breathRunning = false;
+    let breathTiming = { inhale:4, hold:4, exhale:6 }; // default 4-4-6
+
+    function setBreathPattern(pattern) {
+      if (pattern === '446') {
+        breathTiming = { inhale:4, hold:4, exhale:6 };
+      } else if (pattern === '478') {
+        breathTiming = { inhale:4, hold:7, exhale:8 };
+      } else if (pattern === '627') {
+        breathTiming = { inhale:6, hold:2, exhale:7 };
+      }
+      // Reset current cycle
+      if (breathRunning) {
+        clearInterval(breathInterval);
+        breathRunning = false;
+        document.getElementById('toggleBreathWidget').textContent = 'start';
+      }
+      breathPhase = 'inhale';
+      breathTime = breathTiming.inhale;
+      updateBreathDisplay();
+    }
+
+    function updateBreathDisplay() {
+      phase.textContent = breathPhase;
+      circle.textContent = breathTime;
+      if (breathPhase === 'inhale') {
+        const scale = 0.5 + (breathTiming.inhale - breathTime) / breathTiming.inhale * 0.5;
+        circle.style.transform = `scale(${scale})`;
+      } else if (breathPhase === 'hold') {
+        circle.style.transform = 'scale(1)';
+      } else if (breathPhase === 'exhale') {
+        const scale = 1 - (breathTiming.exhale - breathTime) / breathTiming.exhale * 0.5;
+        circle.style.transform = `scale(${scale})`;
+      }
+    }
+
+    document.querySelectorAll('.pattern-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.pattern-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        setBreathPattern(btn.dataset.pattern);
+      });
+    });
+
+    document.getElementById('fabBreath').addEventListener('click', () => {
+      widget.style.display = widget.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    document.getElementById('toggleBreathWidget').addEventListener('click', () => {
+      if (breathRunning) {
+        clearInterval(breathInterval);
+        breathRunning = false;
+        document.getElementById('toggleBreathWidget').textContent = 'start';
+      } else {
+        breathRunning = true;
+        document.getElementById('toggleBreathWidget').textContent = 'stop';
+        breathPhase = 'inhale';
+        breathTime = breathTiming.inhale;
+        updateBreathDisplay();
+        breathInterval = setInterval(() => {
+          breathTime--;
+          if (breathTime <= 0) {
+            if (breathPhase === 'inhale') {
+              breathPhase = 'hold';
+              breathTime = breathTiming.hold;
+            } else if (breathPhase === 'hold') {
+              breathPhase = 'exhale';
+              breathTime = breathTiming.exhale;
+            } else if (breathPhase === 'exhale') {
+              breathPhase = 'inhale';
+              breathTime = breathTiming.inhale;
+            }
+          }
+          updateBreathDisplay();
+        }, 1000);
+      }
+    });
+
     // ========== SCROLL TO TOP ==========
     window.addEventListener('scroll', () => { document.getElementById('scrollToTop').style.opacity = window.scrollY > 200 ? '1' : '0'; });
     document.getElementById('scrollToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
@@ -1499,7 +1653,6 @@
     // ========== INIT ==========
     updateStorage();
     showView('home');
-    document.getElementById('exploreBtn').addEventListener('click', () => showView('techniques'));
     document.getElementById('dailyBtn').addEventListener('click', () => {
       const ids = Object.keys(techniques);
       alert(`Today's technique: ${techniques[ids[Math.floor(Math.random()*ids.length)]].name}`);
