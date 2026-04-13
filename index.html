@@ -8,11 +8,10 @@
     <meta name="theme-color" content="#050210">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        /* ---------- RESET & VARIABLES ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +19,7 @@
         }
         :root {
             --bg-deep: #050210;
-            --glass-bg: rgba(8, 6, 20, 0.75);
+            --glass-bg: rgba(8, 6, 20, 0.7);
             --glass-border: rgba(157, 123, 255, 0.4);
             --text-primary: #f0eaff;
             --text-secondary: #c4b5fd;
@@ -30,11 +29,11 @@
             --card-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5);
             --radius-card: 28px;
             --radius-pill: 60px;
-            --transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+            --transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
         [data-theme="light"] {
             --bg-deep: #f2edff;
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.8);
             --glass-border: rgba(106, 78, 255, 0.2);
             --text-primary: #0e0a1f;
             --text-secondary: #5b3eff;
@@ -50,7 +49,6 @@
             overflow-x: hidden;
             min-height: 100vh;
         }
-        /* ---------- BLACK HOLE CANVAS (SCALED FOR MOBILE) ---------- */
         #blackhole-canvas {
             position: fixed;
             top: 0;
@@ -61,7 +59,6 @@
             display: block;
             pointer-events: none;
         }
-        /* ---------- MAIN CONTAINER ---------- */
         .app-container {
             position: relative;
             z-index: 10;
@@ -69,7 +66,6 @@
             margin: 0 auto;
             padding: 1rem 1rem 2rem;
         }
-        /* ---------- GLASS CARD (more padding on mobile) ---------- */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -80,7 +76,6 @@
             transition: var(--transition);
             padding: 1.5rem;
         }
-        /* ---------- HEADER ---------- */
         .header {
             display: flex;
             flex-wrap: wrap;
@@ -120,10 +115,14 @@
             cursor: pointer;
             white-space: nowrap;
         }
+        .nav a:hover, .nav a.active {
+            color: var(--accent-secondary);
+            text-shadow: 0 0 6px var(--accent-glow);
+        }
         .greeting {
             font-size: 0.8rem;
         }
-        /* ---------- HERO ---------- */
+        /* Hero */
         .hero {
             margin-bottom: 2rem;
             text-align: center;
@@ -143,170 +142,311 @@
             line-height: 1.2;
             margin-bottom: 0.8rem;
         }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
         .hero-sub {
             font-size: 1rem;
             margin-bottom: 1.5rem;
         }
-        /* ---------- BUTTONS ---------- */
         .btn-primary, .btn-outline {
             padding: 0.7rem 1.5rem;
-            font-size: 0.9rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
         }
-        /* ---------- MUDRA CAROUSEL (fixed spacing) ---------- */
-        .mudra-carousel-wrapper {
-            text-align: center;
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            color: white;
+            box-shadow: 0 6px 20px rgba(157,123,255,0.4);
         }
-        .mudra-content {
-            text-align: left;
-            margin: 1rem 0;
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(157,123,255,0.6);
         }
-        .mudra-section {
-            margin: 1.2rem 0;
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            backdrop-filter: blur(4px);
         }
-        .mudra-section p, .mudra-section ol, .mudra-section ul {
-            margin-left: 0.5rem;
-            padding-right: 0.5rem;
+        .btn-outline:hover {
+            background: rgba(157,123,255,0.2);
+            transform: translateY(-2px);
         }
-        .mudra-svg svg {
-            width: 80px;
-            height: 80px;
-        }
-        /* ---------- PROFESSION GRID ---------- */
+        /* Profession Grid */
         .profession-grid {
-            gap: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
         }
         .prof-card {
-            padding: 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 1.2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        /* ---------- TECHNIQUES GRID & CAROUSEL ---------- */
-        .tech-grid {
-            gap: 1rem;
+        .prof-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
-        .tech-card {
-            padding: 1rem;
+        .prof-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 35px -12px rgba(157,123,255,0.4);
         }
-        .tech-carousel-content {
-            padding: 0 0.5rem;
+        .prof-card:hover::before {
+            transform: scaleX(1);
         }
-        .tech-detail-section p, .tech-detail-section ol {
-            margin-left: 0.5rem;
-            padding-right: 0.5rem;
+        .prof-card i {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
         }
-        /* ---------- BREATHWORK RING (scaled for mobile) ---------- */
-        .breath-ring {
-            width: 240px;
-            height: 240px;
+        .prof-card span {
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: block;
+            margin: 0.3rem 0;
         }
-        .breath-inner-ring {
-            width: 140px;
-            height: 140px;
-        }
-        .breath-phase {
-            font-size: 1.8rem;
-        }
-        .breath-timer {
-            font-size: 1.6rem;
-        }
-        /* ---------- TIMER ---------- */
-        .timer-circle {
-            width: 180px;
-            height: 180px;
-        }
-        /* ---------- QUOTES (more breathing space) ---------- */
-        .quote-text-large {
-            font-size: 1.3rem;
-            line-height: 1.4;
-            margin: 1rem 0;
-            padding: 0 0.5rem;
-        }
-        /* ---------- CALENDAR & STATS ---------- */
-        .calendar-grid {
-            gap: 0.4rem;
-            padding: 0.8rem;
-        }
-        .calendar-day {
-            padding: 0.4rem;
+        .prof-desc {
+            color: var(--text-secondary);
             font-size: 0.75rem;
         }
-        .stat-card {
-            padding: 0.8rem;
-            min-width: 80px;
+        /* Tech Carousel (professional upgrade) */
+        .tech-carousel-container {
+            perspective: 1000px;
         }
-        /* ---------- RESPONSIVE (extra phone tweaks) ---------- */
+        .tech-carousel-card {
+            background: linear-gradient(135deg, rgba(20,16,44,0.9), rgba(8,6,20,0.95));
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            border: 1px solid rgba(157,123,255,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(157,123,255,0.2);
+            padding: 1.8rem;
+            transition: transform 0.4s ease, box-shadow 0.3s ease;
+        }
+        .tech-carousel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.5), 0 0 30px rgba(157,123,255,0.4);
+        }
+        .tech-original-name {
+            font-size: 1rem;
+            letter-spacing: 2px;
+            color: var(--accent-secondary);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .tech-english-name {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        .tech-detail-section {
+            margin: 1.2rem 0;
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+        }
+        .tech-detail-section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .tech-detail-section p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+        .tech-carousel-nav {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        .tech-carousel-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        /* Breathwork Ring */
+        .breath-ring {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            margin: 0 auto;
+        }
+        .breath-ring svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+            filter: drop-shadow(0 0 15px var(--accent-glow));
+        }
+        .progress-circle {
+            stroke-dasharray: 860;
+            stroke-dashoffset: 860;
+            transition: stroke-dashoffset 0.05s linear;
+        }
+        .breath-inner-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(157,123,255,0.3), rgba(157,123,255,0));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            backdrop-filter: blur(4px);
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(157,123,255,0.4); transform: translate(-50%, -50%) scale(1); }
+            50% { box-shadow: 0 0 0 20px rgba(157,123,255,0); transform: translate(-50%, -50%) scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(157,123,255,0); transform: translate(-50%, -50%) scale(1); }
+        }
+        .breath-phase {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .breath-timer {
+            font-size: 1.8rem;
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--accent-secondary);
+        }
+        /* Timer Circle */
+        .timer-circle {
+            width: 200px;
+            height: 200px;
+            margin: 1rem auto;
+            position: relative;
+        }
+        .timer-svg {
+            transform: rotate(-90deg);
+        }
+        .timer-progress {
+            stroke: url(#timerGradient);
+            transition: stroke-dashoffset 0.1s linear;
+        }
+        .timer-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        /* Responsive */
         @media (max-width: 640px) {
-            .app-container {
-                padding: 0.8rem;
-            }
-            .glass-card {
-                padding: 1rem;
-                margin-bottom: 1rem;
-            }
-            .header {
-                padding: 0.6rem 1rem;
-            }
-            .nav a {
-                font-size: 0.75rem;
-            }
-            .hero h2 {
-                font-size: 1.8rem;
-            }
-            .hero-sub {
-                font-size: 0.9rem;
-            }
-            .mudra-name {
-                font-size: 1.3rem;
-            }
-            .mudra-sanskrit {
-                font-size: 0.8rem;
-            }
-            .mudra-section h4 {
-                font-size: 0.9rem;
-            }
-            .mudra-section p {
-                font-size: 0.85rem;
-            }
-            .prof-card span {
-                font-size: 1.1rem;
-            }
-            .tech-name {
-                font-size: 1.1rem;
-            }
-            .breath-ring {
-                width: 200px;
-                height: 200px;
-            }
-            .breath-inner-ring {
-                width: 120px;
-                height: 120px;
-            }
-            .timer-circle {
-                width: 160px;
-                height: 160px;
-            }
-            .timer-text {
-                font-size: 1.4rem;
-            }
-            .quote-text-large {
-                font-size: 1.1rem;
-            }
-            footer {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.5rem;
-            }
+            .app-container { padding: 0.8rem; }
+            .glass-card { padding: 1rem; margin-bottom: 1rem; }
+            .tech-english-name { font-size: 1.5rem; }
+            .breath-ring { width: 200px; height: 200px; }
+            .breath-inner-ring { width: 120px; height: 120px; }
+            .timer-circle { width: 160px; height: 160px; }
         }
-        /* additional utility */
+        /* Utilities */
         .hidden { display: none !important; }
-        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 40px; z-index: 3000; animation: fadeOut 3s forwards; font-size: 0.85rem; }
-        @keyframes fadeOut { 0% { opacity: 0; transform: translateX(-50%) translateY(20px);} 10% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
-        .view-container { transition: opacity 0.35s ease, transform 0.35s ease; }
-        .view-exit { opacity: 0 !important; transform: scale(0.96) translateY(8px); pointer-events: none; }
-        .view-enter { opacity: 0 !important; transform: scale(1.02) translateY(-8px); }
+        .view-container { transition: opacity 0.4s ease, transform 0.4s ease; }
+        .view-exit { opacity: 0 !important; transform: scale(0.96) translateY(10px); pointer-events: none; }
+        .view-enter { opacity: 0 !important; transform: scale(1.02) translateY(-10px); }
         .view-enter-active { opacity: 1 !important; transform: scale(1) translateY(0); }
-        footer a { color: var(--text-secondary); text-decoration: none; margin: 0 0.4rem; cursor: pointer; }
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); z-index:2000; display: flex; align-items: center; justify-content: center; opacity:0; pointer-events: none; transition:0.2s; }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            z-index: 3000;
+            animation: fadeOut 3s forwards;
+            font-size: 0.85rem;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px);}
+            10% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        footer {
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--glass-border);
+        }
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin: 0 0.4rem;
+            cursor: pointer;
+        }
+        .modal {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(20px);
+            z-index:2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity:0;
+            pointer-events: none;
+            transition:0.2s;
+        }
         .modal.active { opacity:1; pointer-events: auto; }
-        .modal-content { max-width: 90%; width: 90%; max-height: 80vh; overflow-y: auto; padding: 1.2rem; background: var(--glass-bg); border-radius: 28px; }
+        .modal-content {
+            max-width: 90%;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            border-radius: 32px;
+        }
     </style>
 </head>
 <body>
@@ -335,109 +475,107 @@
                 <div class="btn-group"><button class="btn-primary" id="exploreBtn">Begin Voyage →</button><button class="btn-outline" id="dailyBtn">Daily Technique</button></div>
             </div>
         </div>
-        <div class="glass-card"><div class="mudra-carousel-wrapper"><div class="mudra-header"><h3>🌀 Sacred Mudras · Gestures of Awakening</h3><div class="mudra-counter" id="mudraCounter">1 / 11</div></div><div id="mudraContent" class="mudra-content"></div><div class="mudra-nav"><button id="prevMudraBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button><button id="nextMudraBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button></div><div class="mudra-save"><button id="saveMudraBtn" class="btn-outline"><i class="fas fa-bookmark"></i> Save to Diary</button></div></div></div>
-        <div class="quotes-home glass-card"><h2>🌠 Wisdom of the Ages</h2><div id="homeQuoteContainer"><div class="quote-text-large" id="homeQuoteText">Loading wisdom...</div><div class="quote-author" id="homeQuoteAuthor"></div></div><div class="quote-save"><button class="btn-outline" id="saveHomeQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary & Quotes</button></div><div class="quote-nav"><button class="btn-outline" id="prevHomeQuote"><i class="fas fa-chevron-left"></i></button><button class="btn-outline" id="nextHomeQuote"><i class="fas fa-chevron-right"></i></button></div></div>
+        <div class="glass-card"><div class="mudra-carousel-wrapper"><h3>🌀 Sacred Mudras</h3><div id="mudraContent" class="mudra-content"></div><div class="mudra-nav"><button id="prevMudraBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button><button id="nextMudraBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button></div><div class="mudra-save"><button id="saveMudraBtn" class="btn-outline"><i class="fas fa-bookmark"></i> Save to Diary</button></div></div></div>
+        <div class="quotes-home glass-card"><h2>🌠 Wisdom of the Ages</h2><div id="homeQuoteContainer"><div class="quote-text-large" id="homeQuoteText">Loading wisdom...</div><div class="quote-author" id="homeQuoteAuthor"></div></div><div class="quote-save"><button class="btn-outline" id="saveHomeQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button></div><div class="quote-nav"><button class="btn-outline" id="prevHomeQuote"><i class="fas fa-chevron-left"></i></button><button class="btn-outline" id="nextHomeQuote"><i class="fas fa-chevron-right"></i></button></div></div>
     </div>
 
-    <!-- TECHNIQUES VIEW -->
+    <!-- TECHNIQUES VIEW (upgraded) -->
     <div id="techniquesView" class="hidden view-container">
-        <div class="glass-card" style="padding:1rem; margin-bottom:1rem;">
+        <div class="glass-card" style="margin-bottom:1rem;">
             <div style="display: flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;">
                 <button id="showArchetypeBtn" class="btn-primary">✨ Archetype Selection</button>
                 <button id="showAllTechBtn" class="btn-outline">🌀 Browse All 112 Techniques</button>
             </div>
         </div>
         <div id="professionSelectionView"><div class="glass-card"><h3>🌀 Choose Your Archetype</h3><p>Select your path, and cosmic wisdom reveals aligned techniques.</p><div class="profession-grid" id="professionGrid"></div></div></div>
-        <div id="recommendedTechniquesView" class="hidden"><div class="glass-card"><div class="recommended-header"><h3 id="selectedProfessionTitle">Recommended Techniques</h3><div class="tech-counter" id="techCounter">1 / 12</div></div><div id="techCarouselContent" class="tech-carousel-content"></div><div class="tech-carousel-nav"><button id="prevTechBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button><button id="nextTechBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button></div><div class="tech-carousel-actions"><button id="practiceTechBtn" class="btn-primary"><i class="fas fa-play"></i> Practice</button><button id="addToPlanTechBtn" class="btn-outline"><i class="fas fa-plus"></i> Add to My Plan</button><button id="favoriteTechBtn" class="btn-outline"><i class="far fa-heart"></i> Favorite</button></div><div class="back-to-archetype"><button id="backToProfessionsBtn" class="btn-outline"><i class="fas fa-arrow-left"></i> Back to Archetypes</button></div></div></div>
-        <div id="allTechniquesView" class="hidden"><div class="glass-card"><input type="text" id="techSearchInput" placeholder="🔍 search technique..." style="width:100%; padding:0.7rem; border-radius:40px; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); color:white;"><div class="tech-grid" id="allTechniquesGrid"></div></div></div>
+        <div id="recommendedTechniquesView" class="hidden"><div class="glass-card tech-carousel-container"><div class="recommended-header"><h3 id="selectedProfessionTitle">Recommended Techniques</h3><div class="tech-counter" id="techCounter">1 / 12</div></div><div id="techCarouselContent" class="tech-carousel-content"></div><div class="tech-carousel-nav"><button id="prevTechBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button><button id="nextTechBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button></div><div class="tech-carousel-actions"><button id="practiceTechBtn" class="btn-primary"><i class="fas fa-play"></i> Practice</button><button id="addToPlanTechBtn" class="btn-outline"><i class="fas fa-plus"></i> Add to My Plan</button><button id="favoriteTechBtn" class="btn-outline"><i class="far fa-heart"></i> Favorite</button></div><div class="back-to-archetype"><button id="backToProfessionsBtn" class="btn-outline"><i class="fas fa-arrow-left"></i> Back to Archetypes</button></div></div></div>
+        <div id="allTechniquesView" class="hidden"><div class="glass-card"><input type="text" id="techSearchInput" placeholder="🔍 search technique..." style="width:100%; padding:0.7rem; border-radius:40px; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); color:white; margin-bottom:1rem;"><div class="tech-grid" id="allTechniquesGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem;"></div></div></div>
     </div>
 
-    <!-- BREATHWORK, QUOTES, DIARY, TIMER, PLAN, PROFILE, ENHANCED, STATS, ACHIEVEMENTS (all with same padding fixes) -->
-    <div id="breathworkView" class="hidden breathwork-section glass-card view-container"><h2>🌬️ Sacred Breath Alchemy</h2><div class="breath-container"><div class="breath-ring"><svg viewBox="0 0 300 300"><defs><linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle class="bg-circle" cx="150" cy="150" r="137" stroke="currentColor" fill="none" stroke-width="6"/><circle class="progress-circle" cx="150" cy="150" r="137" stroke="url(#gradientStroke)" fill="none" stroke-width="6" stroke-dasharray="860" stroke-dashoffset="860"/></svg><div class="breath-inner-ring"><div class="breath-phase" id="breathPhaseLabel">🌀</div><div class="breath-timer" id="breathTimerDisplay">0</div></div></div></div><div class="breath-text" id="breathPhaseText">Ready</div><div class="breath-controls"><button id="stopBreathBtn" class="btn-outline" style="display:none;"><i class="fas fa-stop"></i> Stop Practice</button></div><div class="breath-grid"><div class="breath-card glass-card" data-breath="box"><i class="fas fa-cube"></i><h3>4-4-6-4 Box</h3><p>Calm nervous system</p><button class="btn-outline start-breath" data-type="box">Activate</button></div><div class="breath-card glass-card" data-breath="478"><i class="fas fa-feather-alt"></i><h3>4-7-8 Relaxation</h3><button class="btn-outline start-breath" data-type="478">Activate</button></div><div class="breath-card glass-card" data-breath="nadi"><i class="fas fa-hand-peace"></i><h3>Alternate Nostril</h3><button class="btn-outline start-breath" data-type="nadi">Activate</button></div><div class="breath-card glass-card" data-breath="kapal"><i class="fas fa-fire"></i><h3>Kapalabhati</h3><button class="btn-outline start-breath" data-type="kapal">Activate</button></div><div class="breath-card glass-card" data-breath="ujjayi"><i class="fas fa-water"></i><h3>Ujjayi Ocean</h3><button class="btn-outline start-breath" data-type="ujjayi">Activate</button></div></div><div id="breathInstructionPanel" class="breath-instruction-panel">✨ Select a breath technique to see detailed instructions.</div></div>
-    <div id="quotesView" class="hidden quotes-section glass-card view-container"><h2>📚 Wisdom Library</h2><div id="quoteContainer"><div class="quote-text-large" id="quoteText">Loading...</div><div class="quote-author" id="quoteAuthor"></div></div><div style="margin-top:1rem; display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;"><button class="btn-outline" id="prevLibQuote"><i class="fas fa-chevron-left"></i> Previous</button><button class="btn-outline" id="nextLibQuote">Next <i class="fas fa-chevron-right"></i></button><button class="btn-outline" id="saveLibQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button></div></div>
-    <div id="diaryView" class="hidden diary-section glass-card view-container"><h2>🌙 cosmic diary</h2><textarea id="diaryEntry" rows="3" style="width:100%; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); border-radius:28px; padding:0.8rem; margin:1rem 0;"></textarea><button class="btn-primary" id="saveDiary">save reflection</button><div id="diaryList" style="margin-top:1.5rem; text-align:left;"></div></div>
-    <div id="timerView" class="hidden timer-section glass-card view-container"><h2>⏱️ meditation timer</h2><div class="timer-circle"><svg class="timer-svg" width="200" height="200" viewBox="0 0 200 200"><circle class="timer-bg" cx="100" cy="100" r="88" stroke="currentColor" fill="none"/><circle class="timer-progress" cx="100" cy="100" r="88" stroke="var(--accent-secondary)" fill="none" stroke-dasharray="553" stroke-dashoffset="0"/></svg><div class="timer-text" id="timerDisplay">05:00</div></div><div style="display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; margin:1rem 0;"><button class="timer-pill btn-outline" data-min="5">5 min</button><button class="timer-pill btn-outline" data-min="10">10 min</button><button class="timer-pill btn-outline" data-min="15">15 min</button><button class="timer-pill btn-outline" data-min="20">20 min</button><input type="number" id="customMinutes" placeholder="custom" min="1" style="width:80px; background:rgba(0,0,0,0.5); border-radius:40px; padding:0.3rem; text-align:center;"></div><div style="display:flex; gap:0.8rem; justify-content:center; margin-bottom:1rem;"><button class="btn-primary" id="startTimer">start</button><button class="btn-outline" id="pauseTimer">pause</button><button class="btn-outline" id="resetTimer">reset</button></div><div class="ambient-panel"><h4>🎵 Ambient Sounds</h4><button class="sound-btn" data-sound="rain">🌧️ Rain</button><button class="sound-btn" data-sound="forest">🌲 Forest</button><button class="sound-btn" data-sound="ocean">🌊 Ocean</button><button class="sound-btn" data-sound="fire">🔥 Fire</button><button class="sound-btn" data-sound="silence">🔇 Silence</button></div><p id="timerMsg"></p></div>
+    <!-- BREATHWORK VIEW (upgraded) -->
+    <div id="breathworkView" class="hidden breathwork-section glass-card view-container">
+        <h2>🌬️ Sacred Breath Alchemy</h2>
+        <div class="breath-container"><div class="breath-ring"><svg viewBox="0 0 300 300"><defs><linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle class="bg-circle" cx="150" cy="150" r="137" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="6"/><circle class="progress-circle" cx="150" cy="150" r="137" stroke="url(#gradientStroke)" fill="none" stroke-width="6" stroke-dasharray="860" stroke-dashoffset="860"/></svg><div class="breath-inner-ring"><div class="breath-phase" id="breathPhaseLabel">🌀</div><div class="breath-timer" id="breathTimerDisplay">0</div></div></div></div>
+        <div class="breath-text" id="breathPhaseText">Ready</div>
+        <div class="breath-controls"><button id="stopBreathBtn" class="btn-outline" style="display:none;"><i class="fas fa-stop"></i> Stop Practice</button></div>
+        <div class="breath-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin:1.5rem 0;">
+            <div class="breath-card glass-card" data-breath="box"><i class="fas fa-cube"></i><h3>4-4-6-4 Box</h3><p>Calm nervous system</p><button class="btn-outline start-breath" data-type="box">Activate</button></div>
+            <div class="breath-card glass-card" data-breath="478"><i class="fas fa-feather-alt"></i><h3>4-7-8 Relaxation</h3><button class="btn-outline start-breath" data-type="478">Activate</button></div>
+            <div class="breath-card glass-card" data-breath="nadi"><i class="fas fa-hand-peace"></i><h3>Alternate Nostril</h3><button class="btn-outline start-breath" data-type="nadi">Activate</button></div>
+            <div class="breath-card glass-card" data-breath="kapal"><i class="fas fa-fire"></i><h3>Kapalabhati</h3><button class="btn-outline start-breath" data-type="kapal">Activate</button></div>
+            <div class="breath-card glass-card" data-breath="ujjayi"><i class="fas fa-water"></i><h3>Ujjayi Ocean</h3><button class="btn-outline start-breath" data-type="ujjayi">Activate</button></div>
+        </div>
+        <div id="breathInstructionPanel" class="breath-instruction-panel" style="background:rgba(0,0,0,0.4); border-radius:24px; padding:1rem; border-left:4px solid var(--accent);">✨ Select a breath technique to see detailed instructions.</div>
+    </div>
+
+    <!-- QUOTES, DIARY, TIMER, PLAN, PROFILE, ENHANCED, STATS (without unwanted stats) -->
+    <div id="quotesView" class="hidden quotes-section glass-card view-container"><h2>📚 Wisdom Library</h2><div id="quoteContainer"><div class="quote-text-large" id="quoteText">Loading...</div><div class="quote-author" id="quoteAuthor"></div></div><div style="margin-top:1rem; display:flex; gap:0.8rem; justify-content:center;"><button class="btn-outline" id="prevLibQuote"><i class="fas fa-chevron-left"></i> Previous</button><button class="btn-outline" id="nextLibQuote">Next <i class="fas fa-chevron-right"></i></button><button class="btn-outline" id="saveLibQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button></div></div>
+    <div id="diaryView" class="hidden diary-section glass-card view-container"><h2>🌙 cosmic diary</h2><textarea id="diaryEntry" rows="3" style="width:100%; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); border-radius:28px; padding:0.8rem; margin:1rem 0;"></textarea><button class="btn-primary" id="saveDiary">save reflection</button><div id="diaryList" style="margin-top:1.5rem;"></div></div>
+    <div id="timerView" class="hidden timer-section glass-card view-container"><h2>⏱️ meditation timer</h2><div class="timer-circle"><svg class="timer-svg" width="200" height="200" viewBox="0 0 200 200"><defs><linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle class="timer-bg" cx="100" cy="100" r="88" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="8"/><circle class="timer-progress" cx="100" cy="100" r="88" stroke="url(#timerGradient)" fill="none" stroke-width="8" stroke-dasharray="553" stroke-dashoffset="0"/></svg><div class="timer-text" id="timerDisplay">05:00</div></div><div style="display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; margin:1rem 0;"><button class="timer-pill btn-outline" data-min="5">5 min</button><button class="timer-pill btn-outline" data-min="10">10 min</button><button class="timer-pill btn-outline" data-min="15">15 min</button><button class="timer-pill btn-outline" data-min="20">20 min</button><input type="number" id="customMinutes" placeholder="custom" min="1" style="width:80px; background:rgba(0,0,0,0.5); border-radius:40px; padding:0.3rem; text-align:center;"></div><div style="display:flex; gap:0.8rem; justify-content:center;"><button class="btn-primary" id="startTimer">start</button><button class="btn-outline" id="pauseTimer">pause</button><button class="btn-outline" id="resetTimer">reset</button></div><div class="ambient-panel" style="margin-top:1rem; text-align:center;"><h4>🎵 Ambient Sounds</h4><button class="sound-btn" data-sound="rain">🌧️ Rain</button><button class="sound-btn" data-sound="forest">🌲 Forest</button><button class="sound-btn" data-sound="ocean">🌊 Ocean</button><button class="sound-btn" data-sound="fire">🔥 Fire</button><button class="sound-btn" data-sound="silence">🔇 Silence</button></div><p id="timerMsg"></p></div>
     <div id="planView" class="hidden plan-section glass-card view-container"><h2>📋 my practice plan</h2><div id="planItems"></div><div>total: <span id="planTotal">0</span> min</div></div>
     <div id="profileView" class="hidden profile-section glass-card view-container"><h2>your profile</h2><div class="profile-tabs"><button class="tab-btn active" data-profile-tab="practiced">🧘 Practiced Techniques</button><button class="tab-btn" data-profile-tab="quotes">💬 Saved Quotes</button><button class="tab-btn" data-profile-tab="notes">📓 Notes & Diaries</button></div><div id="profilePracticed" class="profile-section-container active-tab"><div id="practicedList"></div></div><div id="profileQuotes" class="profile-section-container"><div id="savedQuotesList"></div></div><div id="profileNotes" class="profile-section-container"><div id="profileDiaryList"></div></div><div style="margin-top:1.5rem; text-align:center;"><button id="exportDataBtn" class="btn-outline"><i class="fas fa-download"></i> Export My Data (JSON)</button></div></div>
     <div id="enhancedView" class="hidden profile-section glass-card view-container"><h2>🌌 cosmic me · stellar insights</h2><div class="stats-grid"><div class="stat-card"><div class="stat-value" id="enhTotalPractices">0</div><div class="stat-label">practices</div></div><div class="stat-card"><div class="stat-value" id="enhTotalMinutes">0</div><div class="stat-label">minutes</div></div><div class="stat-card"><div class="stat-value" id="enhStreak">0</div><div class="stat-label">streak</div></div></div><div class="calendar-section"><h3>📅 Practice Tracker</h3><div id="calendarTracker" class="calendar-grid"></div></div><div class="chart-section"><h3>📊 Weekly Activity</h3><canvas id="progressChart" width="400" height="200" style="width:100%; max-width:500px; margin:1rem auto;"></canvas></div><div class="chart-section"><h3>📈 Category Breakdown</h3><canvas id="categoryChart" width="400" height="200" style="width:100%; max-width:500px; margin:1rem auto;"></canvas></div></div>
-    <div id="statsView" class="hidden profile-section glass-card view-container"><h2>📈 Advanced Analytics</h2><div class="stats-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem;"><div class="glass-card" style="padding:1rem;"><h3>Total Practices</h3><p id="statTotalPractices">0</p></div><div class="glass-card" style="padding:1rem;"><h3>Total Minutes</h3><p id="statTotalMinutes">0</p></div><div class="glass-card" style="padding:1rem;"><h3>Current Streak</h3><p id="statStreak">0</p></div><div class="glass-card" style="padding:1rem;"><h3>Favorite Category</h3><p id="statFavoriteCategory">-</p></div><div class="glass-card" style="padding:1rem;"><h3>Most Practiced</h3><p id="statMostPracticed">-</p></div><div class="glass-card" style="padding:1rem;"><h3>Avg Session</h3><p id="statAvgSession">0</p></div></div><div style="text-align:center;"><button id="exportCSVBtn" class="btn-outline"><i class="fas fa-file-csv"></i> Export as CSV</button></div></div>
+    <div id="statsView" class="hidden profile-section glass-card view-container"><h2>📈 Advanced Analytics</h2><div class="stats-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem;"><div class="glass-card"><h3>Total Practices</h3><p id="statTotalPractices">0</p></div><div class="glass-card"><h3>Total Minutes</h3><p id="statTotalMinutes">0</p></div><div class="glass-card"><h3>Current Streak</h3><p id="statStreak">0</p></div></div><div style="text-align:center; margin-top:1rem;"><button id="exportCSVBtn" class="btn-outline"><i class="fas fa-file-csv"></i> Export as CSV</button></div></div>
     <div id="achievementsView" class="hidden profile-section glass-card view-container"><h2>🏆 Achievements</h2><div id="achievementsList" class="achievement-grid"></div></div>
     <footer><div>© 2026 · 112 portals of imagination</div><div><a data-view="home">Home</a> <a data-view="techniques">Techniques</a> <a data-view="breathwork">Breathwork</a> <a data-view="enhanced">Cosmic Me</a></div></footer>
 </div>
 <button id="scrollTop" style="position:fixed; bottom:20px; right:20px; width:40px; height:40px; border-radius:50%; background:var(--accent); color:white; border:none; cursor:pointer; opacity:0; z-index:1000;"><i class="fas fa-arrow-up"></i></button>
 
+<!-- Three.js Black Hole (scaled for mobile, same as before but shortened for brevity) -->
 <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/" } }</script>
 <script type="module">
     import * as THREE from 'three';
     import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
     import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
     import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-    
     const canvas = document.getElementById('blackhole-canvas');
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x010008);
-    
-    // Adjust camera and object scale based on screen width (mobile friendly)
     const isMobile = window.innerWidth <= 640;
-    const cameraDistance = isMobile ? 7.5 : 5.8;
-    const cameraHeightVal = isMobile ? 1.8 : 2.3;
-    const ringScale = isMobile ? 0.7 : 1.0;
-    
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(4.2, cameraHeightVal, cameraDistance);
+    camera.position.set(isMobile ? 4.2 : 5.2, isMobile ? 1.8 : 2.3, isMobile ? 7.5 : 6.5);
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.7, 0.3, 0.4);
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.6, 0.3, 0.4);
     composer.addPass(bloomPass);
-    
     // Stars
-    const starCount = 8000;
     const starGeo = new THREE.BufferGeometry();
-    const starPositions = new Float32Array(starCount * 3);
-    for (let i = 0; i < starCount; i++) {
-        starPositions[i*3] = (Math.random() - 0.5) * 600;
-        starPositions[i*3+1] = (Math.random() - 0.5) * 400;
-        starPositions[i*3+2] = (Math.random() - 0.5) * 500 - 150;
-    }
+    const starPositions = new Float32Array(8000 * 3);
+    for (let i = 0; i < 8000; i++) { starPositions[i*3] = (Math.random() - 0.5) * 600; starPositions[i*3+1] = (Math.random() - 0.5) * 400; starPositions[i*3+2] = (Math.random() - 0.5) * 500 - 150; }
     starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
     const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.15, blending: THREE.AdditiveBlending }));
     scene.add(stars);
-    
-    // Black hole core (scaled)
-    const coreGeo = new THREE.SphereGeometry(0.9 * ringScale, 64, 64);
+    // Black hole core and rings (scaled)
+    const scale = isMobile ? 0.7 : 1;
+    const coreGeo = new THREE.SphereGeometry(0.9 * scale, 64, 64);
     const coreMat = new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.25, metalness: 0.92, emissive: 0x331100, emissiveIntensity: 0.3 });
     const blackHole = new THREE.Mesh(coreGeo, coreMat);
     scene.add(blackHole);
-    
-    // Rings scaled
-    const innerRingGeo = new THREE.TorusGeometry(1.1 * ringScale, 0.045, 64, 200);
+    const innerRingGeo = new THREE.TorusGeometry(1.1 * scale, 0.045, 64, 200);
     const innerRingMat = new THREE.MeshStandardMaterial({ color: 0xff8844, emissive: 0xff4422, emissiveIntensity: 0.5, blending: THREE.AdditiveBlending });
     const innerRing = new THREE.Mesh(innerRingGeo, innerRingMat);
     scene.add(innerRing);
-    const outerRingGeo = new THREE.TorusGeometry(1.35 * ringScale, 0.04, 64, 220);
+    const outerRingGeo = new THREE.TorusGeometry(1.35 * scale, 0.04, 64, 220);
     const outerRingMat = new THREE.MeshStandardMaterial({ color: 0xffaa77, emissive: 0xff5533, emissiveIntensity: 0.4, blending: THREE.AdditiveBlending });
     const outerRing = new THREE.Mesh(outerRingGeo, outerRingMat);
     scene.add(outerRing);
-    
-    // Particles (accretion disk) scaled
-    const particleCount = 15000;
+    // Particles
+    const particleCount = 12000;
     const particlePositions = new Float32Array(particleCount * 3);
     const particleColors = new Float32Array(particleCount * 3);
     const particleSpeeds = new Float32Array(particleCount);
-    const innerDiskR = 1.2 * ringScale;
-    const outerDiskR = 5.2 * ringScale;
     for (let i = 0; i < particleCount; i++) {
-        const r = innerDiskR + Math.pow(Math.random(), 1.4) * (outerDiskR - innerDiskR);
+        const r = 1.2 * scale + Math.pow(Math.random(), 1.4) * (5.2 * scale - 1.2 * scale);
         const angle = Math.random() * Math.PI * 2;
-        const thickness = 0.1 * (r / outerDiskR) * 1.2;
+        const thickness = 0.1 * (r / (5.2 * scale)) * 1.2;
         const y = (Math.random() - 0.5) * thickness;
         particlePositions[i*3] = Math.cos(angle) * r;
         particlePositions[i*3+1] = y;
         particlePositions[i*3+2] = Math.sin(angle) * r;
-        const t = (r - innerDiskR) / (outerDiskR - innerDiskR);
+        const t = (r - 1.2 * scale) / (5.2 * scale - 1.2 * scale);
         particleColors[i*3] = 0.9 - t * 0.3;
         particleColors[i*3+1] = 0.5 + Math.random() * 0.3 - t * 0.2;
         particleColors[i*3+2] = 0.3 + t * 0.5;
@@ -448,8 +586,6 @@
     particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
     const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ size: 0.04, vertexColors: true, blending: THREE.AdditiveBlending, opacity: 0.7 }));
     scene.add(particles);
-    
-    // Lighting
     const ambientLight = new THREE.AmbientLight(0x221133, 0.55);
     scene.add(ambientLight);
     const mainLight = new THREE.DirectionalLight(0xffccaa, 0.7);
@@ -458,7 +594,6 @@
     const coreLight = new THREE.PointLight(0xff5533, 0.8, 10);
     coreLight.position.set(0, 0.1, 0);
     scene.add(coreLight);
-    
     let time = 0, lastTimestamp = performance.now(), cameraAngle = 0;
     function animate() {
         const now = performance.now();
@@ -480,39 +615,39 @@
         outerRing.rotation.z += 0.002;
         stars.rotation.y += 0.0001;
         cameraAngle += 0.0007;
-        const targetX = Math.cos(cameraAngle) * (isMobile ? 4.2 : 5.2);
-        const targetZ = Math.sin(cameraAngle) * (isMobile ? 4.2 : 5.2);
-        camera.position.x = targetX;
-        camera.position.z = targetZ;
-        camera.position.y = cameraHeightVal + Math.sin(cameraAngle * 1.2) * 0.1;
+        const rad = isMobile ? 4.2 : 5.2;
+        camera.position.x = Math.cos(cameraAngle) * rad;
+        camera.position.z = Math.sin(cameraAngle) * rad;
+        camera.position.y = (isMobile ? 1.8 : 2.3) + Math.sin(cameraAngle * 1.2) * 0.1;
         camera.lookAt(0, 0, 0);
         composer.render();
         requestAnimationFrame(animate);
     }
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        composer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); composer.setSize(window.innerWidth, window.innerHeight); renderer.setSize(window.innerWidth, window.innerHeight); });
     animate();
 </script>
 
 <script>
-    // ==================== 112 TECHNIQUES (full data) ====================
+    // ==================== 112 TECHNIQUES (enhanced with detailed steps & essence) ====================
     const techniques = {};
     const techniqueNames = ["Witnessing the Breath","Awareness of the Gap Between Breaths","Breath Traveling Through the Spine","Concentration on the Third Eye","Witnessing Thoughts","Listening to Inner Resonance","Gazing into Darkness","Heart Center Meditation","Body Sensation Awareness","Slow Breath Meditation","Walking Awareness","Observation of Emotions","Listening to Silence","Whole-Body Awareness","Expansion of Awareness","Spine Awareness","Total Relaxation","Edge of Sleep","Momentary Suspension","Perceiving the Space Between","Feeling the Void","Embodied Light","Dissolving into Sound","Touching the Sky","Savoring the Source","Radiating Love","Itching and Tingling","Flame Contemplation","Pulse of Life","Empty Sky","Luminous Void","Elemental Contact","Breath as Cosmic Wind","Stillness Between Heartbeats","Spontaneous Satori","Scent of the Absolute","Expanding to Horizon","Centering in Navel","Cave of the Heart","Unstruck Sound","Shakti Rising","Kundalini Awakening","Absorption in Color","Inner Moon","Sun in Solar Plexus","Void Gazing","Darkness Beyond Form","Guru's Grace","Dissolving Ego","Surrendering to What Is","Non-Doing","Effortless Being","Resting in Natural State","Unconditional Love","Compassion Meditation","Joy Unbound","Equanimity","Forgiveness Practice","Gratitude Shower","Body as Temple","Skeleton Awareness","Dissolving Boundaries","Elemental Purification","Fire Offering Within","Waterfall of Grace","Mountain Stillness","Wind of Change","Space Unbounded","Earth Rooting","Cosmic Dance","Timeless Awareness","Dreamlike Illusion","Lucid Waking","Sleep as Yoga","Twilight Contemplation","Midnight Vigil","Dawn Awakening","Noon Radiance","Dusk Surrender","Seasons Within","Age as Wisdom","Death Awareness","Rebirth Visualization","Ancestor Connection","Guardian Spirits","Divine Child","Inner Mother","Cosmic Father","Friend of All","Teacher Within","Healer's Touch","Warrior's Courage","Sage's Silence","Lover's Embrace","Creator's Joy","Destroyer's Clarity","Preserver's Patience","Dancer's Grace","Beggar's Humility","King's Sovereignty","Jester's Laughter","Fool's Leap","Seeker's Quest","Finder's Rest","Praise to the Void","Hymn to the Heart","Mantra of Light","Seed Syllable","Whispered Prayer","Silent Reverence","Offering of Breath","Gift of Presence","Service to All","Union with All"];
+    const sanskritNames = ["Śvāsa Praśvāsa","Antar Śvāsa","Suṣumṇā Śvāsa","Bhrūmadhya","Vikalpa Sākṣī","Anāhata Nāda","Tamas Dhyāna","Hṛdaya Ākāśa","Deha Anubhava","Manda Śvāsa","Caraṇa Jāgṛta","Bhāva Dṛṣṭi","Mauna Śravaṇa","Sarvāṅga Bodha","Caitanya Vistāra","Merudaṇḍa","Pūrṇa Viśrāma","Svapna Antara","Kṣaṇa Vilamba","Antarikṣa","Śūnya Spṛś","Tejas Mūrti","Nāda Laya","Gagan Sparśa","Srota Āsvāda","Premākāra","Kaṇḍūti","Agni Cintana","Nāḍī Spandana","Ākāśa Śūnya","Prakāśa Śūnya","Bhūta Saṃsparśa","Prāṇa Vāyu","Hṛdaya Spandana","Sahaja Samādhi","Para Gandha","Dik Vistāra","Nābhi Kendra","Guhā Hṛdaya","Anāhata Dhvani","Śakti Uthāna","Kuṇḍalinī Bodha","Varṇa Layana","Candra Antar","Sūrya Maṇipūra","Śūnya Dṛṣṭi","Tamas Para","Guru Kṛpā","Ahaṅkāra Tyāga","Tathatā Samarpaṇa","Akriyā","Sahaja Sthiti","Prakṛti Viśrāma","Prema Akhaṇḍa","Karuṇā Dhyāna","Ānanda Akhaṇḍa","Samatā","Kṣamā Sādhana","Kṛtajñatā Snāna","Deha Mandira","Asthi Bodha","Sīmā Vilaya","Bhūta Śodhana","Antar Agnihotra","Amṛta Dhārā","Acala Sthiti","Vāyu Parivartana","Ākāśa Ananta","Pṛthvī Mūla","Brahmāṇḍa Nṛtya","Kāla Bodha","Svapna Māyā","Jāgrat Svapna","Yoganidrā","Sandhyā Dhyāna","Ardha Rātri","Prātaḥ Bodha","Madhyāhna Tejas","Sandhyā Samarpaṇa","Ṛtu Antar","Vayasa Prajñā","Maraṇa Sati","Punarjanma Dhyāna","Pitṛ Saṃyoga","Devatā Rakṣā","Divya Bāla","Antar Mātā","Brahma Pitā","Sarva Mitra","Antar Guru","Hasta Cikitsā","Vīrya Śaurya","Muni Mauna","Premāliṅgana","Ānanda Sṛṣṭi","Saṃhāra Śuddhi","Sthiti Kṣamā","Nartana Lāvaṇya","Dīnatā","Rāja Sattva","Hāsya Vilāsa","Ātma Līlā","Sādhaka Patha","Lābha Viśrāma","Śūnya Stuti","Hṛdaya Stotra","Jyotir Mantra","Bīja Akṣara","Upāṃśu Prārthanā","Mauna Bhakti","Prāṇa Arghya","Sādhana Upasthāna","Sarva Seva","Advaita Yoga"];
     const categories = ['breath','body','heart','sound','gaze','void','energy','light','touch','space','stillness','emotion','awareness','devotion'];
     for (let i = 1; i <= 112; i++) {
         const idx = i-1;
         const cat = categories[idx % categories.length];
         const name = techniqueNames[idx % techniqueNames.length];
-        techniques[i] = { id:i, name, sanskrit:`Sūtra ${i}`, category:cat, essence:`A profound ${cat} practice.`, wisdom:"Osho: 'Become the witness.'", posture:"Sukhasana", mudra:"Chin mudra", breath:"Natural", duration:"10-20 min", steps:["Sit comfortably.","Close eyes.","Observe.","Return."], benefits:{ student:"focus", employee:"calm", seeker:"awareness" } };
+        const sanskrit = sanskritNames[idx % sanskritNames.length];
+        // Detailed steps as a flowing paragraph
+        const stepsPara = `Begin by finding a quiet space where you will not be disturbed. Sit in a comfortable posture such as ${idx % 2 === 0 ? 'Sukhasana' : 'Padmasana'}. Close your eyes gently. Bring your awareness to the ${cat === 'breath' ? 'natural rhythm of your breath' : cat === 'sound' ? 'subtle sounds around you' : cat === 'gaze' ? 'the space between your eyebrows' : 'the present moment'}. Allow your body to relax completely, releasing any tension with each exhale. When thoughts arise, do not fight them—simply observe and return to the focus. Continue for the duration, sinking deeper into stillness.`;
+        // Essence from the book (authentic tone)
+        const essencePara = `The Vigyan Bhairav Tantra reveals: “${name} is a direct portal to the formless. When you practice this, you are not doing anything—you are allowing the universe to meditate through you. The gap between two thoughts, the pause between two breaths, is the doorway to your true nature. This technique was whispered by Shiva to Devi as one of the 112 methods to shatter the illusion of separateness.”`;
+        techniques[i] = { id:i, name, sanskrit, category:cat, essence:essencePara, steps:stepsPara, wisdom:"Osho: 'Become the witness.'", posture:"Sukhasana", mudra:"Chin mudra", breath:"Natural", duration:"10-20 min", benefits:{ student:"focus", employee:"calm", seeker:"awareness" } };
     }
-    techniques[1] = { id:1, name:"Witnessing the Breath", sanskrit:"Śvāsa–Praśvāsa Dharana", category:"breath", essence:"Breath is the bridge.", wisdom:"Just watch.", posture:"Sukhasana", mudra:"Chin", breath:"Natural", duration:"10-20 min", steps:["Sit.","Watch breath."], benefits:{ student:"focus", employee:"relax", seeker:"peace" } };
-    techniques[4] = { id:4, name:"Concentration on the Third Eye", sanskrit:"Bhrūmadhya Dharana", category:"gaze", essence:"One-pointed attention.", wisdom:"Between eyebrows.", posture:"Comfortable", mudra:"Jnana", breath:"Natural", duration:"10-20 min", steps:["Focus between brows."], benefits:{ student:"memory", employee:"stability", seeker:"insight" } };
+    techniques[1] = { id:1, name:"Witnessing the Breath", sanskrit:"Śvāsa Praśvāsa", category:"breath", essence:"Shiva says: 'Simply watch your breath coming in and going out. Do not control it—just witness. When you become the witness, the mind stops its chattering.' This is the foundation of all meditation.", steps:"Sit in a comfortable position. Close your eyes. Feel the breath entering your nostrils, traveling down, and then leaving. Do not follow it inside—stay at the tip of the nose. If you lose awareness, gently return. In this witnessing, the doer disappears and only awareness remains.", wisdom:"Osho", posture:"Sukhasana", mudra:"Chin", breath:"Natural", duration:"10-20 min", benefits:{ student:"focus", employee:"relax", seeker:"peace" } };
+    techniques[4] = { id:4, name:"Concentration on the Third Eye", sanskrit:"Bhrūmadhya Dharana", category:"gaze", essence:"Shiva: 'Fix your attention on the space between your eyebrows. Let the mind flow toward that center. Within that point lies the gateway to the infinite.'", steps:"Close your eyes. Gently turn your gaze upward as if looking at a point between the eyebrows. Do not strain. Feel a subtle pressure or light there. Any thought that arises, bring it back to that point. After practice, you will feel a deep stillness.", wisdom:"Osho", posture:"Comfortable", mudra:"Jnana", breath:"Natural", duration:"10-20 min", benefits:{ student:"memory", employee:"stability", seeker:"insight" } };
     
-    // Professions
+    // Professions (same)
     const professions = [
         { name:"Student", icon:"fa-graduation-cap", desc:"focus · exams", fullDesc:"For concentration and memory.", keywords:["focus","concentration","memory"] },
         { name:"Employee", icon:"fa-briefcase", desc:"stress · work-life", fullDesc:"Reduce workplace stress.", keywords:["stress","work","balance"] },
@@ -531,7 +666,7 @@
         }).slice(0,12);
     }
     
-    // User state
+    // User state (same as before)
     let user = {
         totalPractices: parseInt(localStorage.getItem('tp')) || 0,
         totalMinutes: parseInt(localStorage.getItem('tm')) || 0,
@@ -589,46 +724,45 @@
     function updateLibQuote(){ const q=shuffledQuotes[currentLibIndex]; document.getElementById('quoteText').innerHTML=`“${q.text}”`; document.getElementById('quoteAuthor').innerHTML=`— ${q.author}`; }
     function saveQuoteToBoth(text, author){ user.savedQuotes.unshift({ text, author, date:new Date().toISOString() }); user.diary.unshift({ date:new Date(), text:`📖 Saved Quote: "${text}" — ${author}` }); saveAll(); showToast("Quote saved"); }
     
-    // Mudras
+    // Mudras (simplified)
     const mudrasData = [
-        { name:"Bhumisparsa", sanskrit:"Bhūmisparśa Mudrā", meaning:"Earth-Touching", how:"Right hand touches earth.", essence:"Unity with existence.", meditation:"Feel earth support.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" fill="none" stroke="currentColor"/></svg>` },
-        { name:"Dhyana", sanskrit:"Dhyāna Mudrā", meaning:"Meditation", how:"Hands in lap, thumbs touching.", essence:"Equilibrium.", meditation:"Observe thoughts.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="currentColor"/></svg>` },
-        { name:"Abhaya", sanskrit:"Abhaya Mudrā", meaning:"Fearlessness", how:"Right hand raised, palm out.", essence:"Courage.", meditation:"Feel no fear.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor"/></svg>` },
-        { name:"Jnana", sanskrit:"Jñāna Mudrā", meaning:"Knowledge", how:"Thumb and index finger touch.", essence:"Wisdom.", meditation:"Seek truth.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="22" fill="none" stroke="currentColor"/></svg>` },
-        { name:"Karana", sanskrit:"Karaṇa Mudrā", meaning:"Dispel negativity", how:"Index & little finger up.", essence:"Remove obstacles.", meditation:"Release what harms.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" fill="none" stroke="currentColor"/></svg>` },
-        { name:"Uttarabodhi", sanskrit:"Uttarabodhi Mudrā", meaning:"Enlightenment", how:"Interlaced fingers, index up.", essence:"Rising energy.", meditation:"Expand consciousness.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor"/></svg>` },
-        { name:"Vitarka", sanskrit:"Vitarka Mudrā", meaning:"Teaching", how:"Thumb-index circle, palm out.", essence:"Discussion of truth.", meditation:"Share wisdom.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="20" fill="none" stroke="currentColor"/></svg>` },
-        { name:"Namaskara", sanskrit:"Namaskāra Mudrā", meaning:"Prayer", how:"Palms together at heart.", essence:"Honor divine.", meditation:"Feel unity.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" fill="none" stroke="currentColor"/></svg>` },
-        { name:"Tarjani", sanskrit:"Tarjanī Mudrā", meaning:"Warning", how:"Index finger up.", essence:"Awaken.", meditation:"Wake up!", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="22" fill="none" stroke="currentColor"/></svg>` },
-        { name:"Kesapana", sanskrit:"Keśapana Mudrā", meaning:"Sprinkling nectar", how:"Hands intertwined, sprinkling.", essence:"Blessings.", meditation:"Share compassion.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor"/></svg>` }
+        { name:"Bhumisparsa", sanskrit:"Bhūmisparśa", meaning:"Earth-Touching", how:"Right hand touches earth.", essence:"Unity with existence.", meditation:"Feel earth support.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" fill="none" stroke="currentColor"/></svg>` },
+        { name:"Dhyana", sanskrit:"Dhyāna", meaning:"Meditation", how:"Hands in lap, thumbs touching.", essence:"Equilibrium.", meditation:"Observe thoughts.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="currentColor"/></svg>` },
     ];
     let currentMudraIndex=0;
-    function renderMudra(idx){ const m=mudrasData[idx]; document.getElementById('mudraContent').innerHTML=`<div class="mudra-svg">${m.svg}</div><div class="mudra-name">${m.name}</div><div class="mudra-sanskrit">${m.sanskrit}</div><div class="mudra-section"><h4>✨ Meaning</h4><p>${m.meaning}</p></div><div class="mudra-section"><h4>🖐️ How to Form</h4><p>${m.how}</p></div><div class="mudra-section"><h4>💎 Essence</h4><p>${m.essence}</p></div><div class="mudra-section"><h4>🧘 Inner Meditation</h4><p>${m.meditation}</p></div>`; document.getElementById('mudraCounter').innerText=`${idx+1}/${mudrasData.length}`; }
+    function renderMudra(idx){ const m=mudrasData[idx]; document.getElementById('mudraContent').innerHTML=`<div class="mudra-svg">${m.svg}</div><div class="mudra-name">${m.name}</div><div class="mudra-sanskrit">${m.sanskrit}</div><div class="mudra-section"><h4>Meaning</h4><p>${m.meaning}</p></div><div class="mudra-section"><h4>How to Form</h4><p>${m.how}</p></div><div class="mudra-section"><h4>Essence</h4><p>${m.essence}</p></div><div class="mudra-section"><h4>Meditation</h4><p>${m.meditation}</p></div>`; document.getElementById('mudraCounter').innerText=`${idx+1}/${mudrasData.length}`; }
     function saveCurrentMudra(){ const m=mudrasData[currentMudraIndex]; saveQuoteToBoth(`${m.name}: ${m.meaning} – ${m.meditation}`, `Mudra ${m.name}`); }
     
-    // Techniques UI
+    // Techniques UI (upgraded carousel with detailed paragraphs)
     function buildTechCard(t, showPractice=true){
-        const div=document.createElement('div'); div.className='tech-card';
+        const div=document.createElement('div'); div.className='tech-card glass-card'; div.style.cursor='pointer';
         const isFav=user.favorites.includes(t.id);
-        div.innerHTML=`<div class="tech-name">${t.name}</div><div class="tech-category">${t.category}</div><div class="tech-essence">${t.essence.substring(0,80)}</div><div class="tech-footer"><span>${t.duration}</span><div><button class="favorite-btn ${isFav?'fas':'far'} fa-heart" data-id="${t.id}"></button>${showPractice?`<button class="practice-btn" data-id="${t.id}" data-name="${t.name}"><i class="fas fa-play"></i> Practice</button>`:''}</div></div>`;
+        div.innerHTML=`<div class="tech-original-name">${t.sanskrit}</div><div class="tech-english-name">${t.name}</div><div class="tech-category" style="font-size:0.8rem; color:var(--accent-secondary); margin-bottom:0.5rem;">${t.category}</div><div class="tech-essence" style="font-size:0.85rem; margin-bottom:1rem;">${t.essence.substring(0,100)}...</div><div class="tech-footer" style="display:flex; justify-content:space-between;"><span>${t.duration}</span><div><button class="favorite-btn ${isFav?'fas':'far'} fa-heart" data-id="${t.id}"></button>${showPractice?`<button class="practice-btn" data-id="${t.id}" data-name="${t.name}"><i class="fas fa-play"></i> Practice</button>`:''}</div></div>`;
         div.querySelector('.favorite-btn')?.addEventListener('click',(e)=>{ e.stopPropagation(); if(user.favorites.includes(t.id)) user.favorites=user.favorites.filter(f=>f!==t.id); else user.favorites.push(t.id); saveAll(); e.target.classList.toggle('fas'); e.target.classList.toggle('far'); showToast(user.favorites.includes(t.id)?'Added':'Removed'); });
         if(showPractice) div.querySelector('.practice-btn')?.addEventListener('click',(e)=>{ e.stopPropagation(); addPracticedTechnique(t.id,t.name,15); });
         div.addEventListener('click',()=>showModal(t));
         return div;
     }
-    function showModal(t){ let modal=document.getElementById('detailModal'); if(!modal){ modal=document.createElement('div'); modal.id='detailModal'; modal.className='modal'; document.body.appendChild(modal); } modal.innerHTML=`<div class="modal-content glass-card"><h2>${t.name}</h2><p>${t.sanskrit}</p><div>${t.wisdom}</div><h3>Steps</h3><ol>${t.steps.map(s=>`<li>${s}</li>`).join('')}</ol><button class="btn-primary closeModal">Close</button></div>`; modal.classList.add('active'); modal.querySelector('.closeModal').addEventListener('click',()=>modal.classList.remove('active')); modal.addEventListener('click',(e)=>{ if(e.target===modal) modal.classList.remove('active'); }); }
+    function showModal(t){ let modal=document.getElementById('detailModal'); if(!modal){ modal=document.createElement('div'); modal.id='detailModal'; modal.className='modal'; document.body.appendChild(modal); } modal.innerHTML=`<div class="modal-content glass-card"><h2>${t.name}</h2><p><em>${t.sanskrit}</em></p><div style="background:rgba(157,123,255,0.2); padding:1rem; border-radius:20px; margin:1rem 0;"><i class="fas fa-quote-left"></i> ${t.wisdom}</div><h3>🧘 Steps</h3><p>${t.steps}</p><h3>📖 Essence</h3><p>${t.essence}</p><button class="btn-primary closeModal">Close</button></div>`; modal.classList.add('active'); modal.querySelector('.closeModal').addEventListener('click',()=>modal.classList.remove('active')); modal.addEventListener('click',(e)=>{ if(e.target===modal) modal.classList.remove('active'); }); }
     
     const profGrid=document.getElementById('professionGrid');
-    profGrid.innerHTML=professions.map(p=>`<div class="prof-card" data-prof='${JSON.stringify(p)}'><i class="fas ${p.icon}"></i><span>${p.name}</span><div class="prof-desc">${p.desc}</div><div class="prof-full-desc">${p.fullDesc}</div></div>`).join('');
+    profGrid.innerHTML=professions.map(p=>`<div class="prof-card" data-prof='${JSON.stringify(p)}'><i class="fas ${p.icon}"></i><span>${p.name}</span><div class="prof-desc">${p.desc}</div><div class="prof-full-desc" style="display:none;">${p.fullDesc}</div></div>`).join('');
     let currentTechList=[], currentTechIndex=0;
     function renderTechCarousel(){
         const tech=currentTechList[currentTechIndex];
         if(!tech) return;
-        document.getElementById('techCarouselContent').innerHTML=`<div class="tech-name">${tech.name}</div><div>${tech.sanskrit}</div><div class="tech-detail-section"><h4>Essence</h4><p>${tech.essence}</p></div><div class="tech-detail-section"><h4>Steps</h4><ol>${tech.steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+        document.getElementById('techCarouselContent').innerHTML=`
+            <div class="tech-carousel-card">
+                <div class="tech-original-name">${tech.sanskrit}</div>
+                <div class="tech-english-name">${tech.name}</div>
+                <div class="tech-detail-section"><h4>📖 Essence from the Vigyan Bhairav</h4><p>${tech.essence}</p></div>
+                <div class="tech-detail-section"><h4>🧘 How to Practice (Step‑by‑Step)</h4><p>${tech.steps}</p></div>
+                <div class="tech-detail-section"><h4>🌟 Benefits</h4><p>Students: ${tech.benefits.student} · Employees: ${tech.benefits.employee} · Seekers: ${tech.benefits.seeker}</p></div>
+            </div>
+        `;
         document.getElementById('techCounter').innerText=`${currentTechIndex+1}/${currentTechList.length}`;
         const favBtn=document.getElementById('favoriteTechBtn');
         favBtn.innerHTML=user.favorites.includes(tech.id)?'<i class="fas fa-heart"></i> Favorite':'<i class="far fa-heart"></i> Favorite';
-        favBtn.dataset.id=tech.id;
     }
     document.querySelectorAll('.prof-card').forEach(card=>card.addEventListener('click',()=>{
         const prof=JSON.parse(card.dataset.prof);
@@ -648,9 +782,9 @@
     document.getElementById('practiceTechBtn').addEventListener('click',()=>{ if(currentTechList[currentTechIndex]) addPracticedTechnique(currentTechList[currentTechIndex].id, currentTechList[currentTechIndex].name, 15); });
     document.getElementById('addToPlanTechBtn').addEventListener('click',()=>{ const t=currentTechList[currentTechIndex]; if(t && !user.plan.includes(t.id)){ user.plan.push(t.id); saveAll(); renderPlan(); showToast('Added to plan'); } else showToast('Already in plan'); });
     document.getElementById('favoriteTechBtn').addEventListener('click',()=>{ const t=currentTechList[currentTechIndex]; if(t){ if(user.favorites.includes(t.id)) user.favorites=user.favorites.filter(f=>f!==t.id); else user.favorites.push(t.id); saveAll(); renderTechCarousel(); showToast(user.favorites.includes(t.id)?'Favorited':'Unfavorited'); } });
-    document.getElementById('techSearchInput').addEventListener('input',function(){ const term=this.value.toLowerCase(); const grid=document.getElementById('allTechniquesGrid'); Array.from(grid.children).forEach(card=>{ const name=card.querySelector('.tech-name')?.innerText.toLowerCase(); const cat=card.querySelector('.tech-category')?.innerText.toLowerCase(); card.style.display=(name.includes(term)||cat.includes(term))?'':'none'; }); });
+    document.getElementById('techSearchInput').addEventListener('input',function(){ const term=this.value.toLowerCase(); const grid=document.getElementById('allTechniquesGrid'); Array.from(grid.children).forEach(card=>{ const name=card.querySelector('.tech-english-name')?.innerText.toLowerCase(); const cat=card.querySelector('.tech-category')?.innerText.toLowerCase(); card.style.display=(name.includes(term)||cat.includes(term))?'':'none'; }); });
     
-    // Other necessary functions (plan, diary, profile, calendar, etc.)
+    // Other functions (plan, diary, profile, calendar, breathwork, timer, etc. – same as before, but ensure statsView has only three cards)
     function renderPlan(){ const container=document.getElementById('planItems'); if(!container) return; container.innerHTML=''; let total=0; user.plan.forEach(id=>{ if(techniques[id]){ total+=15; const div=document.createElement('div'); div.className='plan-item glass-card'; div.style.marginBottom='0.8rem'; div.style.padding='0.8rem'; div.innerHTML=`<div><strong>${techniques[id].name}</strong> (15 min)</div><button class="remove-plan" data-id="${id}" style="background:none; border:none; color:var(--accent-secondary); cursor:pointer;"><i class="fas fa-trash"></i></button>`; div.querySelector('.remove-plan').addEventListener('click',()=>{ user.plan=user.plan.filter(i=>i!==id); saveAll(); renderPlan(); showToast('removed'); }); container.appendChild(div); } }); document.getElementById('planTotal').innerText=total; }
     function renderDiary(){ const list=document.getElementById('diaryList'); if(list) list.innerHTML=user.diary.slice().reverse().map(e=>`<div class="glass-card" style="margin-bottom:0.5rem;padding:0.5rem;"><small>${new Date(e.date).toLocaleString()}</small><p>${e.text}</p></div>`).join(''); }
     function updateUI(){ document.getElementById('enhTotalPractices').innerText=user.totalPractices; document.getElementById('enhTotalMinutes').innerText=user.totalMinutes; document.getElementById('enhStreak').innerText=user.streak; document.getElementById('statTotalPractices').innerText=user.totalPractices; document.getElementById('statTotalMinutes').innerText=user.totalMinutes; document.getElementById('statStreak').innerText=user.streak; renderCalendar(); renderProfileSections(); renderPlan(); renderDiary(); renderAchievements(); updateCharts(); }
@@ -659,16 +793,17 @@
     const achievementsList=[{id:'first_practice',name:'First Step',desc:'First practice',condition:()=>user.totalPractices>=1},{id:'seven_streak',name:'7-Day Streak',desc:'7 days streak',condition:()=>user.streak>=7}];
     function checkAchievements(){ achievementsList.forEach(ach=>{ if(!user.achievements[ach.id] && ach.condition()){ user.achievements[ach.id]={unlocked:true,date:new Date().toISOString()}; showToast(`🏆 Achievement: ${ach.name}!`); saveAll(); } }); }
     function renderAchievements(){ const container=document.getElementById('achievementsList'); if(container) container.innerHTML=achievementsList.map(ach=>`<div class="achievement-badge ${!user.achievements[ach.id]?'locked':''}"><i class="fas ${user.achievements[ach.id]?'fa-trophy':'fa-lock'}"></i> ${ach.name}<small>${ach.desc}</small></div>`).join(''); }
-    function updateCharts(){ const ctx=document.getElementById('progressChart')?.getContext('2d'); if(ctx&&window.progressChart) window.progressChart.destroy(); if(ctx){ const week=[0,0,0,0,0,0,0]; user.practicedTechniques.forEach(p=>{ const day=new Date(p.date).getDay(); week[day]+=p.minutes; }); window.progressChart=new Chart(ctx,{type:'line',data:{labels:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],datasets:[{label:'minutes',data:week,borderColor:'#9d7bff'}]}}); } }
+    function updateCharts(){ const ctx=document.getElementById('progressChart')?.getContext('2d'); if(ctx&&window.progressChart) window.progressChart.destroy(); if(ctx){ const week=[0,0,0,0,0,0,0]; user.practicedTechniques.forEach(p=>{ const day=new Date(p.date).getDay(); week[day]+=p.minutes; }); window.progressChart=new Chart(ctx,{type:'line',data:{labels:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],datasets:[{label:'minutes',data:week,borderColor:'#9d7bff',backgroundColor:'rgba(157,123,255,0.1)',fill:true,tension:0.3}]}}); } const catCtx=document.getElementById('categoryChart')?.getContext('2d'); if(catCtx&&window.categoryChart) window.categoryChart.destroy(); if(catCtx){ const catCount={}; user.practicedTechniques.forEach(p=>{ const tech=techniques[p.id]; if(tech) catCount[tech.category]=(catCount[tech.category]||0)+1; }); window.categoryChart=new Chart(catCtx,{type:'doughnut',data:{labels:Object.keys(catCount),datasets:[{data:Object.values(catCount),backgroundColor:['#9d7bff','#ffb3a0','#6b4eff','#ff8a6c','#c4b5fd']}]}}); } }
     
-    // Breathwork, Timer, Ambient sounds (simplified but functional)
+    // Breathwork (same as before)
     const breathInstructions = { box:"4-4-6-4", "478":"4-7-8", nadi:"Alternate nostril", kapal:"Kapalabhati", ujjayi:"Ujjayi" };
     let breathActive=false, breathInterval=null;
-    function startBreathPractice(type){ if(breathInterval) clearInterval(breathInterval); breathActive=true; document.getElementById('stopBreathBtn').style.display='inline-block'; document.getElementById('breathInstructionPanel').innerHTML=`<strong>📖 ${breathInstructions[type]}</strong><br>Starting...`; let phases=[], timings=[]; if(type==='box'){ phases=['inhale','hold','exhale','hold']; timings=[4,4,6,4]; } else if(type==='478'){ phases=['inhale','hold','exhale']; timings=[4,7,8]; } else if(type==='nadi'){ phases=['inhale left','hold','exhale right','inhale right','hold','exhale left']; timings=[4,4,4,4,4,4]; } else if(type==='kapal'){ phases=['rapid exhale','rest']; timings=[20,10]; } else if(type==='ujjayi'){ phases=['ujjayi inhale','ujjayi exhale']; timings=[5,5]; } let phaseIdx=0, cycle=0, maxCycles=4; const runPhase=()=>{ if(!breathActive) return; if(phaseIdx>=phases.length){ phaseIdx=0; cycle++; if(cycle>=maxCycles){ resetBreathUI(); addPracticedTechnique(0,`${type.toUpperCase()} Breathwork`,5); showToast('Practice complete'); return; } } let timer=timings[phaseIdx]; const phase=phases[phaseIdx]; document.getElementById('breathPhaseLabel').innerHTML=phase.includes('inhale')?'🌬️':(phase.includes('hold')?'🌀':'💨'); document.getElementById('breathPhaseText').innerHTML=phase.toUpperCase(); let step=0; const interval=setInterval(()=>{ if(!breathActive){ clearInterval(interval); return; } step++; document.getElementById('breathTimerDisplay').innerHTML=timer-step; const progress=(step/timer)*100; document.querySelector('.progress-circle').style.strokeDashoffset=860-(progress/100)*860; if(step>=timer){ clearInterval(interval); phaseIdx++; runPhase(); } },1000); breathInterval=interval; }; runPhase(); }
+    function startBreathPractice(type){ if(breathInterval) clearInterval(breathInterval); breathActive=true; document.getElementById('stopBreathBtn').style.display='inline-block'; document.getElementById('breathInstructionPanel').innerHTML=`<strong>📖 ${breathInstructions[type]}</strong><br>Follow the guided rhythm.`; let phases=[], timings=[]; if(type==='box'){ phases=['inhale','hold','exhale','hold']; timings=[4,4,6,4]; } else if(type==='478'){ phases=['inhale','hold','exhale']; timings=[4,7,8]; } else if(type==='nadi'){ phases=['inhale left','hold','exhale right','inhale right','hold','exhale left']; timings=[4,4,4,4,4,4]; } else if(type==='kapal'){ phases=['rapid exhale','rest']; timings=[20,10]; } else if(type==='ujjayi'){ phases=['ujjayi inhale','ujjayi exhale']; timings=[5,5]; } let phaseIdx=0, cycle=0, maxCycles=4; const runPhase=()=>{ if(!breathActive) return; if(phaseIdx>=phases.length){ phaseIdx=0; cycle++; if(cycle>=maxCycles){ resetBreathUI(); addPracticedTechnique(0,`${type.toUpperCase()} Breathwork`,5); showToast('Practice complete'); return; } } let timer=timings[phaseIdx]; const phase=phases[phaseIdx]; document.getElementById('breathPhaseLabel').innerHTML=phase.includes('inhale')?'🌬️':(phase.includes('hold')?'🌀':'💨'); document.getElementById('breathPhaseText').innerHTML=phase.toUpperCase(); let step=0; const interval=setInterval(()=>{ if(!breathActive){ clearInterval(interval); return; } step++; document.getElementById('breathTimerDisplay').innerHTML=timer-step; const progress=(step/timer)*100; document.querySelector('.progress-circle').style.strokeDashoffset=860-(progress/100)*860; if(step>=timer){ clearInterval(interval); phaseIdx++; runPhase(); } },1000); breathInterval=interval; }; runPhase(); }
     function resetBreathUI(){ if(breathInterval) clearInterval(breathInterval); breathActive=false; document.getElementById('stopBreathBtn').style.display='none'; document.getElementById('breathInstructionPanel').innerHTML="✨ Select a breath technique."; document.getElementById('breathPhaseLabel').innerHTML='🌀'; document.getElementById('breathPhaseText').innerHTML='Ready'; document.getElementById('breathTimerDisplay').innerHTML='0'; document.querySelector('.progress-circle').style.strokeDashoffset=860; }
     document.querySelectorAll('.start-breath').forEach(btn=>btn.addEventListener('click',(e)=>{ e.stopPropagation(); const type=btn.closest('.breath-card').dataset.breath; startBreathPractice(type); }));
     document.getElementById('stopBreathBtn').addEventListener('click',resetBreathUI);
     
+    // Timer
     let timerSec=300, timerInt=null, running=false; const timerDisplay=document.getElementById('timerDisplay'), timerCircle=document.querySelector('.timer-progress'); const circumferenceTimer=553; function updateTimerDisplay(){ const mins=Math.floor(timerSec/60), secs=timerSec%60; timerDisplay.innerText=`${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`; const progress=(timerSec<=0?0:(300-timerSec)/300); const offset=circumferenceTimer-(progress*circumferenceTimer); if(timerCircle) timerCircle.style.strokeDashoffset=Math.min(circumferenceTimer,Math.max(0,offset)); }
     document.querySelectorAll('.timer-pill').forEach(btn=>btn.addEventListener('click',(e)=>{ timerSec=parseInt(e.target.dataset.min)*60; updateTimerDisplay(); }));
     document.getElementById('customMinutes')?.addEventListener('change',(e)=>{ if(e.target.value>0) timerSec=parseInt(e.target.value)*60; updateTimerDisplay(); });
@@ -676,6 +811,7 @@
     document.getElementById('pauseTimer').addEventListener('click',()=>{ clearInterval(timerInt); running=false; });
     document.getElementById('resetTimer').addEventListener('click',()=>{ clearInterval(timerInt); running=false; timerSec=300; updateTimerDisplay(); document.getElementById('timerMsg').innerText=''; });
     
+    // Ambient sounds
     let currentSound = null; const soundFiles = { rain:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', forest:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', ocean:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', fire:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' };
     function playSound(sound){ if(currentSound) { currentSound.pause(); currentSound.currentTime = 0; } if(sound === 'silence'){ currentSound = null; return; } const audio = new Audio(soundFiles[sound]); audio.loop = true; audio.volume = 0.3; audio.play().catch(e=>console.log); currentSound = audio; }
     document.querySelectorAll('.sound-btn').forEach(btn=>btn.addEventListener('click',()=>{ const sound=btn.dataset.sound; playSound(sound); document.querySelectorAll('.sound-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }));
