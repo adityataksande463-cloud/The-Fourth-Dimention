@@ -300,9 +300,180 @@ body {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin: 1rem 0;
+/* ========== UPGRADED HOME STYLES ========== */
+.cosmic-hero {
+    position: relative;
+    text-align: center;
+    padding: 2rem 1rem 3rem;
+    margin-bottom: 2rem;
+    background: radial-gradient(ellipse at 50% 0%, rgba(157,123,255,0.15), transparent 70%);
+    border-radius: 60px;
+    overflow: hidden;
 }
-
+.hero-glow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    width: 120%;
+    height: 140%;
+    background: radial-gradient(circle, rgba(157,123,255,0.2), transparent);
+    transform: translateX(-50%);
+    filter: blur(60px);
+    pointer-events: none;
+    animation: heroPulse 8s infinite alternate;
+}
+@keyframes heroPulse {
+    0% { opacity: 0.3; transform: translateX(-50%) scale(1);}
+    100% { opacity: 0.7; transform: translateX(-50%) scale(1.1);}
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+.hero-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 1rem 0;
+    background: linear-gradient(135deg, #fff, var(--accent), var(--accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.pulse-badge {
+    animation: gentlePulse 2s infinite;
+}
+@keyframes gentlePulse {
+    0% { box-shadow: 0 0 0 0 rgba(157,123,255,0.4);}
+    70% { box-shadow: 0 0 0 10px rgba(157,123,255,0);}
+    100% { box-shadow: 0 0 0 0 rgba(157,123,255,0);}
+}
+/* Mudra card */
+.mudra-elevated {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1.8rem;
+}
+.mudra-elevated:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 50px -20px rgba(0,0,0,0.6);
+}
+.mudra-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 0.5rem;
+}
+.mudra-header h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+.mudra-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+}
+.mudra-svg svg {
+    width: 90px;
+    height: 90px;
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+    transition: transform 0.3s ease;
+}
+.mudra-svg svg:hover {
+    transform: scale(1.05);
+}
+/* Wisdom card */
+.wisdom-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--glass-bg), rgba(157,123,255,0.1));
+    border: 1px solid rgba(157,123,255,0.3);
+}
+.wisdom-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--accent), var(--accent-secondary), var(--accent));
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+.wisdom-card:hover::before {
+    opacity: 0.3;
+}
+.wisdom-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.wisdom-quote-icon i {
+    font-size: 2rem;
+    color: var(--accent-secondary);
+    opacity: 0.6;
+}
+.wisdom-quote-container {
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5rem;
+}
+.quote-text-large {
+    font-size: 1.5rem;
+    font-style: italic;
+    line-height: 1.4;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+}
+.quote-author {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--accent-secondary);
+    text-align: right;
+    font-weight: 500;
+}
+.wisdom-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 1rem;
+}
+.quote-nav {
+    display: flex;
+    gap: 0.5rem;
+}
+/* Responsive */
+@media (max-width: 640px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    .quote-text-large {
+        font-size: 1.2rem;
+    }
+    .mudra-header h3 {
+        font-size: 1.2rem;
+    }
+    .wisdom-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .quote-nav {
+        justify-content: center;
+    }
+}
 /* ========== PROFESSION GRID (ARCHETYPES) ========== */
 .profession-grid {
     display: grid;
