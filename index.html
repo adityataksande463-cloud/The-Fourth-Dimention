@@ -464,21 +464,61 @@
         </div>
     </header>
 
-    <!-- HOME VIEW -->
-    <div id="homeView" class="view-container">
-        <div class="hero">
-            <div>
-                <div class="hero-badge">🌀 today's cosmic · witness the breath</div>
-                <div class="hero-badge totd" id="totdBadge">✨ Technique of the Day: Breath Awareness</div>
-                <h2>Journey Through <span class="gradient-text">Infinite Consciousness</span></h2>
-                <p class="hero-sub">112 authentic Tantra meditations, breathwork, cosmic diary, wisdom quotes, and a living black hole.</p>
-                <div class="btn-group"><button class="btn-primary" id="exploreBtn">Begin Voyage →</button><button class="btn-outline" id="dailyBtn">Daily Technique</button></div>
+    <!-- ========== UPGRADED HOME VIEW ========== -->
+<div id="homeView" class="view-container">
+    <!-- Hero section with floating particles effect -->
+    <div class="hero cosmic-hero">
+        <div class="hero-glow"></div>
+        <div class="hero-content">
+            <div class="hero-badge pulse-badge">🌀 today's cosmic · witness the breath</div>
+            <div class="hero-badge totd" id="totdBadge">✨ Technique of the Day: Breath Awareness</div>
+            <h1 class="hero-title">Journey Through <span class="gradient-text">Infinite Consciousness</span></h1>
+            <p class="hero-sub">112 authentic Tantra meditations · breathwork · cosmic diary · wisdom quotes · living black hole</p>
+            <div class="btn-group">
+                <button class="btn-primary" id="exploreBtn">Begin Voyage <i class="fas fa-arrow-right"></i></button>
+                <button class="btn-outline" id="dailyBtn"><i class="fas fa-sun"></i> Daily Technique</button>
             </div>
         </div>
-        <div class="glass-card"><div class="mudra-carousel-wrapper"><h3>🌀 Sacred Mudras</h3><div id="mudraContent" class="mudra-content"></div><div class="mudra-nav"><button id="prevMudraBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button><button id="nextMudraBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button></div><div class="mudra-save"><button id="saveMudraBtn" class="btn-outline"><i class="fas fa-bookmark"></i> Save to Diary</button></div></div></div>
-        <div class="quotes-home glass-card"><h2>🌠 Wisdom of the Ages</h2><div id="homeQuoteContainer"><div class="quote-text-large" id="homeQuoteText">Loading wisdom...</div><div class="quote-author" id="homeQuoteAuthor"></div></div><div class="quote-save"><button class="btn-outline" id="saveHomeQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button></div><div class="quote-nav"><button class="btn-outline" id="prevHomeQuote"><i class="fas fa-chevron-left"></i></button><button class="btn-outline" id="nextHomeQuote"><i class="fas fa-chevron-right"></i></button></div></div>
     </div>
 
+    <!-- Sacred Mudras – now with elegant card design and floating animation -->
+    <div class="glass-card mudra-elevated">
+        <div class="mudra-header">
+            <h3><i class="fas fa-hand-peace"></i> Sacred Mudras · Gestures of Awakening</h3>
+            <div class="mudra-counter" id="mudraCounter">1 / 11</div>
+        </div>
+        <div id="mudraContent" class="mudra-content">
+            <!-- dynamic content injected by JS -->
+        </div>
+        <div class="mudra-nav">
+            <button id="prevMudraBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button>
+            <button id="nextMudraBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="mudra-save">
+            <button id="saveMudraBtn" class="btn-outline"><i class="fas fa-bookmark"></i> Save to Diary</button>
+        </div>
+    </div>
+
+    <!-- Wisdom Quotes – now a beautiful card with animated gradient border -->
+    <div class="glass-card wisdom-card">
+        <div class="wisdom-header">
+            <h2><i class="fas fa-feather-alt"></i> Wisdom of the Ages</h2>
+            <div class="wisdom-quote-icon"><i class="fas fa-quote-right"></i></div>
+        </div>
+        <div id="homeQuoteContainer" class="wisdom-quote-container">
+            <div class="quote-text-large" id="homeQuoteText">Loading wisdom...</div>
+            <div class="quote-author" id="homeQuoteAuthor"></div>
+        </div>
+        <div class="wisdom-actions">
+            <button class="btn-outline" id="saveHomeQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button>
+            <div class="quote-nav">
+                <button class="btn-outline" id="prevHomeQuote"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn-outline" id="nextHomeQuote"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+    
     <!-- TECHNIQUES VIEW (upgraded) -->
     <div id="techniquesView" class="hidden view-container">
         <div class="glass-card" style="margin-bottom:1rem;">
