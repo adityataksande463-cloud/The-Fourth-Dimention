@@ -474,123 +474,258 @@ body {
         justify-content: center;
     }
 }
-/* ========== PROFESSION GRID (ARCHETYPES) ========== */
-.profession-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+/* ========== UPGRADED TECHNIQUES STYLES ========== */
+.techniques-actions {
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.2rem;
 }
-
-.prof-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 1.5rem;
-    text-align: center;
-    cursor: pointer;
+.actions-wrapper {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.btn-glow {
+    box-shadow: 0 0 12px rgba(157,123,255,0.5);
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+}
+.btn-glow:hover {
+    box-shadow: 0 0 20px rgba(157,123,255,0.8);
+    transform: translateY(-2px);
 }
 
-.prof-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
+/* Archetype card */
+.archetype-card {
+    background: linear-gradient(135deg, var(--glass-bg), rgba(157,123,255,0.05));
+    padding: 1.8rem;
 }
-
-.prof-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--accent);
-    box-shadow: 0 20px 35px -12px rgba(157, 123, 255, 0.4);
+.section-header {
+    text-align: center;
+    margin-bottom: 1.8rem;
 }
-
-.prof-card:hover::before {
-    transform: scaleX(1);
-}
-
-.prof-card i {
-    font-size: 2.8rem;
+.section-header h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
     background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    margin-bottom: 0.8rem;
-}
-
-.prof-card span {
-    font-weight: 700;
-    font-size: 1.3rem;
-    display: block;
-    margin: 0.5rem 0 0.3rem;
-}
-
-.prof-desc {
-    color: var(--text-secondary);
-    font-size: 0.8rem;
     margin-bottom: 0.5rem;
 }
+.section-header p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
 
-.prof-full-desc {
-    font-size: 0.7rem;
-    color: var(--accent-secondary);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
+/* Profession grid cards */
+.profession-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.2rem;
+}
+.prof-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 28px;
+    padding: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    position: relative;
+    overflow: hidden;
+}
+.prof-card::after {
+    content: '';
     position: absolute;
-    bottom: 1rem;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(157,123,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+.prof-card:hover::after {
+    left: 100%;
+}
+.prof-card i {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.6rem;
+}
+.prof-card span {
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: block;
+    margin: 0.3rem 0;
+}
+.prof-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Tech Carousel Container */
+.tech-carousel-container {
+    padding: 1.5rem;
+}
+.recommended-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 0.8rem;
+}
+.tech-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+.tech-counter {
+    font-size: 0.9rem;
+    background: rgba(157,123,255,0.2);
+    padding: 0.2rem 0.8rem;
+    border-radius: 40px;
+}
+.tech-carousel-content {
+    margin: 1.2rem 0;
+}
+/* Carousel card (already styled in previous upgrades – keep or enhance) */
+.tech-carousel-card {
+    background: linear-gradient(135deg, rgba(20,16,44,0.95), rgba(8,6,20,0.98));
+    border-radius: 32px;
+    border: 1px solid rgba(157,123,255,0.4);
+    padding: 1.8rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.tech-carousel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 40px -15px rgba(0,0,0,0.5), 0 0 20px rgba(157,123,255,0.3);
+}
+.tech-original-name {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: var(--accent-secondary);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+}
+.tech-english-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff, var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
+}
+.tech-detail-section {
+    margin: 1rem 0;
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+}
+.tech-detail-section h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent-secondary);
+    margin-bottom: 0.3rem;
+}
+.tech-detail-section p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+.tech-carousel-nav {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1.5rem 0 1rem;
+}
+.nav-btn {
+    min-width: 110px;
+}
+.tech-carousel-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+.action-practice {
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+}
+.back-to-archetype {
+    text-align: center;
+    margin-top: 1.2rem;
+}
+.back-btn {
+    padding: 0.5rem 1.2rem;
+}
+
+/* All Techniques Grid */
+.all-tech-card {
+    padding: 1.5rem;
+}
+.search-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+.search-icon {
+    position: absolute;
     left: 1rem;
-    right: 1rem;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
-    padding: 0.5rem;
-    pointer-events: none;
-    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 1rem;
 }
-
-.prof-card:hover .prof-full-desc {
-    opacity: 1;
-    transform: translateY(0);
+.tech-search-input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    border-radius: 60px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: all 0.2s;
 }
-
-/* ========== TECHNIQUES GRID & CAROUSEL ========== */
+.tech-search-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(157,123,255,0.3);
+}
 .tech-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1rem;
 }
-
 .tech-card {
-    background: linear-gradient(135deg, rgba(20, 16, 44, 0.85), rgba(8, 6, 20, 0.9));
+    background: linear-gradient(135deg, rgba(20,16,44,0.85), rgba(8,6,20,0.9));
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(157, 123, 255, 0.2);
+    border: 1px solid rgba(157,123,255,0.2);
     border-radius: 24px;
-    padding: 1.5rem;
+    padding: 1.2rem;
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
 .tech-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(157, 123, 255, 0.6);
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: 0 15px 30px -12px rgba(157,123,255,0.3);
 }
-
-.tech-name {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin: 0.5rem 0;
+.tech-card .tech-original-name {
+    font-size: 0.75rem;
 }
-
+.tech-card .tech-english-name {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+.tech-card .tech-category {
+    font-size: 0.7rem;
+    color: var(--accent-secondary);
+    text-transform: uppercase;
+}
 .tech-footer {
     display: flex;
     justify-content: space-between;
@@ -599,65 +734,41 @@ body {
     border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 0.8rem;
 }
-
 .favorite-btn, .practice-btn {
     background: none;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
     color: var(--accent-secondary);
     transition: transform 0.2s;
     margin-left: 0.5rem;
 }
-
 .favorite-btn:hover, .practice-btn:hover {
     transform: scale(1.05);
 }
 
-.tech-carousel-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    text-align: left;
-    margin: 1rem 0;
+/* Responsive */
+@media (max-width: 640px) {
+    .section-header h3 {
+        font-size: 1.4rem;
+    }
+    .tech-english-name {
+        font-size: 1.3rem;
+    }
+    .tech-carousel-card {
+        padding: 1rem;
+    }
+    .tech-detail-section p {
+        font-size: 0.85rem;
+    }
+    .tech-carousel-nav {
+        gap: 0.6rem;
+    }
+    .nav-btn {
+        min-width: 90px;
+        padding: 0.5rem 1rem;
+    }
 }
-
-.tech-carousel-nav, .tech-carousel-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 1rem 0;
-}
-
-.tech-detail-section {
-    margin: 1rem 0;
-}
-
-.tech-detail-section h4 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--accent-secondary);
-    margin-bottom: 0.3rem;
-    border-left: 3px solid var(--accent);
-    padding-left: 0.8rem;
-}
-
-.tech-detail-section p, .tech-detail-section ol {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--text-primary);
-    margin-left: 1rem;
-}
-
-.tech-detail-section ol {
-    padding-left: 1.2rem;
-}
-
-.tech-detail-section li {
-    margin-bottom: 0.3rem;
-}
-
 /* ========== BREATHWORK ========== */
 .breathwork-section {
     text-align: center;
