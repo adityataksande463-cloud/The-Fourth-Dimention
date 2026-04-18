@@ -535,18 +535,22 @@
 
     <!-- HOME VIEW -->
     <div id="homeView" class="view-container">
-        <div class="hero">
-            <div>
-                <div class="hero-badge">🌀 today's cosmic · witness the breath</div>
-                <div class="hero-badge totd" id="totdBadge">✨ Technique of the Day: Breath Awareness</div>
-                <h2>Journey Through <span class="gradient-text">Infinite Consciousness</span></h2>
-                <p class="hero-sub">112 authentic Tantra meditations · breathwork · cosmic diary · wisdom quotes · living black hole</p>
-                <div class="btn-group"><button class="btn-primary" id="exploreBtn">Begin Voyage →</button><button class="btn-outline" id="dailyBtn">Daily Technique</button></div>
+    <div class="home-grid">
+        <!-- Hero -->
+        <div class="glass-card">
+            <div class="hero">
+                <div>
+                    <div class="hero-badge">🌀 today's cosmic · witness the breath</div>
+                    <div class="hero-badge totd" id="totdBadge">✨ Technique of the Day: Breath Awareness</div>
+                    <h2>Journey Through <span class="gradient-text">Infinite Consciousness</span></h2>
+                    <p class="hero-sub">112 authentic Tantra meditations · breathwork · cosmic diary · wisdom quotes · living black hole</p>
+                    <div class="btn-group">
+                        <button class="btn-primary" id="exploreBtn">Begin Voyage →</button>
+                        <button class="btn-outline" id="dailyBtn"><i class="fas fa-sun"></i> Daily Technique</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="glass-card"><div class="mudra-carousel-wrapper"><h3><i class="fas fa-hand-peace"></i> Sacred Mudras · Gestures of Awakening</h3><div id="mudraContent" class="mudra-content"></div><div class="mudra-nav"><button id="prevMudraBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button><button id="nextMudraBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button></div><div class="mudra-save"><button id="saveMudraBtn" class="btn-outline"><i class="fas fa-bookmark"></i> Save to Diary</button></div></div></div>
-        <div class="quotes-home glass-card"><h2><i class="fas fa-feather-alt"></i> Wisdom of the Ages</h2><div id="homeQuoteContainer"><div class="quote-text-large" id="homeQuoteText">Loading wisdom...</div><div class="quote-author" id="homeQuoteAuthor"></div></div><div class="quote-save"><button class="btn-outline" id="saveHomeQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button></div><div class="quote-nav"><button class="btn-outline" id="prevHomeQuote"><i class="fas fa-chevron-left"></i></button><button class="btn-outline" id="nextHomeQuote"><i class="fas fa-chevron-right"></i></button></div></div>
-    </div>
 
     <!-- TECHNIQUES VIEW (upgraded) -->
     <div id="techniquesView" class="hidden view-container">
@@ -558,9 +562,41 @@
 
     <!-- BREATHWORK VIEW -->
     <div id="breathworkView" class="hidden breathwork-section glass-card view-container"><h2><i class="fas fa-wind"></i> Sacred Breath Alchemy</h2><div class="breath-container"><div class="breath-ring"><svg viewBox="0 0 300 300"><defs><linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle class="bg-circle" cx="150" cy="150" r="137" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="6"/><circle class="progress-circle" cx="150" cy="150" r="137" stroke="url(#gradientStroke)" fill="none" stroke-width="6" stroke-dasharray="860" stroke-dashoffset="860"/></svg><div class="breath-inner-ring"><div class="breath-phase" id="breathPhaseLabel">🌀</div><div class="breath-timer" id="breathTimerDisplay">0</div></div></div></div><div class="breath-text" id="breathPhaseText">Ready</div><div class="breath-controls"><button id="stopBreathBtn" class="btn-outline" style="display:none;"><i class="fas fa-stop"></i> Stop Practice</button></div><div class="breath-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin:1.5rem 0;"><div class="breath-card glass-card" data-breath="box"><i class="fas fa-cube"></i><h3>4-4-6-4 Box</h3><p>Calm nervous system</p><button class="btn-outline start-breath" data-type="box">Activate</button></div><div class="breath-card glass-card" data-breath="478"><i class="fas fa-feather-alt"></i><h3>4-7-8 Relaxation</h3><button class="btn-outline start-breath" data-type="478">Activate</button></div><div class="breath-card glass-card" data-breath="nadi"><i class="fas fa-hand-peace"></i><h3>Alternate Nostril</h3><button class="btn-outline start-breath" data-type="nadi">Activate</button></div><div class="breath-card glass-card" data-breath="kapal"><i class="fas fa-fire"></i><h3>Kapalabhati</h3><button class="btn-outline start-breath" data-type="kapal">Activate</button></div><div class="breath-card glass-card" data-breath="ujjayi"><i class="fas fa-water"></i><h3>Ujjayi Ocean</h3><button class="btn-outline start-breath" data-type="ujjayi">Activate</button></div></div><div id="breathInstructionPanel" class="breath-instruction-panel" style="background:rgba(0,0,0,0.4); border-radius:24px; padding:1rem; border-left:4px solid var(--accent);">✨ Select a breath technique to see detailed instructions.</div></div>
-
-    <!-- QUOTES LIBRARY -->
-    <div id="quotesView" class="hidden quotes-section glass-card view-container"><h2><i class="fas fa-book"></i> Wisdom Library</h2><div id="quoteContainer"><div class="quote-text-large" id="quoteText">Loading...</div><div class="quote-author" id="quoteAuthor"></div></div><div style="margin-top:1rem; display:flex; gap:0.8rem; justify-content:center;"><button class="btn-outline" id="prevLibQuote"><i class="fas fa-chevron-left"></i> Previous</button><button class="btn-outline" id="nextLibQuote">Next <i class="fas fa-chevron-right"></i></button><button class="btn-outline" id="saveLibQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button></div></div>
+        
+        <!-- Sacred Mudras -->
+        <div class="glass-card">
+            <div class="mudra-carousel-wrapper">
+                <h3><i class="fas fa-hand-peace"></i> Sacred Mudras · Gestures of Awakening</h3>
+                <div id="mudraContent" class="mudra-content"></div>
+                <div class="mudra-nav">
+                    <button id="prevMudraBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button>
+                    <button id="nextMudraBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="mudra-save">
+                    <button id="saveMudraBtn" class="btn-outline"><i class="fas fa-bookmark"></i> Save to Diary</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Wisdom Quotes -->
+        <div class="glass-card">
+            <div class="quotes-home">
+                <h2><i class="fas fa-feather-alt"></i> Wisdom of the Ages</h2>
+                <div id="homeQuoteContainer">
+                    <div class="quote-text-large" id="homeQuoteText">Loading wisdom...</div>
+                    <div class="quote-author" id="homeQuoteAuthor"></div>
+                </div>
+                <div class="quote-save">
+                    <button class="btn-outline" id="saveHomeQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button>
+                </div>
+                <div class="quote-nav">
+                    <button class="btn-outline" id="prevHomeQuote"><i class="fas fa-chevron-left"></i></button>
+                    <button class="btn-outline" id="nextHomeQuote"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- DIARY -->
     <div id="diaryView" class="hidden diary-section glass-card view-container"><h2><i class="fas fa-moon"></i> Cosmic Diary</h2><textarea id="diaryEntry" rows="3" placeholder="Write your reflections, insights, or dreams..." style="width:100%; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); border-radius:28px; padding:0.8rem; margin:1rem 0;"></textarea><button class="btn-primary" id="saveDiary">Save Reflection</button><div id="diaryList" style="margin-top:1.5rem;"></div></div>
@@ -882,14 +918,45 @@
     document.querySelectorAll('.start-breath').forEach(btn=>btn.addEventListener('click',(e)=>{ e.stopPropagation(); const type=btn.closest('.breath-card').dataset.breath; startBreathPractice(type); }));
     document.getElementById('stopBreathBtn').addEventListener('click',resetBreathUI);
     
-    // Timer
-    let timerSec=300, timerInt=null, running=false; const timerDisplay=document.getElementById('timerDisplay'), timerCircle=document.querySelector('.timer-progress'); const circumferenceTimer=553; function updateTimerDisplay(){ const mins=Math.floor(timerSec/60), secs=timerSec%60; timerDisplay.innerText=`${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`; const progress=(timerSec<=0?0:(300-timerSec)/300); const offset=circumferenceTimer-(progress*circumferenceTimer); if(timerCircle) timerCircle.style.strokeDashoffset=Math.min(circumferenceTimer,Math.max(0,offset)); }
-    document.querySelectorAll('.timer-pill').forEach(btn=>btn.addEventListener('click',(e)=>{ timerSec=parseInt(e.target.dataset.min)*60; updateTimerDisplay(); }));
-    document.getElementById('customMinutes')?.addEventListener('change',(e)=>{ if(e.target.value>0) timerSec=parseInt(e.target.value)*60; updateTimerDisplay(); });
-    document.getElementById('startTimer').addEventListener('click',()=>{ if(running) return; running=true; timerInt=setInterval(()=>{ if(timerSec<=0){ clearInterval(timerInt); running=false; addPracticedTechnique(0, "Focused Meditation", Math.floor((300-timerSec)/60)||5); document.getElementById('timerMsg').innerText='✨ Complete!'; showToast('Meditation completed!'); updateTimerDisplay(); } else { timerSec--; updateTimerDisplay(); } },1000); });
-    document.getElementById('pauseTimer').addEventListener('click',()=>{ clearInterval(timerInt); running=false; });
-    document.getElementById('resetTimer').addEventListener('click',()=>{ clearInterval(timerInt); running=false; timerSec=300; updateTimerDisplay(); document.getElementById('timerMsg').innerText=''; });
-    
+<div id="timerView" class="hidden timer-section glass-card view-container">
+    <h2><i class="fas fa-hourglass-half"></i> Meditation Timer</h2>
+    <div class="timer-circle">
+        <svg class="timer-svg" width="200" height="200" viewBox="0 0 200 200">
+            <defs><linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs>
+            <circle class="timer-bg" cx="100" cy="100" r="88" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="8"/>
+            <circle class="timer-progress" cx="100" cy="100" r="88" stroke="url(#timerGradient)" fill="none" stroke-width="8" stroke-dasharray="553" stroke-dashoffset="0"/>
+        </svg>
+        <div class="timer-text" id="timerDisplay">05:00</div>
+    </div>
+    <div class="timer-presets">
+        <div class="timer-preset" data-min="5">5 min</div>
+        <div class="timer-preset" data-min="10">10 min</div>
+        <div class="timer-preset" data-min="15">15 min</div>
+        <div class="timer-preset" data-min="20">20 min</div>
+        <div class="timer-preset" data-min="30">30 min</div>
+        <div class="timer-preset" data-min="60">60 min</div>
+    </div>
+    <div style="display:flex; gap:0.8rem; justify-content:center; margin-bottom:1rem;">
+        <input type="number" id="customMinutes" placeholder="custom min" min="1" style="width:90px; background:rgba(0,0,0,0.5); border-radius:40px; padding:0.3rem; text-align:center;">
+        <button id="setCustomBtn" class="btn-outline">Set</button>
+    </div>
+    <div style="display:flex; gap:0.8rem; justify-content:center;">
+        <button class="btn-primary" id="startTimer"><i class="fas fa-play"></i> Start</button>
+        <button class="btn-outline" id="pauseTimer"><i class="fas fa-pause"></i> Pause</button>
+        <button class="btn-outline" id="resetTimer"><i class="fas fa-redo-alt"></i> Reset</button>
+    </div>
+    <div class="ambient-panel" style="margin-top:1rem; text-align:center;">
+        <h4><i class="fas fa-music"></i> Ambient Sounds</h4>
+        <button class="sound-btn" data-sound="rain">🌧️ Rain</button>
+        <button class="sound-btn" data-sound="forest">🌲 Forest</button>
+        <button class="sound-btn" data-sound="ocean">🌊 Ocean</button>
+        <button class="sound-btn" data-sound="fire">🔥 Fire</button>
+        <button class="sound-btn" data-sound="silence">🔇 Silence</button>
+    </div>
+    <p id="timerMsg" style="margin-top:0.8rem; font-size:0.9rem;"></p>
+</div>
+
+
     // Ambient sounds
     let currentSound = null; const soundFiles = { rain:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', forest:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', ocean:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', fire:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' };
     function playSound(sound){ if(currentSound) { currentSound.pause(); currentSound.currentTime = 0; } if(sound === 'silence'){ currentSound = null; return; } const audio = new Audio(soundFiles[sound]); audio.loop = true; audio.volume = 0.3; audio.play().catch(e=>console.log); currentSound = audio; }
@@ -919,6 +986,75 @@
     document.getElementById('saveLibQuoteBtn').addEventListener('click',()=>{ const q=shuffledQuotes[currentLibIndex]; saveQuoteToBoth(q.text,q.author); });
     
     renderMudra(0); updateHomeQuote(); updateLibQuote(); renderPlan(); renderDiary(); updateUI(); showView('home');
+/* ========== DESKTOP TWO-COLUMN LAYOUT FOR HOME ========== */
+@media (min-width: 1024px) {
+    .home-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.8rem;
+        align-items: start;
+    }
+    .home-grid .glass-card:first-child {
+        grid-column: span 2; /* hero stays full width */
+    }
+    .home-grid .glass-card:nth-child(2) {
+        grid-column: span 1;
+    }
+    .home-grid .glass-card:nth-child(3) {
+        grid-column: span 1;
+    }
+}
+/* Improved daily technique modal */
+.daily-modal {
+    background: linear-gradient(135deg, var(--glass-bg), rgba(157,123,255,0.2));
+    border-radius: 32px;
+    padding: 1.5rem;
+    max-width: 500px;
+    text-align: center;
+}
+.daily-modal h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+.daily-modal .tech-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+.daily-modal .btn-group {
+    margin-top: 1.5rem;
+}
+/* Timer upgrade */
+.timer-presets {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+.timer-preset {
+    background: rgba(157,123,255,0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 40px;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.timer-preset.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+.timer-preset:hover {
+    transform: translateY(-2px);
+    background: rgba(157,123,255,0.4);
+}
+<div id="achievementsView" class="hidden profile-section glass-card view-container">
+    <h2><i class="fas fa-trophy"></i> Achievements</h2>
+    <div id="achievementsList" class="achievement-grid"></div>
+</div>
+
+
 </script>
 </body>
 </html>
