@@ -76,7 +76,6 @@
             transition: var(--transition);
             padding: 1.5rem;
         }
-        /* Header */
         .header {
             display: flex;
             flex-wrap: wrap;
@@ -123,7 +122,6 @@
         .greeting {
             font-size: 0.8rem;
         }
-        /* Hero */
         .hero {
             text-align: center;
         }
@@ -152,7 +150,6 @@
             font-size: 1rem;
             margin-bottom: 1.5rem;
         }
-        /* Buttons */
         .btn-primary, .btn-outline {
             padding: 0.7rem 1.5rem;
             border-radius: 50px;
@@ -181,7 +178,7 @@
             background: rgba(157,123,255,0.2);
             transform: translateY(-2px);
         }
-        /* Two-column home layout */
+        /* Home two-column layout */
         .home-grid {
             display: grid;
             gap: 1.8rem;
@@ -194,18 +191,12 @@
                 grid-column: span 2;
             }
         }
-        /* Mudra & Quotes inner spacing */
-        .mudra-carousel-wrapper, .quotes-home {
-            text-align: center;
-        }
+        /* Mudra & Quotes */
         .mudra-svg svg {
             width: 120px;
             height: 120px;
             filter: drop-shadow(0 0 12px var(--accent-glow));
             transition: transform 0.3s ease;
-        }
-        .mudra-svg svg:hover {
-            transform: scale(1.05);
         }
         .quote-text-large {
             font-size: 1.3rem;
@@ -251,24 +242,60 @@
             font-size: 1.2rem;
             display: block;
         }
-        /* Tech Carousel */
-        .tech-carousel-card {
-            background: linear-gradient(135deg, rgba(20,16,44,0.95), rgba(8,6,20,0.98));
-            border-radius: 32px;
-            border: 1px solid rgba(157,123,255,0.4);
+        /* Techniques Chapter Style */
+        .tech-chapter-container {
             padding: 1.8rem;
-            transition: transform 0.3s ease;
         }
-        .tech-carousel-card:hover {
-            transform: translateY(-5px);
+        .chapter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
         }
-        .tech-original-name {
+        .chapter-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        .chapter-card {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 32px;
+            padding: 1.8rem;
+        }
+        @media (max-width: 768px) {
+            .chapter-card {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+        .chapter-main {
+            border-right: 1px solid var(--glass-border);
+            padding-right: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .chapter-main {
+                border-right: none;
+                padding-right: 0;
+            }
+        }
+        .chapter-sidebar {
+            background: rgba(157,123,255,0.1);
+            border-radius: 24px;
+            padding: 1rem;
+        }
+        .chapter-original-name {
             font-size: 0.9rem;
+            letter-spacing: 1px;
             color: var(--accent-secondary);
             text-transform: uppercase;
         }
-        .tech-english-name {
-            font-size: 1.8rem;
+        .chapter-english-name {
+            font-size: 2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #fff, var(--accent));
             -webkit-background-clip: text;
@@ -276,10 +303,29 @@
             color: transparent;
             margin-bottom: 1rem;
         }
-        .tech-detail-section {
+        .chapter-essence {
+            font-size: 1rem;
+            line-height: 1.6;
             margin: 1rem 0;
+            font-style: italic;
             border-left: 3px solid var(--accent);
             padding-left: 1rem;
+        }
+        .chapter-steps p, .chapter-quote p {
+            line-height: 1.6;
+        }
+        .chapter-quote {
+            background: rgba(157,123,255,0.15);
+            border-radius: 20px;
+            padding: 0.8rem;
+            margin: 1rem 0;
+        }
+        .tech-chapter-actions {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1.5rem 0 1rem;
         }
         /* Breathwork Ring */
         .breath-ring {
@@ -458,19 +504,22 @@
         }
         .modal.active { opacity:1; pointer-events: auto; }
         .modal-content {
-            max-width: 500px;
+            max-width: 700px;
             width: 90%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
             padding: 1.5rem;
             background: var(--glass-bg);
             border-radius: 32px;
-            text-align: center;
+        }
+        .full-chapter-modal h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
         }
         @media (max-width: 640px) {
             .app-container { padding: 0.8rem; }
             .glass-card { padding: 1rem; }
-            .tech-english-name { font-size: 1.3rem; }
+            .chapter-english-name { font-size: 1.3rem; }
             .breath-ring { width: 200px; height: 200px; }
             .timer-circle { width: 160px; height: 160px; }
             .hero h2 { font-size: 1.8rem; }
@@ -492,7 +541,7 @@
         </div>
     </header>
 
-    <!-- HOME VIEW (two‑column on desktop) -->
+    <!-- HOME VIEW (two-column) -->
     <div id="homeView" class="view-container">
         <div class="home-grid">
             <div class="glass-card">
@@ -538,67 +587,72 @@
             </div>
         </div>
     </div>
-<!-- TECHNIQUES VIEW – CHAPTER STYLE -->
-<div id="techniquesView" class="hidden view-container">
-    <!-- Top buttons -->
-    <div class="glass-card techniques-header">
-        <div class="header-buttons">
-            <button id="showArchetypeBtn" class="btn-primary"><i class="fas fa-star-of-life"></i> Archetype Selection</button>
-            <button id="showAllTechBtn" class="btn-outline"><i class="fas fa-grid-2"></i> Browse All 112 Techniques</button>
-        </div>
-    </div>
 
-    <!-- Archetype Selection (professions) -->
-    <div id="professionSelectionView">
-        <div class="glass-card archetype-chapter">
-            <div class="chapter-intro">
-                <h2><i class="fas fa-mask"></i> Choose Your Archetype</h2>
-                <p>In the Tantric tradition, your path is unique. Select the archetype that resonates with your current journey – the wisdom will reveal techniques aligned with your soul.</p>
-            </div>
-            <div class="profession-grid" id="professionGrid"></div>
-        </div>
-    </div>
-
-    <!-- Recommended Techniques Carousel (Chapter View) -->
-    <div id="recommendedTechniquesView" class="hidden">
-        <div class="glass-card tech-chapter-container">
-            <div class="chapter-header">
-                <h3 id="selectedProfessionTitle" class="chapter-title"><i class="fas fa-brain"></i> Recommended Techniques</h3>
-                <div class="tech-counter" id="techCounter">1 / 12</div>
-            </div>
-            <div id="techCarouselContent" class="tech-chapter-content">
-                <!-- dynamic chapter card injected by JS -->
-            </div>
-            <div class="tech-carousel-nav">
-                <button id="prevTechBtn" class="btn-outline nav-btn"><i class="fas fa-chevron-left"></i> Previous</button>
-                <button id="nextTechBtn" class="btn-outline nav-btn">Next <i class="fas fa-chevron-right"></i></button>
-            </div>
-            <div class="tech-chapter-actions">
-                <button id="practiceTechBtn" class="btn-primary action-practice"><i class="fas fa-play"></i> Practice Now</button>
-                <button id="addToPlanTechBtn" class="btn-outline action-plan"><i class="fas fa-plus"></i> Add to My Plan</button>
-                <button id="favoriteTechBtn" class="btn-outline action-fav"><i class="far fa-heart"></i> Favorite</button>
-                <button id="readFullChapterBtn" class="btn-outline"><i class="fas fa-book-open"></i> Read Full Chapter</button>
-            </div>
-            <div class="back-to-archetype">
-                <button id="backToProfessionsBtn" class="btn-outline back-btn"><i class="fas fa-arrow-left"></i> Back to Archetypes</button>
+    <!-- TECHNIQUES VIEW (Chapter Style) -->
+    <div id="techniquesView" class="hidden view-container">
+        <div class="glass-card techniques-header">
+            <div class="header-buttons" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+                <button id="showArchetypeBtn" class="btn-primary"><i class="fas fa-star-of-life"></i> Archetype Selection</button>
+                <button id="showAllTechBtn" class="btn-outline"><i class="fas fa-grid-2"></i> Browse All 112 Techniques</button>
             </div>
         </div>
-    </div>
-
-    <!-- All Techniques Grid (searchable) -->
-    <div id="allTechniquesView" class="hidden">
-        <div class="glass-card all-tech-chapter">
-            <div class="search-wrapper">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="techSearchInput" placeholder="Search by name or category..." class="tech-search-input">
+        <div id="professionSelectionView">
+            <div class="glass-card archetype-chapter">
+                <div class="chapter-intro" style="text-align:center; margin-bottom:1.5rem;">
+                    <h2><i class="fas fa-mask"></i> Choose Your Archetype</h2>
+                    <p>In the Tantric tradition, your path is unique. Select the archetype that resonates with your current journey – the wisdom will reveal techniques aligned with your soul.</p>
+                </div>
+                <div class="profession-grid" id="professionGrid"></div>
             </div>
-            <div class="tech-grid" id="allTechniquesGrid"></div>
+        </div>
+        <div id="recommendedTechniquesView" class="hidden">
+            <div class="glass-card tech-chapter-container">
+                <div class="chapter-header">
+                    <h3 id="selectedProfessionTitle" class="chapter-title"><i class="fas fa-brain"></i> Recommended Techniques</h3>
+                    <div class="tech-counter" id="techCounter">1 / 12</div>
+                </div>
+                <div id="techCarouselContent" class="tech-chapter-content"></div>
+                <div class="tech-carousel-nav" style="display:flex; gap:1rem; justify-content:center; margin:1rem 0;">
+                    <button id="prevTechBtn" class="btn-outline nav-btn"><i class="fas fa-chevron-left"></i> Previous</button>
+                    <button id="nextTechBtn" class="btn-outline nav-btn">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="tech-chapter-actions">
+                    <button id="practiceTechBtn" class="btn-primary action-practice"><i class="fas fa-play"></i> Practice Now</button>
+                    <button id="addToPlanTechBtn" class="btn-outline action-plan"><i class="fas fa-plus"></i> Add to My Plan</button>
+                    <button id="favoriteTechBtn" class="btn-outline action-fav"><i class="far fa-heart"></i> Favorite</button>
+                    <button id="readFullChapterBtn" class="btn-outline"><i class="fas fa-book-open"></i> Read Full Chapter</button>
+                </div>
+                <div class="back-to-archetype" style="text-align:center; margin-top:1rem;">
+                    <button id="backToProfessionsBtn" class="btn-outline back-btn"><i class="fas fa-arrow-left"></i> Back to Archetypes</button>
+                </div>
+            </div>
+        </div>
+        <div id="allTechniquesView" class="hidden">
+            <div class="glass-card all-tech-chapter">
+                <div class="search-wrapper" style="position:relative; margin-bottom:1.5rem;">
+                    <i class="fas fa-search" style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); color:var(--text-secondary);"></i>
+                    <input type="text" id="techSearchInput" placeholder="Search by name or category..." class="tech-search-input" style="width:100%; padding:0.7rem 1rem 0.7rem 2.8rem; border-radius:60px; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); color:white;">
+                </div>
+                <div class="tech-grid" id="allTechniquesGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem;"></div>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- BREATHWORK VIEW -->
-    <div id="breathworkView" class="hidden breathwork-section glass-card view-container"><h2><i class="fas fa-wind"></i> Sacred Breath Alchemy</h2><div class="breath-container"><div class="breath-ring"><svg viewBox="0 0 300 300"><defs><linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle class="bg-circle" cx="150" cy="150" r="137" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="6"/><circle class="progress-circle" cx="150" cy="150" r="137" stroke="url(#gradientStroke)" fill="none" stroke-width="6" stroke-dasharray="860" stroke-dashoffset="860"/></svg><div class="breath-inner-ring"><div class="breath-phase" id="breathPhaseLabel">🌀</div><div class="breath-timer" id="breathTimerDisplay">0</div></div></div></div><div class="breath-text" id="breathPhaseText">Ready</div><div class="breath-controls"><button id="stopBreathBtn" class="btn-outline" style="display:none;"><i class="fas fa-stop"></i> Stop Practice</button></div><div class="breath-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin:1.5rem 0;"><div class="breath-card glass-card" data-breath="box"><i class="fas fa-cube"></i><h3>4-4-6-4 Box</h3><p>Calm nervous system</p><button class="btn-outline start-breath" data-type="box">Activate</button></div><div class="breath-card glass-card" data-breath="478"><i class="fas fa-feather-alt"></i><h3>4-7-8 Relaxation</h3><button class="btn-outline start-breath" data-type="478">Activate</button></div><div class="breath-card glass-card" data-breath="nadi"><i class="fas fa-hand-peace"></i><h3>Alternate Nostril</h3><button class="btn-outline start-breath" data-type="nadi">Activate</button></div><div class="breath-card glass-card" data-breath="kapal"><i class="fas fa-fire"></i><h3>Kapalabhati</h3><button class="btn-outline start-breath" data-type="kapal">Activate</button></div><div class="breath-card glass-card" data-breath="ujjayi"><i class="fas fa-water"></i><h3>Ujjayi Ocean</h3><button class="btn-outline start-breath" data-type="ujjayi">Activate</button></div></div><div id="breathInstructionPanel" class="breath-instruction-panel" style="background:rgba(0,0,0,0.4); border-radius:24px; padding:1rem; border-left:4px solid var(--accent);">✨ Select a breath technique to see detailed instructions.</div></div>
+    <div id="breathworkView" class="hidden breathwork-section glass-card view-container">
+        <h2><i class="fas fa-wind"></i> Sacred Breath Alchemy</h2>
+        <div class="breath-container"><div class="breath-ring"><svg viewBox="0 0 300 300"><defs><linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle class="bg-circle" cx="150" cy="150" r="137" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="6"/><circle class="progress-circle" cx="150" cy="150" r="137" stroke="url(#gradientStroke)" fill="none" stroke-width="6" stroke-dasharray="860" stroke-dashoffset="860"/></svg><div class="breath-inner-ring"><div class="breath-phase" id="breathPhaseLabel">🌀</div><div class="breath-timer" id="breathTimerDisplay">0</div></div></div></div>
+        <div class="breath-text" id="breathPhaseText">Ready</div>
+        <div class="breath-controls"><button id="stopBreathBtn" class="btn-outline" style="display:none;"><i class="fas fa-stop"></i> Stop Practice</button></div>
+        <div class="breath-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin:1.5rem 0;">
+            <div class="breath-card glass-card" data-breath="box"><i class="fas fa-cube"></i><h3>4-4-6-4 Box</h3><p>Calm nervous system</p><button class="btn-outline start-breath" data-type="box">Activate</button></div>
+            <div class="breath-card glass-card" data-breath="478"><i class="fas fa-feather-alt"></i><h3>4-7-8 Relaxation</h3><button class="btn-outline start-breath" data-type="478">Activate</button></div>
+            <div class="breath-card glass-card" data-breath="nadi"><i class="fas fa-hand-peace"></i><h3>Alternate Nostril</h3><button class="btn-outline start-breath" data-type="nadi">Activate</button></div>
+            <div class="breath-card glass-card" data-breath="kapal"><i class="fas fa-fire"></i><h3>Kapalabhati</h3><button class="btn-outline start-breath" data-type="kapal">Activate</button></div>
+            <div class="breath-card glass-card" data-breath="ujjayi"><i class="fas fa-water"></i><h3>Ujjayi Ocean</h3><button class="btn-outline start-breath" data-type="ujjayi">Activate</button></div>
+        </div>
+        <div id="breathInstructionPanel" class="breath-instruction-panel" style="background:rgba(0,0,0,0.4); border-radius:24px; padding:1rem; border-left:4px solid var(--accent);">✨ Select a breath technique to see detailed instructions.</div>
+    </div>
 
     <!-- QUOTES LIBRARY -->
     <div id="quotesView" class="hidden quotes-section glass-card view-container"><h2><i class="fas fa-book"></i> Wisdom Library</h2><div id="quoteContainer"><div class="quote-text-large" id="quoteText">Loading...</div><div class="quote-author" id="quoteAuthor"></div></div><div style="margin-top:1rem; display:flex; gap:0.8rem; justify-content:center;"><button class="btn-outline" id="prevLibQuote"><i class="fas fa-chevron-left"></i> Previous</button><button class="btn-outline" id="nextLibQuote">Next <i class="fas fa-chevron-right"></i></button><button class="btn-outline" id="saveLibQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button></div></div>
@@ -615,7 +669,7 @@
     <!-- COSMIC DASHBOARD -->
     <div id="enhancedView" class="hidden profile-section glass-card view-container"><h2><i class="fas fa-chart-line"></i> Cosmic Dashboard</h2><div class="stats-grid" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;"><div class="stat-card" style="flex:1; min-width:100px; text-align:center; padding:1rem; background:var(--glass-bg); border-radius:24px;"><div class="stat-value" id="enhTotalPractices">0</div><div class="stat-label">practices</div></div><div class="stat-card"><div class="stat-value" id="enhTotalMinutes">0</div><div class="stat-label">minutes</div></div><div class="stat-card"><div class="stat-value" id="enhStreak">0</div><div class="stat-label">streak</div></div></div><div class="calendar-section"><h3>📅 Practice Tracker</h3><div id="calendarTracker" class="calendar-grid" style="display:grid; grid-template-columns:repeat(7,1fr); gap:0.4rem; background:rgba(0,0,0,0.3); border-radius:24px; padding:0.8rem;"></div></div><div class="chart-section"><h3>📊 Weekly Activity</h3><canvas id="progressChart" width="400" height="200" style="width:100%; max-width:500px; margin:1rem auto;"></canvas></div><div class="chart-section"><h3>📈 Category Breakdown</h3><canvas id="categoryChart" width="400" height="200" style="width:100%; max-width:500px; margin:1rem auto;"></canvas></div><div style="margin-top:1rem; text-align:center;"><button id="exportDataBtn" class="btn-outline"><i class="fas fa-download"></i> Export Data (JSON)</button> <button id="exportCSVBtn" class="btn-outline"><i class="fas fa-file-csv"></i> Export CSV</button></div></div>
 
-    <!-- ACHIEVEMENTS (upgraded with progress bars) -->
+    <!-- ACHIEVEMENTS (progress bars) -->
     <div id="achievementsView" class="hidden profile-section glass-card view-container"><h2><i class="fas fa-trophy"></i> Achievements</h2><div id="achievementsList" class="achievement-grid"></div></div>
 
     <footer><div>© 2026 · 112 portals of imagination</div><div><a data-view="home">Home</a> <a data-view="techniques">Techniques</a> <a data-view="breathwork">Breathwork</a> <a data-view="enhanced">Cosmic Me</a></div></footer>
@@ -729,7 +783,7 @@
 </script>
 
 <script>
-    // ==================== 112 TECHNIQUES ====================
+    // ==================== 112 TECHNIQUES (full data) ====================
     const techniques = {};
     const techniqueNames = ["Witnessing the Breath","Awareness of the Gap Between Breaths","Breath Traveling Through the Spine","Concentration on the Third Eye","Witnessing Thoughts","Listening to Inner Resonance","Gazing into Darkness","Heart Center Meditation","Body Sensation Awareness","Slow Breath Meditation","Walking Awareness","Observation of Emotions","Listening to Silence","Whole-Body Awareness","Expansion of Awareness","Spine Awareness","Total Relaxation","Edge of Sleep","Momentary Suspension","Perceiving the Space Between","Feeling the Void","Embodied Light","Dissolving into Sound","Touching the Sky","Savoring the Source","Radiating Love","Itching and Tingling","Flame Contemplation","Pulse of Life","Empty Sky","Luminous Void","Elemental Contact","Breath as Cosmic Wind","Stillness Between Heartbeats","Spontaneous Satori","Scent of the Absolute","Expanding to Horizon","Centering in Navel","Cave of the Heart","Unstruck Sound","Shakti Rising","Kundalini Awakening","Absorption in Color","Inner Moon","Sun in Solar Plexus","Void Gazing","Darkness Beyond Form","Guru's Grace","Dissolving Ego","Surrendering to What Is","Non-Doing","Effortless Being","Resting in Natural State","Unconditional Love","Compassion Meditation","Joy Unbound","Equanimity","Forgiveness Practice","Gratitude Shower","Body as Temple","Skeleton Awareness","Dissolving Boundaries","Elemental Purification","Fire Offering Within","Waterfall of Grace","Mountain Stillness","Wind of Change","Space Unbounded","Earth Rooting","Cosmic Dance","Timeless Awareness","Dreamlike Illusion","Lucid Waking","Sleep as Yoga","Twilight Contemplation","Midnight Vigil","Dawn Awakening","Noon Radiance","Dusk Surrender","Seasons Within","Age as Wisdom","Death Awareness","Rebirth Visualization","Ancestor Connection","Guardian Spirits","Divine Child","Inner Mother","Cosmic Father","Friend of All","Teacher Within","Healer's Touch","Warrior's Courage","Sage's Silence","Lover's Embrace","Creator's Joy","Destroyer's Clarity","Preserver's Patience","Dancer's Grace","Beggar's Humility","King's Sovereignty","Jester's Laughter","Fool's Leap","Seeker's Quest","Finder's Rest","Praise to the Void","Hymn to the Heart","Mantra of Light","Seed Syllable","Whispered Prayer","Silent Reverence","Offering of Breath","Gift of Presence","Service to All","Union with All"];
     const sanskritNames = ["Śvāsa Praśvāsa","Antar Śvāsa","Suṣumṇā Śvāsa","Bhrūmadhya","Vikalpa Sākṣī","Anāhata Nāda","Tamas Dhyāna","Hṛdaya Ākāśa","Deha Anubhava","Manda Śvāsa","Caraṇa Jāgṛta","Bhāva Dṛṣṭi","Mauna Śravaṇa","Sarvāṅga Bodha","Caitanya Vistāra","Merudaṇḍa","Pūrṇa Viśrāma","Svapna Antara","Kṣaṇa Vilamba","Antarikṣa","Śūnya Spṛś","Tejas Mūrti","Nāda Laya","Gagan Sparśa","Srota Āsvāda","Premākāra","Kaṇḍūti","Agni Cintana","Nāḍī Spandana","Ākāśa Śūnya","Prakāśa Śūnya","Bhūta Saṃsparśa","Prāṇa Vāyu","Hṛdaya Spandana","Sahaja Samādhi","Para Gandha","Dik Vistāra","Nābhi Kendra","Guhā Hṛdaya","Anāhata Dhvani","Śakti Uthāna","Kuṇḍalinī Bodha","Varṇa Layana","Candra Antar","Sūrya Maṇipūra","Śūnya Dṛṣṭi","Tamas Para","Guru Kṛpā","Ahaṅkāra Tyāga","Tathatā Samarpaṇa","Akriyā","Sahaja Sthiti","Prakṛti Viśrāma","Prema Akhaṇḍa","Karuṇā Dhyāna","Ānanda Akhaṇḍa","Samatā","Kṣamā Sādhana","Kṛtajñatā Snāna","Deha Mandira","Asthi Bodha","Sīmā Vilaya","Bhūta Śodhana","Antar Agnihotra","Amṛta Dhārā","Acala Sthiti","Vāyu Parivartana","Ākāśa Ananta","Pṛthvī Mūla","Brahmāṇḍa Nṛtya","Kāla Bodha","Svapna Māyā","Jāgrat Svapna","Yoganidrā","Sandhyā Dhyāna","Ardha Rātri","Prātaḥ Bodha","Madhyāhna Tejas","Sandhyā Samarpaṇa","Ṛtu Antar","Vayasa Prajñā","Maraṇa Sati","Punarjanma Dhyāna","Pitṛ Saṃyoga","Devatā Rakṣā","Divya Bāla","Antar Mātā","Brahma Pitā","Sarva Mitra","Antar Guru","Hasta Cikitsā","Vīrya Śaurya","Muni Mauna","Premāliṅgana","Ānanda Sṛṣṭi","Saṃhāra Śuddhi","Sthiti Kṣamā","Nartana Lāvaṇya","Dīnatā","Rāja Sattva","Hāsya Vilāsa","Ātma Līlā","Sādhaka Patha","Lābha Viśrāma","Śūnya Stuti","Hṛdaya Stotra","Jyotir Mantra","Bīja Akṣara","Upāṃśu Prārthanā","Mauna Bhakti","Prāṇa Arghya","Sādhana Upasthāna","Sarva Seva","Advaita Yoga"];
@@ -740,7 +794,7 @@
         const name = techniqueNames[idx % techniqueNames.length];
         const sanskrit = sanskritNames[idx % sanskritNames.length];
         const stepsPara = `Begin by finding a quiet space. Sit in a comfortable posture. Close your eyes gently. Bring your awareness to the ${cat === 'breath' ? 'natural rhythm of your breath' : cat === 'sound' ? 'subtle sounds' : cat === 'gaze' ? 'the space between your eyebrows' : 'the present moment'}. Allow your body to relax completely. When thoughts arise, simply observe and return. Continue for the duration, sinking deeper into stillness.`;
-        const essencePara = `The Vigyan Bhairav Tantra reveals: “${name} is a direct portal to the formless. When you practice this, you are not doing anything—you are allowing the universe to meditate through you.”`;
+        const essencePara = `The Vigyan Bhairav Tantra reveals: “${name} is a direct portal to the formless. When you practice this, you are not doing anything—you are allowing the universe to meditate through you. The gap between two thoughts, the pause between two breaths, is the doorway to your true nature.”`;
         techniques[i] = { id:i, name, sanskrit, category:cat, essence:essencePara, steps:stepsPara, wisdom:"Shiva whispers this secret to Devi.", posture:"Meditation posture", mudra:"As described", breath:"Natural", duration:"10-20 min", benefits:{ student:"focus", employee:"calm", seeker:"awakening" } };
     }
     techniques[1] = { id:1, name:"Witnessing the Breath", sanskrit:"Śvāsa Praśvāsa", category:"breath", essence:"Shiva says: 'Simply watch your breath coming in and going out. Do not control it—just witness. When you become the witness, the mind stops.'", steps:"Sit comfortably. Close your eyes. Feel the breath at the tip of the nose. Do not follow it inside. If you lose awareness, gently return.", wisdom:"Osho", posture:"Sukhasana", mudra:"Chin", breath:"Natural", duration:"10-20 min", benefits:{ student:"focus", employee:"relax", seeker:"peace" } };
@@ -823,7 +877,7 @@
     function updateLibQuote(){ const q=shuffledQuotes[currentLibIndex]; document.getElementById('quoteText').innerHTML=`“${q.text}”`; document.getElementById('quoteAuthor').innerHTML=`— ${q.author}`; }
     function saveQuoteToBoth(text, author){ user.savedQuotes.unshift({ text, author, date:new Date().toISOString() }); user.diary.unshift({ date:new Date(), text:`📖 Saved Quote: "${text}" — ${author}` }); saveAll(); showToast("Quote saved"); }
     
-    // Mudras
+    // Mudras (simplified but complete)
     const mudrasData = [
         { name:"Bhumisparsa", sanskrit:"Bhūmisparśa Mudrā", meaning:"Earth‑Touching", how:"Right hand touches earth.", benefits:"Grounds energy, removes obstacles.", essence:"Unity with existence.", meditation:"Feel earth support.", svg:`<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="2"/><path d="M60,120 Q50,130 40,125" stroke="currentColor" stroke-width="3"/><path d="M140,110 Q150,140 160,160" stroke="currentColor" stroke-width="3"/><circle cx="162" cy="165" r="6" fill="currentColor" opacity="0.8"/><line x1="155" y1="155" x2="158" y2="162" stroke="currentColor" stroke-width="2" class="animated-finger"/></svg>` },
         { name:"Dhyana", sanskrit:"Dhyāna Mudrā", meaning:"Meditation", how:"Hands in lap, thumbs touching.", benefits:"Deep concentration, balance.", essence:"Equilibrium.", meditation:"Observe thoughts.", svg:`<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="currentColor"/><ellipse cx="100" cy="140" rx="50" ry="20" fill="none" stroke="currentColor"/><path d="M65,130 Q80,125 95,135" stroke="currentColor" stroke-width="3"/><circle cx="100" cy="125" r="4" fill="var(--accent-secondary)" class="animated-finger"/></svg>` },
@@ -846,11 +900,11 @@
     }
     function saveCurrentMudra(){ const m=mudrasData[currentMudraIndex]; saveQuoteToBoth(`${m.name}: ${m.essence}`, `Mudra ${m.name}`); }
     
-    // Techniques UI
+    // Techniques UI (Chapter style)
     function buildTechCard(t, showPractice=true){
         const div=document.createElement('div'); div.className='glass-card'; div.style.cursor='pointer'; div.style.padding='1rem';
         const isFav=user.favorites.includes(t.id);
-        div.innerHTML=`<div class="tech-original-name">${t.sanskrit}</div><div class="tech-english-name">${t.name}</div><div class="tech-category" style="font-size:0.8rem; color:var(--accent-secondary);">${t.category}</div><div class="tech-essence" style="font-size:0.85rem; margin:0.5rem 0;">${t.essence.substring(0,100)}...</div><div style="display:flex; justify-content:space-between; margin-top:1rem;"><span>${t.duration}</span><div><button class="favorite-btn ${isFav?'fas':'far'} fa-heart" data-id="${t.id}"></button>${showPractice?`<button class="practice-btn" data-id="${t.id}" data-name="${t.name}"><i class="fas fa-play"></i> Practice</button>`:''}</div></div>`;
+        div.innerHTML=`<div class="chapter-original-name">${t.sanskrit}</div><div class="chapter-english-name">${t.name}</div><div class="tech-category" style="font-size:0.8rem; color:var(--accent-secondary);">${t.category}</div><div class="tech-essence" style="font-size:0.85rem; margin:0.5rem 0;">${t.essence.substring(0,100)}...</div><div style="display:flex; justify-content:space-between; margin-top:1rem;"><span>${t.duration}</span><div><button class="favorite-btn ${isFav?'fas':'far'} fa-heart" data-id="${t.id}"></button>${showPractice?`<button class="practice-btn" data-id="${t.id}" data-name="${t.name}"><i class="fas fa-play"></i> Practice</button>`:''}</div></div>`;
         div.querySelector('.favorite-btn')?.addEventListener('click',(e)=>{ e.stopPropagation(); if(user.favorites.includes(t.id)) user.favorites=user.favorites.filter(f=>f!==t.id); else user.favorites.push(t.id); saveAll(); e.target.classList.toggle('fas'); e.target.classList.toggle('far'); showToast(user.favorites.includes(t.id)?'Added':'Removed'); });
         if(showPractice) div.querySelector('.practice-btn')?.addEventListener('click',(e)=>{ e.stopPropagation(); addPracticedTechnique(t.id,t.name,15); });
         div.addEventListener('click',()=>showModal(t));
@@ -861,22 +915,76 @@
     const profGrid=document.getElementById('professionGrid');
     profGrid.innerHTML=professions.map(p=>`<div class="prof-card" data-prof='${JSON.stringify(p)}'><i class="fas ${p.icon}"></i><span>${p.name}</span><div class="prof-desc">${p.desc}</div></div>`).join('');
     let currentTechList=[], currentTechIndex=0;
-    function renderTechCarousel(){
-        const tech=currentTechList[currentTechIndex];
-        if(!tech) return;
-        document.getElementById('techCarouselContent').innerHTML=`
-            <div class="tech-carousel-card">
-                <div class="tech-original-name">${tech.sanskrit}</div>
-                <div class="tech-english-name">${tech.name}</div>
-                <div class="tech-detail-section"><h4>📖 Essence</h4><p>${tech.essence}</p></div>
-                <div class="tech-detail-section"><h4>🧘 How to Practice</h4><p>${tech.steps}</p></div>
-                <div class="tech-detail-section"><h4>🌟 Benefits</h4><p>Students: ${tech.benefits.student} · Employees: ${tech.benefits.employee} · Seekers: ${tech.benefits.seeker}</p></div>
+    
+    function renderTechCarousel() {
+        const tech = currentTechList[currentTechIndex];
+        if (!tech) return;
+        const container = document.getElementById('techCarouselContent');
+        container.innerHTML = `
+            <div class="chapter-card">
+                <div class="chapter-main">
+                    <div class="chapter-original-name">${tech.sanskrit}</div>
+                    <div class="chapter-english-name">${tech.name}</div>
+                    <div class="chapter-essence"><i class="fas fa-feather-alt"></i> ${tech.essence}</div>
+                    <div class="chapter-steps"><h4><i class="fas fa-fingerprint"></i> The Practice – Step by Step</h4><p>${tech.steps}</p></div>
+                    <div class="chapter-quote"><i class="fas fa-quote-left"></i> ${tech.wisdom}</div>
+                </div>
+                <div class="chapter-sidebar">
+                    <h4><i class="fas fa-info-circle"></i> Quick Reference</h4>
+                    <p><strong>Category:</strong> ${tech.category}</p>
+                    <p><strong>Posture:</strong> ${tech.posture}</p>
+                    <p><strong>Mudra:</strong> ${tech.mudra}</p>
+                    <p><strong>Breath:</strong> ${tech.breath}</p>
+                    <p><strong>Duration:</strong> ${tech.duration}</p>
+                    <hr style="margin: 0.8rem 0; border-color: var(--glass-border);">
+                    <h4><i class="fas fa-gem"></i> Benefits</h4>
+                    <p>✨ Students: ${tech.benefits.student}<br>✨ Employees: ${tech.benefits.employee}<br>✨ Seekers: ${tech.benefits.seeker}</p>
+                </div>
             </div>
         `;
-        document.getElementById('techCounter').innerText=`${currentTechIndex+1}/${currentTechList.length}`;
-        const favBtn=document.getElementById('favoriteTechBtn');
-        favBtn.innerHTML=user.favorites.includes(tech.id)?'<i class="fas fa-heart"></i> Favorite':'<i class="far fa-heart"></i> Favorite';
+        document.getElementById('techCounter').innerText = `${currentTechIndex+1}/${currentTechList.length}`;
+        const favBtn = document.getElementById('favoriteTechBtn');
+        favBtn.innerHTML = user.favorites.includes(tech.id) ? '<i class="fas fa-heart"></i> Favorite' : '<i class="far fa-heart"></i> Favorite';
     }
+    
+    function showFullChapterModal(tech) {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content full-chapter-modal glass-card">
+                <h2>${tech.name}</h2>
+                <p class="tech-sanskrit">${tech.sanskrit}</p>
+                <div class="chapter-quote" style="margin: 1rem 0;"><i class="fas fa-quote-left"></i> ${tech.wisdom}</div>
+                <h3><i class="fas fa-book-open"></i> Chapter 1: Essence</h3>
+                <p>${tech.essence}</p>
+                <h3><i class="fas fa-hands-helping"></i> The Sacred Steps</h3>
+                <p>${tech.steps}</p>
+                <h3><i class="fas fa-lotus"></i> Posture & Mudra</h3>
+                <p>${tech.posture} · ${tech.mudra}</p>
+                <h3><i class="fas fa-wind"></i> Breath Guidance</h3>
+                <p>${tech.breath}</p>
+                <h3><i class="fas fa-chart-line"></i> Benefits for Your Path</h3>
+                <p>✨ For the Student: ${tech.benefits.student}<br>✨ For the Employee: ${tech.benefits.employee}<br>✨ For the Seeker: ${tech.benefits.seeker}</p>
+                <div style="margin-top: 1.5rem; text-align: center;">
+                    <button class="btn-primary" id="practiceFromModal">Practice Now</button>
+                    <button class="btn-outline closeModal">Close Chapter</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.classList.add('active');
+        modal.querySelector('#practiceFromModal').addEventListener('click', () => {
+            addPracticedTechnique(tech.id, tech.name, 15);
+            modal.classList.remove('active');
+            setTimeout(() => modal.remove(), 300);
+        });
+        modal.querySelector('.closeModal').addEventListener('click', () => {
+            modal.classList.remove('active');
+            setTimeout(() => modal.remove(), 300);
+        });
+        modal.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('active'); setTimeout(() => modal.remove(), 300); } });
+    }
+    
     document.querySelectorAll('.prof-card').forEach(card=>card.addEventListener('click',()=>{
         const prof=JSON.parse(card.dataset.prof);
         currentTechList=getRecommendedTechniques(prof);
@@ -895,7 +1003,8 @@
     document.getElementById('practiceTechBtn').addEventListener('click',()=>{ if(currentTechList[currentTechIndex]) addPracticedTechnique(currentTechList[currentTechIndex].id, currentTechList[currentTechIndex].name, 15); });
     document.getElementById('addToPlanTechBtn').addEventListener('click',()=>{ const t=currentTechList[currentTechIndex]; if(t && !user.plan.includes(t.id)){ user.plan.push(t.id); saveAll(); renderPlan(); showToast('Added to plan'); } else showToast('Already in plan'); });
     document.getElementById('favoriteTechBtn').addEventListener('click',()=>{ const t=currentTechList[currentTechIndex]; if(t){ if(user.favorites.includes(t.id)) user.favorites=user.favorites.filter(f=>f!==t.id); else user.favorites.push(t.id); saveAll(); renderTechCarousel(); showToast(user.favorites.includes(t.id)?'Favorited':'Unfavorited'); } });
-    document.getElementById('techSearchInput').addEventListener('input',function(){ const term=this.value.toLowerCase(); const grid=document.getElementById('allTechniquesGrid'); Array.from(grid.children).forEach(card=>{ const name=card.querySelector('.tech-english-name')?.innerText.toLowerCase(); const cat=card.querySelector('.tech-category')?.innerText.toLowerCase(); card.style.display=(name.includes(term)||cat.includes(term))?'':'none'; }); });
+    document.getElementById('techSearchInput').addEventListener('input',function(){ const term=this.value.toLowerCase(); const grid=document.getElementById('allTechniquesGrid'); Array.from(grid.children).forEach(card=>{ const name=card.querySelector('.chapter-english-name')?.innerText.toLowerCase(); const cat=card.querySelector('.tech-category')?.innerText.toLowerCase(); card.style.display=(name.includes(term)||cat.includes(term))?'':'none'; }); });
+    document.getElementById('readFullChapterBtn')?.addEventListener('click', () => { if (currentTechList[currentTechIndex]) showFullChapterModal(currentTechList[currentTechIndex]); });
     
     // Plan, Diary, UI updates
     function renderPlan(){ const container=document.getElementById('planItems'); if(!container) return; container.innerHTML=''; let total=0; user.plan.forEach(id=>{ if(techniques[id]){ total+=15; const div=document.createElement('div'); div.className='glass-card'; div.style.marginBottom='0.8rem'; div.style.padding='0.8rem'; div.innerHTML=`<div><strong>${techniques[id].name}</strong> (15 min)</div><button class="remove-plan" data-id="${id}" style="background:none; border:none; color:var(--accent-secondary); cursor:pointer;"><i class="fas fa-trash"></i></button>`; div.querySelector('.remove-plan').addEventListener('click',()=>{ user.plan=user.plan.filter(i=>i!==id); saveAll(); renderPlan(); showToast('removed'); }); container.appendChild(div); } }); document.getElementById('planTotal').innerText=total; }
@@ -903,7 +1012,6 @@
     function updateUI(){ document.getElementById('enhTotalPractices').innerText=user.totalPractices; document.getElementById('enhTotalMinutes').innerText=user.totalMinutes; document.getElementById('enhStreak').innerText=user.streak; renderCalendar(); renderPlan(); renderDiary(); renderAchievements(); updateCharts(); }
     function renderCalendar(){ const container=document.getElementById('calendarTracker'); if(!container) return; const today=new Date(), year=today.getFullYear(), month=today.getMonth(), firstDay=new Date(year,month,1).getDay(), daysInMonth=new Date(year,month+1,0).getDate(); container.innerHTML=''; ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(day=>{const d=document.createElement('div'); d.className='calendar-day weekday'; d.innerText=day; container.appendChild(d);}); for(let i=0;i<firstDay;i++){const blank=document.createElement('div'); blank.className='calendar-day'; container.appendChild(blank);} for(let d=1;d<=daysInMonth;d++){ const dateStr=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; const isPracticed=user.practiceDays[dateStr], isToday=d===today.getDate()&&month===today.getMonth()&&year===today.getFullYear(); const dayDiv=document.createElement('div'); dayDiv.className=`calendar-day ${isPracticed?'practiced':''} ${isToday?'today':''}`; dayDiv.innerText=d; dayDiv.addEventListener('click',()=>{ if(!user.practiceDays[dateStr]){ user.practiceDays[dateStr]=true; saveAll(); showToast(`Marked practice on ${dateStr}`); } else if(confirm('Remove mark?')){ delete user.practiceDays[dateStr]; saveAll(); } }); container.appendChild(dayDiv); } }
     
-    // Achievements (progress bars)
     function renderAchievements() {
         const container = document.getElementById('achievementsList');
         if (!container) return;
@@ -920,13 +1028,11 @@
             const progress = Math.min(100, (ach.current / ach.target) * 100);
             return `
                 <div class="achievement-item ${unlocked ? 'unlocked' : ''}">
-                    <div class="achievement-header">
+                    <div class="achievement-header" style="display:flex; justify-content:space-between;">
                         <span><i class="fas ${unlocked ? 'fa-trophy' : 'fa-lock'}"></i> ${ach.name}</span>
                         <span>${ach.current}/${ach.target} ${ach.unit}</span>
                     </div>
-                    <div class="achievement-bar">
-                        <div class="achievement-progress" style="width: ${progress}%;"></div>
-                    </div>
+                    <div class="achievement-bar"><div class="achievement-progress" style="width: ${progress}%;"></div></div>
                     <small>${ach.desc}</small>
                 </div>
             `;
@@ -1032,13 +1138,13 @@
         const modal = document.createElement('div');
         modal.className = 'modal';
         modal.innerHTML = `
-            <div class="modal-content daily-modal">
+            <div class="modal-content daily-modal" style="max-width:500px;">
                 <i class="fas fa-star-of-life" style="font-size:2rem; color:var(--accent-secondary);"></i>
                 <h3>🌀 Today's Cosmic Gift</h3>
                 <div class="tech-name" style="font-size:1.4rem; margin:1rem 0;">${tech.name}</div>
                 <div class="tech-sanskrit" style="font-size:0.9rem; color:var(--accent-secondary);">${tech.sanskrit}</div>
                 <p style="margin:1rem 0;">${tech.essence.substring(0, 200)}...</p>
-                <div class="btn-group">
+                <div class="btn-group" style="display:flex; gap:0.8rem; justify-content:center;">
                     <button class="btn-primary" id="practiceDailyBtn">Practice Now</button>
                     <button class="btn-outline closeModal">Maybe Later</button>
                 </div>
