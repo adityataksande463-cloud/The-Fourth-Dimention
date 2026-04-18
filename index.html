@@ -538,19 +538,64 @@
             </div>
         </div>
     </div>
+<!-- TECHNIQUES VIEW – CHAPTER STYLE -->
+<div id="techniquesView" class="hidden view-container">
+    <!-- Top buttons -->
+    <div class="glass-card techniques-header">
+        <div class="header-buttons">
+            <button id="showArchetypeBtn" class="btn-primary"><i class="fas fa-star-of-life"></i> Archetype Selection</button>
+            <button id="showAllTechBtn" class="btn-outline"><i class="fas fa-grid-2"></i> Browse All 112 Techniques</button>
+        </div>
+    </div>
 
-    <!-- TECHNIQUES VIEW -->
-    <div id="techniquesView" class="hidden view-container">
-        <div class="glass-card" style="margin-bottom:1rem;">
-            <div style="display: flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;">
-                <button id="showArchetypeBtn" class="btn-primary"><i class="fas fa-star-of-life"></i> Archetype Selection</button>
-                <button id="showAllTechBtn" class="btn-outline"><i class="fas fa-grid-2"></i> Browse All 112 Techniques</button>
+    <!-- Archetype Selection (professions) -->
+    <div id="professionSelectionView">
+        <div class="glass-card archetype-chapter">
+            <div class="chapter-intro">
+                <h2><i class="fas fa-mask"></i> Choose Your Archetype</h2>
+                <p>In the Tantric tradition, your path is unique. Select the archetype that resonates with your current journey – the wisdom will reveal techniques aligned with your soul.</p>
+            </div>
+            <div class="profession-grid" id="professionGrid"></div>
+        </div>
+    </div>
+
+    <!-- Recommended Techniques Carousel (Chapter View) -->
+    <div id="recommendedTechniquesView" class="hidden">
+        <div class="glass-card tech-chapter-container">
+            <div class="chapter-header">
+                <h3 id="selectedProfessionTitle" class="chapter-title"><i class="fas fa-brain"></i> Recommended Techniques</h3>
+                <div class="tech-counter" id="techCounter">1 / 12</div>
+            </div>
+            <div id="techCarouselContent" class="tech-chapter-content">
+                <!-- dynamic chapter card injected by JS -->
+            </div>
+            <div class="tech-carousel-nav">
+                <button id="prevTechBtn" class="btn-outline nav-btn"><i class="fas fa-chevron-left"></i> Previous</button>
+                <button id="nextTechBtn" class="btn-outline nav-btn">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="tech-chapter-actions">
+                <button id="practiceTechBtn" class="btn-primary action-practice"><i class="fas fa-play"></i> Practice Now</button>
+                <button id="addToPlanTechBtn" class="btn-outline action-plan"><i class="fas fa-plus"></i> Add to My Plan</button>
+                <button id="favoriteTechBtn" class="btn-outline action-fav"><i class="far fa-heart"></i> Favorite</button>
+                <button id="readFullChapterBtn" class="btn-outline"><i class="fas fa-book-open"></i> Read Full Chapter</button>
+            </div>
+            <div class="back-to-archetype">
+                <button id="backToProfessionsBtn" class="btn-outline back-btn"><i class="fas fa-arrow-left"></i> Back to Archetypes</button>
             </div>
         </div>
-        <div id="professionSelectionView"><div class="glass-card"><h3><i class="fas fa-mask"></i> Choose Your Archetype</h3><p>Select your path – cosmic wisdom reveals aligned techniques.</p><div class="profession-grid" id="professionGrid"></div></div></div>
-        <div id="recommendedTechniquesView" class="hidden"><div class="glass-card tech-carousel-container"><div class="recommended-header"><h3 id="selectedProfessionTitle">Recommended Techniques</h3><div class="tech-counter" id="techCounter">1 / 12</div></div><div id="techCarouselContent" class="tech-carousel-content"></div><div class="tech-carousel-nav"><button id="prevTechBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button><button id="nextTechBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button></div><div class="tech-carousel-actions"><button id="practiceTechBtn" class="btn-primary"><i class="fas fa-play"></i> Practice</button><button id="addToPlanTechBtn" class="btn-outline"><i class="fas fa-plus"></i> Add to My Plan</button><button id="favoriteTechBtn" class="btn-outline"><i class="far fa-heart"></i> Favorite</button></div><div class="back-to-archetype"><button id="backToProfessionsBtn" class="btn-outline"><i class="fas fa-arrow-left"></i> Back to Archetypes</button></div></div></div>
-        <div id="allTechniquesView" class="hidden"><div class="glass-card"><input type="text" id="techSearchInput" placeholder="🔍 search technique..." style="width:100%; padding:0.7rem; border-radius:40px; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); color:white; margin-bottom:1rem;"><div class="tech-grid" id="allTechniquesGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem;"></div></div></div>
     </div>
+
+    <!-- All Techniques Grid (searchable) -->
+    <div id="allTechniquesView" class="hidden">
+        <div class="glass-card all-tech-chapter">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="techSearchInput" placeholder="Search by name or category..." class="tech-search-input">
+            </div>
+            <div class="tech-grid" id="allTechniquesGrid"></div>
+        </div>
+    </div>
+</div>
 
     <!-- BREATHWORK VIEW -->
     <div id="breathworkView" class="hidden breathwork-section glass-card view-container"><h2><i class="fas fa-wind"></i> Sacred Breath Alchemy</h2><div class="breath-container"><div class="breath-ring"><svg viewBox="0 0 300 300"><defs><linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle class="bg-circle" cx="150" cy="150" r="137" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="6"/><circle class="progress-circle" cx="150" cy="150" r="137" stroke="url(#gradientStroke)" fill="none" stroke-width="6" stroke-dasharray="860" stroke-dashoffset="860"/></svg><div class="breath-inner-ring"><div class="breath-phase" id="breathPhaseLabel">🌀</div><div class="breath-timer" id="breathTimerDisplay">0</div></div></div></div><div class="breath-text" id="breathPhaseText">Ready</div><div class="breath-controls"><button id="stopBreathBtn" class="btn-outline" style="display:none;"><i class="fas fa-stop"></i> Stop Practice</button></div><div class="breath-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin:1.5rem 0;"><div class="breath-card glass-card" data-breath="box"><i class="fas fa-cube"></i><h3>4-4-6-4 Box</h3><p>Calm nervous system</p><button class="btn-outline start-breath" data-type="box">Activate</button></div><div class="breath-card glass-card" data-breath="478"><i class="fas fa-feather-alt"></i><h3>4-7-8 Relaxation</h3><button class="btn-outline start-breath" data-type="478">Activate</button></div><div class="breath-card glass-card" data-breath="nadi"><i class="fas fa-hand-peace"></i><h3>Alternate Nostril</h3><button class="btn-outline start-breath" data-type="nadi">Activate</button></div><div class="breath-card glass-card" data-breath="kapal"><i class="fas fa-fire"></i><h3>Kapalabhati</h3><button class="btn-outline start-breath" data-type="kapal">Activate</button></div><div class="breath-card glass-card" data-breath="ujjayi"><i class="fas fa-water"></i><h3>Ujjayi Ocean</h3><button class="btn-outline start-breath" data-type="ujjayi">Activate</button></div></div><div id="breathInstructionPanel" class="breath-instruction-panel" style="background:rgba(0,0,0,0.4); border-radius:24px; padding:1rem; border-left:4px solid var(--accent);">✨ Select a breath technique to see detailed instructions.</div></div>
