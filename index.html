@@ -596,9 +596,73 @@
         <div id="breathInstructionPanel" class="breath-instruction-panel" style="background:rgba(0,0,0,0.4); border-radius:24px; padding:1.5rem; border-left:4px solid var(--accent); margin-top: 1rem;">✨ Select a breath technique to see detailed instructions and scientific benefits.</div>
     </div>
 
-    <!-- QUOTES LIBRARY -->
-    <div id="quotesView" class="hidden quotes-section glass-card view-container"><h2><i class="fas fa-book"></i> Wisdom Library · 100+ Quotes</h2><div id="quoteContainer"><div class="quote-text-large" id="quoteText">Loading...</div><div class="quote-author" id="quoteAuthor"></div></div><div style="margin-top:1.5rem; display:flex; gap:0.8rem; justify-content:center;"><button class="btn-outline" id="prevLibQuote"><i class="fas fa-chevron-left"></i> Previous</button><button class="btn-outline" id="nextLibQuote">Next <i class="fas fa-chevron-right"></i></button><button class="btn-outline" id="saveLibQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button><button class="btn-outline" id="randomQuoteBtn"><i class="fas fa-random"></i> Random</button></div><div style="margin-top:1rem;"><input type="text" id="quoteSearchInput" placeholder="Search quotes..." style="width:100%; padding:0.8rem; border-radius:40px; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); color:white;"></div></div>
+<!-- ========== UPGRADED QUOTES SECTION ========== -->
+<div id="quotesView" class="hidden quotes-section view-container">
+    <div class="quotes-layout">
+        <!-- Left: Main Quote Display Card -->
+        <div class="quotes-main-card glass-card">
+            <div class="quotes-header">
+                <h2><i class="fas fa-feather-alt"></i> Wisdom Library · <span class="quote-count-badge">100+ Quotes</span></h2>
+                <div class="quotes-actions-top">
+                    <button class="icon-btn" id="randomQuoteBtnTop" title="Random Quote"><i class="fas fa-dice-d6"></i></button>
+                    <button class="icon-btn" id="toggleFavoritesBtn" title="Show Favorites"><i class="fas fa-star"></i></button>
+                </div>
+            </div>
 
+            <!-- Main Quote Card -->
+            <div class="quote-display-card">
+                <div class="quote-icon-large">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <div class="quote-text-display" id="quoteTextDisplay">“The quieter you become, the more you can hear.”</div>
+                <div class="quote-author-display" id="quoteAuthorDisplay">— Ram Dass</div>
+                <div class="quote-tags" id="quoteTagsDisplay">
+                    <span class="quote-tag">awareness</span>
+                    <span class="quote-tag">stillness</span>
+                </div>
+                <div class="quote-card-actions">
+                    <button class="btn-outline" id="saveQuoteMainBtn"><i class="fas fa-bookmark"></i> Save to Diary</button>
+                    <button class="btn-outline" id="copyQuoteBtn"><i class="fas fa-copy"></i> Copy</button>
+                    <button class="btn-outline" id="shareQuoteBtn"><i class="fas fa-share-alt"></i> Share</button>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="quote-navigation">
+                <button class="nav-btn-pill" id="prevLibQuote"><i class="fas fa-chevron-left"></i> Previous</button>
+                <span class="quote-counter" id="quoteCounterDisplay">1 / 20</span>
+                <button class="nav-btn-pill" id="nextLibQuote">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Right: Search and Favorites Panel -->
+        <div class="quotes-side-panel">
+            <!-- Search Box -->
+            <div class="search-box-enhanced glass-card">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="quoteSearchInputEnhanced" placeholder="Search by text or author...">
+                <button id="clearSearchBtn" class="clear-search-btn" style="display: none;"><i class="fas fa-times"></i></button>
+            </div>
+
+            <!-- Favorites List -->
+            <div class="favorites-panel glass-card">
+                <div class="favorites-header">
+                    <h3><i class="fas fa-heart"></i> Favorited Quotes</h3>
+                    <span id="favoritesCount">0</span>
+                </div>
+                <div id="favoritesListContainer" class="favorites-list">
+                    <!-- Dynamically filled -->
+                    <div class="empty-favorites-message">
+                        <i class="fas fa-bookmark"></i>
+                        <p>Save your favorite quotes<br>to see them here.</p>
+                    </div>
+                </div>
+                <button id="clearAllFavoritesBtn" class="btn-outline" style="margin-top: 0.8rem; width: 100%;">Clear All Favorites</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
     <!-- DIARY -->
     <div id="diaryView" class="hidden diary-section glass-card view-container"><h2><i class="fas fa-moon"></i> Cosmic Diary · Reflections & Insights</h2><textarea id="diaryEntry" rows="4" placeholder="Write your reflections, insights, or dreams..." style="width:100%; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); border-radius:28px; padding:1rem; margin:1rem 0;"></textarea><button class="btn-primary" id="saveDiary">Save Reflection</button><button class="btn-outline" id="exportDiaryPDFBtn" style="margin-left:1rem;"><i class="fas fa-file-pdf"></i> Export Diary</button><div id="diaryList" style="margin-top:1.5rem;"></div></div>
 
