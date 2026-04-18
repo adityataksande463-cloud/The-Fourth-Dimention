@@ -286,80 +286,171 @@ function renderAchievements() {
     }).join('');
 }
 
-// ==================== QUOTES (RICH COLLECTION) ====================
-const fullQuotesList = [
-    { text: "Three things cannot long be hidden: the sun, the moon, and the truth.", author: "Buddha" },
-    { text: "Peace comes from within. Do not seek it without.", author: "Buddha" },
-    { text: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
-    { text: "When I let go of what I am, I become what I might be.", author: "Lao Tzu" },
-    { text: "Happiness is the absence of the striving for happiness.", author: "Zhuangzi" },
-    { text: "The mind is the Buddha, and the Buddha is the mind.", author: "Bodhidharma" },
-    { text: "Where do you search me? I am with you.", author: "Kabir" },
-    { text: "The only true wisdom is in knowing you know nothing.", author: "Socrates" },
-    { text: "Knowing yourself is the beginning of all wisdom.", author: "Aristotle" },
-    { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche" },
-    { text: "The kingdom of God is within you.", author: "Jesus" },
-    { text: "Yoga is the cessation of the fluctuations of the mind.", author: "Patanjali" },
-    { text: "Arise, awake, and stop not till the goal is reached.", author: "Swami Vivekananda" },
-    { text: "Truth is a pathless land.", author: "Jiddu Krishnamurti" },
-    { text: "Don’t worry, be happy.", author: "Meher Baba" },
-    { text: "All life is yoga.", author: "Sri Aurobindo" }
-];
+// ========== Upgraded Quotes Logic (Centered Layout) ==========
+let currentQuoteIndex = 0;
+let filteredQuotes = [...fullQuotesList];
+const quoteTextLarge = document.getElementById('quoteTextLarge');
+const quoteAuthorLarge = document.getElementById('quoteAuthorLarge');
+const quoteTagsSimple = document.getElementById('quoteTagsSimple');
+const quotePositionDisplay = document.getElementById('quotePositionDisplay');
+const quoteTotalCount = document.getElementById('quoteTotalCount');
+const quoteSearchInputSimple = document.getElementById('quoteSearchInputSimple');
+const clearSearchSimpleBtn = document.getElementById('clearSearchSimpleBtn');
+const toggleFavoriteBtn = document.getElementById('toggleFavoriteBtn');
+const favoritesQuickRow = document.getElementById('favoritesQuickRow');
+const favoritesChipsContainer = document.getElementById('favoritesChipsContainer');
 
-function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+// Update total count display
+quoteTotalCount.innerText = fullQuotesList.length;
+
+function generateTags(quoteText) {
+    const tags = [];
+    const lower = quoteText.toLowerCase();
+    if (lower.includes('breath') || lower.includes('mind')) tags.push('mindfulness');
+    if (lower.includes('love') || lower.includes('heart')) tags.push('love');
+    if (lower.includes('truth') || lower.includes('wisdom')) tags.push('wisdom');
+    if (lower.includes('silence') || lower.includes('still')) tags.push('stillness');
+    if (lower.includes('peace') || lower.includes('calm')) tags.push('peace');
+    return tags.slice(0, 3);
+}
+
+function updateQuoteDisplay() {
+    const quote = filteredQuotes[currentQuoteIndex] || fullQuotesList[0];
+    quoteTextLarge.innerText = `“${quote.text}”`;
+    quoteAuthorLarge.innerText = `— ${quote.author}`;
+    
+    const tags = generateTags(quote.text);
+    quoteTagsSimple.innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
+    
+    quotePositionDisplay.innerText = `${currentQuoteIndex + 1} / ${filteredQuotes.length}`;
+    
+    // Update favorite button state
+    const isFav = user.savedQuotes.some(q => q.text === quote.text && q.author === quote.author);
+    toggleFavoriteBtn.innerHTML = isFav ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+}
+
+function renderFavoritesChips() {
+    const favs = user.savedQuotes;
+    if (favs.length === 0) {
+        favoritesQuickRow.style.display = 'none';
+        return;
     }
-    return arr;
+    favoritesQuickRow.style.display = 'flex';
+    favoritesChipsContainer.innerHTML = favs.slice(0, 5).map(q => 
+        `<span class="fav-chip" data-text="${q.text}" data-author="${q.author}">${q.author.split(' ')[0]}</span>`
+    ).join('');
+    
+    document.querySelectorAll('.fav-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            const text = chip.dataset.text;
+            const author = chip.dataset.author;
+            const foundIndex = filteredQuotes.findIndex(q => q.text === text && q.author === author);
+            if (foundIndex !== -1) {
+                currentQuoteIndex = foundIndex;
+                updateQuoteDisplay();
+                quoteSearchInputSimple.value = '';
+                clearSearchSimpleBtn.style.display = 'none';
+                filteredQuotes = [...fullQuotesList];
+                currentQuoteIndex = foundIndex;
+                updateQuoteDisplay();
+            }
+        });
+    });
 }
 
-let shuffledQuotes = shuffleArray([...fullQuotesList]);
-let currentLibIndex = 0;
-let homeQuotes = shuffleArray([...fullQuotesList]);
-let currentHomeIndex = 0;
-
-function updateHomeQuote() {
-    const q = homeQuotes[currentHomeIndex];
-    document.getElementById('homeQuoteText').innerHTML = `“${q.text}”`;
-    document.getElementById('homeQuoteAuthor').innerHTML = `— ${q.author}`;
+function saveCurrentQuote() {
+    const quote = filteredQuotes[currentQuoteIndex];
+    if (!user.savedQuotes.some(q => q.text === quote.text && q.author === quote.author)) {
+        user.savedQuotes.unshift({ text: quote.text, author: quote.author, date: new Date().toISOString() });
+        user.diary.unshift({ date: new Date(), text: `📖 Saved Quote: "${quote.text}" — ${quote.author}` });
+        saveAll();
+        renderFavoritesChips();
+        updateQuoteDisplay();
+        showToast('Quote saved to favorites');
+    } else {
+        // Remove if already favorited
+        user.savedQuotes = user.savedQuotes.filter(q => !(q.text === quote.text && q.author === quote.author));
+        saveAll();
+        renderFavoritesChips();
+        updateQuoteDisplay();
+        showToast('Removed from favorites');
+    }
 }
 
+function filterQuotesSimple(term) {
+    if (!term) {
+        filteredQuotes = [...fullQuotesList];
+        clearSearchSimpleBtn.style.display = 'none';
+    } else {
+        filteredQuotes = fullQuotesList.filter(q => 
+            q.text.toLowerCase().includes(term.toLowerCase()) || 
+            q.author.toLowerCase().includes(term.toLowerCase())
+        );
+        clearSearchSimpleBtn.style.display = 'block';
+    }
+    currentQuoteIndex = 0;
+    updateQuoteDisplay();
+    if (filteredQuotes.length === 0) {
+        quoteTextLarge.innerText = "No matching quotes.";
+        quoteAuthorLarge.innerText = "";
+        quoteTagsSimple.innerHTML = "";
+        quotePositionDisplay.innerText = "0 / 0";
+    }
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    filteredQuotes = [...fullQuotesList];
+    currentQuoteIndex = 0;
+    updateQuoteDisplay();
+    renderFavoritesChips();
+    
+    document.getElementById('prevLibQuote').addEventListener('click', () => {
+        if (filteredQuotes.length === 0) return;
+        currentQuoteIndex = (currentQuoteIndex - 1 + filteredQuotes.length) % filteredQuotes.length;
+        updateQuoteDisplay();
+    });
+    document.getElementById('nextLibQuote').addEventListener('click', () => {
+        if (filteredQuotes.length === 0) return;
+        currentQuoteIndex = (currentQuoteIndex + 1) % filteredQuotes.length;
+        updateQuoteDisplay();
+    });
+    
+    document.getElementById('saveQuoteMainBtn').addEventListener('click', saveCurrentQuote);
+    toggleFavoriteBtn.addEventListener('click', saveCurrentQuote);
+    
+    document.getElementById('copyQuoteBtn').addEventListener('click', () => {
+        const quote = filteredQuotes[currentQuoteIndex];
+        navigator.clipboard?.writeText(`"${quote.text}" — ${quote.author}`).then(() => {
+            showToast('Quote copied');
+        }).catch(() => showToast('Copy failed'));
+    });
+    
+    document.getElementById('shareQuoteBtn').addEventListener('click', () => {
+        const quote = filteredQuotes[currentQuoteIndex];
+        if (navigator.share) {
+            navigator.share({ title: 'Wisdom', text: `"${quote.text}" — ${quote.author}` });
+        } else {
+            navigator.clipboard?.writeText(`"${quote.text}" — ${quote.author}`);
+            showToast('Quote copied (share not supported)');
+        }
+    });
+    
+    quoteSearchInputSimple.addEventListener('input', (e) => filterQuotesSimple(e.target.value));
+    clearSearchSimpleBtn.addEventListener('click', () => {
+        quoteSearchInputSimple.value = '';
+        filterQuotesSimple('');
+    });
+    
+    // Also keep compatibility with old save button
+    const oldSaveBtn = document.getElementById('saveLibQuoteBtn');
+    if (oldSaveBtn) oldSaveBtn.addEventListener('click', saveCurrentQuote);
+});
+
+// Override the old updateLibQuote function to avoid conflicts
 function updateLibQuote() {
-    const q = shuffledQuotes[currentLibIndex];
-    document.getElementById('quoteText').innerHTML = `“${q.text}”`;
-    document.getElementById('quoteAuthor').innerHTML = `— ${q.author}`;
-}
-
-function nextHomeQuote() {
-    currentHomeIndex = (currentHomeIndex + 1) % homeQuotes.length;
-    updateHomeQuote();
-}
-
-function prevHomeQuote() {
-    currentHomeIndex = (currentHomeIndex - 1 + homeQuotes.length) % homeQuotes.length;
-    updateHomeQuote();
-}
-
-function nextLibQuote() {
-    currentLibIndex = (currentLibIndex + 1) % shuffledQuotes.length;
-    updateLibQuote();
-}
-
-function prevLibQuote() {
-    currentLibIndex = (currentLibIndex - 1 + shuffledQuotes.length) % shuffledQuotes.length;
-    updateLibQuote();
-}
-
-function saveCurrentHomeQuote() {
-    const q = homeQuotes[currentHomeIndex];
-    saveQuoteToBoth(q.text, q.author);
-}
-
-function saveCurrentLibQuote() {
-    const q = shuffledQuotes[currentLibIndex];
-    saveQuoteToBoth(q.text, q.author);
-}
+    updateQuoteDisplay();
+            }
 
 // ==================== MUDRA CAROUSEL ====================
 const mudrasData = [
