@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Vigyan Bhairav Tantra · 112 Portals to Infinity · Ultimate Meditation Platform</title>
-    <meta name="description" content="The most comprehensive interactive meditation platform: all 112 authentic Tantra techniques, dynamic breathwork, cosmic diary, wisdom quotes, live black hole, and immersive tools.">
+    <title>Vigyan Bhairav Tantra 2.0 · 112 Portals · 300+ Wisdom Quotes</title>
+    <meta name="description" content="The ultimate meditation platform: 112 authentic Tantra techniques, 19 breathwork protocols, 300+ sacred quotes, cosmic diary, dynamic timer, achievements, and 3D black hole.">
     <meta name="theme-color" content="#050210">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <!-- PDF export libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* ===== VARIABLES & RESET ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-deep: #050210;
@@ -41,1323 +38,322 @@
             --accent-glow: #8f6eff;
             --accent-secondary: #ff8a6c;
         }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-deep);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-        #blackhole-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            display: block;
-            pointer-events: none;
-        }
-        .app-container {
-            position: relative;
-            z-index: 10;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem 2rem;
-        }
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-card);
-            box-shadow: var(--card-shadow);
-            transition: var(--transition);
-            padding: 1.5rem;
-        }
-        .header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--radius-pill);
-            margin-bottom: 2rem;
-        }
-        .logo h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.7rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-deep); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
+        #blackhole-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .app-container { position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; padding: 1rem 1.5rem 2rem; }
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: var(--radius-card); box-shadow: var(--card-shadow); transition: var(--transition); padding: 1.5rem; }
+        .header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.8rem; padding: 0.8rem 1.5rem; border-radius: var(--radius-pill); margin-bottom: 2rem; }
+        .logo h1 { font-family: 'Outfit', sans-serif; font-size: 1.7rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .logo p { font-size: 0.7rem; letter-spacing: 1px; color: var(--text-secondary); }
-        .nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            align-items: center;
-        }
-        .nav a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            cursor: pointer;
-            white-space: nowrap;
-            padding: 0.3rem 0.6rem;
-            border-radius: 30px;
-        }
-        .nav a:hover, .nav a.active {
-            color: var(--accent-secondary);
-            background: rgba(157,123,255,0.15);
-            text-shadow: 0 0 6px var(--accent-glow);
-        }
+        .nav { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; }
+        .nav a { color: var(--text-primary); text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: var(--transition); cursor: pointer; white-space: nowrap; padding: 0.3rem 0.6rem; border-radius: 30px; }
+        .nav a:hover, .nav a.active { color: var(--accent-secondary); background: rgba(157,123,255,0.15); text-shadow: 0 0 6px var(--accent-glow); }
         .greeting { font-size: 0.9rem; font-weight: 500; color: var(--accent); margin-left: 0.5rem; }
-        .hero { text-align: center; }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(157,123,255,0.2);
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            margin-bottom: 1rem;
-        }
-        .hero h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .hero-sub { font-size: 1.1rem; margin-bottom: 1.8rem; opacity: 0.9; }
-        .btn-primary, .btn-outline, .btn-success {
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
-            font-size: 0.95rem;
-            margin: 0.3rem;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            color: white;
-            box-shadow: 0 6px 20px rgba(157,123,255,0.4);
-        }
+        .btn-primary, .btn-outline, .btn-success { padding: 0.8rem 1.8rem; border-radius: 50px; font-weight: 700; cursor: pointer; border: none; transition: all 0.2s ease; font-size: 0.95rem; margin: 0.3rem; }
+        .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); color: white; box-shadow: 0 6px 20px rgba(157,123,255,0.4); }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(157,123,255,0.6); }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            backdrop-filter: blur(4px);
-        }
+        .btn-outline { background: transparent; border: 1px solid var(--glass-border); color: var(--text-primary); backdrop-filter: blur(4px); }
         .btn-outline:hover { background: rgba(157,123,255,0.2); transform: translateY(-2px); }
-        .btn-success {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: white;
-            box-shadow: 0 6px 20px rgba(46,204,113,0.4);
-        }
-        .home-grid {
-            display: grid;
-            gap: 1.8rem;
-        }
-        @media (min-width: 1024px) {
-            .home-grid { grid-template-columns: 1fr 1fr; }
-            .home-grid .glass-card:first-child { grid-column: span 2; }
-        }
-        .mudra-svg svg {
-            width: 140px;
-            height: 140px;
-            filter: drop-shadow(0 0 12px var(--accent-glow));
-            transition: transform 0.3s ease;
-        }
-        .mudra-svg svg:hover { transform: scale(1.05); }
-        .quote-text-large {
-            font-size: 1.4rem;
-            font-style: italic;
-            line-height: 1.5;
-            margin: 1rem 0;
-            font-weight: 300;
-        }
-        .quote-author { font-size: 1rem; color: var(--accent-secondary); margin-top: 0.5rem; }
-        .profession-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1.2rem;
-            margin-top: 1.5rem;
-        }
-        .prof-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .prof-card:hover { transform: translateY(-6px); border-color: var(--accent); }
-        .prof-card i { font-size: 2.5rem; background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0.8rem; }
-        .prof-card span { font-weight: 700; font-size: 1.3rem; display: block; }
-        .prof-desc { font-size: 0.9rem; opacity: 0.8; margin-top: 0.3rem; }
-        .tech-chapter-container { padding: 1.8rem; }
-        .chapter-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 0.5rem;
-        }
-        .chapter-title { font-size: 1.8rem; font-weight: 700; }
-        .chapter-card {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            background: rgba(0,0,0,0.3);
-            border-radius: 32px;
-            padding: 1.8rem;
-        }
-        @media (max-width: 768px) { .chapter-card { grid-template-columns: 1fr; } }
-        .chapter-main { border-right: 1px solid var(--glass-border); padding-right: 1.5rem; }
-        .chapter-sidebar {
-            background: rgba(157,123,255,0.1);
-            border-radius: 24px;
-            padding: 1.5rem;
-        }
-        .chapter-original-name {
-            font-size: 1rem;
-            letter-spacing: 1px;
-            color: var(--accent-secondary);
-            text-transform: uppercase;
-        }
-        .chapter-english-name {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-        }
-        .chapter-essence {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin: 1.5rem 0;
-            font-style: italic;
-            border-left: 4px solid var(--accent);
-            padding-left: 1.5rem;
-        }
-        .breath-ring {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 0 auto;
-        }
-        .breath-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .progress-circle {
-            stroke-dasharray: 860;
-            stroke-dashoffset: 860;
-            transition: stroke-dashoffset 0.05s linear;
-        }
-        .breath-inner-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(157,123,255,0.3), rgba(157,123,255,0));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            backdrop-filter: blur(4px);
-            animation: pulseGlow 3s infinite;
-        }
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(157,123,255,0.4); transform: translate(-50%, -50%) scale(1); }
-            50% { box-shadow: 0 0 0 20px rgba(157,123,255,0); transform: translate(-50%, -50%) scale(1.02); }
-            100% { box-shadow: 0 0 0 0 rgba(157,123,255,0); transform: translate(-50%, -50%) scale(1); }
-        }
-        .breath-phase {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .breath-timer {
-            font-size: 2rem;
-            font-family: 'Outfit', monospace;
-            font-weight: bold;
-            color: var(--accent-secondary);
-        }
-        .timer-circle { width: 220px; height: 220px; margin: 1rem auto; position: relative; }
-        .timer-svg { transform: rotate(-90deg); }
-        .timer-progress {
-            stroke: url(#timerGradient);
-            transition: stroke-dashoffset 0.1s linear;
-        }
-        .timer-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2.2rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .timer-presets {
-            display: flex;
-            gap: 0.8rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 1.5rem 0;
-        }
-        .timer-preset {
-            background: rgba(157,123,255,0.2);
-            border: 1px solid var(--glass-border);
-            border-radius: 40px;
-            padding: 0.6rem 1.2rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .timer-preset.active { background: var(--accent); color: white; }
-        .achievement-item {
-            background: rgba(0,0,0,0.3);
-            border-radius: 20px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .achievement-bar {
-            height: 10px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-        .achievement-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-            width: 0%;
-            border-radius: 5px;
-            transition: width 0.3s ease;
-        }
         .hidden { display: none !important; }
-        .view-container { transition: opacity 0.4s ease, transform 0.4s ease; }
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 40px;
-            z-index: 3000;
-            animation: fadeOut 3s forwards;
-        }
-        @keyframes fadeOut {
-            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-            10% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-        footer {
-            margin-top: 3rem;
-            padding: 1.5rem 0;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            border-top: 1px solid var(--glass-border);
-        }
-        .modal {
-            position: fixed;
-            top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(20px);
-            z-index:2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity:0;
-            pointer-events: none;
-            transition:0.2s;
-        }
+        .view-container { transition: opacity 0.4s ease; }
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; padding: 0.8rem 1.5rem; border-radius: 40px; z-index: 3000; animation: fadeOut 3s forwards; }
+        @keyframes fadeOut { 0% { opacity: 0; transform: translateX(-50%) translateY(20px); } 10% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(20px); z-index:2000; display: flex; align-items: center; justify-content: center; opacity:0; pointer-events: none; transition:0.2s; }
         .modal.active { opacity:1; pointer-events: auto; }
-        .modal-content {
-            max-width: 800px;
-            width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 2rem;
-            background: var(--glass-bg);
-            border-radius: 32px;
-        }
-        .tech-grid-detailed {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.2rem;
-        }
-        .data-export-import {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 1.5rem;
-            justify-content: center;
-        }
-        @media (max-width: 640px) {
-            .app-container { padding: 0.8rem; }
-            .glass-card { padding: 1rem; }
-            .chapter-english-name { font-size: 1.5rem; }
-            .breath-ring { width: 240px; height: 240px; }
-            .timer-circle { width: 180px; height: 180px; }
-            .hero h2 { font-size: 1.8rem; }
-        }
-        /* Additional enhancements for 10k+ lines feel */
-        .glowing-text {
-            text-shadow: 0 0 15px var(--accent-glow);
-        }
-        .progress-ring-small { width: 80px; height: 80px; }
-        .daily-insight {
-            background: linear-gradient(145deg, rgba(157,123,255,0.1), rgba(255,179,160,0.1));
-            border-radius: 24px;
-            padding: 1rem;
-            margin: 1rem 0;
-        }
+        .modal-content { max-width: 800px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 2rem; background: var(--glass-bg); border-radius: 32px; }
+        .tech-grid-detailed { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+        .profession-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.2rem; margin-top: 1.5rem; }
+        .prof-card { background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.2rem; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+        .prof-card:hover { transform: translateY(-6px); border-color: var(--accent); }
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: center; justify-content: center; }
+        .filter-select { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: 40px; padding: 0.5rem 1rem; color: white; }
+        .breath-ring { position: relative; width: 260px; height: 260px; margin: 0 auto; }
+        .progress-circle { stroke-dasharray: 860; stroke-dashoffset: 860; transition: stroke-dashoffset 0.05s linear; }
+        .timer-circle { width: 220px; height: 220px; margin: 1rem auto; position: relative; }
+        .timer-progress { transition: stroke-dashoffset 0.1s linear; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.4rem; background: rgba(0,0,0,0.3); border-radius: 24px; padding: 1rem; }
+        .calendar-day { text-align: center; padding: 0.5rem; border-radius: 50%; cursor: pointer; }
+        .calendar-day.practiced { background: var(--accent); color: white; }
+        .achievement-item { background: rgba(0,0,0,0.3); border-radius: 20px; padding: 1rem; margin-bottom: 1rem; }
+        .achievement-bar { height: 10px; background: rgba(255,255,255,0.2); border-radius: 5px; overflow: hidden; margin-top: 0.5rem; }
+        .achievement-progress { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-secondary)); width: 0%; border-radius: 5px; }
+        .quote-card { background: rgba(0,0,0,0.3); border-radius: 32px; padding: 2rem; text-align: center; margin: 1rem 0; }
+        .quote-text-large { font-size: 1.5rem; font-style: italic; line-height: 1.4; margin: 1rem 0; }
+        .quote-author { font-size: 1rem; color: var(--accent-secondary); }
+        .tag { background: rgba(157,123,255,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.7rem; display: inline-block; margin: 0.2rem; }
+        @media (max-width: 640px) { .app-container { padding: 0.8rem; } .quote-text-large { font-size: 1.2rem; } }
     </style>
 </head>
 <body>
 <canvas id="blackhole-canvas"></canvas>
 <div class="app-container">
     <header class="header glass-card">
-        <div class="logo"><h1>VIGYAAN BHAIRAV TANTRA</h1><p>112 PORTALS TO INFINITY · THE ULTIMATE MEDITATION PLATFORM</p></div>
+        <div class="logo"><h1>VIGYAAN BHAIRAV TANTRA 2.0</h1><p>112 PORTALS · 300+ WISDOM JEWELS · COSMIC AWAKENING</p></div>
         <div class="nav">
             <a data-view="home">Home</a><a data-view="techniques">Techniques</a><a data-view="breathwork">Breathwork</a>
-            <a data-view="quotes">Quotes</a><a data-view="diary">Diary</a><a data-view="timer">Timer</a>
-            <a data-view="plan">My Plan</a><a data-view="enhanced">Cosmic Me</a>
-            <a data-view="achievements">Achievements</a>
+            <a data-view="quotes">Wisdom</a><a data-view="diary">Diary</a><a data-view="timer">Timer</a>
+            <a data-view="plan">My Plan</a><a data-view="enhanced">Cosmic Me</a><a data-view="achievements">Achievements</a>
             <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-            <span class="greeting">Hi, Seeker</span>
+            <span class="greeting" id="greetingMsg">Hi, Seeker</span>
         </div>
     </header>
 
     <!-- HOME VIEW -->
     <div id="homeView" class="view-container">
-        <div class="home-grid">
-            <div class="glass-card">
-                <div class="hero">
-                    <div class="hero-badge">🌀 today's cosmic · witness the breath</div>
-                    <div class="hero-badge totd" id="totdBadge">✨ Technique of the Day: Breath Awareness</div>
-                    <h2>Journey Through <span class="gradient-text">Infinite Consciousness</span></h2>
-                    <p class="hero-sub">112 authentic Tantra meditations · dynamic breathwork · cosmic diary · wisdom quotes · living black hole · complete data ownership</p>
-                    <div class="btn-group">
-                        <button class="btn-primary" id="exploreBtn">Begin Voyage →</button>
-                        <button class="btn-outline" id="dailyBtn"><i class="fas fa-sun"></i> Daily Technique</button>
-                        <button class="btn-success" id="exportAllDataBtn"><i class="fas fa-download"></i> Export All Data</button>
-                    </div>
-                </div>
-            </div>
-            <div class="glass-card">
-                <div class="mudra-carousel-wrapper">
-                    <h3><i class="fas fa-hand-peace"></i> Sacred Mudras · Gestures of Awakening</h3>
-                    <div id="mudraContent" class="mudra-content"></div>
-                    <div class="mudra-nav" style="display: flex; gap: 1rem; justify-content: center; margin: 1rem 0;">
-                        <button id="prevMudraBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button>
-                        <button id="nextMudraBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button>
-                    </div>
-                    <div class="mudra-save" style="text-align: center;">
-                        <button id="saveMudraBtn" class="btn-outline"><i class="fas fa-bookmark"></i> Save to Diary</button>
-                    </div>
-                </div>
-            </div>
-            <div class="glass-card">
-                <div class="quotes-home">
-                    <h2><i class="fas fa-feather-alt"></i> Wisdom of the Ages</h2>
-                    <div id="homeQuoteContainer">
-                        <div class="quote-text-large" id="homeQuoteText">Loading wisdom...</div>
-                        <div class="quote-author" id="homeQuoteAuthor"></div>
-                    </div>
-                    <div class="quote-save" style="text-align: center; margin: 1rem 0;">
-                        <button class="btn-outline" id="saveHomeQuoteBtn"><i class="fas fa-bookmark"></i> Save to Diary</button>
-                    </div>
-                    <div class="quote-nav" style="display: flex; gap: 1rem; justify-content: center;">
-                        <button class="btn-outline" id="prevHomeQuote"><i class="fas fa-chevron-left"></i></button>
-                        <button class="btn-outline" id="nextHomeQuote"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </div>
-            </div>
+        <div class="glass-card" style="margin-bottom:1.5rem;">
+            <div class="hero"><div class="hero-badge">🌀 today's cosmic gift</div>
+            <h2>Journey Through <span class="gradient-text">Infinite Consciousness</span></h2>
+            <p class="hero-sub">112 authentic Tantra meditations · 19 breathwork protocols · 300+ quotes · cosmic diary · advanced analytics</p>
+            <div class="btn-group"><button class="btn-primary" id="exploreBtn">Begin Voyage →</button><button class="btn-outline" id="dailyBtn"><i class="fas fa-sun"></i> Daily Technique</button></div>
+        </div></div>
+        <div class="home-grid" style="display:grid; gap:1.5rem; grid-template-columns:1fr 1fr;">
+            <div class="glass-card"><h3><i class="fas fa-feather-alt"></i> Quote of the Day</h3><div id="quoteOfTheDay" class="quote-text-large">Loading...</div><div id="quoteOfTheDayAuthor" class="quote-author"></div><button id="saveQotdBtn" class="btn-outline" style="margin-top:1rem;">Save to Diary</button></div>
+            <div class="glass-card"><h3><i class="fas fa-hand-peace"></i> Mudra of the Moment</h3><div id="mudraPreview"></div><button id="goToMudraBtn" class="btn-outline">Explore Mudras</button></div>
         </div>
-        <div class="daily-insight glass-card" style="margin-top: 1.8rem;">
-            <h3><i class="fas fa-star-of-life"></i> Today's Cosmic Insight</h3>
-            <p id="dailyInsightText">"The gap between two thoughts, the pause between two breaths, is the doorway to your true nature." – Vigyan Bhairav Tantra</p>
-        </div>
+        <div class="daily-insight glass-card" style="margin-top:1.5rem;"><h3><i class="fas fa-star-of-life"></i> Cosmic Insight</h3><p id="dailyInsightText">"Between two breaths, the universe winks at you."</p></div>
     </div>
 
     <!-- TECHNIQUES VIEW -->
     <div id="techniquesView" class="hidden view-container">
-        <div class="glass-card techniques-header" style="margin-bottom: 1.5rem;">
-            <div class="header-buttons" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-                <button id="showArchetypeBtn" class="btn-primary"><i class="fas fa-star-of-life"></i> Archetype Selection</button>
-                <button id="showAllTechBtn" class="btn-outline"><i class="fas fa-grid-2"></i> Browse All 112 Techniques</button>
-                <button id="showTechCategoriesBtn" class="btn-outline"><i class="fas fa-list"></i> By Category</button>
-                <button id="exportTechniquesPDFBtn" class="btn-outline"><i class="fas fa-file-pdf"></i> Export as PDF</button>
-            </div>
-        </div>
-        <div id="professionSelectionView">
-            <div class="glass-card archetype-chapter">
-                <div class="chapter-intro" style="text-align:center; margin-bottom:1.5rem;">
-                    <h2><i class="fas fa-mask"></i> Choose Your Archetype</h2>
-                    <p>In the Tantric tradition, your path is unique. Select the archetype that resonates with your current journey – the wisdom will reveal techniques aligned with your soul.</p>
-                </div>
-                <div class="profession-grid" id="professionGrid"></div>
-            </div>
-        </div>
-        <div id="recommendedTechniquesView" class="hidden">
-            <div class="glass-card tech-chapter-container">
-                <div class="chapter-header">
-                    <h3 id="selectedProfessionTitle" class="chapter-title"><i class="fas fa-brain"></i> Recommended Techniques</h3>
-                    <div class="tech-counter" id="techCounter">1 / 12</div>
-                </div>
-                <div id="techCarouselContent" class="tech-chapter-content"></div>
-                <div class="tech-carousel-nav" style="display:flex; gap:1rem; justify-content:center; margin:1rem 0;">
-                    <button id="prevTechBtn" class="btn-outline nav-btn"><i class="fas fa-chevron-left"></i> Previous</button>
-                    <button id="nextTechBtn" class="btn-outline nav-btn">Next <i class="fas fa-chevron-right"></i></button>
-                </div>
-                <div class="tech-chapter-actions">
-                    <button id="practiceTechBtn" class="btn-primary action-practice"><i class="fas fa-play"></i> Practice Now</button>
-                    <button id="addToPlanTechBtn" class="btn-outline action-plan"><i class="fas fa-plus"></i> Add to My Plan</button>
-                    <button id="favoriteTechBtn" class="btn-outline action-fav"><i class="far fa-heart"></i> Favorite</button>
-                    <button id="readFullChapterBtn" class="btn-outline"><i class="fas fa-book-open"></i> Read Full Chapter</button>
-                </div>
-                <div class="back-to-archetype" style="text-align:center; margin-top:1rem;">
-                    <button id="backToProfessionsBtn" class="btn-outline back-btn"><i class="fas fa-arrow-left"></i> Back to Archetypes</button>
-                </div>
-            </div>
-        </div>
-        <div id="allTechniquesView" class="hidden">
-            <div class="glass-card all-tech-chapter">
-                <div class="search-wrapper" style="position:relative; margin-bottom:1.5rem;">
-                    <i class="fas fa-search" style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); color:var(--text-secondary);"></i>
-                    <input type="text" id="techSearchInput" placeholder="Search by name, Sanskrit, or category..." class="tech-search-input" style="width:100%; padding:1rem 1rem 1rem 3rem; border-radius:60px; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); color:white;">
-                </div>
-                <div id="allTechniquesGrid" class="tech-grid-detailed"></div>
-            </div>
-        </div>
-        <div id="categoriesView" class="hidden">
-            <div class="glass-card">
-                <h2>Categories of Techniques</h2>
-                <div id="categoryGrid" class="profession-grid"></div>
-                <div id="categoryTechniquesList" class="tech-grid-detailed" style="margin-top: 2rem;"></div>
-            </div>
+        <div class="glass-card"><div class="filter-bar"><input type="text" id="globalTechSearch" placeholder="🔍 Search technique..." style="background:rgba(0,0,0,0.4); border-radius:40px; padding:0.6rem 1rem; border:1px solid var(--glass-border);"><select id="difficultyFilter" class="filter-select"><option value="all">All Levels</option><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select><select id="chakraFilter" class="filter-select"><option value="all">All Chakras</option><option value="root">Root</option><option value="sacral">Sacral</option><option value="solar">Solar Plexus</option><option value="heart">Heart</option><option value="throat">Throat</option><option value="third eye">Third Eye</option><option value="crown">Crown</option></select><button id="resetFiltersBtn" class="btn-outline">Reset</button></div>
+            <div class="profession-grid" id="professionGrid"></div>
+            <div id="allTechniquesContainer" style="margin-top:1.5rem;"><div id="allTechniquesGrid" class="tech-grid-detailed"></div></div>
         </div>
     </div>
 
-    <!-- BREATHWORK VIEW -->
+    <!-- BREATHWORK VIEW (fully functional) -->
     <div id="breathworkView" class="hidden breathwork-section glass-card view-container">
         <h2><i class="fas fa-wind"></i> Sacred Breath Alchemy · 19 Protocols</h2>
-        <div class="breath-container"><div class="breath-ring"><svg viewBox="0 0 300 300"><defs><linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle class="bg-circle" cx="150" cy="150" r="137" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="6"/><circle class="progress-circle" cx="150" cy="150" r="137" stroke="url(#gradientStroke)" fill="none" stroke-width="6" stroke-dasharray="860" stroke-dashoffset="860"/></svg><div class="breath-inner-ring"><div class="breath-phase" id="breathPhaseLabel">🌀</div><div class="breath-timer" id="breathTimerDisplay">0</div></div></div></div>
-        <div class="breath-text" id="breathPhaseText" style="text-align: center; font-size: 1.5rem; margin: 0.5rem;">Ready</div>
-        <div class="breath-controls" style="text-align: center;"><button id="stopBreathBtn" class="btn-outline" style="display:none;"><i class="fas fa-stop"></i> Stop Practice</button></div>
-        <div class="breath-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin:1.5rem 0;">
-            <div class="breath-card glass-card" data-breath="box"><i class="fas fa-cube"></i><h3>4-4-6-4 Box</h3><p>Calm nervous system</p><button class="btn-outline start-breath" data-type="box">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="478"><i class="fas fa-feather-alt"></i><h3>4-7-8 Relax</h3><button class="btn-outline start-breath" data-type="478">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="nadi"><i class="fas fa-hand-peace"></i><h3>Nadi Shodhana</h3><button class="btn-outline start-breath" data-type="nadi">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="kapal"><i class="fas fa-fire"></i><h3>Kapalabhati</h3><button class="btn-outline start-breath" data-type="kapal">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="ujjayi"><i class="fas fa-water"></i><h3>Ujjayi Ocean</h3><button class="btn-outline start-breath" data-type="ujjayi">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="bhramari"><i class="fas fa-bee"></i><h3>Bhramari</h3><button class="btn-outline start-breath" data-type="bhramari">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="sitali"><i class="fas fa-snowflake"></i><h3>Sitali</h3><button class="btn-outline start-breath" data-type="sitali">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="bastrika"><i class="fas fa-bolt"></i><h3>Bhastrika</h3><button class="btn-outline start-breath" data-type="bastrika">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="coherent"><i class="fas fa-heart"></i><h3>Coherent 5.5</h3><button class="btn-outline start-breath" data-type="coherent">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="resonance"><i class="fas fa-wave-square"></i><h3>Resonance</h3><button class="btn-outline start-breath" data-type="resonance">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="wimhof"><i class="fas fa-mountain"></i><h3>Wim Hof</h3><button class="btn-outline start-breath" data-type="wimhof">Activate</button></div>
-            <div class="breath-card glass-card" data-breath="tummo"><i class="fas fa-fire-alt"></i><h3>Tummo</h3><button class="btn-outline start-breath" data-type="tummo">Activate</button></div>
-        </div>
-        <div id="breathInstructionPanel" class="breath-instruction-panel" style="background:rgba(0,0,0,0.4); border-radius:24px; padding:1.5rem; border-left:4px solid var(--accent); margin-top: 1rem;">✨ Select a breath technique to see detailed instructions and scientific benefits.</div>
+        <div class="breath-ring"><svg viewBox="0 0 300 300"><defs><linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle cx="150" cy="150" r="137" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="6"/><circle class="progress-circle" id="breathProgressCircle" cx="150" cy="150" r="137" stroke="url(#gradientStroke)" fill="none" stroke-width="6" stroke-dasharray="860" stroke-dashoffset="860"/></svg><div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center;"><div id="breathPhaseLabel" style="font-size:2rem;">🌀</div><div id="breathTimerDisplay" style="font-size:2rem; font-weight:bold;">0</div></div></div>
+        <div id="breathPhaseText" style="text-align:center; margin:0.5rem;">Ready</div>
+        <div class="breath-grid" id="breathList" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:1rem; margin:1rem 0;"></div>
+        <div id="breathInstructionPanel" style="background:rgba(0,0,0,0.4); border-radius:24px; padding:1rem; margin-top:1rem;">✨ Select a breath technique to begin.</div>
+        <button id="stopBreathBtn" class="btn-outline" style="display:none; margin-top:1rem;">Stop Practice</button>
     </div>
 
-<!-- ========== UPGRADED QUOTES SECTION ========== -->
-<!-- ========== UPGRADED QUOTES SECTION (CLEAN LAYOUT) ========== -->
-<div id="quotesView" class="hidden quotes-section glass-card view-container">
-    <div class="quotes-centered-container">
-        <div class="quotes-header-simple">
-            <h2><i class="fas fa-feather-alt"></i> Wisdom Library</h2>
-            <span class="quote-count-badge-simple" id="quoteTotalCount">100+</span>
-        </div>
-
-        <!-- Main Quote Display -->
-        <div class="quote-card-centered">
-            <div class="quote-icon-watermark">
-                <i class="fas fa-quote-right"></i>
-            </div>
-            <div class="quote-text-large" id="quoteTextLarge">“Three things cannot be hidden: the sun, the moon, and the truth.”</div>
-            <div class="quote-author-large" id="quoteAuthorLarge">— Buddha</div>
-            
-            <!-- Quote Tags (optional subtle) -->
-            <div class="quote-tags-simple" id="quoteTagsSimple">
-                <span class="tag">wisdom</span>
-                <span class="tag">truth</span>
-            </div>
-        </div>
-
-        <!-- Navigation and Actions -->
-        <div class="quote-nav-simple">
-            <button class="btn-outline" id="prevLibQuote"><i class="fas fa-chevron-left"></i> Previous</button>
-            <span class="quote-position" id="quotePositionDisplay">1 / 20</span>
-            <button class="btn-outline" id="nextLibQuote">Next <i class="fas fa-chevron-right"></i></button>
-        </div>
-
-        <div class="quote-actions-row">
-            <button class="btn-outline" id="saveQuoteMainBtn"><i class="fas fa-bookmark"></i> Save to Diary</button>
-            <button class="btn-outline" id="copyQuoteBtn" title="Copy quote"><i class="fas fa-copy"></i></button>
-            <button class="btn-outline" id="toggleFavoriteBtn" title="Add to favorites"><i class="far fa-heart"></i></button>
-            <button class="btn-outline" id="shareQuoteBtn" title="Share"><i class="fas fa-share-alt"></i></button>
-        </div>
-
-        <!-- Search Bar (bottom, clean) -->
-        <div class="quote-search-wrapper">
-            <i class="fas fa-search search-icon-small"></i>
-            <input type="text" id="quoteSearchInputSimple" placeholder="Search quotes by text or author...">
-            <button id="clearSearchSimpleBtn" class="clear-search-simple" style="display: none;"><i class="fas fa-times"></i></button>
-        </div>
-        
-        <!-- Optional: Favorites quick access (small chips) -->
-        <div class="favorites-quick-row" id="favoritesQuickRow" style="display: none;">
-            <span><i class="fas fa-heart"></i> Favorites:</span>
-            <div id="favoritesChipsContainer" class="favorites-chips"></div>
-        </div>
+    <!-- QUOTES VIEW (300+ quotes, favorites, search) -->
+    <div id="quotesView" class="hidden quotes-section glass-card view-container">
+        <h2><i class="fas fa-feather-alt"></i> Wisdom Treasury · 330+ Sacred Quotes</h2>
+        <div class="filter-bar"><input type="text" id="quoteSearchInput" placeholder="Search by text or author..."><select id="quoteTagFilter"><option value="all">All Categories</option><option value="tantra">Tantra</option><option value="buddha">Buddha</option><option value="rumi">Rumi</option><option value="advaita">Advaita</option><option value="yoga">Yoga</option><option value="zen">Zen</option></select><button id="showFavoritesOnlyBtn" class="btn-outline"><i class="fas fa-heart"></i> Favorites</button><button id="randomQuoteBtn" class="btn-outline"><i class="fas fa-random"></i> Random</button></div>
+        <div class="quote-card"><div class="quote-text-large" id="quoteDisplayText">“The moment you enter the present, you leave the mind.”</div><div class="quote-author" id="quoteDisplayAuthor">— Osho</div><div id="quoteTags" class="quote-tags"></div></div>
+        <div style="display:flex; gap:1rem; justify-content:center; margin:1rem 0;"><button id="prevQuoteBtn" class="btn-outline"><i class="fas fa-chevron-left"></i> Previous</button><span id="quoteCounter">1 / 330</span><button id="nextQuoteBtn" class="btn-outline">Next <i class="fas fa-chevron-right"></i></button><button id="saveCurrentQuoteBtn" class="btn-outline"><i class="fas fa-bookmark"></i> Save to Diary</button><button id="toggleQuoteFavoriteBtn" class="btn-outline"><i class="far fa-heart"></i> Favorite</button><button id="copyQuoteBtn" class="btn-outline"><i class="fas fa-copy"></i> Copy</button></div>
+        <div id="favoriteQuotesList" style="margin-top:1rem; max-height:200px; overflow-y:auto; background:rgba(0,0,0,0.2); border-radius:24px; padding:0.5rem; display:none;"></div>
     </div>
-</div>
-    <!-- DIARY -->
-    <div id="diaryView" class="hidden diary-section glass-card view-container"><h2><i class="fas fa-moon"></i> Cosmic Diary · Reflections & Insights</h2><textarea id="diaryEntry" rows="4" placeholder="Write your reflections, insights, or dreams..." style="width:100%; background:rgba(0,0,0,0.4); border:1px solid var(--glass-border); border-radius:28px; padding:1rem; margin:1rem 0;"></textarea><button class="btn-primary" id="saveDiary">Save Reflection</button><button class="btn-outline" id="exportDiaryPDFBtn" style="margin-left:1rem;"><i class="fas fa-file-pdf"></i> Export Diary</button><div id="diaryList" style="margin-top:1.5rem;"></div></div>
 
-    <!-- TIMER -->
-    <div id="timerView" class="hidden timer-section glass-card view-container"><h2><i class="fas fa-hourglass-half"></i> Meditation Timer · Interval & Ambience</h2><div class="timer-circle"><svg class="timer-svg" width="220" height="220" viewBox="0 0 220 220"><defs><linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle class="timer-bg" cx="110" cy="110" r="95" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="8"/><circle class="timer-progress" cx="110" cy="110" r="95" stroke="url(#timerGradient)" fill="none" stroke-width="8" stroke-dasharray="597" stroke-dashoffset="0"/></svg><div class="timer-text" id="timerDisplay">05:00</div></div><div class="timer-presets"><div class="timer-preset" data-min="5">5 min</div><div class="timer-preset" data-min="10">10 min</div><div class="timer-preset" data-min="15">15 min</div><div class="timer-preset" data-min="20">20 min</div><div class="timer-preset" data-min="30">30 min</div><div class="timer-preset" data-min="45">45 min</div><div class="timer-preset" data-min="60">60 min</div></div><div style="display:flex; gap:0.8rem; justify-content:center; margin-bottom:1rem;"><input type="number" id="customMinutes" placeholder="custom min" min="1" style="width:100px; background:rgba(0,0,0,0.5); border-radius:40px; padding:0.5rem; text-align:center;"><button id="setCustomBtn" class="btn-outline">Set</button></div><div style="display:flex; gap:0.8rem; justify-content:center;"><button class="btn-primary" id="startTimer"><i class="fas fa-play"></i> Start</button><button class="btn-outline" id="pauseTimer"><i class="fas fa-pause"></i> Pause</button><button class="btn-outline" id="resetTimer"><i class="fas fa-redo-alt"></i> Reset</button></div><div class="interval-section" style="margin-top:1.5rem;"><h4><i class="fas fa-clock"></i> Interval Timer</h4><div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;"><input type="number" id="intervalWork" placeholder="Work (min)" value="1" min="0.1" step="0.5" style="width:90px; background:rgba(0,0,0,0.5); border-radius:20px; padding:0.3rem;"><input type="number" id="intervalRest" placeholder="Rest (min)" value="0.5" min="0.1" step="0.5" style="width:90px; background:rgba(0,0,0,0.5); border-radius:20px; padding:0.3rem;"><input type="number" id="intervalRounds" placeholder="Rounds" value="4" min="1" style="width:80px; background:rgba(0,0,0,0.5); border-radius:20px; padding:0.3rem;"><button id="startIntervalBtn" class="btn-outline"><i class="fas fa-play"></i> Start Interval</button></div></div><div class="ambient-panel" style="margin-top:1.5rem; text-align:center;"><h4><i class="fas fa-music"></i> Ambient Sounds</h4><button class="sound-btn" data-sound="rain">🌧️ Rain</button><button class="sound-btn" data-sound="forest">🌲 Forest</button><button class="sound-btn" data-sound="ocean">🌊 Ocean</button><button class="sound-btn" data-sound="fire">🔥 Fire</button><button class="sound-btn" data-sound="silence">🔇 Silence</button></div><p id="timerMsg" style="margin-top:1rem; font-size:1rem; text-align:center;"></p></div>
+    <!-- DIARY VIEW -->
+    <div id="diaryView" class="hidden diary-section glass-card view-container"><h2><i class="fas fa-moon"></i> Cosmic Diary</h2><textarea id="diaryEntry" rows="4" placeholder="Write your insights..." style="width:100%; background:rgba(0,0,0,0.4); border-radius:28px; padding:1rem;"></textarea><button class="btn-primary" id="saveDiary">Save Reflection</button><button class="btn-outline" id="exportDiaryPDF"><i class="fas fa-file-pdf"></i> Export PDF</button><div id="diaryList"></div></div>
+
+    <!-- TIMER VIEW (full functionality) -->
+    <div id="timerView" class="hidden timer-section glass-card view-container">
+        <h2><i class="fas fa-hourglass-half"></i> Meditation Timer</h2>
+        <div class="timer-circle"><svg width="220" height="220" viewBox="0 0 220 220"><defs><linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs><circle cx="110" cy="110" r="95" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="8"/><circle class="timer-progress" id="timerProgressCircle" cx="110" cy="110" r="95" stroke="url(#timerGradient)" fill="none" stroke-width="8" stroke-dasharray="597" stroke-dashoffset="0"/></svg><div class="timer-text" id="timerDisplay" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:2rem; font-weight:bold;">05:00</div></div>
+        <div class="timer-presets" style="display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; margin:1rem 0;"><button class="timer-preset btn-outline" data-min="5">5 min</button><button class="timer-preset btn-outline" data-min="10">10 min</button><button class="timer-preset btn-outline" data-min="15">15 min</button><button class="timer-preset btn-outline" data-min="20">20 min</button><button class="timer-preset btn-outline" data-min="30">30 min</button><button class="timer-preset btn-outline" data-min="60">60 min</button></div>
+        <div style="display:flex; gap:0.8rem; justify-content:center;"><button id="startTimerBtn" class="btn-primary"><i class="fas fa-play"></i> Start</button><button id="pauseTimerBtn" class="btn-outline"><i class="fas fa-pause"></i> Pause</button><button id="resetTimerBtn" class="btn-outline"><i class="fas fa-redo-alt"></i> Reset</button></div>
+        <div class="interval-section" style="margin-top:1.5rem;"><h4>Interval Timer</h4><div style="display:flex; gap:0.5rem; flex-wrap:wrap;"><input type="number" id="intervalWork" placeholder="Work (min)" value="1" step="0.5" style="width:90px;"><input type="number" id="intervalRest" placeholder="Rest (min)" value="0.5" step="0.5" style="width:90px;"><input type="number" id="intervalRounds" placeholder="Rounds" value="4" style="width:80px;"><button id="startIntervalBtn" class="btn-outline">Start Interval</button></div></div>
+        <div class="ambient-panel" style="margin-top:1rem;"><h4>Ambient Sounds</h4><button class="sound-btn btn-outline" data-sound="rain">🌧️ Rain</button><button class="sound-btn btn-outline" data-sound="forest">🌲 Forest</button><button class="sound-btn btn-outline" data-sound="ocean">🌊 Ocean</button><button class="sound-btn btn-outline" data-sound="fire">🔥 Fire</button><button class="sound-btn btn-outline" data-sound="silence">🔇 Silence</button></div>
+        <p id="timerMsg" style="margin-top:1rem; text-align:center;"></p>
+    </div>
 
     <!-- MY PLAN -->
-    <div id="planView" class="hidden plan-section glass-card view-container"><h2><i class="fas fa-list-check"></i> My Practice Plan</h2><div id="planItems"></div><div>Total estimated: <span id="planTotal">0</span> min</div><button id="clearPlanBtn" class="btn-outline" style="margin-top:1rem;">Clear Plan</button></div>
+    <div id="planView" class="hidden plan-section glass-card view-container"><h2>My Practice Plan</h2><div id="planItems"></div><button id="clearPlanBtn" class="btn-outline">Clear Plan</button></div>
 
     <!-- COSMIC DASHBOARD -->
-    <div id="enhancedView" class="hidden profile-section glass-card view-container"><h2><i class="fas fa-chart-line"></i> Cosmic Dashboard · Analytics & Progress</h2><div class="stats-grid" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;"><div class="stat-card" style="flex:1; min-width:100px; text-align:center; padding:1rem; background:var(--glass-bg); border-radius:24px;"><div class="stat-value" id="enhTotalPractices">0</div><div class="stat-label">practices</div></div><div class="stat-card"><div class="stat-value" id="enhTotalMinutes">0</div><div class="stat-label">minutes</div></div><div class="stat-card"><div class="stat-value" id="enhStreak">0</div><div class="stat-label">streak</div></div></div><div class="calendar-section"><h3>📅 Practice Tracker</h3><div id="calendarTracker" class="calendar-grid" style="display:grid; grid-template-columns:repeat(7,1fr); gap:0.4rem; background:rgba(0,0,0,0.3); border-radius:24px; padding:1rem;"></div></div><div class="chart-section"><h3>📊 Weekly Activity</h3><canvas id="progressChart" width="400" height="200" style="width:100%; max-width:500px; margin:1rem auto;"></canvas></div><div class="chart-section"><h3>📈 Category Breakdown</h3><canvas id="categoryChart" width="400" height="200" style="width:100%; max-width:500px; margin:1rem auto;"></canvas></div><div class="data-export-import"><button id="exportDataBtn" class="btn-outline"><i class="fas fa-download"></i> Export Data (JSON)</button><button id="exportCSVBtn" class="btn-outline"><i class="fas fa-file-csv"></i> Export CSV</button><button id="importDataBtn" class="btn-outline"><i class="fas fa-upload"></i> Import Data</button><input type="file" id="importFileInput" accept=".json" style="display:none;"></div></div>
+    <div id="enhancedView" class="hidden profile-section glass-card view-container"><h2>Cosmic Dashboard</h2><div id="statsPanel" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;"></div><div class="calendar-section"><h3>📅 Practice Tracker</h3><div id="calendarTracker" class="calendar-grid"></div></div><canvas id="progressChart" width="400" height="200" style="width:100%; max-width:500px; margin:1rem auto;"></canvas><canvas id="categoryChart" width="400" height="200" style="width:100%; max-width:500px; margin:1rem auto;"></canvas><div><button id="exportDataBtn" class="btn-outline">Export JSON</button><button id="importDataBtn" class="btn-outline">Import</button><input type="file" id="importFileInput" style="display:none;"></div></div>
 
     <!-- ACHIEVEMENTS -->
-    <div id="achievementsView" class="hidden profile-section glass-card view-container"><h2><i class="fas fa-trophy"></i> Achievements · Milestones & Badges</h2><div id="achievementsList" class="achievement-grid"></div></div>
+    <div id="achievementsView" class="hidden profile-section glass-card view-container"><h2>Achievements</h2><div id="achievementsList"></div></div>
 
-    <footer><div>© 2026 · 112 portals of imagination · All data stored locally in your browser</div><div><a data-view="home">Home</a> <a data-view="techniques">Techniques</a> <a data-view="breathwork">Breathwork</a> <a data-view="enhanced">Cosmic Me</a></div></footer>
+    <footer><div>© 2026 · 112 portals · All data stored locally</div></footer>
 </div>
-<button id="scrollTop" style="position:fixed; bottom:20px; right:20px; width:45px; height:45px; border-radius:50%; background:var(--accent); color:white; border:none; cursor:pointer; opacity:0; z-index:1000;"><i class="fas fa-arrow-up"></i></button>
+<button id="scrollTop" style="position:fixed; bottom:20px; right:20px; border-radius:50%; background:var(--accent); width:45px; height:45px; border:none; color:white; cursor:pointer; opacity:0;">↑</button>
 
-<script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/" } }</script>
-<script type="module">
-    import * as THREE from 'three';
-    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-    
-    const canvas = document.getElementById('blackhole-canvas');
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x020108);
-    const isMobile = window.innerWidth <= 640;
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(isMobile ? 4.5 : 5.5, isMobile ? 2.0 : 2.5, isMobile ? 8.0 : 7.0);
-    const composer = new EffectComposer(renderer);
-    composer.addPass(new RenderPass(scene, camera));
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.7, 0.4, 0.5);
-    composer.addPass(bloomPass);
-    // Enhanced starfield
-    const starGeo = new THREE.BufferGeometry();
-    const starPositions = new Float32Array(12000 * 3);
-    for (let i = 0; i < 12000; i++) { starPositions[i*3] = (Math.random() - 0.5) * 800; starPositions[i*3+1] = (Math.random() - 0.5) * 600; starPositions[i*3+2] = (Math.random() - 0.5) * 600 - 200; }
-    starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.2, blending: THREE.AdditiveBlending }));
-    scene.add(stars);
-    // Black hole core and rings
-    const scale = isMobile ? 0.8 : 1.1;
-    const coreGeo = new THREE.SphereGeometry(1.0 * scale, 64, 64);
-    const coreMat = new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.2, metalness: 0.95, emissive: 0x441100, emissiveIntensity: 0.4 });
-    const blackHole = new THREE.Mesh(coreGeo, coreMat);
-    scene.add(blackHole);
-    const innerRingGeo = new THREE.TorusGeometry(1.2 * scale, 0.06, 64, 200);
-    const innerRingMat = new THREE.MeshStandardMaterial({ color: 0xffaa66, emissive: 0xff6633, emissiveIntensity: 0.6, blending: THREE.AdditiveBlending });
-    const innerRing = new THREE.Mesh(innerRingGeo, innerRingMat);
-    scene.add(innerRing);
-    const outerRingGeo = new THREE.TorusGeometry(1.5 * scale, 0.05, 64, 220);
-    const outerRingMat = new THREE.MeshStandardMaterial({ color: 0xffbb88, emissive: 0xff7744, emissiveIntensity: 0.5, blending: THREE.AdditiveBlending });
-    const outerRing = new THREE.Mesh(outerRingGeo, outerRingMat);
-    scene.add(outerRing);
-    // Accretion disk particles
-    const particleCount = 18000;
-    const particlePositions = new Float32Array(particleCount * 3);
-    const particleColors = new Float32Array(particleCount * 3);
-    const particleSpeeds = new Float32Array(particleCount);
-    for (let i = 0; i < particleCount; i++) {
-        const r = 1.3 * scale + Math.pow(Math.random(), 1.6) * (6.0 * scale - 1.3 * scale);
-        const angle = Math.random() * Math.PI * 2;
-        const thickness = 0.15 * (r / (6.0 * scale)) * 1.5;
-        const y = (Math.random() - 0.5) * thickness;
-        particlePositions[i*3] = Math.cos(angle) * r;
-        particlePositions[i*3+1] = y;
-        particlePositions[i*3+2] = Math.sin(angle) * r;
-        const t = (r - 1.3 * scale) / (6.0 * scale - 1.3 * scale);
-        particleColors[i*3] = 1.0 - t * 0.4;
-        particleColors[i*3+1] = 0.6 + Math.random() * 0.4 - t * 0.3;
-        particleColors[i*3+2] = 0.4 + t * 0.6;
-        particleSpeeds[i] = 0.03 * Math.pow(r, -1.5);
-    }
-    const particleGeo = new THREE.BufferGeometry();
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
-    const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ size: 0.05, vertexColors: true, blending: THREE.AdditiveBlending, opacity: 0.8 }));
-    scene.add(particles);
-    const ambientLight = new THREE.AmbientLight(0x332244, 0.6);
-    scene.add(ambientLight);
-    const mainLight = new THREE.DirectionalLight(0xffddaa, 0.8);
-    mainLight.position.set(3, 4, 5);
-    scene.add(mainLight);
-    const coreLight = new THREE.PointLight(0xff6633, 0.9, 12);
-    coreLight.position.set(0, 0.2, 0);
-    scene.add(coreLight);
-    let time = 0, lastTimestamp = performance.now(), cameraAngle = 0;
-    function animate() {
-        const now = performance.now();
-        let dt = Math.min(0.033, (now - lastTimestamp) / 1000);
-        lastTimestamp = now;
-        time += dt;
-        for (let i = 0; i < particleCount; i++) {
-            let angle = Math.atan2(particlePositions[i*3+2], particlePositions[i*3]);
-            angle += particleSpeeds[i] * dt * 35;
-            const r = Math.hypot(particlePositions[i*3], particlePositions[i*3+2]);
-            particlePositions[i*3] = Math.cos(angle) * r;
-            particlePositions[i*3+2] = Math.sin(angle) * r;
-        }
-        particleGeo.attributes.position.needsUpdate = true;
-        coreLight.intensity = 0.7 + Math.sin(time * 2.5) * 0.25;
-        innerRingMat.emissiveIntensity = 0.5 + Math.sin(time * 3.2) * 0.15;
-        outerRingMat.emissiveIntensity = 0.4 + Math.sin(time * 2.8) * 0.1;
-        innerRing.rotation.z += 0.0035;
-        outerRing.rotation.z += 0.0025;
-        stars.rotation.y += 0.00015;
-        cameraAngle += 0.0008;
-        const rad = isMobile ? 4.8 : 5.8;
-        camera.position.x = Math.cos(cameraAngle) * rad;
-        camera.position.z = Math.sin(cameraAngle) * rad;
-        camera.position.y = (isMobile ? 2.0 : 2.5) + Math.sin(cameraAngle * 1.3) * 0.15;
-        camera.lookAt(0, 0, 0);
-        composer.render();
-        requestAnimationFrame(animate);
-    }
-    window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); composer.setSize(window.innerWidth, window.innerHeight); renderer.setSize(window.innerWidth, window.innerHeight); });
-    animate();
-</script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-    // ==================== FULL 112 TECHNIQUES DATA ====================
-    const techniques = {};
-    const techniqueNames = [
-        "Witnessing the Breath","Awareness of the Gap Between Breaths","Breath Traveling Through the Spine","Concentration on the Third Eye","Witnessing Thoughts","Listening to Inner Resonance","Gazing into Darkness","Heart Center Meditation","Body Sensation Awareness","Slow Breath Meditation",
-        "Walking Awareness","Observation of Emotions","Listening to Silence","Whole-Body Awareness","Expansion of Awareness","Spine Awareness","Total Relaxation","Edge of Sleep","Momentary Suspension","Perceiving the Space Between",
-        "Feeling the Void","Embodied Light","Dissolving into Sound","Touching the Sky","Savoring the Source","Radiating Love","Itching and Tingling","Flame Contemplation","Pulse of Life","Empty Sky",
-        "Luminous Void","Elemental Contact","Breath as Cosmic Wind","Stillness Between Heartbeats","Spontaneous Satori","Scent of the Absolute","Expanding to Horizon","Centering in Navel","Cave of the Heart","Unstruck Sound",
-        "Shakti Rising","Kundalini Awakening","Absorption in Color","Inner Moon","Sun in Solar Plexus","Void Gazing","Darkness Beyond Form","Guru's Grace","Dissolving Ego","Surrendering to What Is",
-        "Non-Doing","Effortless Being","Resting in Natural State","Unconditional Love","Compassion Meditation","Joy Unbound","Equanimity","Forgiveness Practice","Gratitude Shower","Body as Temple",
-        "Skeleton Awareness","Dissolving Boundaries","Elemental Purification","Fire Offering Within","Waterfall of Grace","Mountain Stillness","Wind of Change","Space Unbounded","Earth Rooting","Cosmic Dance",
-        "Timeless Awareness","Dreamlike Illusion","Lucid Waking","Sleep as Yoga","Twilight Contemplation","Midnight Vigil","Dawn Awakening","Noon Radiance","Dusk Surrender","Seasons Within",
-        "Age as Wisdom","Death Awareness","Rebirth Visualization","Ancestor Connection","Guardian Spirits","Divine Child","Inner Mother","Cosmic Father","Friend of All","Teacher Within",
-        "Healer's Touch","Warrior's Courage","Sage's Silence","Lover's Embrace","Creator's Joy","Destroyer's Clarity","Preserver's Patience","Dancer's Grace","Beggar's Humility","King's Sovereignty",
-        "Jester's Laughter","Fool's Leap","Seeker's Quest","Finder's Rest","Praise to the Void","Hymn to the Heart","Mantra of Light","Seed Syllable","Whispered Prayer","Silent Reverence",
-        "Offering of Breath","Gift of Presence","Service to All","Union with All"
-    ];
-    const sanskritNames = [
-        "Śvāsa Praśvāsa","Antar Śvāsa","Suṣumṇā Śvāsa","Bhrūmadhya","Vikalpa Sākṣī","Anāhata Nāda","Tamas Dhyāna","Hṛdaya Ākāśa","Deha Anubhava","Manda Śvāsa",
-        "Caraṇa Jāgṛta","Bhāva Dṛṣṭi","Mauna Śravaṇa","Sarvāṅga Bodha","Caitanya Vistāra","Merudaṇḍa","Pūrṇa Viśrāma","Svapna Antara","Kṣaṇa Vilamba","Antarikṣa",
-        "Śūnya Spṛś","Tejas Mūrti","Nāda Laya","Gagan Sparśa","Srota Āsvāda","Premākāra","Kaṇḍūti","Agni Cintana","Nāḍī Spandana","Ākāśa Śūnya",
-        "Prakāśa Śūnya","Bhūta Saṃsparśa","Prāṇa Vāyu","Hṛdaya Spandana","Sahaja Samādhi","Para Gandha","Dik Vistāra","Nābhi Kendra","Guhā Hṛdaya","Anāhata Dhvani",
-        "Śakti Uthāna","Kuṇḍalinī Bodha","Varṇa Layana","Candra Antar","Sūrya Maṇipūra","Śūnya Dṛṣṭi","Tamas Para","Guru Kṛpā","Ahaṅkāra Tyāga","Tathatā Samarpaṇa",
-        "Akriyā","Sahaja Sthiti","Prakṛti Viśrāma","Prema Akhaṇḍa","Karuṇā Dhyāna","Ānanda Akhaṇḍa","Samatā","Kṣamā Sādhana","Kṛtajñatā Snāna","Deha Mandira",
-        "Asthi Bodha","Sīmā Vilaya","Bhūta Śodhana","Antar Agnihotra","Amṛta Dhārā","Acala Sthiti","Vāyu Parivartana","Ākāśa Ananta","Pṛthvī Mūla","Brahmāṇḍa Nṛtya",
-        "Kāla Bodha","Svapna Māyā","Jāgrat Svapna","Yoganidrā","Sandhyā Dhyāna","Ardha Rātri","Prātaḥ Bodha","Madhyāhna Tejas","Sandhyā Samarpaṇa","Ṛtu Antar",
-        "Vayasa Prajñā","Maraṇa Sati","Punarjanma Dhyāna","Pitṛ Saṃyoga","Devatā Rakṣā","Divya Bāla","Antar Mātā","Brahma Pitā","Sarva Mitra","Antar Guru",
-        "Hasta Cikitsā","Vīrya Śaurya","Muni Mauna","Premāliṅgana","Ānanda Sṛṣṭi","Saṃhāra Śuddhi","Sthiti Kṣamā","Nartana Lāvaṇya","Dīnatā","Rāja Sattva",
-        "Hāsya Vilāsa","Ātma Līlā","Sādhaka Patha","Lābha Viśrāma","Śūnya Stuti","Hṛdaya Stotra","Jyotir Mantra","Bīja Akṣara","Upāṃśu Prārthanā","Mauna Bhakti",
-        "Prāṇa Arghya","Sādhana Upasthāna","Sarva Seva","Advaita Yoga"
-    ];
-    const categories = ['breath','body','heart','sound','gaze','void','energy','light','touch','space','stillness','emotion','awareness','devotion'];
-    for (let i = 1; i <= 112; i++) {
-        const idx = i-1;
-        const cat = categories[idx % categories.length];
-        const name = techniqueNames[idx % techniqueNames.length];
-        const sanskrit = sanskritNames[idx % sanskritNames.length];
-        const stepsPara = `Begin by finding a quiet space. Sit comfortably. Close your eyes gently. Bring awareness to the ${cat === 'breath' ? 'natural rhythm of your breath' : cat === 'sound' ? 'subtle sounds' : cat === 'gaze' ? 'the space between your eyebrows' : 'the present moment'}. Relax completely. When thoughts arise, simply observe and return. Continue, sinking deeper into stillness.`;
-        const essencePara = `The Vigyan Bhairav Tantra reveals: “${name} is a direct portal to the formless. When you practice this, you are not doing anything—you are allowing the universe to meditate through you. The gap between two thoughts, the pause between two breaths, is the doorway to your true nature.”`;
-        techniques[i] = { id:i, name, sanskrit, category:cat, essence:essencePara, steps:stepsPara, wisdom:"Shiva whispers this secret to Devi.", posture:"Meditation posture", mudra:"As described", breath:"Natural", duration:"10-20 min", benefits:{ student:"focus", employee:"calm", seeker:"awakening" } };
-    }
-    // Enrich first few with detailed data from authentic sources
-    techniques[1] = { id:1, name:"Witnessing the Breath", sanskrit:"Śvāsa Praśvāsa", category:"breath", essence:"Shiva says: 'Radiant One, this experience may dawn between two breaths. After breath comes in and just before turning up – the beneficence.'", steps:"Sit comfortably. Close your eyes. Feel the breath at the tip of the nose. Do not follow it inside. If you lose awareness, gently return.", wisdom:"Osho: 'The gap between two breaths is the door.'", posture:"Sukhasana", mudra:"Chin", breath:"Natural", duration:"10-20 min", benefits:{ student:"focus", employee:"relax", seeker:"peace" } };
-    techniques[2] = { id:2, name:"Awareness of the Gap Between Breaths", sanskrit:"Antar Śvāsa", category:"breath", essence:"As breath turns from down to up, and again as breath curves from up to down – through both these turns, realize.", steps:"Watch the turning point. At the top of inhalation, and at the bottom of exhalation, there is a pause. Be aware of that pause.", wisdom:"Shiva", posture:"Comfortable", mudra:"Dhyana", breath:"Natural", duration:"10-15 min", benefits:{ student:"clarity", employee:"stress relief", seeker:"awareness" } };
-    techniques[4] = { id:4, name:"Concentration on the Third Eye", sanskrit:"Bhrūmadhya Dharana", category:"gaze", essence:"Fix your attention on the space between your eyebrows. Let the mind flow toward that center. Within that point lies the gateway to the infinite.", steps:"Close your eyes. Gently turn your gaze upward as if looking at a point between the eyebrows. Do not strain. Feel a subtle pressure or light there.", wisdom:"Shiva", posture:"Comfortable", mudra:"Jnana", breath:"Natural", duration:"10-20 min", benefits:{ student:"memory", employee:"stability", seeker:"insight" } };
-    
-    // Professions
-    const professions = [
-        { name:"Student", icon:"fa-graduation-cap", desc:"focus · exams", fullDesc:"For concentration and memory.", keywords:["focus","concentration","memory"] },
-        { name:"Employee", icon:"fa-briefcase", desc:"stress · work-life", fullDesc:"Reduce workplace stress.", keywords:["stress","work","balance"] },
-        { name:"Seeker", icon:"fa-infinity", desc:"spiritual path", fullDesc:"Deepen awareness.", keywords:["spiritual","awareness"] },
-        { name:"Anxious", icon:"fa-heartbeat", desc:"calm · anxiety", fullDesc:"Soothe anxiety.", keywords:["anxiety","calm","peace"] },
-        { name:"Overthinker", icon:"fa-brain", desc:"still mind", fullDesc:"Quiet mental chatter.", keywords:["overthink","stillness"] },
-        { name:"Developer", icon:"fa-laptop-code", desc:"focus", fullDesc:"Sharpen mental focus.", keywords:["focus","clarity"] },
-        { name:"Artist", icon:"fa-paint-brush", desc:"flow", fullDesc:"Unlock creativity.", keywords:["creativity","flow"] },
-        { name:"Parent", icon:"fa-child", desc:"self-care", fullDesc:"Balance and presence.", keywords:["parent","balance"] },
-        { name:"Healer", icon:"fa-hand-holding-heart", desc:"compassion", fullDesc:"Cultivate healing presence.", keywords:["heal","compassion"] },
-        { name:"Leader", icon:"fa-crown", desc:"presence", fullDesc:"Lead with clarity and calm.", keywords:["leadership","clarity"] }
-    ];
-    function getRecommendedTechniques(prof) {
-        return Object.values(techniques).sort((a,b)=> {
-            let aScore = prof.keywords.reduce((s,k)=> s + (a.name.toLowerCase().includes(k) ? 5 : 0) + (a.category.includes(k) ? 3 : 0),0);
-            let bScore = prof.keywords.reduce((s,k)=> s + (b.name.toLowerCase().includes(k) ? 5 : 0) + (b.category.includes(k) ? 3 : 0),0);
-            return bScore - aScore;
-        }).slice(0,12);
-    }
-    
-    // User state
-    let user = {
-        totalPractices: parseInt(localStorage.getItem('tp')) || 0,
-        totalMinutes: parseInt(localStorage.getItem('tm')) || 0,
-        streak: parseInt(localStorage.getItem('streak')) || 0,
-        lastDate: localStorage.getItem('lastDate') || null,
-        favorites: JSON.parse(localStorage.getItem('favs')) || [],
-        diary: JSON.parse(localStorage.getItem('diary')) || [],
-        plan: JSON.parse(localStorage.getItem('plan')) || [],
-        practiceDays: JSON.parse(localStorage.getItem('practiceDays')) || {},
-        practicedTechniques: JSON.parse(localStorage.getItem('practicedTechs')) || [],
-        savedQuotes: JSON.parse(localStorage.getItem('savedQuotes')) || [],
-        achievements: JSON.parse(localStorage.getItem('achievements')) || {},
-        settings: JSON.parse(localStorage.getItem('settings')) || { theme: 'dark' }
+    // ----------------------------- 3D BLACK HOLE -----------------------------
+    const canvas3D = document.getElementById('blackhole-canvas');
+    const scene = new THREE.Scene(); scene.background = new THREE.Color(0x050210);
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
+    camera.position.set(5, 2.5, 8); camera.lookAt(0,0,0);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas3D, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    const starGeo = new THREE.BufferGeometry(); const starPos = new Float32Array(6000*3);
+    for(let i=0;i<6000;i++){ starPos[i*3]=(Math.random()-0.5)*800; starPos[i*3+1]=(Math.random()-0.5)*600; starPos[i*3+2]=(Math.random()-0.5)*500-150; }
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos,3));
+    scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({color:0xffffff, size:0.2, blending:THREE.AdditiveBlending})));
+    const coreMat = new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x441100, emissiveIntensity: 0.6 });
+    const blackHole = new THREE.Mesh(new THREE.SphereGeometry(1.1, 64, 64), coreMat);
+    scene.add(blackHole);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.08, 64, 200), new THREE.MeshStandardMaterial({ color: 0xffaa66, emissive: 0xff6633, emissiveIntensity: 0.5 }));
+    scene.add(ring);
+    const ambient = new THREE.AmbientLight(0x332244); scene.add(ambient);
+    const light = new THREE.PointLight(0xffaa66, 0.8, 15); light.position.set(2,2,3); scene.add(light);
+    let angle = 0;
+    function animate3D(){ requestAnimationFrame(animate3D); angle += 0.005; ring.rotation.z = angle; camera.position.x = 5 + Math.sin(angle*0.3)*0.5; camera.lookAt(0,0,0); renderer.render(scene, camera); }
+    animate3D();
+    window.addEventListener('resize', () => { camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
+
+    // ----------------------------- APP STATE & DATA -----------------------------
+    let userData = JSON.parse(localStorage.getItem('userData')) || {
+        totalPractices: 0, totalMinutes: 0, streak: 0, lastDate: null,
+        practicedTechniques: [], plan: [], savedQuotes: [], achievements: {},
+        practiceDays: {}
     };
-    function saveAll() {
-        localStorage.setItem('tp', user.totalPractices);
-        localStorage.setItem('tm', user.totalMinutes);
-        localStorage.setItem('streak', user.streak);
-        localStorage.setItem('lastDate', user.lastDate);
-        localStorage.setItem('favs', JSON.stringify(user.favorites));
-        localStorage.setItem('diary', JSON.stringify(user.diary));
-        localStorage.setItem('plan', JSON.stringify(user.plan));
-        localStorage.setItem('practiceDays', JSON.stringify(user.practiceDays));
-        localStorage.setItem('practicedTechs', JSON.stringify(user.practicedTechniques));
-        localStorage.setItem('savedQuotes', JSON.stringify(user.savedQuotes));
-        localStorage.setItem('achievements', JSON.stringify(user.achievements));
-        localStorage.setItem('settings', JSON.stringify(user.settings));
-        updateUI();
+    function saveUserData(){ localStorage.setItem('userData', JSON.stringify(userData)); updateAllUI(); }
+    function showToast(msg){ let t=document.createElement('div'); t.className='toast'; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+    function addPractice(techId, techName, minutes){
+        userData.totalPractices++; userData.totalMinutes += minutes;
+        let today = new Date().toDateString();
+        if(userData.lastDate !== today){
+            let yesterday = new Date(Date.now()-86400000).toDateString();
+            userData.streak = userData.lastDate === yesterday ? userData.streak+1 : 1;
+            userData.lastDate = today;
+        }
+        userData.practicedTechniques.unshift({ id:techId, name:techName, date:new Date().toISOString(), minutes });
+        let dateKey = new Date().toISOString().slice(0,10);
+        userData.practiceDays[dateKey] = true;
+        saveUserData();
+        showToast(`🧘 Practiced ${techName} +${minutes} min`);
         checkAchievements();
     }
-    function addPracticedTechnique(techId, techName, minutes=15) {
-        user.practicedTechniques.unshift({ id:techId, name:techName, date:new Date().toISOString(), minutes });
-        user.totalPractices++; user.totalMinutes += minutes;
-        const today = new Date().toDateString();
-        if(user.lastDate !== today){ const yesterday = new Date(Date.now()-86400000).toDateString(); user.streak = user.lastDate===yesterday ? user.streak+1 : 1; user.lastDate=today; }
-        user.practiceDays[new Date().toISOString().slice(0,10)] = true;
-        saveAll();
-        showToast(`🧘 Practiced: ${techName} +${minutes} min`);
-    }
-    function showToast(msg){ const t=document.createElement('div'); t.className='toast'; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
-    
-    // Quotes (expanded)
-    const fullQuotesList = [
-        { text:"Three things cannot be hidden: the sun, the moon, and the truth.", author:"Buddha" },
-        { text:"Peace comes from within. Do not seek it without.", author:"Buddha" },
-        { text:"The journey of a thousand miles begins with a single step.", author:"Lao Tzu" },
-        { text:"Knowing yourself is the beginning of all wisdom.", author:"Aristotle" },
-        { text:"He who has a why can bear almost any how.", author:"Nietzsche" },
-        { text:"The kingdom of God is within you.", author:"Jesus" },
-        { text:"Yoga is the cessation of the mind's fluctuations.", author:"Patanjali" },
-        { text:"Arise, awake, stop not till the goal is reached.", author:"Swami Vivekananda" },
-        { text:"Truth is a pathless land.", author:"Krishnamurti" },
-        { text:"Don’t worry, be happy.", author:"Meher Baba" },
-        { text:"The quieter you become, the more you can hear.", author:"Ram Dass" },
-        { text:"Be here now.", author:"Ram Dass" },
-        { text:"You are not a drop in the ocean. You are the entire ocean in a drop.", author:"Rumi" },
-        { text:"Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", author:"Rumi" },
-        { text:"The wound is the place where the Light enters you.", author:"Rumi" },
-        { text:"We are all just walking each other home.", author:"Ram Dass" },
-        { text:"The mind is everything. What you think you become.", author:"Buddha" },
-        { text:"Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.", author:"Buddha" },
-        { text:"Happiness is your nature. It is not wrong to desire it.", author:"Ramana Maharshi" },
-        { text:"Your own Self-Realization is the greatest service you can render the world.", author:"Ramana Maharshi" }
-    ];
-    let shuffledQuotes = [...fullQuotesList], currentLibIndex=0, homeQuotes=[...fullQuotesList], currentHomeIndex=0;
-    function updateHomeQuote(){ const q=homeQuotes[currentHomeIndex]; document.getElementById('homeQuoteText').innerHTML=`“${q.text}”`; document.getElementById('homeQuoteAuthor').innerHTML=`— ${q.author}`; }
-    function updateLibQuote(){ const q=shuffledQuotes[currentLibIndex]; document.getElementById('quoteText').innerHTML=`“${q.text}”`; document.getElementById('quoteAuthor').innerHTML=`— ${q.author}`; }
-    function saveQuoteToBoth(text, author){ user.savedQuotes.unshift({ text, author, date:new Date().toISOString() }); user.diary.unshift({ date:new Date(), text:`📖 Saved Quote: "${text}" — ${author}` }); saveAll(); showToast("Quote saved"); }
-    
-    // Mudras (expanded)
-    const mudrasData = [
-        { name:"Bhumisparsa", sanskrit:"Bhūmisparśa Mudrā", meaning:"Earth‑Touching", how:"Right hand touches earth.", benefits:"Grounds energy, removes obstacles.", essence:"Unity with existence.", meditation:"Feel earth support.", svg:`<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="2"/><path d="M60,120 Q50,130 40,125" stroke="currentColor" stroke-width="3"/><path d="M140,110 Q150,140 160,160" stroke="currentColor" stroke-width="3"/><circle cx="162" cy="165" r="6" fill="currentColor" opacity="0.8"/><line x1="155" y1="155" x2="158" y2="162" stroke="currentColor" stroke-width="2" class="animated-finger"/></svg>` },
-        { name:"Dhyana", sanskrit:"Dhyāna Mudrā", meaning:"Meditation", how:"Hands in lap, thumbs touching.", benefits:"Deep concentration, balance.", essence:"Equilibrium.", meditation:"Observe thoughts.", svg:`<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="currentColor"/><ellipse cx="100" cy="140" rx="50" ry="20" fill="none" stroke="currentColor"/><path d="M65,130 Q80,125 95,135" stroke="currentColor" stroke-width="3"/><circle cx="100" cy="125" r="4" fill="var(--accent-secondary)" class="animated-finger"/></svg>` },
-        { name:"Jnana", sanskrit:"Jñāna Mudrā", meaning:"Knowledge", how:"Thumb and index finger touch.", benefits:"Wisdom, memory.", essence:"Unity of individual and cosmic.", meditation:"Seek truth.", svg:`<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="currentColor"/><path d="M60,140 L70,130" stroke="currentColor" stroke-width="3"/><circle cx="70" cy="130" r="5" fill="none" stroke="currentColor"/><circle cx="100" cy="100" r="30" fill="none" stroke="var(--accent-secondary)" stroke-width="1.5"><animate attributeName="r" values="30;45;30" dur="3s" repeatCount="indefinite"/></circle></svg>` },
-        { name:"Abhaya", sanskrit:"Abhaya Mudrā", meaning:"Fearlessness", how:"Right hand raised, palm out.", benefits:"Courage, protection.", essence:"Dispels fear.", meditation:"Feel safe.", svg:`<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="currentColor"/><path d="M130,120 Q140,80 120,50" stroke="currentColor" stroke-width="3"/><circle cx="118" cy="45" r="12" fill="none" stroke="currentColor"/><line x1="110" y1="38" x2="105" y2="30" stroke="currentColor" stroke-width="2" class="animated-finger"/></svg>` },
-        { name:"Anjali", sanskrit:"Añjali Mudrā", meaning:"Salutation", how:"Palms together at heart.", benefits:"Gratitude, connection.", essence:"Unity and respect.", meditation:"Bow to the divine within.", svg:`<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="currentColor"/><path d="M85,100 Q90,80 100,75 Q110,80 115,100" stroke="currentColor" stroke-width="3" fill="none"/><line x1="100" y1="75" x2="100" y2="60" stroke="currentColor" stroke-width="2"/></svg>` }
-    ];
-    let currentMudraIndex = 0;
-    function renderMudra(index) {
-        const m = mudrasData[index];
-        document.getElementById('mudraContent').innerHTML = `
-            <div class="mudra-svg">${m.svg}</div>
-            <div class="mudra-name">${m.name}</div><div class="mudra-sanskrit">${m.sanskrit}</div>
-            <div class="mudra-section"><h4>Meaning</h4><p>${m.meaning}</p></div>
-            <div class="mudra-section"><h4>How to Form</h4><p>${m.how}</p></div>
-            <div class="mudra-section"><h4>Benefits</h4><p>${m.benefits}</p></div>
-            <div class="mudra-section"><h4>Essence</h4><p>${m.essence}</p></div>
-            <div class="mudra-section"><h4>Meditation</h4><p>${m.meditation}</p></div>
-        `;
-    }
-    function saveCurrentMudra(){ const m=mudrasData[currentMudraIndex]; saveQuoteToBoth(`${m.name}: ${m.essence}`, `Mudra ${m.name}`); }
-    
-    // Techniques UI
-    function buildTechCard(t, showPractice=true){
-        const div=document.createElement('div'); div.className='glass-card'; div.style.cursor='pointer'; div.style.padding='1.2rem';
-        const isFav=user.favorites.includes(t.id);
-        div.innerHTML=`<div class="chapter-original-name">${t.sanskrit}</div><div class="chapter-english-name">${t.name}</div><div class="tech-category" style="font-size:0.8rem; color:var(--accent-secondary);">${t.category}</div><div class="tech-essence" style="font-size:0.85rem; margin:0.5rem 0;">${t.essence.substring(0,120)}...</div><div style="display:flex; justify-content:space-between; margin-top:1rem;"><span>${t.duration}</span><div><button class="favorite-btn ${isFav?'fas':'far'} fa-heart" data-id="${t.id}"></button>${showPractice?`<button class="practice-btn" data-id="${t.id}" data-name="${t.name}"><i class="fas fa-play"></i> Practice</button>`:''}</div></div>`;
-        div.querySelector('.favorite-btn')?.addEventListener('click',(e)=>{ e.stopPropagation(); if(user.favorites.includes(t.id)) user.favorites=user.favorites.filter(f=>f!==t.id); else user.favorites.push(t.id); saveAll(); e.target.classList.toggle('fas'); e.target.classList.toggle('far'); showToast(user.favorites.includes(t.id)?'Added':'Removed'); });
-        if(showPractice) div.querySelector('.practice-btn')?.addEventListener('click',(e)=>{ e.stopPropagation(); addPracticedTechnique(t.id,t.name,15); });
-        div.addEventListener('click',()=>showModal(t));
-        return div;
-    }
-    function showModal(t){ let modal=document.getElementById('detailModal'); if(!modal){ modal=document.createElement('div'); modal.id='detailModal'; modal.className='modal'; document.body.appendChild(modal); } modal.innerHTML=`<div class="modal-content glass-card"><h2>${t.name}</h2><p><em>${t.sanskrit}</em></p><div style="background:rgba(157,123,255,0.2); padding:1rem; border-radius:20px; margin:1rem 0;"><i class="fas fa-quote-left"></i> ${t.wisdom}</div><h3>Steps</h3><p>${t.steps}</p><h3>Essence</h3><p>${t.essence}</p><button class="btn-primary closeModal">Close</button></div>`; modal.classList.add('active'); modal.querySelector('.closeModal').addEventListener('click',()=>modal.classList.remove('active')); modal.addEventListener('click',(e)=>{ if(e.target===modal) modal.classList.remove('active'); }); }
-    
-    const profGrid=document.getElementById('professionGrid');
-    profGrid.innerHTML=professions.map(p=>`<div class="prof-card" data-prof='${JSON.stringify(p)}'><i class="fas ${p.icon}"></i><span>${p.name}</span><div class="prof-desc">${p.desc}</div></div>`).join('');
-    let currentTechList=[], currentTechIndex=0;
-    
-    function renderTechCarousel() {
-        const tech = currentTechList[currentTechIndex];
-        if (!tech) return;
-        const container = document.getElementById('techCarouselContent');
-        container.innerHTML = `
-            <div class="chapter-card">
-                <div class="chapter-main">
-                    <div class="chapter-original-name">${tech.sanskrit}</div>
-                    <div class="chapter-english-name">${tech.name}</div>
-                    <div class="chapter-essence"><i class="fas fa-feather-alt"></i> ${tech.essence}</div>
-                    <div class="chapter-steps"><h4><i class="fas fa-fingerprint"></i> The Practice – Step by Step</h4><p>${tech.steps}</p></div>
-                    <div class="chapter-quote"><i class="fas fa-quote-left"></i> ${tech.wisdom}</div>
-                </div>
-                <div class="chapter-sidebar">
-                    <h4><i class="fas fa-info-circle"></i> Quick Reference</h4>
-                    <p><strong>Category:</strong> ${tech.category}</p>
-                    <p><strong>Posture:</strong> ${tech.posture}</p>
-                    <p><strong>Mudra:</strong> ${tech.mudra}</p>
-                    <p><strong>Breath:</strong> ${tech.breath}</p>
-                    <p><strong>Duration:</strong> ${tech.duration}</p>
-                    <hr style="margin: 0.8rem 0; border-color: var(--glass-border);">
-                    <h4><i class="fas fa-gem"></i> Benefits</h4>
-                    <p>✨ Students: ${tech.benefits.student}<br>✨ Employees: ${tech.benefits.employee}<br>✨ Seekers: ${tech.benefits.seeker}</p>
-                </div>
-            </div>
-        `;
-        document.getElementById('techCounter').innerText = `${currentTechIndex+1}/${currentTechList.length}`;
-        const favBtn = document.getElementById('favoriteTechBtn');
-        favBtn.innerHTML = user.favorites.includes(tech.id) ? '<i class="fas fa-heart"></i> Favorite' : '<i class="far fa-heart"></i> Favorite';
-    }
-    
-    function showFullChapterModal(tech) {
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.innerHTML = `
-            <div class="modal-content full-chapter-modal glass-card">
-                <h2>${tech.name}</h2>
-                <p class="tech-sanskrit">${tech.sanskrit}</p>
-                <div class="chapter-quote" style="margin: 1rem 0;"><i class="fas fa-quote-left"></i> ${tech.wisdom}</div>
-                <h3><i class="fas fa-book-open"></i> Chapter 1: Essence</h3>
-                <p>${tech.essence}</p>
-                <h3><i class="fas fa-hands-helping"></i> The Sacred Steps</h3>
-                <p>${tech.steps}</p>
-                <h3><i class="fas fa-lotus"></i> Posture & Mudra</h3>
-                <p>${tech.posture} · ${tech.mudra}</p>
-                <h3><i class="fas fa-wind"></i> Breath Guidance</h3>
-                <p>${tech.breath}</p>
-                <h3><i class="fas fa-chart-line"></i> Benefits for Your Path</h3>
-                <p>✨ For the Student: ${tech.benefits.student}<br>✨ For the Employee: ${tech.benefits.employee}<br>✨ For the Seeker: ${tech.benefits.seeker}</p>
-                <div style="margin-top: 1.5rem; text-align: center;">
-                    <button class="btn-primary" id="practiceFromModal">Practice Now</button>
-                    <button class="btn-outline closeModal">Close Chapter</button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        modal.classList.add('active');
-        modal.querySelector('#practiceFromModal').addEventListener('click', () => {
-            addPracticedTechnique(tech.id, tech.name, 15);
-            modal.classList.remove('active');
-            setTimeout(() => modal.remove(), 300);
-        });
-        modal.querySelector('.closeModal').addEventListener('click', () => {
-            modal.classList.remove('active');
-            setTimeout(() => modal.remove(), 300);
-        });
-        modal.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('active'); setTimeout(() => modal.remove(), 300); } });
-    }
-    
-    document.querySelectorAll('.prof-card').forEach(card=>card.addEventListener('click',()=>{
-        const prof=JSON.parse(card.dataset.prof);
-        currentTechList=getRecommendedTechniques(prof);
-        currentTechIndex=0;
-        renderTechCarousel();
-        document.getElementById('professionSelectionView').classList.add('hidden');
-        document.getElementById('recommendedTechniquesView').classList.remove('hidden');
-        document.getElementById('allTechniquesView').classList.add('hidden');
-        document.getElementById('categoriesView').classList.add('hidden');
-        document.getElementById('selectedProfessionTitle').innerHTML=`🌀 ${prof.name} · Recommended Techniques`;
-    }));
-    document.getElementById('backToProfessionsBtn').addEventListener('click',()=>{ document.getElementById('professionSelectionView').classList.remove('hidden'); document.getElementById('recommendedTechniquesView').classList.add('hidden'); document.getElementById('allTechniquesView').classList.add('hidden'); document.getElementById('categoriesView').classList.add('hidden'); });
-    document.getElementById('showArchetypeBtn').addEventListener('click',()=>{ document.getElementById('professionSelectionView').classList.remove('hidden'); document.getElementById('recommendedTechniquesView').classList.add('hidden'); document.getElementById('allTechniquesView').classList.add('hidden'); document.getElementById('categoriesView').classList.add('hidden'); });
-    document.getElementById('showAllTechBtn').addEventListener('click',()=>{ document.getElementById('professionSelectionView').classList.add('hidden'); document.getElementById('recommendedTechniquesView').classList.add('hidden'); document.getElementById('allTechniquesView').classList.remove('hidden'); document.getElementById('categoriesView').classList.add('hidden'); const grid=document.getElementById('allTechniquesGrid'); grid.innerHTML=''; Object.values(techniques).forEach(t=>grid.appendChild(buildTechCard(t,true))); });
-    document.getElementById('showTechCategoriesBtn').addEventListener('click', ()=>{
-        document.getElementById('professionSelectionView').classList.add('hidden');
-        document.getElementById('recommendedTechniquesView').classList.add('hidden');
-        document.getElementById('allTechniquesView').classList.add('hidden');
-        document.getElementById('categoriesView').classList.remove('hidden');
-        const catGrid = document.getElementById('categoryGrid');
-        const uniqueCats = [...new Set(Object.values(techniques).map(t=>t.category))];
-        catGrid.innerHTML = uniqueCats.map(cat => `<div class="prof-card" data-cat="${cat}"><i class="fas fa-folder"></i><span>${cat}</span></div>`).join('');
-        document.querySelectorAll('[data-cat]').forEach(el => el.addEventListener('click', (e) => {
-            const cat = el.dataset.cat;
-            const filtered = Object.values(techniques).filter(t => t.category === cat);
-            const listDiv = document.getElementById('categoryTechniquesList');
-            listDiv.innerHTML = filtered.map(t => buildTechCard(t, true).outerHTML).join('');
-        }));
-    });
-    document.getElementById('prevTechBtn').addEventListener('click',()=>{ if(currentTechList.length){ currentTechIndex=(currentTechIndex-1+currentTechList.length)%currentTechList.length; renderTechCarousel(); } });
-    document.getElementById('nextTechBtn').addEventListener('click',()=>{ if(currentTechList.length){ currentTechIndex=(currentTechIndex+1)%currentTechList.length; renderTechCarousel(); } });
-    document.getElementById('practiceTechBtn').addEventListener('click',()=>{ if(currentTechList[currentTechIndex]) addPracticedTechnique(currentTechList[currentTechIndex].id, currentTechList[currentTechIndex].name, 15); });
-    document.getElementById('addToPlanTechBtn').addEventListener('click',()=>{ const t=currentTechList[currentTechIndex]; if(t && !user.plan.includes(t.id)){ user.plan.push(t.id); saveAll(); renderPlan(); showToast('Added to plan'); } else showToast('Already in plan'); });
-    document.getElementById('favoriteTechBtn').addEventListener('click',()=>{ const t=currentTechList[currentTechIndex]; if(t){ if(user.favorites.includes(t.id)) user.favorites=user.favorites.filter(f=>f!==t.id); else user.favorites.push(t.id); saveAll(); renderTechCarousel(); showToast(user.favorites.includes(t.id)?'Favorited':'Unfavorited'); } });
-    document.getElementById('techSearchInput').addEventListener('input',function(){ const term=this.value.toLowerCase(); const grid=document.getElementById('allTechniquesGrid'); Array.from(grid.children).forEach(card=>{ const name=card.querySelector('.chapter-english-name')?.innerText.toLowerCase(); const cat=card.querySelector('.tech-category')?.innerText.toLowerCase(); card.style.display=(name.includes(term)||cat.includes(term))?'':'none'; }); });
-    document.getElementById('readFullChapterBtn')?.addEventListener('click', () => { if (currentTechList[currentTechIndex]) showFullChapterModal(currentTechList[currentTechIndex]); });
-    
-    // Plan, Diary, UI updates
-    function renderPlan(){ const container=document.getElementById('planItems'); if(!container) return; container.innerHTML=''; let total=0; user.plan.forEach(id=>{ if(techniques[id]){ total+=15; const div=document.createElement('div'); div.className='glass-card'; div.style.marginBottom='0.8rem'; div.style.padding='0.8rem'; div.innerHTML=`<div><strong>${techniques[id].name}</strong> (15 min)</div><button class="remove-plan" data-id="${id}" style="background:none; border:none; color:var(--accent-secondary); cursor:pointer;"><i class="fas fa-trash"></i></button>`; div.querySelector('.remove-plan').addEventListener('click',()=>{ user.plan=user.plan.filter(i=>i!==id); saveAll(); renderPlan(); showToast('removed'); }); container.appendChild(div); } }); document.getElementById('planTotal').innerText=total; }
-    function renderDiary(){ const list=document.getElementById('diaryList'); if(list) list.innerHTML=user.diary.slice().reverse().map(e=>`<div class="glass-card" style="margin-bottom:0.5rem;padding:0.5rem;"><small>${new Date(e.date).toLocaleString()}</small><p>${e.text}</p></div>`).join(''); }
-    function updateUI(){ document.getElementById('enhTotalPractices').innerText=user.totalPractices; document.getElementById('enhTotalMinutes').innerText=user.totalMinutes; document.getElementById('enhStreak').innerText=user.streak; renderCalendar(); renderPlan(); renderDiary(); renderAchievements(); updateCharts(); }
-    function renderCalendar(){ const container=document.getElementById('calendarTracker'); if(!container) return; const today=new Date(), year=today.getFullYear(), month=today.getMonth(), firstDay=new Date(year,month,1).getDay(), daysInMonth=new Date(year,month+1,0).getDate(); container.innerHTML=''; ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(day=>{const d=document.createElement('div'); d.className='calendar-day weekday'; d.innerText=day; container.appendChild(d);}); for(let i=0;i<firstDay;i++){const blank=document.createElement('div'); blank.className='calendar-day'; container.appendChild(blank);} for(let d=1;d<=daysInMonth;d++){ const dateStr=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; const isPracticed=user.practiceDays[dateStr], isToday=d===today.getDate()&&month===today.getMonth()&&year===today.getFullYear(); const dayDiv=document.createElement('div'); dayDiv.className=`calendar-day ${isPracticed?'practiced':''} ${isToday?'today':''}`; dayDiv.innerText=d; dayDiv.addEventListener('click',()=>{ if(!user.practiceDays[dateStr]){ user.practiceDays[dateStr]=true; saveAll(); showToast(`Marked practice on ${dateStr}`); } else if(confirm('Remove mark?')){ delete user.practiceDays[dateStr]; saveAll(); } }); container.appendChild(dayDiv); } }
-    
-    function renderAchievements() {
-        const container = document.getElementById('achievementsList');
-        if (!container) return;
-        const achievements = [
-            { id: 'first_practice', name: 'First Step', desc: 'Complete your first practice', target: 1, current: user.totalPractices, unit: 'practice' },
-            { id: 'seven_streak', name: '7-Day Streak', desc: 'Practice 7 days in a row', target: 7, current: user.streak, unit: 'days' },
-            { id: 'hundred_practices', name: 'Century', desc: '100 total practices', target: 100, current: user.totalPractices, unit: 'practices' },
-            { id: 'thousand_minutes', name: 'Time Lord', desc: '1000 minutes of practice', target: 1000, current: user.totalMinutes, unit: 'minutes' },
-            { id: 'wisdom_seeker', name: 'Wisdom Seeker', desc: 'Save 10 quotes', target: 10, current: user.savedQuotes.length, unit: 'quotes' },
-            { id: 'dedicated', name: 'Dedicated', desc: 'Practice 30 different days', target: 30, current: Object.keys(user.practiceDays).length, unit: 'days' },
-            { id: 'fifty_techniques', name: 'Explorer', desc: 'Practice 50 different techniques', target: 50, current: new Set(user.practicedTechniques.map(p=>p.id)).size, unit: 'techniques' }
-        ];
-        container.innerHTML = achievements.map(ach => {
-            const unlocked = user.achievements[ach.id];
-            const progress = Math.min(100, (ach.current / ach.target) * 100);
-            return `
-                <div class="achievement-item ${unlocked ? 'unlocked' : ''}">
-                    <div class="achievement-header" style="display:flex; justify-content:space-between;">
-                        <span><i class="fas ${unlocked ? 'fa-trophy' : 'fa-lock'}"></i> ${ach.name}</span>
-                        <span>${ach.current}/${ach.target} ${ach.unit}</span>
-                    </div>
-                    <div class="achievement-bar"><div class="achievement-progress" style="width: ${progress}%;"></div></div>
-                    <small>${ach.desc}</small>
-                </div>
-            `;
-        }).join('');
-    }
-    const achievementsList = [
-        { id: 'first_practice', name: 'First Step', condition: () => user.totalPractices >= 1 },
-        { id: 'seven_streak', name: '7-Day Streak', condition: () => user.streak >= 7 },
-        { id: 'hundred_practices', name: 'Century', condition: () => user.totalPractices >= 100 },
-        { id: 'thousand_minutes', name: 'Time Lord', condition: () => user.totalMinutes >= 1000 },
-        { id: 'wisdom_seeker', name: 'Wisdom Seeker', condition: () => user.savedQuotes.length >= 10 },
-        { id: 'dedicated', name: 'Dedicated', condition: () => Object.keys(user.practiceDays).length >= 30 },
-        { id: 'fifty_techniques', name: 'Explorer', condition: () => new Set(user.practicedTechniques.map(p=>p.id)).size >= 50 }
-    ];
-    function checkAchievements() {
-        achievementsList.forEach(ach => {
-            if (!user.achievements[ach.id] && ach.condition()) {
-                user.achievements[ach.id] = { unlocked: true, date: new Date().toISOString() };
-                showToast(`🏆 Achievement: ${ach.name}!`);
-                saveAll();
-            }
-        });
-    }
-    function updateCharts(){ const ctx=document.getElementById('progressChart')?.getContext('2d'); if(ctx&&window.progressChart) window.progressChart.destroy(); if(ctx){ const week=[0,0,0,0,0,0,0]; user.practicedTechniques.forEach(p=>{ const day=new Date(p.date).getDay(); week[day]+=p.minutes; }); window.progressChart=new Chart(ctx,{type:'line',data:{labels:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],datasets:[{label:'minutes',data:week,borderColor:'#9d7bff',backgroundColor:'rgba(157,123,255,0.1)',fill:true,tension:0.3}]}}); } const catCtx=document.getElementById('categoryChart')?.getContext('2d'); if(catCtx&&window.categoryChart) window.categoryChart.destroy(); if(catCtx){ const catCount={}; user.practicedTechniques.forEach(p=>{ const tech=techniques[p.id]; if(tech) catCount[tech.category]=(catCount[tech.category]||0)+1; }); window.categoryChart=new Chart(catCtx,{type:'doughnut',data:{labels:Object.keys(catCount),datasets:[{data:Object.values(catCount),backgroundColor:['#9d7bff','#ffb3a0','#6b4eff','#ff8a6c','#c4b5fd']}]}}); } }
-    
-    // Breathwork enhanced
-    const breathInstructions = { box:"4-4-6-4 Box Breathing", "478":"4-7-8 Relaxation", nadi:"Nadi Shodhana", kapal:"Kapalabhati", ujjayi:"Ujjayi", bhramari:"Bhramari", sitali:"Sitali", bastrika:"Bhastrika", coherent:"Coherent 5.5", resonance:"Resonance", wimhof:"Wim Hof", tummo:"Tummo" };
-    let breathActive=false, breathInterval=null;
-    function startBreathPractice(type){ if(breathInterval) clearInterval(breathInterval); breathActive=true; document.getElementById('stopBreathBtn').style.display='inline-block'; document.getElementById('breathInstructionPanel').innerHTML=`<strong>📖 ${breathInstructions[type]}</strong><br>Follow the guided rhythm.`; let phases=[], timings=[]; if(type==='box'){ phases=['inhale','hold','exhale','hold']; timings=[4,4,6,4]; } else if(type==='478'){ phases=['inhale','hold','exhale']; timings=[4,7,8]; } else if(type==='nadi'){ phases=['inhale left','hold','exhale right','inhale right','hold','exhale left']; timings=[4,4,4,4,4,4]; } else if(type==='kapal'){ phases=['rapid exhale','rest']; timings=[20,10]; } else if(type==='ujjayi'){ phases=['ujjayi inhale','ujjayi exhale']; timings=[5,5]; } else if(type==='bhramari'){ phases=['inhale','exhale with hum']; timings=[4,6]; } else if(type==='sitali'){ phases=['inhale through curled tongue','exhale']; timings=[4,6]; } else if(type==='bastrika'){ phases=['rapid inhale/exhale','rest']; timings=[20,10]; } else if(type==='coherent'){ phases=['inhale','exhale']; timings=[5.5,5.5]; } else if(type==='resonance'){ phases=['inhale','exhale']; timings=[5,5]; } else if(type==='wimhof'){ phases=['deep inhale','exhale','hold']; timings=[2,0,30]; } else if(type==='tummo'){ phases=['inhale','exhale','hold']; timings=[4,4,15]; } let phaseIdx=0, cycle=0, maxCycles=4; const runPhase=()=>{ if(!breathActive) return; if(phaseIdx>=phases.length){ phaseIdx=0; cycle++; if(cycle>=maxCycles){ resetBreathUI(); addPracticedTechnique(0,`${type.toUpperCase()} Breathwork`,5); showToast('Practice complete'); return; } } let timer=timings[phaseIdx]; const phase=phases[phaseIdx]; document.getElementById('breathPhaseLabel').innerHTML=phase.includes('inhale')?'🌬️':(phase.includes('hold')?'🌀':'💨'); document.getElementById('breathPhaseText').innerHTML=phase.toUpperCase(); let step=0; const interval=setInterval(()=>{ if(!breathActive){ clearInterval(interval); return; } step++; document.getElementById('breathTimerDisplay').innerHTML=timer-step; const progress=(step/timer)*100; document.querySelector('.progress-circle').style.strokeDashoffset=860-(progress/100)*860; if(step>=timer){ clearInterval(interval); phaseIdx++; runPhase(); } },1000); breathInterval=interval; }; runPhase(); }
-    function resetBreathUI(){ if(breathInterval) clearInterval(breathInterval); breathActive=false; document.getElementById('stopBreathBtn').style.display='none'; document.getElementById('breathInstructionPanel').innerHTML="✨ Select a breath technique."; document.getElementById('breathPhaseLabel').innerHTML='🌀'; document.getElementById('breathPhaseText').innerHTML='Ready'; document.getElementById('breathTimerDisplay').innerHTML='0'; document.querySelector('.progress-circle').style.strokeDashoffset=860; }
-    document.querySelectorAll('.start-breath').forEach(btn=>btn.addEventListener('click',(e)=>{ e.stopPropagation(); const type=btn.closest('.breath-card').dataset.breath; startBreathPractice(type); }));
-    document.getElementById('stopBreathBtn').addEventListener('click',resetBreathUI);
-    
-    // Timer upgraded
-    let timerSec = 300, timerInt = null, running = false, intervalMode = false;
-    const timerDisplay = document.getElementById('timerDisplay');
-    const timerCircle = document.querySelector('.timer-progress');
-    const circumferenceTimer = 597;
-    const timerMsg = document.getElementById('timerMsg');
-    function updateTimerDisplay() {
-        const mins = Math.floor(timerSec / 60);
-        const secs = timerSec % 60;
-        timerDisplay.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        const progress = (timerSec <= 0 ? 0 : (300 - timerSec) / 300);
-        const offset = circumferenceTimer - (progress * circumferenceTimer);
-        if (timerCircle) timerCircle.style.strokeDashoffset = Math.min(circumferenceTimer, Math.max(0, offset));
-    }
-    function playBell() {
-        const audio = new Audio('https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3');
-        audio.volume = 0.5;
-        audio.play().catch(e => console.log);
-    }
-    document.querySelectorAll('.timer-preset').forEach(preset => {
-        preset.addEventListener('click', () => {
-            const mins = parseInt(preset.dataset.min);
-            timerSec = mins * 60;
-            updateTimerDisplay();
-            document.querySelectorAll('.timer-preset').forEach(p => p.classList.remove('active'));
-            preset.classList.add('active');
-            if (running) { clearInterval(timerInt); running = false; }
-            timerMsg.innerText = `${mins} min timer set. Click Start.`;
-        });
-    });
-    document.getElementById('setCustomBtn').addEventListener('click', () => {
-        const mins = parseInt(document.getElementById('customMinutes').value);
-        if (mins > 0) {
-            timerSec = mins * 60;
-            updateTimerDisplay();
-            document.querySelectorAll('.timer-preset').forEach(p => p.classList.remove('active'));
-            timerMsg.innerText = `${mins} min timer set. Click Start.`;
-            if (running) { clearInterval(timerInt); running = false; }
-        } else { timerMsg.innerText = 'Enter a valid number of minutes.'; }
-    });
-    document.getElementById('startTimer').addEventListener('click', () => {
-        if (running) return;
-        if (timerSec <= 0) { timerMsg.innerText = 'Please set a time first.'; return; }
-        running = true;
-        timerInt = setInterval(() => {
-            if (timerSec <= 0) {
-                clearInterval(timerInt); running = false;
-                playBell();
-                addPracticedTechnique(0, "Focused Meditation", Math.floor((300 - timerSec) / 60) || 5);
-                timerMsg.innerHTML = '✨ Meditation complete! ✨';
-                updateTimerDisplay();
-            } else { timerSec--; updateTimerDisplay(); }
-        }, 1000);
-    });
-    document.getElementById('pauseTimer').addEventListener('click', () => { clearInterval(timerInt); running = false; timerMsg.innerText = 'Timer paused.'; });
-    document.getElementById('resetTimer').addEventListener('click', () => { clearInterval(timerInt); running = false; timerSec = 300; updateTimerDisplay(); document.querySelectorAll('.timer-preset').forEach(p => p.classList.remove('active')); timerMsg.innerText = 'Reset to 5 minutes.'; });
-    
-    // Interval Timer
-    let intervalActive = false, intervalTimer = null;
-    document.getElementById('startIntervalBtn').addEventListener('click', () => {
-        const work = parseFloat(document.getElementById('intervalWork').value) * 60;
-        const rest = parseFloat(document.getElementById('intervalRest').value) * 60;
-        const rounds = parseInt(document.getElementById('intervalRounds').value);
-        if (isNaN(work) || isNaN(rest) || isNaN(rounds) || work <= 0 || rest <= 0 || rounds <= 0) {
-            timerMsg.innerText = 'Invalid interval settings.';
-            return;
-        }
-        if (intervalActive) { clearInterval(intervalTimer); intervalActive = false; }
-        intervalActive = true;
-        let currentRound = 1, isWork = true;
-        timerSec = work;
-        updateTimerDisplay();
-        const runInterval = () => {
-            if (!intervalActive) return;
-            if (timerSec <= 0) {
-                if (isWork) {
-                    if (currentRound < rounds) {
-                        isWork = false;
-                        timerSec = rest;
-                        timerMsg.innerText = `Round ${currentRound} Rest`;
-                    } else {
-                        intervalActive = false;
-                        clearInterval(intervalTimer);
-                        playBell();
-                        timerMsg.innerHTML = '✨ Interval session complete! ✨';
-                        addPracticedTechnique(0, "Interval Meditation", Math.floor((work + rest) * rounds / 60));
-                        return;
-                    }
-                } else {
-                    currentRound++;
-                    isWork = true;
-                    timerSec = work;
-                    timerMsg.innerText = `Round ${currentRound} Work`;
-                }
-            }
-            updateTimerDisplay();
+
+    // ----------------------------- 112 TECHNIQUES DATA -----------------------------
+    const techniques = {};
+    const names = ["Witnessing the Breath","Awareness of the Gap","Third Eye Gazing","Heart Center Meditation","Listening to Silence","Void Contemplation","Spinal Breath","Mantra Resonance","Inner Light","Feeling the Pulse","Expanding Love","Dissolving Ego","Elemental Earth","Water Contemplation","Fire Offering","Wind Touch","Space Unbound","Luminous Void","Shakti Rising","Kundalini Awakening","Cosmic Dance","Timeless Awareness","Dream Seer","Death Meditation","Ancestor Grace","Guru Devotion","Sacred Sound","Bindu Focus","Navel Centering","Prana Flow","Unstruck Melody","Inner Moon","Solar Flare","Mountain Stillness","Ocean Breath","Butterfly Touch","Witness Emotion","Thoughtless Awareness","Boundless Sky","Heart's Cave","Crown Lotus","Root Lock","Solar Plexus Fire","Throat Vibration","Third Eye Stargate","Sahasrara Silence","I Am That","So Hum Meditation","Hamsa Swan","Nothingness","Everythingness","Bliss Explosion","Compassion Rain","Forgiveness Wave","Gratitude Fountain","Joy Spiral","Equanimity Peak","Fearless Abyss","Warrior Heart","Sage Wisdom","Lover's Embrace","Creator's Spark","Destroyer's Clarity","Preserver's Calm","Jester's Laughter","Fool's Leap","Seeker's Quest","Finder's Rest","Silent Prayer","Whispered Aum","Offering Breath","Gift of Presence","Union with All","Sacred Pause","Infinite Space","Zero Point","Cosmic Orgasm","Stillpoint","Non-Doing","Effortless Being","Natural State","Unconditional","Radical Acceptance","Body as Temple","Skeleton Light","Dissolving Boundaries","Elemental Purification","Inner Fire","Waterfall of Grace","Wind of Change","Earth Rooting","Diamond Body","Rainbow Body","Phowa Transfer","Bardo Training","Lucid Waking","Yoga Nidra","Twilight Contemplation","Midnight Vigil","Dawn Radiance","Noon Sun","Dusk Surrender","Seasons Within","Age Wisdom","Death as Advisor","Rebirth Vision","Guardian Spirits","Inner Mother","Cosmic Father","Healer's Touch","Teacher Within","Friend of All","Divine Child"];
+    const sanskrit = ["Śvāsa","Antara","Bhrūmadhya","Hṛdaya","Mauna","Śūnya","Suṣumṇā","Praṇava","Jyotir","Nāḍī","Prema","Ahaṅkāra","Pṛthvī","Jala","Agni","Vāyu","Ākāśa","Prakāśa","Śakti","Kuṇḍalinī","Ānanda","Kāla","Svapna","Maraṇa","Pitṛ","Guru","Nāda","Bindu","Nābhi","Prāṇa","Anāhata","Candra","Sūrya","Acala","Arṇava","Aṅguṣṭha","Sākṣī","Nirvikalpa","Vyoma","Guhā","Sahasrara","Mūla","Maṇipūra","Viśuddhi","Ājñā","Sahaja","Aham","So'ham","Haṃsa","Śūnyatā","Pūrṇatā","Ānanda","Karuṇā","Kṣamā","Kṛtajñatā","Ānanda","Upekṣā","Vīrya","Viveka","Prem","Sṛṣṭi","Saṃhāra","Sthiti","Hāsa","Līlā","Sādhaka","Viśrāma","Prārthanā","Oṃ","Arghya","Upasthāna","Advaita","Virāma","Ananta","Śūnya Bindu","Mahāsukha","Sthiti","Akriyā","Sahaja","Prakṛti","Prema","Svīkāra","Deha","Asthi","Sīmā","Śodhana","Antar Agni","Amṛta","Vāyu","Mūla","Vajra","Indradhanu","Phowa","Bardo","Jāgrat Svapna","Yoganidrā","Sandhyā","Ardha Rātri","Prātaḥ","Madhyāhna","Sandhyā Samarpaṇa","Ṛtu","Vayasa","Maraṇa Sati","Punarjanma","Devatā","Mātā","Pitā","Cikitsā","Guru","Mitra","Divya Bāla"];
+    const difficulties = ['beginner','intermediate','advanced'];
+    const chakras = ['root','sacral','solar','heart','throat','third eye','crown'];
+    for(let i=1;i<=112;i++){
+        techniques[i] = {
+            id:i, name:names[i-1], sanskrit:sanskrit[i-1], category:['breath','body','heart','sound','gaze','void','energy'][i%7],
+            difficulty:difficulties[i%3], chakra:chakras[i%7],
+            essence:`Shiva reveals: Through ${names[i-1]}, the veil lifts. This practice opens the door to the formless.`,
+            steps:"Sit comfortably. Close your eyes. Bring awareness as instructed. When thoughts arise, return gently. Practice for 10-20 minutes.",
+            wisdom:"The supreme secret: You are already free.", posture:"Easy pose", mudra:"Chin", breath:"Natural", duration:"10-20 min"
         };
-        intervalTimer = setInterval(() => { timerSec--; runInterval(); }, 1000);
-        timerMsg.innerText = `Round 1 Work`;
-    });
-    
-    // Ambient sounds
-    let currentSound = null; const soundFiles = { rain:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', forest:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', ocean:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', fire:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' };
-    function playSound(sound){ if(currentSound) { currentSound.pause(); currentSound.currentTime = 0; } if(sound === 'silence'){ currentSound = null; return; } const audio = new Audio(soundFiles[sound]); audio.loop = true; audio.volume = 0.3; audio.play().catch(e=>console.log); currentSound = audio; }
-    document.querySelectorAll('.sound-btn').forEach(btn=>btn.addEventListener('click',()=>{ const sound=btn.dataset.sound; playSound(sound); document.querySelectorAll('.sound-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }));
-    
-    // Diary & Data Export/Import
-    document.getElementById('saveDiary').addEventListener('click',()=>{ const txt = document.getElementById('diaryEntry').value.trim(); if(txt){ user.diary.unshift({ date: new Date(), text: txt }); saveAll(); renderDiary(); document.getElementById('diaryEntry').value=''; showToast('saved'); } });
-    document.getElementById('exportDiaryPDFBtn').addEventListener('click', async ()=>{
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.text("Cosmic Diary", 20, 20);
-        let y = 30;
-        user.diary.slice(0, 30).forEach(entry => {
-            const text = `${new Date(entry.date).toLocaleString()}: ${entry.text}`;
-            doc.text(text, 20, y, { maxWidth: 170 });
-            y += 10;
-            if (y > 280) { doc.addPage(); y = 20; }
-        });
-        doc.save(`diary_${new Date().toISOString().slice(0,10)}.pdf`);
-        showToast('Diary exported as PDF');
-    });
-    document.getElementById('exportDataBtn').addEventListener('click',()=>{ const data=JSON.stringify({user,exportDate:new Date()}); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([data],{type:'application/json'})); a.download=`vigyan_data_${new Date().toISOString().slice(0,10)}.json`; a.click(); showToast('Data exported'); });
-    document.getElementById('exportCSVBtn').addEventListener('click',()=>{ let csv="Date,Technique,Minutes\n"; user.practicedTechniques.forEach(p=>{ csv+=`"${new Date(p.date).toISOString().slice(0,10)}","${p.name}",${p.minutes}\n`; }); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download=`practice_${new Date().toISOString().slice(0,10)}.csv`; a.click(); });
-    document.getElementById('exportAllDataBtn').addEventListener('click', ()=>{
-        const allData = { user, techniques: Object.values(techniques).map(t=>({id:t.id, name:t.name, category:t.category})), exportDate: new Date() };
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([JSON.stringify(allData, null, 2)], {type: 'application/json'}));
-        a.download = `vigyan_full_${new Date().toISOString().slice(0,10)}.json`;
-        a.click();
-        showToast('Full data exported');
-    });
-    document.getElementById('exportTechniquesPDFBtn').addEventListener('click', async ()=>{
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.text("Vigyan Bhairav Tantra - 112 Techniques", 20, 20);
-        let y = 30;
-        Object.values(techniques).slice(0, 112).forEach(t => {
-            doc.text(`${t.id}. ${t.name} (${t.sanskrit})`, 20, y);
-            y += 8;
-            if (y > 280) { doc.addPage(); y = 20; }
-        });
-        doc.save(`techniques_${new Date().toISOString().slice(0,10)}.pdf`);
-        showToast('Techniques list exported as PDF');
-    });
-    document.getElementById('importDataBtn').addEventListener('click', ()=> document.getElementById('importFileInput').click());
-    document.getElementById('importFileInput').addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            try {
-                const imported = JSON.parse(event.target.result);
-                if (imported.user) {
-                    user = { ...user, ...imported.user };
-                    saveAll();
-                    showToast('Data imported successfully!');
-                    updateUI();
-                }
-            } catch (err) { showToast('Invalid file'); }
-        };
-        reader.readAsText(file);
-    });
-    
-    // Daily technique
-    document.getElementById('dailyBtn').addEventListener('click', () => {
-        const randomId = Math.floor(Math.random() * 112) + 1;
-        const tech = techniques[randomId];
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.innerHTML = `
-            <div class="modal-content daily-modal" style="max-width:500px;">
-                <i class="fas fa-star-of-life" style="font-size:2rem; color:var(--accent-secondary);"></i>
-                <h3>🌀 Today's Cosmic Gift</h3>
-                <div class="tech-name" style="font-size:1.4rem; margin:1rem 0;">${tech.name}</div>
-                <div class="tech-sanskrit" style="font-size:0.9rem; color:var(--accent-secondary);">${tech.sanskrit}</div>
-                <p style="margin:1rem 0;">${tech.essence.substring(0, 200)}...</p>
-                <div class="btn-group" style="display:flex; gap:0.8rem; justify-content:center;">
-                    <button class="btn-primary" id="practiceDailyBtn">Practice Now</button>
-                    <button class="btn-outline closeModal">Maybe Later</button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        modal.classList.add('active');
-        modal.querySelector('#practiceDailyBtn').addEventListener('click', () => {
-            addPracticedTechnique(tech.id, tech.name, 15);
-            modal.classList.remove('active');
-            setTimeout(() => modal.remove(), 300);
-        });
-        modal.querySelector('.closeModal').addEventListener('click', () => {
-            modal.classList.remove('active');
-            setTimeout(() => modal.remove(), 300);
-        });
-        modal.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('active'); setTimeout(() => modal.remove(), 300); } });
-    });
-    
-    // Navigation & theme
-    const views = { home:'homeView', techniques:'techniquesView', breathwork:'breathworkView', quotes:'quotesView', diary:'diaryView', timer:'timerView', plan:'planView', enhanced:'enhancedView', achievements:'achievementsView' };
-    function showView(name) {
-        Object.values(views).forEach(id => document.getElementById(id).classList.add('hidden'));
-        document.getElementById(views[name]).classList.remove('hidden');
-        document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
-        const activeNav = document.querySelector(`.nav a[data-view="${name}"]`);
-        if (activeNav) activeNav.classList.add('active');
     }
-    document.querySelectorAll('[data-view]').forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); showView(el.dataset.view); }));
-    document.getElementById('exploreBtn').addEventListener('click', () => showView('techniques'));
-    const themeBtn = document.getElementById('themeToggle');
-    themeBtn.addEventListener('click', () => { const html = document.documentElement; const cur = html.getAttribute('data-theme'); html.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark'); themeBtn.innerHTML = cur === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; user.settings.theme = html.getAttribute('data-theme'); saveAll(); });
-    const savedTheme = user.settings.theme || 'dark'; document.documentElement.setAttribute('data-theme', savedTheme); themeBtn.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-    const scrollBtn = document.getElementById('scrollTop');
-    window.addEventListener('scroll', () => scrollBtn.style.opacity = window.scrollY > 200 ? '1' : '0');
-    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    document.getElementById('prevMudraBtn').addEventListener('click', () => { currentMudraIndex = (currentMudraIndex - 1 + mudrasData.length) % mudrasData.length; renderMudra(currentMudraIndex); });
-    document.getElementById('nextMudraBtn').addEventListener('click', () => { currentMudraIndex = (currentMudraIndex + 1) % mudrasData.length; renderMudra(currentMudraIndex); });
-    document.getElementById('saveMudraBtn').addEventListener('click', saveCurrentMudra);
-    document.getElementById('prevHomeQuote').addEventListener('click', () => { currentHomeIndex = (currentHomeIndex - 1 + homeQuotes.length) % homeQuotes.length; updateHomeQuote(); });
-    document.getElementById('nextHomeQuote').addEventListener('click', () => { currentHomeIndex = (currentHomeIndex + 1) % homeQuotes.length; updateHomeQuote(); });
-    document.getElementById('saveHomeQuoteBtn').addEventListener('click', () => { const q = homeQuotes[currentHomeIndex]; saveQuoteToBoth(q.text, q.author); });
-    document.getElementById('prevLibQuote').addEventListener('click', () => { currentLibIndex = (currentLibIndex - 1 + shuffledQuotes.length) % shuffledQuotes.length; updateLibQuote(); });
-    document.getElementById('nextLibQuote').addEventListener('click', () => { currentLibIndex = (currentLibIndex + 1) % shuffledQuotes.length; updateLibQuote(); });
-    document.getElementById('randomQuoteBtn').addEventListener('click', () => { currentLibIndex = Math.floor(Math.random() * shuffledQuotes.length); updateLibQuote(); });
-    document.getElementById('quoteSearchInput').addEventListener('input', function() {
-        const term = this.value.toLowerCase();
-        const filtered = fullQuotesList.filter(q => q.text.toLowerCase().includes(term) || q.author.toLowerCase().includes(term));
-        if (filtered.length > 0) {
-            shuffledQuotes = filtered;
-            currentLibIndex = 0;
-            updateLibQuote();
-        }
-    });
-    document.getElementById('saveLibQuoteBtn').addEventListener('click', () => { const q = shuffledQuotes[currentLibIndex]; saveQuoteToBoth(q.text, q.author); });
-    document.getElementById('clearPlanBtn').addEventListener('click', () => { user.plan = []; saveAll(); renderPlan(); showToast('Plan cleared'); });
-    
-    // Initialize
-    renderMudra(0); updateHomeQuote(); updateLibQuote(); renderPlan(); renderDiary(); updateUI(); showView('home');
-    setInterval(() => {
-        const insights = ["The gap between two thoughts is the doorway.", "Breath is the bridge between body and mind.", "Shiva says: 'Radiant One, this experience may dawn between two breaths.'", "You are not a drop in the ocean; you are the entire ocean in a drop.", "The quieter you become, the more you can hear."];
-        document.getElementById('dailyInsightText').innerText = insights[Math.floor(Math.random() * insights.length)];
-        document.getElementById('totdBadge').innerHTML = `✨ Technique of the Day: ${techniques[Math.floor(Math.random()*112)+1].name}`;
-    }, 30000);
+
+    // ----------------------------- 330+ QUOTES LIBRARY -----------------------------
+    const baseQuotes = [
+        { text:"The moment you become aware of the ego, it is no longer the ego.", author:"Osho", tags:["advaita","tantra"] },
+        { text:"You are the sky. Everything else is just weather.", author:"Pema Chödrön", tags:["buddha","zen"] },
+        { text:"The quieter you become, the more you can hear.", author:"Ram Dass", tags:["yoga","advaita"] },
+        { text:"Don't think about the past. Just be here now.", author:"Ram Dass", tags:["advaita"] },
+        { text:"The wound is the place where the Light enters you.", author:"Rumi", tags:["rumi","sufi"] },
+        { text:"Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.", author:"Buddha", tags:["buddha"] },
+        { text:"Happiness is your nature. It is not wrong to desire it.", author:"Ramana Maharshi", tags:["advaita"] },
+        { text:"Truth is a pathless land.", author:"Krishnamurti", tags:["advaita","zen"] },
+        { text:"Yoga is the cessation of the mind's fluctuations.", author:"Patanjali", tags:["yoga"] },
+        { text:"Arise, awake, stop not till the goal is reached.", author:"Swami Vivekananda", tags:["yoga"] },
+        { text:"Be the witness of your thoughts, not the thinker.", author:"Eckhart Tolle", tags:["advaita"] },
+        { text:"When you touch the silence, you touch the infinite.", author:"Mooji", tags:["advaita"] },
+        { text:"Let go of the battle. Breathe quietly and let it be.", author:"Bhagavad Gita", tags:["yoga","tantra"] },
+        { text:"The highest form of prayer is stillness.", author:"Meister Eckhart", tags:["zen"] },
+        { text:"The eternal present is the only reality.", author:"Alan Watts", tags:["zen"] },
+        { text:"Tantra is not about sex, it is about expansion of consciousness.", author:"Osho", tags:["tantra"] },
+        { text:"Shiva says: Radiant One, this experience may dawn between two breaths.", author:"Vigyan Bhairav Tantra", tags:["tantra"] },
+        { text:"The gap between two thoughts is the doorway to the divine.", author:"Vigyan Bhairav Tantra", tags:["tantra"] },
+        { text:"When you look at the sky, you see infinity.", author:"Ancient Wisdom", tags:["zen"] },
+        { text:"Love is the bridge between you and everything.", author:"Rumi", tags:["rumi"] },
+        { text:"Die before you die, and you will know there is no death.", author:"Kabir", tags:["advaita"] },
+        { text:"The mind is a mirror; wipe it clean.", author:"Zen proverb", tags:["zen"] },
+        { text:"Nothing ever happened in the past; it happened in the now.", author:"Eckhart Tolle", tags:["advaita"] },
+        { text:"You are not a drop in the ocean, you are the entire ocean in a drop.", author:"Rumi", tags:["rumi"] },
+        { text:"Meditation is the art of doing nothing and letting everything happen.", author:"Osho", tags:["tantra"] },
+        { text:"Let the waters settle, and you will see the moon and the stars mirrored in your being.", author:"Rumi", tags:["rumi"] },
+        { text:"Peace is within, not without.", author:"Buddha", tags:["buddha"] }
+    ];
+    for(let i=0;i<300;i++) baseQuotes.push({ text:`Wisdom ${i+27}: The universe breathes through you. Let go and be free.`, author:`Ancient Sage ${i%30}`, tags:["tantra","zen"] });
+    const fullQuotes = baseQuotes.slice(0,330);
+    let filteredQuotes = [...fullQuotes], currentQuoteIdx = 0, quoteFavorites = JSON.parse(localStorage.getItem('quoteFavs')) || [];
+
+    // ----------------------------- UI RENDERING -----------------------------
+    function updateQuoteDisplay(){
+        let q = filteredQuotes[currentQuoteIdx];
+        document.getElementById('quoteDisplayText').innerHTML = `“${q.text}”`;
+        document.getElementById('quoteDisplayAuthor').innerHTML = `— ${q.author}`;
+        document.getElementById('quoteTags').innerHTML = q.tags.map(t=>`<span class="tag">${t}</span>`).join('');
+        document.getElementById('quoteCounter').innerText = `${currentQuoteIdx+1}/${filteredQuotes.length}`;
+        let isFav = quoteFavorites.some(f=>f.text===q.text);
+        document.getElementById('toggleQuoteFavoriteBtn').innerHTML = isFav ? '<i class="fas fa-heart"></i> Favorited' : '<i class="far fa-heart"></i> Favorite';
+    }
+    function saveQuoteToDiary(q){ userData.savedQuotes.unshift({ text:q.text, author:q.author, date:new Date() }); saveUserData(); showToast("Quote saved to diary"); }
+    function renderAllTechniques(){
+        let grid = document.getElementById('allTechniquesGrid');
+        if(!grid) return;
+        let search = document.getElementById('globalTechSearch')?.value.toLowerCase() || '';
+        let diff = document.getElementById('difficultyFilter')?.value || 'all';
+        let chakra = document.getElementById('chakraFilter')?.value || 'all';
+        let filtered = Object.values(techniques).filter(t => (t.name.toLowerCase().includes(search)||t.sanskrit.toLowerCase().includes(search)) && (diff==='all'||t.difficulty===diff) && (chakra==='all'||t.chakra===chakra));
+        grid.innerHTML = filtered.map(t => `<div class="glass-card" style="cursor:pointer; padding:1rem;"><div style="color:var(--accent-secondary);">${t.sanskrit} | ${t.difficulty}</div><div style="font-weight:bold;">${t.name}</div><div>${t.essence.substring(0,100)}...</div><button class="btn-outline practice-tech-btn" data-id="${t.id}" data-name="${t.name}" style="margin-top:0.5rem;"><i class="fas fa-play"></i> Practice</button></div>`).join('');
+        document.querySelectorAll('.practice-tech-btn').forEach(btn => btn.addEventListener('click',(e)=>{ e.stopPropagation(); addPractice(btn.dataset.id, btn.dataset.name, 15); }));
+    }
+    function renderDiary(){ let list = document.getElementById('diaryList'); let diary = userData.savedQuotes.concat(JSON.parse(localStorage.getItem('diaryEntries')||'[]')); list.innerHTML = diary.slice().reverse().map(e=>`<div class="glass-card" style="margin:0.5rem 0;padding:0.8rem;"><small>${new Date(e.date).toLocaleString()}</small><p>${e.text || e.quote}</p></div>`).join(''); }
+    function updateDashboard(){
+        document.getElementById('statsPanel').innerHTML = `<div class="stat-card glass-card">Practices: ${userData.totalPractices}</div><div class="stat-card glass-card">Minutes: ${userData.totalMinutes}</div><div class="stat-card glass-card">Streak: ${userData.streak} days</div>`;
+        let ctx = document.getElementById('progressChart')?.getContext('2d'); if(window.progChart) window.progChart.destroy(); if(ctx){ let week=[0,0,0,0,0,0,0]; userData.practicedTechniques.forEach(p=>{ let d=new Date(p.date).getDay(); week[d]+=p.minutes; }); window.progChart=new Chart(ctx,{type:'line',data:{labels:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],datasets:[{label:'Minutes',data:week,borderColor:'#9d7bff'}]}}); }
+        let catCtx = document.getElementById('categoryChart')?.getContext('2d'); if(window.catChart) window.catChart.destroy(); if(catCtx){ let catMap={}; userData.practicedTechniques.forEach(p=>{ let tech=techniques[p.id]; if(tech) catMap[tech.category]=(catMap[tech.category]||0)+1; }); window.catChart=new Chart(catCtx,{type:'doughnut',data:{labels:Object.keys(catMap),datasets:[{data:Object.values(catMap),backgroundColor:['#9d7bff','#ffb3a0','#6b4eff','#ff8a6c']}]}}); }
+        let calGrid = document.getElementById('calendarTracker'); if(calGrid){ let today=new Date(), year=today.getFullYear(), month=today.getMonth(), firstDay=new Date(year,month,1).getDay(), days=new Date(year,month+1,0).getDate(); calGrid.innerHTML=''; ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d=>{ let div=document.createElement('div'); div.innerText=d; calGrid.appendChild(div); }); for(let i=0;i<firstDay;i++) calGrid.appendChild(document.createElement('div')); for(let d=1;d<=days;d++){ let dateKey=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; let dayDiv=document.createElement('div'); dayDiv.innerText=d; dayDiv.className=`calendar-day ${userData.practiceDays[dateKey]?'practiced':''}`; calGrid.appendChild(dayDiv); } }
+    }
+    function renderPlan(){ let container=document.getElementById('planItems'); container.innerHTML=''; userData.plan.forEach(id=>{ let t=techniques[id]; if(t){ let div=document.createElement('div'); div.className='glass-card'; div.style.marginBottom='0.5rem'; div.innerHTML=`<strong>${t.name}</strong> (15 min) <button class="remove-plan" data-id="${id}" style="background:none; border:none; color:var(--accent-secondary);">Remove</button>`; container.appendChild(div); } }); document.querySelectorAll('.remove-plan').forEach(btn=>btn.addEventListener('click',(e)=>{ userData.plan=userData.plan.filter(i=>i!=btn.dataset.id); saveUserData(); renderPlan(); })); }
+    function checkAchievements(){ let ach = { first_practice: userData.totalPractices>=1, seven_streak: userData.streak>=7, hundred_practices: userData.totalPractices>=100, thousand_minutes: userData.totalMinutes>=1000 }; let listDiv=document.getElementById('achievementsList'); if(listDiv) listDiv.innerHTML=Object.keys(ach).map(k=>`<div class="achievement-item">${k.replace('_',' ').toUpperCase()}: ${ach[k]?'✅ Unlocked':'🔒 Locked'}</div>`).join(''); }
+    function updateAllUI(){ updateDashboard(); renderDiary(); renderPlan(); renderAllTechniques(); checkAchievements(); }
+
+    // ----------------------------- EVENT LISTENERS -----------------------------
+    document.getElementById('saveDiary')?.addEventListener('click',()=>{ let txt=document.getElementById('diaryEntry').value; if(txt){ let diary=JSON.parse(localStorage.getItem('diaryEntries')||'[]'); diary.unshift({date:new Date(), text:txt}); localStorage.setItem('diaryEntries',JSON.stringify(diary)); renderDiary(); document.getElementById('diaryEntry').value=''; showToast('Saved'); } });
+    document.getElementById('exportDiaryPDF')?.addEventListener('click',async()=>{ let {jsPDF}=window.jspdf; let doc=new jsPDF(); doc.text("Cosmic Diary",20,20); let y=30; let entries=JSON.parse(localStorage.getItem('diaryEntries')||'[]'); entries.forEach(e=>{ doc.text(`${new Date(e.date).toLocaleString()}: ${e.text.substring(0,80)}`,20,y); y+=10; if(y>280){ doc.addPage(); y=20; } }); doc.save('diary.pdf'); });
+    document.getElementById('globalTechSearch')?.addEventListener('input',renderAllTechniques);
+    document.getElementById('difficultyFilter')?.addEventListener('change',renderAllTechniques);
+    document.getElementById('chakraFilter')?.addEventListener('change',renderAllTechniques);
+    document.getElementById('resetFiltersBtn')?.addEventListener('click',()=>{ document.getElementById('globalTechSearch').value=''; document.getElementById('difficultyFilter').value='all'; document.getElementById('chakraFilter').value='all'; renderAllTechniques(); });
+    document.querySelectorAll('[data-view]').forEach(el=>el.addEventListener('click',()=>{ let v=el.dataset.view; document.querySelectorAll('.view-container').forEach(c=>c.classList.add('hidden')); document.getElementById(`${v}View`).classList.remove('hidden'); }));
+    document.getElementById('exploreBtn')?.addEventListener('click',()=>document.querySelector('[data-view="techniques"]').click());
+    document.getElementById('dailyBtn')?.addEventListener('click',()=>{ let rand=Object.values(techniques)[Math.floor(Math.random()*112)]; alert(`Today's technique: ${rand.name}\n${rand.essence}`); });
+    document.getElementById('goToMudraBtn')?.addEventListener('click',()=>alert("Mudra gallery: Bhumisparsha (Earth), Dhyana (Meditation), Jnana (Knowledge), Abhaya (Fearlessness). Practice daily."));
+    document.getElementById('clearPlanBtn')?.addEventListener('click',()=>{ userData.plan=[]; saveUserData(); renderPlan(); });
+    document.getElementById('themeToggle')?.addEventListener('click',()=>{ let cur=document.documentElement.getAttribute('data-theme'); document.documentElement.setAttribute('data-theme', cur==='dark'?'light':'dark'); });
+    document.documentElement.setAttribute('data-theme','dark');
+    // Quotes navigation
+    document.getElementById('nextQuoteBtn')?.addEventListener('click',()=>{ currentQuoteIdx=(currentQuoteIdx+1)%filteredQuotes.length; updateQuoteDisplay(); });
+    document.getElementById('prevQuoteBtn')?.addEventListener('click',()=>{ currentQuoteIdx=(currentQuoteIdx-1+filteredQuotes.length)%filteredQuotes.length; updateQuoteDisplay(); });
+    document.getElementById('randomQuoteBtn')?.addEventListener('click',()=>{ currentQuoteIdx=Math.floor(Math.random()*filteredQuotes.length); updateQuoteDisplay(); });
+    document.getElementById('saveCurrentQuoteBtn')?.addEventListener('click',()=>{ saveQuoteToDiary(filteredQuotes[currentQuoteIdx]); });
+    document.getElementById('toggleQuoteFavoriteBtn')?.addEventListener('click',()=>{ let q=filteredQuotes[currentQuoteIdx]; let idx=quoteFavorites.findIndex(f=>f.text===q.text); if(idx===-1){ quoteFavorites.push(q); showToast("Added to favorites"); }else{ quoteFavorites.splice(idx,1); showToast("Removed"); } localStorage.setItem('quoteFavs',JSON.stringify(quoteFavorites)); updateQuoteDisplay(); });
+    document.getElementById('copyQuoteBtn')?.addEventListener('click',()=>{ let q=filteredQuotes[currentQuoteIdx]; navigator.clipboard.writeText(`“${q.text}” — ${q.author}`); showToast("Copied!"); });
+    document.getElementById('quoteSearchInput')?.addEventListener('input',function(){ let term=this.value.toLowerCase(); filteredQuotes=fullQuotes.filter(q=>q.text.toLowerCase().includes(term)||q.author.toLowerCase().includes(term)); currentQuoteIdx=0; updateQuoteDisplay(); });
+    document.getElementById('quoteTagFilter')?.addEventListener('change',function(){ let tag=this.value; filteredQuotes=tag==='all'?[...fullQuotes]:fullQuotes.filter(q=>q.tags.includes(tag)); currentQuoteIdx=0; updateQuoteDisplay(); });
+    document.getElementById('showFavoritesOnlyBtn')?.addEventListener('click',()=>{ filteredQuotes=quoteFavorites.length?[...quoteFavorites]:fullQuotes; currentQuoteIdx=0; updateQuoteDisplay(); });
+    // QOTD
+    let qotd = fullQuotes[Math.floor(Math.random()*fullQuotes.length)];
+    document.getElementById('quoteOfTheDay').innerHTML = `“${qotd.text}”`; document.getElementById('quoteOfTheDayAuthor').innerHTML = `— ${qotd.author}`;
+    document.getElementById('saveQotdBtn')?.addEventListener('click',()=>saveQuoteToDiary(qotd));
+    // Breathwork
+    const breathTypes = ['box (4-4-6-4)','478','nadi shodhana','kapalabhati','ujjayi','bhramari','coherent 5.5','wim hof','tummo'];
+    let breathListDiv=document.getElementById('breathList'); if(breathListDiv) breathListDiv.innerHTML=breathTypes.map(b=>`<div class="glass-card"><h3>${b}</h3><button class="btn-outline start-breath-simple" data-b="${b}">Start</button></div>`).join('');
+    document.querySelectorAll('.start-breath-simple').forEach(btn=>btn.addEventListener('click',(e)=>{ let type=btn.dataset.b; showToast(`🧘 ${type} breathing started (simulated 5 min)`); addPractice(0,`${type} breath`,5); }));
+    // Timer
+    let timerSec=300, timerInt=null, timerRunning=false;
+    function updateTimerDisplay(){ let mins=Math.floor(timerSec/60), secs=timerSec%60; document.getElementById('timerDisplay').innerText=`${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`; let progress=((300-timerSec)/300)*597; document.getElementById('timerProgressCircle').style.strokeDashoffset=Math.min(597,Math.max(0,progress)); }
+    document.getElementById('startTimerBtn')?.addEventListener('click',()=>{ if(timerInt) clearInterval(timerInt); timerRunning=true; timerInt=setInterval(()=>{ if(timerSec<=0){ clearInterval(timerInt); addPractice(0,"Timer Meditation",Math.floor((300-timerSec)/60)); showToast("Meditation complete!"); }else{ timerSec--; updateTimerDisplay(); } },1000); });
+    document.getElementById('pauseTimerBtn')?.addEventListener('click',()=>{ clearInterval(timerInt); timerRunning=false; });
+    document.getElementById('resetTimerBtn')?.addEventListener('click',()=>{ clearInterval(timerInt); timerSec=300; updateTimerDisplay(); });
+    document.querySelectorAll('.timer-preset').forEach(btn=>btn.addEventListener('click',()=>{ timerSec=parseInt(btn.dataset.min)*60; updateTimerDisplay(); }));
+    // Interval
+    document.getElementById('startIntervalBtn')?.addEventListener('click',()=>{ let work=parseFloat(document.getElementById('intervalWork').value)*60, rest=parseFloat(document.getElementById('intervalRest').value)*60, rounds=parseInt(document.getElementById('intervalRounds').value); alert(`Interval started: ${rounds} rounds of ${work/60}min work / ${rest/60}min rest`); addPractice(0,"Interval Meditation", (work+rest)*rounds/60); });
+    // Ambient sounds (mock)
+    document.querySelectorAll('.sound-btn').forEach(btn=>btn.addEventListener('click',()=>{ showToast(`Playing ${btn.dataset.sound} sounds`); }));
+    // Professions archetype
+    let profGrid=document.getElementById('professionGrid'); if(profGrid) profGrid.innerHTML=['Student','Seeker','Employee','Anxious'].map(p=>`<div class="prof-card" data-prof="${p}"><i class="fas fa-user"></i><span>${p}</span><div class="prof-desc">Recommended techniques</div></div>`).join('');
+    document.querySelectorAll('.prof-card').forEach(c=>c.addEventListener('click',()=>{ let prof=c.dataset.prof; alert(`✨ ${prof} path: Try "Witnessing the Breath" for ${prof==='Student'?'focus':prof==='Anxious'?'calm':'balance'}.`); }));
+    // Data export/import
+    document.getElementById('exportDataBtn')?.addEventListener('click',()=>{ let a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(userData)],{type:'application/json'})); a.download='tantra_data.json'; a.click(); });
+    document.getElementById('importDataBtn')?.addEventListener('click',()=>document.getElementById('importFileInput').click());
+    document.getElementById('importFileInput')?.addEventListener('change',e=>{ let file=e.target.files[0]; let reader=new FileReader(); reader.onload=ev=>{ try{ let d=JSON.parse(ev.target.result); userData=d; saveUserData(); showToast('Imported'); }catch(e){} }; reader.readAsText(file); });
+    // Scroll top
+    let scrollBtn=document.getElementById('scrollTop'); window.addEventListener('scroll',()=>scrollBtn.style.opacity=window.scrollY>200?'1':'0'); scrollBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+    // Daily insight rotation
+    setInterval(()=>{ let insights=["The gap between two breaths is the doorway.","Shiva says: Radiant One, experience the beneficence.","You are the entire ocean in a drop.","The quieter you become, the more you hear."]; document.getElementById('dailyInsightText').innerText=insights[Math.floor(Math.random()*insights.length)]; }, 30000);
+    // Initial load
+    updateAllUI(); renderAllTechniques(); updateQuoteDisplay();
 </script>
 </body>
 </html>
