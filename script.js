@@ -1,7 +1,7 @@
 /**
  * ============================================================
  * VIGYAAN BHAIRAV · PEACEFUL MEDITATION PLATFORM
- * Complete JavaScript Application
+ * Complete Application Logic
  * Version 2.0.0
  * ============================================================
  */
@@ -142,7 +142,7 @@
 
     function getRecommendedTechniques(prof) {
         const scored = Object.values(TECHNIQUES).map(function(t) {
-            var score = prof.keywords.reduce(function(s, k) {
+            let score = prof.keywords.reduce(function(s, k) {
                 return s + (t.name.toLowerCase().includes(k) ? 5 : 0) + (t.category.includes(k) ? 3 : 0);
             }, 0);
             return { tech: t, score: score };
@@ -192,11 +192,7 @@
         kapal: { name: 'Kapalabhati', phases: ['rapid exhale', 'rest'], timings: [20, 10] },
         bhramari: { name: 'Bhramari Hum', phases: ['inhale', 'exhale with hum'], timings: [4, 6] },
         coherent: { name: 'Coherent 5.5', phases: ['inhale', 'exhale'], timings: [5.5, 5.5] },
-        sitali: { name: 'Sitali Cool', phases: ['inhale through curled tongue', 'exhale'], timings: [4, 6] },
-        bastrika: { name: 'Bhastrika', phases: ['rapid breath', 'rest'], timings: [20, 10] },
-        tummo: { name: 'Tummo Inner Fire', phases: ['inhale', 'hold', 'exhale'], timings: [6, 12, 6] },
-        sama: { name: 'Sama Vritti', phases: ['inhale', 'exhale'], timings: [5, 5] },
-        wimhof: { name: 'Wim Hof', phases: ['deep inhale', 'exhale', 'retention'], timings: [2, 0, 30] }
+        sitali: { name: 'Sitali Cool', phases: ['inhale through curled tongue', 'exhale'], timings: [4, 6] }
     };
 
     // ============================================================
@@ -297,11 +293,12 @@
 
     function updateLevel() {
         var mins = user.totalMinutes;
-        var level = "Novice 🌿";
+        var level = "Novice";
         if (mins >= 5000) level = "Mahasiddha 🕉️";
         else if (mins >= 2500) level = "Enlightened 🌟";
         else if (mins >= 1000) level = "Adept 🔮";
         else if (mins >= 300) level = "Seeker 🌱";
+        else level = "Novice 🌿";
 
         var levelBadge = document.getElementById('userLevelBadge');
         var enhLevel = document.getElementById('enhLevel');
@@ -535,8 +532,7 @@
         if (!container) return;
 
         if (user.diary.length === 0) {
-            container.innerHTML =
-                '<div style="color:var(--text-secondary);opacity:0.5;text-align:center;padding:1rem 0;">No entries yet. Begin your journey.</div>';
+            container.innerHTML = '<div style="color:var(--text-secondary);opacity:0.5;text-align:center;padding:1rem 0;">No entries yet. Begin your journey.</div>';
             return;
         }
 
@@ -823,7 +819,7 @@
         document.querySelectorAll('footer a[data-view]').forEach(function(el) {
             el.addEventListener('click', function(e) {
                 e.preventDefault();
-                showView(this.dataset.view);
+                showView(el.dataset.view);
             });
         });
 
