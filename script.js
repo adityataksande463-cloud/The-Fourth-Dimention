@@ -1,809 +1,1397 @@
-// ==================== 112 TECHNIQUES DATA ====================
-const techniques = {};
-const techniqueNames = [
-    "Witnessing the Breath","Awareness of the Gap Between Breaths","Breath Traveling Through the Spine","Concentration on the Third Eye","Witnessing Thoughts",
-    "Listening to Inner Resonance","Gazing into Darkness","Heart Center Meditation","Body Sensation Awareness","Slow Breath Meditation",
-    "Walking Awareness","Observation of Emotions","Listening to Silence","Whole-Body Awareness","Expansion of Awareness",
-    "Spine Awareness","Total Relaxation","Edge of Sleep","Momentary Suspension","Perceiving the Space Between",
-    "Feeling the Void","Embodied Light","Dissolving into Sound","Touching the Sky","Savoring the Source",
-    "Radiating Love","Itching and Tingling","Flame Contemplation","Pulse of Life","Empty Sky",
-    "Luminous Void","Elemental Contact","Breath as Cosmic Wind","Stillness Between Heartbeats","Spontaneous Satori",
-    "Scent of the Absolute","Expanding to Horizon","Centering in Navel","Cave of the Heart","Unstruck Sound",
-    "Shakti Rising","Kundalini Awakening","Absorption in Color","Inner Moon","Sun in Solar Plexus",
-    "Void Gazing","Darkness Beyond Form","Guru's Grace","Dissolving Ego","Surrendering to What Is",
-    "Non-Doing","Effortless Being","Resting in Natural State","Unconditional Love","Compassion Meditation",
-    "Joy Unbound","Equanimity","Forgiveness Practice","Gratitude Shower","Body as Temple",
-    "Skeleton Awareness","Dissolving Boundaries","Elemental Purification","Fire Offering Within","Waterfall of Grace",
-    "Mountain Stillness","Wind of Change","Space Unbounded","Earth Rooting","Cosmic Dance",
-    "Timeless Awareness","Dreamlike Illusion","Lucid Waking","Sleep as Yoga","Twilight Contemplation",
-    "Midnight Vigil","Dawn Awakening","Noon Radiance","Dusk Surrender","Seasons Within",
-    "Age as Wisdom","Death Awareness","Rebirth Visualization","Ancestor Connection","Guardian Spirits",
-    "Divine Child","Inner Mother","Cosmic Father","Friend of All","Teacher Within",
-    "Healer's Touch","Warrior's Courage","Sage's Silence","Lover's Embrace","Creator's Joy",
-    "Destroyer's Clarity","Preserver's Patience","Dancer's Grace","Beggar's Humility","King's Sovereignty",
-    "Jester's Laughter","Fool's Leap","Seeker's Quest","Finder's Rest","Praise to the Void",
-    "Hymn to the Heart","Mantra of Light","Seed Syllable","Whispered Prayer","Silent Reverence",
-    "Offering of Breath","Gift of Presence","Service to All","Union with All"
-];
-const categories = ['breath','body','heart','sound','gaze','void','energy','light','touch','space','stillness','emotion','awareness','devotion'];
-const postures = ['Sukhasana','Padmasana','Vajrasana','Shavasana','Siddhasana','Standing','Walking','Ardha Padmasana'];
-const mudrasList = ['Chin mudra','Jnana mudra','Dhyana mudra','Bhairavi mudra','Shambhavi mudra','Khechari mudra','Yoni mudra','Viparita Karani'];
-const breaths = ['Natural','Ujjayi','Nadi Shodhana','Kapalabhati','Sama Vritti','Dirga','Bhastrika','Visualized'];
+/**
+ * ============================================================
+ * VIGYAAN BHAIRAV · PEACEFUL MEDITATION PLATFORM
+ * Complete JavaScript Application
+ * Version 2.0.0
+ * ============================================================
+ */
 
-for (let i = 1; i <= 112; i++) {
-    const idx = i-1;
-    const cat = categories[idx % categories.length];
-    const name = techniqueNames[idx % techniqueNames.length];
-    const sanskrit = `Sūtra ${i}: ${name.replace(/ /g, '')}`;
-    const essence = `A profound ${cat} practice that opens the door to direct experience.`;
-    const wisdom = `Osho: "In this technique, you become the witness. Let the experience wash over you."`;
-    const posture = postures[idx % postures.length];
-    const mudra = mudrasList[idx % mudrasList.length];
-    const breath = breaths[idx % breaths.length];
-    const duration = `${10 + (idx % 15)}-${20 + (idx % 15)} min`;
-    const steps = [
-        `Find a comfortable ${posture.toLowerCase()} posture.`,
-        `Allow the body to relax completely.`,
-        `Bring awareness to ${cat === 'breath' ? 'the natural flow of breath' : cat === 'sound' ? 'subtle sounds around you' : cat === 'gaze' ? 'a single point' : 'the chosen object of meditation'}.`,
-        `When distracted, gently return without judgment.`,
-        `Stay present for the duration.`
+(function() {
+    'use strict';
+
+    // ============================================================
+    // 1. DATA: 112 TECHNIQUES
+    // ============================================================
+    const TECHNIQUES = {};
+
+    const techniqueNames = [
+        "Witnessing the Breath", "Awareness of the Gap", "Spinal Current Meditation", "Third Eye Gazing",
+        "Witnessing Thoughts", "Inner Resonance", "Gazing into Darkness", "Heart Center Meditation",
+        "Body Sensation Awareness", "Slow Breath Meditation", "Walking Awareness", "Observation of Emotions",
+        "Listening to Silence", "Whole-Body Awareness", "Expansion of Awareness", "Spine Awareness",
+        "Total Relaxation", "Edge of Sleep", "Momentary Suspension", "Perceiving the Space Between",
+        "Feeling the Void", "Embodied Light", "Dissolving into Sound", "Touching the Sky",
+        "Savoring the Source", "Radiating Love", "Itching and Tingling", "Flame Contemplation",
+        "Pulse of Life", "Empty Sky", "Luminous Void", "Elemental Contact",
+        "Breath as Cosmic Wind", "Stillness Between Heartbeats", "Spontaneous Satori", "Scent of the Absolute",
+        "Expanding to Horizon", "Centering in Navel", "Cave of the Heart", "Unstruck Sound",
+        "Shakti Rising", "Kundalini Awakening", "Absorption in Color", "Inner Moon",
+        "Sun in Solar Plexus", "Void Gazing", "Darkness Beyond Form", "Guru's Grace",
+        "Dissolving Ego", "Surrendering to What Is", "Non-Doing", "Effortless Being",
+        "Resting in Natural State", "Unconditional Love", "Compassion Meditation", "Joy Unbound",
+        "Equanimity", "Forgiveness Practice", "Gratitude Shower", "Body as Temple",
+        "Skeleton Awareness", "Dissolving Boundaries", "Elemental Purification", "Fire Offering Within",
+        "Waterfall of Grace", "Mountain Stillness", "Wind of Change", "Space Unbounded",
+        "Earth Rooting", "Cosmic Dance", "Timeless Awareness", "Dreamlike Illusion",
+        "Lucid Waking", "Sleep as Yoga", "Twilight Contemplation", "Midnight Vigil",
+        "Dawn Awakening", "Noon Radiance", "Dusk Surrender", "Seasons Within",
+        "Age as Wisdom", "Death Awareness", "Rebirth Visualization", "Ancestor Connection",
+        "Guardian Spirits", "Divine Child", "Inner Mother", "Cosmic Father",
+        "Friend of All", "Teacher Within", "Healer's Touch", "Warrior's Courage",
+        "Sage's Silence", "Lover's Embrace", "Creator's Joy", "Destroyer's Clarity",
+        "Preserver's Patience", "Dancer's Grace", "Beggar's Humility", "King's Sovereignty",
+        "Jester's Laughter", "Fool's Leap", "Seeker's Quest", "Finder's Rest",
+        "Praise to the Void", "Hymn to the Heart", "Mantra of Light", "Seed Syllable",
+        "Whispered Prayer", "Silent Reverence", "Offering of Breath", "Gift of Presence"
     ];
-    const benefits = {
-        student: "enhanced focus and memory",
-        employee: "reduced stress and increased clarity",
-        seeker: "deeper connection to inner self"
+
+    const sanskritNames = [
+        "Śvāsa Praśvāsa", "Antar Śvāsa", "Suṣumṇā Śvāsa", "Bhrūmadhya Dhyāna",
+        "Vikalpa Sākṣī", "Anāhata Nāda", "Tamas Dhyāna", "Hṛdaya Ākāśa",
+        "Deha Anubhava", "Manda Śvāsa", "Caraṇa Jāgṛta", "Bhāva Dṛṣṭi",
+        "Mauna Śravaṇa", "Sarvāṅga Bodha", "Caitanya Vistāra", "Merudaṇḍa",
+        "Pūrṇa Viśrāma", "Svapna Antara", "Kṣaṇa Vilamba", "Antarikṣa Spṛś",
+        "Śūnya Sparśa", "Tejas Mūrti", "Nāda Laya", "Gagan Sparśa",
+        "Srota Āsvāda", "Premākāra", "Kaṇḍūti", "Agni Cintana",
+        "Nāḍī Spandana", "Ākāśa Śūnya", "Prakāśa Śūnya", "Bhūta Saṃsparśa",
+        "Prāṇa Vāyu", "Hṛdaya Spandana", "Sahaja Samādhi", "Para Gandha",
+        "Dik Vistāra", "Nābhi Kendra", "Guhā Hṛdaya", "Anāhata Dhvani",
+        "Śakti Uthāna", "Kuṇḍalinī Bodha", "Varṇa Layana", "Candra Antar",
+        "Sūrya Maṇipūra", "Śūnya Dṛṣṭi", "Tamas Para", "Guru Kṛpā",
+        "Ahaṅkāra Tyāga", "Tathatā Samarpaṇa", "Akriyā", "Sahaja Sthiti",
+        "Prakṛti Viśrāma", "Prema Akhaṇḍa", "Karuṇā Dhyāna", "Ānanda Akhaṇḍa",
+        "Samatā", "Kṣamā Sādhana", "Kṛtajñatā Snāna", "Deha Mandira",
+        "Asthi Bodha", "Sīmā Vilaya", "Bhūta Śodhana", "Antar Agnihotra",
+        "Amṛta Dhārā", "Acala Sthiti", "Vāyu Parivartana", "Ākāśa Ananta",
+        "Pṛthvī Mūla", "Brahmāṇḍa Nṛtya", "Kāla Bodha", "Svapna Māyā",
+        "Jāgrat Svapna", "Yoganidrā", "Sandhyā Dhyāna", "Ardha Rātri",
+        "Prātaḥ Bodha", "Madhyāhna Tejas", "Sandhyā Samarpaṇa", "Ṛtu Antar",
+        "Vayasa Prajñā", "Maraṇa Sati", "Punarjanma Dhyāna", "Pitṛ Saṃyoga",
+        "Devatā Rakṣā", "Divya Bāla", "Antar Mātā", "Brahma Pitā",
+        "Sarva Mitra", "Antar Guru", "Hasta Cikitsā", "Vīrya Śaurya",
+        "Muni Mauna", "Premāliṅgana", "Ānanda Sṛṣṭi", "Saṃhāra Śuddhi",
+        "Sthiti Kṣamā", "Nartana Lāvaṇya", "Dīnatā", "Rāja Sattva",
+        "Hāsya Vilāsa", "Ātma Līlā", "Sādhaka Patha", "Lābha Viśrāma",
+        "Śūnya Stuti", "Hṛdaya Stotra", "Jyotir Mantra", "Bīja Akṣara",
+        "Upāṃśu Prārthanā", "Mauna Bhakti", "Prāṇa Arghya", "Sādhana Upasthāna"
+    ];
+
+    const categories = ['breath', 'body', 'heart', 'sound', 'gaze', 'void', 'energy', 'light', 'touch', 'space', 'stillness',
+        'emotion', 'awareness', 'devotion'
+    ];
+    const chakras = ['Root', 'Sacral', 'Solar Plexus', 'Heart', 'Throat', 'Third Eye', 'Crown'];
+    const elements = ['Earth', 'Water', 'Fire', 'Air', 'Ether'];
+
+    for (let i = 1; i <= 112; i++) {
+        const idx = i - 1;
+        const cat = categories[idx % categories.length];
+        const chakra = chakras[i % chakras.length];
+        const element = elements[i % elements.length];
+        const name = techniqueNames[idx % techniqueNames.length];
+        const sanskrit = sanskritNames[idx % sanskritNames.length];
+        TECHNIQUES[i] = {
+            id: i,
+            name: name,
+            sanskrit: sanskrit,
+            category: cat,
+            chakra: chakra,
+            element: element,
+            essence: `The Vigyan Bhairav Tantra reveals: “${name} is a direct portal to the formless. When you rest in this awareness, the universe meditates through you.”`,
+            steps: `1. Find a quiet, comfortable seat. 2. Close your eyes gently. 3. Bring your attention to ${cat === 'breath' ? 'the natural flow of breath' : 'the present moment'}. 4. Allow thoughts to arise and dissolve without engagement. 5. Continue for 10-20 minutes.`,
+            wisdom: `Shiva whispers: “Radiant one, this experience may dawn between two breaths.”`,
+            posture: "Sukhasana or Vajrasana",
+            mudra: "Chin Mudra or Jnana Mudra",
+            breath: "Natural, effortless",
+            duration: "15-20 minutes",
+            benefits: { student: "Enhanced focus", employee: "Stress relief", seeker: "Deeper awareness" }
+        };
+    }
+
+    // Enhance first few with authentic details
+    TECHNIQUES[1] = Object.assign({}, TECHNIQUES[1], {
+        essence: "Shiva: 'Between two breaths, the beneficence. Watch the breath coming in and going out. Don't control, just witness.'",
+        steps: "1. Sit comfortably. 2. Close your eyes. 3. Observe the breath at the nostrils. 4. Don't follow it inside. 5. If awareness drifts, gently return."
+    });
+    TECHNIQUES[4] = Object.assign({}, TECHNIQUES[4], {
+        essence: "Fix your attention at the third eye. Let the mind dissolve into that light. This is the gateway to the infinite.",
+        steps: "1. Sit with a straight spine. 2. Close your eyes. 3. Gently gaze upward to the space between eyebrows. 4. Feel subtle pressure or light. 5. Rest in that awareness."
+    });
+
+    // ============================================================
+    // 2. PROFESSIONS / ARCHETYPES
+    // ============================================================
+    const professions = [
+        { name: "Student", icon: "fa-graduation-cap", desc: "Focus & Memory", keywords: ["focus", "memory",
+                "concentration"
+            ] },
+        { name: "Employee", icon: "fa-briefcase", desc: "Stress & Work-life", keywords: ["stress", "work",
+                "balance"
+            ] },
+        { name: "Seeker", icon: "fa-infinity", desc: "Spiritual Path", keywords: ["spiritual", "awakening",
+                "awareness"
+            ] },
+        { name: "Anxious", icon: "fa-heartbeat", desc: "Calm Anxiety", keywords: ["anxiety", "calm", "peace"] },
+        { name: "Artist", icon: "fa-paint-brush", desc: "Flow State", keywords: ["creativity", "flow"] },
+        { name: "Leader", icon: "fa-crown", desc: "Clarity & Presence", keywords: ["leadership", "clarity",
+                "presence"
+            ] },
+        { name: "Healer", icon: "fa-hand-holding-heart", desc: "Compassion", keywords: ["compassion", "healing",
+                "care"
+            ] }
+    ];
+
+    function getRecommendedTechniques(prof) {
+        const scored = Object.values(TECHNIQUES).map(function(t) {
+            var score = prof.keywords.reduce(function(s, k) {
+                return s + (t.name.toLowerCase().includes(k) ? 5 : 0) + (t.category.includes(k) ? 3 : 0);
+            }, 0);
+            return { tech: t, score: score };
+        });
+        scored.sort(function(a, b) { return b.score - a.score; });
+        return scored.slice(0, 12).map(function(s) { return s.tech; });
+    }
+
+    // ============================================================
+    // 3. QUOTES LIBRARY
+    // ============================================================
+    const QUOTE_LIBRARY = [
+        { text: "The pause between two breaths is the doorway to the infinite.", author: "Shiva" },
+        { text: "You are the timeless sky, thoughts are just clouds passing by.", author: "Rumi" },
+        { text: "Realize that you are already free.", author: "Ramana Maharshi" },
+        { text: "Stillness is the language of God.", author: "Osho" },
+        { text: "When you become aware of silence, you become aware of yourself.", author: "Eckhart Tolle" },
+        { text: "The only way to live is by accepting each minute as an unrepeatable miracle.", author: "Tara Brach" },
+        { text: "Let go of the battle. Breathe quietly and let it be.", author: "Buddha" },
+        { text: "Be content with what you have; rejoice in the way things are.", author: "Lao Tzu" },
+        { text: "The mind is everything. What you think you become.", author: "Buddha" },
+        { text: "Peace comes from within. Do not seek it without.", author: "Buddha" },
+        { text: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
+        { text: "Knowing yourself is the beginning of all wisdom.", author: "Aristotle" },
+        { text: "He who has a why can bear almost any how.", author: "Nietzsche" },
+        { text: "The kingdom of God is within you.", author: "Jesus" },
+        { text: "Yoga is the cessation of the mind's fluctuations.", author: "Patanjali" },
+        { text: "Arise, awake, stop not till the goal is reached.", author: "Swami Vivekananda" },
+        { text: "Truth is a pathless land.", author: "Krishnamurti" },
+        { text: "Don't worry, be happy.", author: "Meher Baba" },
+        { text: "The quieter you become, the more you can hear.", author: "Ram Dass" },
+        { text: "Be here now.", author: "Ram Dass" },
+        { text: "You are not a drop in the ocean. You are the entire ocean in a drop.", author: "Rumi" },
+        { text: "The wound is the place where the Light enters you.", author: "Rumi" }
+    ];
+
+    // ============================================================
+    // 4. BREATH PROTOCOLS
+    // ============================================================
+    const BREATH_PROTOCOLS = {
+        box: { name: 'Box 4-4-6-4', phases: ['inhale', 'hold', 'exhale', 'hold'], timings: [4, 4, 6, 4] },
+        '478': { name: '4-7-8 Relax', phases: ['inhale', 'hold', 'exhale'], timings: [4, 7, 8] },
+        nadi: { name: 'Nadi Shodhana', phases: ['inhale left', 'hold', 'exhale right', 'inhale right', 'hold',
+                'exhale left'
+            ], timings: [4, 4, 4, 4, 4, 4] },
+        ujjayi: { name: 'Ujjayi Ocean', phases: ['ujjayi inhale', 'ujjayi exhale'], timings: [5, 5] },
+        kapal: { name: 'Kapalabhati', phases: ['rapid exhale', 'rest'], timings: [20, 10] },
+        bhramari: { name: 'Bhramari Hum', phases: ['inhale', 'exhale with hum'], timings: [4, 6] },
+        coherent: { name: 'Coherent 5.5', phases: ['inhale', 'exhale'], timings: [5.5, 5.5] },
+        sitali: { name: 'Sitali Cool', phases: ['inhale through curled tongue', 'exhale'], timings: [4, 6] },
+        bastrika: { name: 'Bhastrika', phases: ['rapid breath', 'rest'], timings: [20, 10] },
+        tummo: { name: 'Tummo Inner Fire', phases: ['inhale', 'hold', 'exhale'], timings: [6, 12, 6] },
+        sama: { name: 'Sama Vritti', phases: ['inhale', 'exhale'], timings: [5, 5] },
+        wimhof: { name: 'Wim Hof', phases: ['deep inhale', 'exhale', 'retention'], timings: [2, 0, 30] }
     };
-    techniques[i] = { id:i, name, sanskrit, category:cat, essence, wisdom, posture, mudra, breath, duration, steps, benefits };
-}
 
-// Override key techniques
-techniques[1] = { id:1, name:"Witnessing the Breath", sanskrit:"Śvāsa–Praśvāsa Dharana", category:"breath", essence:"Breath is the bridge between body and mind.", wisdom:"Osho: 'Just watch the breath. Don't control it.'", posture:"Sukhasana", mudra:"Chin mudra", breath:"Natural", duration:"10-20 min", steps:["Sit comfortably.","Close eyes.","Observe natural breath.","Return when distracted."], benefits:{ student:"concentration", employee:"stress relief", seeker:"calm mind" } };
-techniques[4] = { id:4, name:"Concentration on the Third Eye", sanskrit:"Bhrūmadhya Dharana", category:"gaze", essence:"Attention becomes powerful when gathered in one point.", wisdom:"Osho: 'Between the eyebrows is the center of intuition.'", posture:"Comfortable", mudra:"Jnana mudra", breath:"Natural", duration:"10-20 min", steps:["Close eyes.","Focus between eyebrows.","Return when distracted."], benefits:{ student:"memory", employee:"stability", seeker:"meditation depth" } };
+    // ============================================================
+    // 5. ACHIEVEMENT DEFINITIONS
+    // ============================================================
+    const ACHIEVEMENT_DEFS = [
+        { id: 'first', name: 'First Step', desc: 'Complete your first practice', target: 1, get: function() { return user
+                    .totalPractices; } },
+        { id: 'streak3', name: '3-Day Presence', desc: '3 days streak', target: 3, get: function() { return user
+                    .streak; } },
+        { id: 'streak7', name: 'Week of Light', desc: '7 days streak', target: 7, get: function() { return user
+                    .streak; } },
+        { id: 'streak30', name: 'One Month', desc: '30 days streak', target: 30, get: function() { return user
+                    .streak; } },
+        { id: 'minutes100', name: '100 Minutes', desc: '100 total minutes', target: 100, get: function() { return user
+                    .totalMinutes; } },
+        { id: 'minutes500', name: '500 Minutes', desc: '500 total minutes', target: 500, get: function() { return user
+                    .totalMinutes; } },
+        { id: 'diary5', name: 'Reflective Soul', desc: '5 diary entries', target: 5, get: function() { return user
+                    .diary.length; } },
+        { id: 'diary20', name: 'Wisdom Keeper', desc: '20 diary entries', target: 20, get: function() { return user
+                    .diary.length; } },
+        { id: 'techniques20', name: 'Explorer', desc: '20 different techniques', target: 20, get: function() { return new Set(
+                    user.practicedTechniques.map(function(p) { return p.id; })).size; } }
+    ];
 
-// ==================== PROFESSIONS ====================
-const professions = [
-    { name:"Student", icon:"fa-graduation-cap", desc:"focus · exams", fullDesc:"Ideal for students seeking improved concentration, memory retention, and exam performance.", keywords:["focus","concentration","memory","exam","study"] },
-    { name:"Employee", icon:"fa-briefcase", desc:"stress · work-life", fullDesc:"Helps manage workplace stress, improve work-life balance, and maintain calm under pressure.", keywords:["stress","work","balance","employee"] },
-    { name:"CEO", icon:"fa-chart-line", desc:"clarity · decisions", fullDesc:"Enhances clarity of thought, sharp decision-making, and leadership presence.", keywords:["clarity","decision","leadership"] },
-    { name:"Seeker", icon:"fa-infinity", desc:"spiritual path", fullDesc:"For those on a spiritual journey—deepens awareness, expands consciousness, and opens the heart.", keywords:["spiritual","awareness","consciousness"] },
-    { name:"Anxious", icon:"fa-heartbeat", desc:"calm · anxiety", fullDesc:"Soothes anxiety, calms the nervous system, and restores inner peace.", keywords:["anxiety","calm","fear","peace"] },
-    { name:"Overthinker", icon:"fa-brain", desc:"still mind", fullDesc:"Quiets mental chatter, stops overthinking, and brings stillness to the restless mind.", keywords:["overthink","mind","thoughts","stillness"] },
-    { name:"Healthcare", icon:"fa-hospital-user", desc:"compassion", fullDesc:"Nurtures compassion, emotional resilience, and healing presence for caregivers.", keywords:["compassion","healing","care"] },
-    { name:"Teacher", icon:"fa-chalkboard", desc:"patience", fullDesc:"Cultivates patience, empathy, and the ability to inspire others.", keywords:["patience","teach","guide"] },
-    { name:"Developer", icon:"fa-laptop-code", desc:"focus", fullDesc:"Sharpens mental focus, reduces burnout, and enhances problem-solving skills.", keywords:["focus","code","mental clarity"] },
-    { name:"Artist", icon:"fa-paint-brush", desc:"flow", fullDesc:"Unlocks creative flow, dissolves blocks, and connects with inspiration.", keywords:["creativity","flow","inspiration"] },
-    { name:"Parent", icon:"fa-child", desc:"self-care", fullDesc:"Balances nurturing others with self-care, reducing parental stress and increasing presence.", keywords:["parent","care","balance","self-care"] },
-    { name:"Entrepreneur", icon:"fa-rocket", desc:"resilience", fullDesc:"Builds resilience, mental toughness, and the ability to pivot under pressure.", keywords:["resilience","drive","stress"] },
-    { name:"FirstResponder", icon:"fa-fire-extinguisher", desc:"grounding", fullDesc:"Provides grounding techniques to process trauma and maintain stability in high-stress roles.", keywords:["grounding","trauma","calm"] },
-    { name:"Retiree", icon:"fa-umbrella-beach", desc:"peace", fullDesc:"Invites deep relaxation, contentment, and the wisdom of aging gracefully.", keywords:["peace","relaxation","wisdom"] },
-    { name:"Freelancer", icon:"fa-user-tie", desc:"balance", fullDesc:"Helps balance work deadlines with personal well-being, preventing burnout.", keywords:["balance","work-life","focus"] },
-    { name:"Athlete", icon:"fa-running", desc:"performance", fullDesc:"Optimizes focus, body awareness, and mental toughness for peak performance.", keywords:["performance","focus","body awareness"] }
-];
+    // ============================================================
+    // 6. USER STATE & PERSISTENCE
+    // ============================================================
+    var user = {
+        totalPractices: parseInt(localStorage.getItem('tp')) || 0,
+        totalMinutes: parseInt(localStorage.getItem('tm')) || 0,
+        streak: parseInt(localStorage.getItem('streak')) || 0,
+        lastDate: localStorage.getItem('lastDate') || null,
+        favorites: JSON.parse(localStorage.getItem('favs')) || [],
+        diary: JSON.parse(localStorage.getItem('diary')) || [],
+        plan: JSON.parse(localStorage.getItem('plan')) || [],
+        practiceDays: JSON.parse(localStorage.getItem('practiceDays')) || {},
+        practicedTechniques: JSON.parse(localStorage.getItem('practicedTechs')) || [],
+        savedQuotes: JSON.parse(localStorage.getItem('savedQuotes')) || [],
+        achievements: JSON.parse(localStorage.getItem('achievements')) || {},
+        moodHistory: JSON.parse(localStorage.getItem('moodHistory')) || []
+    };
 
-function getRecommendedTechniques(prof) {
-    return Object.values(techniques).sort((a,b)=> {
-        const aScore = prof.keywords.reduce((s,k)=> s + (a.name.toLowerCase().includes(k) ? 5 : (a.category.includes(k) ? 3 : 0)),0);
-        const bScore = prof.keywords.reduce((s,k)=> s + (b.name.toLowerCase().includes(k) ? 5 : (b.category.includes(k) ? 3 : 0)),0);
-        return bScore - aScore;
-    }).slice(0,12);
-}
-
-// ==================== USER STATE ====================
-let user = {
-    totalPractices: parseInt(localStorage.getItem('tp')) || 0,
-    totalMinutes: parseInt(localStorage.getItem('tm')) || 0,
-    streak: parseInt(localStorage.getItem('streak')) || 0,
-    lastDate: localStorage.getItem('lastDate') || null,
-    favorites: JSON.parse(localStorage.getItem('favs')) || [],
-    diary: JSON.parse(localStorage.getItem('diary')) || [],
-    plan: JSON.parse(localStorage.getItem('plan')) || [],
-    practiceDays: JSON.parse(localStorage.getItem('practiceDays')) || {},
-    practicedTechniques: JSON.parse(localStorage.getItem('practicedTechs')) || [],
-    savedQuotes: JSON.parse(localStorage.getItem('savedQuotes')) || [],
-    achievements: JSON.parse(localStorage.getItem('achievements')) || {}
-};
-
-function saveAll() {
-    localStorage.setItem('tp', user.totalPractices);
-    localStorage.setItem('tm', user.totalMinutes);
-    localStorage.setItem('streak', user.streak);
-    localStorage.setItem('lastDate', user.lastDate);
-    localStorage.setItem('favs', JSON.stringify(user.favorites));
-    localStorage.setItem('diary', JSON.stringify(user.diary));
-    localStorage.setItem('plan', JSON.stringify(user.plan));
-    localStorage.setItem('practiceDays', JSON.stringify(user.practiceDays));
-    localStorage.setItem('practicedTechs', JSON.stringify(user.practicedTechniques));
-    localStorage.setItem('savedQuotes', JSON.stringify(user.savedQuotes));
-    localStorage.setItem('achievements', JSON.stringify(user.achievements));
-    updateUI();
-    checkAchievements();
-    updateStats();
-}
-
-function updateUI() {
-    document.getElementById('enhTotalPractices').innerText = user.totalPractices;
-    document.getElementById('enhTotalMinutes').innerText = user.totalMinutes;
-    document.getElementById('enhStreak').innerText = user.streak;
-    document.getElementById('statTotalPractices').innerText = user.totalPractices;
-    document.getElementById('statTotalMinutes').innerText = user.totalMinutes;
-    document.getElementById('statStreak').innerText = user.streak;
-    renderCalendar();
-    renderProfileSections();
-    renderPlan();
-    renderDiary();
-    renderAchievements();
-    updateCharts();
-}
-
-function updateStats() {
-    const categoryCount = {};
-    user.practicedTechniques.forEach(p => {
-        const tech = techniques[p.id];
-        if(tech) categoryCount[tech.category] = (categoryCount[tech.category] || 0) + 1;
-    });
-    let favCat = Object.keys(categoryCount).reduce((a,b) => categoryCount[a] > categoryCount[b] ? a : b, 'None');
-    document.getElementById('statFavoriteCategory').innerText = favCat !== 'None' ? favCat : '-';
-    const techCount = {};
-    user.practicedTechniques.forEach(p => { techCount[p.name] = (techCount[p.name] || 0) + 1; });
-    let mostPracticed = Object.keys(techCount).reduce((a,b) => techCount[a] > techCount[b] ? a : b, 'None');
-    document.getElementById('statMostPracticed').innerText = mostPracticed !== 'None' ? mostPracticed : '-';
-    let avg = user.practicedTechniques.length ? Math.round(user.totalMinutes / user.practicedTechniques.length) : 0;
-    document.getElementById('statAvgSession').innerText = avg;
-}
-
-function updateCharts() {
-    const ctx = document.getElementById('progressChart')?.getContext('2d');
-    if(ctx && window.progressChart) window.progressChart.destroy();
-    if(ctx) {
-        window.progressChart = new Chart(ctx, {
-            type: 'line',
-            data: { labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], datasets: [{ label:'minutes', data: getWeeklyMinutes(), borderColor:'#9d7bff', tension:0.3, fill:false }] },
-            options: { responsive: true, maintainAspectRatio: true }
-        });
+    function saveAll() {
+        localStorage.setItem('tp', user.totalPractices);
+        localStorage.setItem('tm', user.totalMinutes);
+        localStorage.setItem('streak', user.streak);
+        localStorage.setItem('lastDate', user.lastDate);
+        localStorage.setItem('favs', JSON.stringify(user.favorites));
+        localStorage.setItem('diary', JSON.stringify(user.diary));
+        localStorage.setItem('plan', JSON.stringify(user.plan));
+        localStorage.setItem('practiceDays', JSON.stringify(user.practiceDays));
+        localStorage.setItem('practicedTechs', JSON.stringify(user.practicedTechniques));
+        localStorage.setItem('savedQuotes', JSON.stringify(user.savedQuotes));
+        localStorage.setItem('achievements', JSON.stringify(user.achievements));
+        localStorage.setItem('moodHistory', JSON.stringify(user.moodHistory));
+        updateUI();
+        checkAchievements();
+        updateLevel();
     }
-    const catCtx = document.getElementById('categoryChart')?.getContext('2d');
-    if(catCtx && window.categoryChart) window.categoryChart.destroy();
-    if(catCtx) {
-        const catCount = {};
-        user.practicedTechniques.forEach(p => {
-            const tech = techniques[p.id];
-            if(tech) catCount[tech.category] = (catCount[tech.category] || 0) + 1;
-        });
-        window.categoryChart = new Chart(catCtx, {
-            type: 'doughnut',
-            data: { labels: Object.keys(catCount), datasets: [{ data: Object.values(catCount), backgroundColor: ['#9d7bff','#ffb3a0','#6b4eff','#ff8a6c','#c4b5fd'] }] },
-            options: { responsive: true }
-        });
+
+    function getToday() {
+        return new Date().toISOString().slice(0, 10);
     }
-}
 
-function getWeeklyMinutes() {
-    const weekMinutes = [0,0,0,0,0,0,0];
-    user.practicedTechniques.forEach(p => {
-        const date = new Date(p.date);
-        const day = date.getDay();
-        weekMinutes[day] += p.minutes;
-    });
-    return weekMinutes;
-}
-
-function renderCalendar() {
-    const container = document.getElementById('calendarTracker'); if(!container) return;
-    const today = new Date(), year = today.getFullYear(), month = today.getMonth(), firstDay = new Date(year, month, 1).getDay(), daysInMonth = new Date(year, month+1, 0).getDate();
-    container.innerHTML = '';
-    ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(day => { const d = document.createElement('div'); d.className='calendar-day weekday'; d.innerText=day; container.appendChild(d); });
-    for(let i=0;i<firstDay;i++) { const blank = document.createElement('div'); blank.className='calendar-day'; container.appendChild(blank); }
-    for(let d=1; d<=daysInMonth; d++) {
-        const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-        const isPracticed = user.practiceDays[dateStr], isToday = d===today.getDate() && month===today.getMonth() && year===today.getFullYear();
-        const dayDiv = document.createElement('div'); dayDiv.className = `calendar-day ${isPracticed ? 'practiced' : ''} ${isToday ? 'today' : ''}`; dayDiv.innerText = d;
-        dayDiv.addEventListener('click',()=>{ if(!user.practiceDays[dateStr]) { user.practiceDays[dateStr]=true; saveAll(); showToast(`Marked practice on ${dateStr}`); } else if(confirm('Remove practice mark?')){ delete user.practiceDays[dateStr]; saveAll(); } });
-        container.appendChild(dayDiv);
+    function getYesterday() {
+        var d = new Date();
+        d.setDate(d.getDate() - 1);
+        return d.toISOString().slice(0, 10);
     }
-}
 
-function renderProfileSections() {
-    const practicedDiv = document.getElementById('practicedList');
-    if(practicedDiv) practicedDiv.innerHTML = user.practicedTechniques.slice(0,50).map(p => `<div class="profile-list-item">🧘 ${p.name} · ${new Date(p.date).toLocaleDateString()} (${p.minutes} min)</div>`).join('') || "<em>No practices recorded yet.</em>";
-    const quotesDiv = document.getElementById('savedQuotesList');
-    if(quotesDiv) quotesDiv.innerHTML = user.savedQuotes.slice(0,50).map(q => `<div class="profile-list-item">“${q.text.substring(0,120)}”<br>— ${q.author} <small>${new Date(q.date).toLocaleDateString()}</small></div>`).join('') || "<em>No saved quotes.</em>";
-    const notesDiv = document.getElementById('profileDiaryList');
-    if(notesDiv) notesDiv.innerHTML = user.diary.slice().reverse().slice(0,50).map(e => `<div class="profile-list-item"><small>${new Date(e.date).toLocaleString()}</small><p>${e.text}</p></div>`).join('') || "<em>No diary entries yet.</em>";
-}
+    // ============================================================
+    // 7. CORE FUNCTIONS
+    // ============================================================
+    function addPractice(techId, techName, minutes) {
+        minutes = minutes || 15;
+        user.practicedTechniques.unshift({ id: techId, name: techName, date: new Date().toISOString(), minutes: minutes });
+        user.totalPractices++;
+        user.totalMinutes += minutes;
 
-function addPracticedTechnique(techId, techName, minutes=15) {
-    user.practicedTechniques.unshift({ id:techId, name:techName, date:new Date().toISOString(), minutes });
-    user.totalPractices++;
-    user.totalMinutes += minutes;
-    const today = new Date().toDateString();
-    if(user.lastDate !== today){ const yesterday = new Date(Date.now()-86400000).toDateString(); user.streak = user.lastDate===yesterday ? user.streak+1 : 1; user.lastDate=today; }
-    user.practiceDays[new Date().toISOString().slice(0,10)] = true;
-    saveAll();
-    showToast(`🧘 Practiced: ${techName} +${minutes} min`);
-    if (Notification.permission === 'granted') new Notification('Practice Complete!', { body: `You completed ${techName} for ${minutes} minutes.` });
-}
+        var today = getToday();
+        var yesterday = getYesterday();
 
-function saveQuoteToBoth(text, author) {
-    user.savedQuotes.unshift({ text, author, date: new Date().toISOString() });
-    user.diary.unshift({ date: new Date(), text: `📖 Saved Quote: "${text}" — ${author}` });
-    saveAll();
-    renderProfileSections();
-    renderDiary();
-    showToast("Quote saved");
-}
-
-function renderDiary() {
-    const list = document.getElementById('diaryList');
-    if(list) list.innerHTML = user.diary.slice().reverse().map(e=>`<div class="glass-card" style="margin-bottom:0.5rem;padding:0.5rem;"><small>${new Date(e.date).toLocaleString()}</small><p>${e.text}</p></div>`).join('');
-}
-
-function renderPlan() {
-    const container = document.getElementById('planItems'); if(!container) return;
-    container.innerHTML = ''; let total=0;
-    user.plan.forEach(id => {
-        if(techniques[id]) {
-            total += 15;
-            const div = document.createElement('div'); div.className = 'plan-item glass-card'; div.style.marginBottom='0.8rem'; div.style.padding='0.8rem';
-            div.innerHTML = `<div><strong>${techniques[id].name}</strong> (15 min)</div><button class="remove-plan" data-id="${id}" style="background:none; border:none; color:var(--accent-secondary); cursor:pointer;"><i class="fas fa-trash"></i></button>`;
-            div.querySelector('.remove-plan').addEventListener('click', () => { user.plan = user.plan.filter(i=>i!==id); saveAll(); renderPlan(); showToast('removed'); });
-            container.appendChild(div);
+        if (!user.practiceDays[today]) {
+            user.practiceDays[today] = true;
+            if (user.lastDate === yesterday) {
+                user.streak++;
+            } else if (user.lastDate !== today) {
+                user.streak = 1;
+            }
+            user.lastDate = today;
         }
-    });
-    document.getElementById('planTotal').innerText = total;
-}
 
-// ==================== ACHIEVEMENTS ====================
-const achievementsList = [
-    { id: 'first_practice', name: 'First Step', desc: 'Complete your first practice', condition: () => user.totalPractices >= 1 },
-    { id: 'seven_streak', name: '7-Day Streak', desc: 'Practice 7 days in a row', condition: () => user.streak >= 7 },
-    { id: 'hundred_practices', name: 'Century', desc: '100 total practices', condition: () => user.totalPractices >= 100 },
-    { id: 'thousand_minutes', name: 'Time Lord', desc: '1000 minutes of practice', condition: () => user.totalMinutes >= 1000 },
-    { id: 'master_of_breath', name: 'Master of Breath', desc: 'Complete 10 breathwork sessions', condition: () => user.practicedTechniques.filter(p => p.name.includes('Breathwork')).length >= 10 },
-    { id: 'wisdom_seeker', name: 'Wisdom Seeker', desc: 'Save 10 quotes', condition: () => user.savedQuotes.length >= 10 },
-    { id: 'technique_collector', name: 'Technique Collector', desc: 'Practice 20 different techniques', condition: () => new Set(user.practicedTechniques.map(p => p.id)).size >= 20 },
-    { id: 'dedicated', name: 'Dedicated', desc: 'Practice 30 days total', condition: () => Object.keys(user.practiceDays).length >= 30 }
-];
-
-function checkAchievements() {
-    let changed = false;
-    achievementsList.forEach(ach => {
-        if (!user.achievements[ach.id] && ach.condition()) {
-            user.achievements[ach.id] = { unlocked: true, date: new Date().toISOString() };
-            changed = true;
-            showToast(`🏆 Achievement Unlocked: ${ach.name}!`);
-            if (Notification.permission === 'granted') new Notification('Achievement Unlocked!', { body: ach.name });
-        }
-    });
-    if (changed) saveAll();
-}
-
-function renderAchievements() {
-    const container = document.getElementById('achievementsList');
-    if (!container) return;
-    container.innerHTML = achievementsList.map(ach => {
-        const unlocked = user.achievements[ach.id];
-        return `<div class="achievement-badge ${!unlocked ? 'locked' : ''}"><i class="fas ${unlocked ? 'fa-trophy' : 'fa-lock'}"></i> ${ach.name}<small>${ach.desc}</small></div>`;
-    }).join('');
-}
-
-// ========== Upgraded Quotes Logic (Centered Layout) ==========
-let currentQuoteIndex = 0;
-let filteredQuotes = [...fullQuotesList];
-const quoteTextLarge = document.getElementById('quoteTextLarge');
-const quoteAuthorLarge = document.getElementById('quoteAuthorLarge');
-const quoteTagsSimple = document.getElementById('quoteTagsSimple');
-const quotePositionDisplay = document.getElementById('quotePositionDisplay');
-const quoteTotalCount = document.getElementById('quoteTotalCount');
-const quoteSearchInputSimple = document.getElementById('quoteSearchInputSimple');
-const clearSearchSimpleBtn = document.getElementById('clearSearchSimpleBtn');
-const toggleFavoriteBtn = document.getElementById('toggleFavoriteBtn');
-const favoritesQuickRow = document.getElementById('favoritesQuickRow');
-const favoritesChipsContainer = document.getElementById('favoritesChipsContainer');
-
-// Update total count display
-quoteTotalCount.innerText = fullQuotesList.length;
-
-function generateTags(quoteText) {
-    const tags = [];
-    const lower = quoteText.toLowerCase();
-    if (lower.includes('breath') || lower.includes('mind')) tags.push('mindfulness');
-    if (lower.includes('love') || lower.includes('heart')) tags.push('love');
-    if (lower.includes('truth') || lower.includes('wisdom')) tags.push('wisdom');
-    if (lower.includes('silence') || lower.includes('still')) tags.push('stillness');
-    if (lower.includes('peace') || lower.includes('calm')) tags.push('peace');
-    return tags.slice(0, 3);
-}
-
-function updateQuoteDisplay() {
-    const quote = filteredQuotes[currentQuoteIndex] || fullQuotesList[0];
-    quoteTextLarge.innerText = `“${quote.text}”`;
-    quoteAuthorLarge.innerText = `— ${quote.author}`;
-    
-    const tags = generateTags(quote.text);
-    quoteTagsSimple.innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
-    
-    quotePositionDisplay.innerText = `${currentQuoteIndex + 1} / ${filteredQuotes.length}`;
-    
-    // Update favorite button state
-    const isFav = user.savedQuotes.some(q => q.text === quote.text && q.author === quote.author);
-    toggleFavoriteBtn.innerHTML = isFav ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
-}
-
-function renderFavoritesChips() {
-    const favs = user.savedQuotes;
-    if (favs.length === 0) {
-        favoritesQuickRow.style.display = 'none';
-        return;
+        saveAll();
+        showToast('🧘 Practiced: ' + techName + ' · +' + minutes + ' min', 'success');
     }
-    favoritesQuickRow.style.display = 'flex';
-    favoritesChipsContainer.innerHTML = favs.slice(0, 5).map(q => 
-        `<span class="fav-chip" data-text="${q.text}" data-author="${q.author}">${q.author.split(' ')[0]}</span>`
-    ).join('');
-    
-    document.querySelectorAll('.fav-chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-            const text = chip.dataset.text;
-            const author = chip.dataset.author;
-            const foundIndex = filteredQuotes.findIndex(q => q.text === text && q.author === author);
-            if (foundIndex !== -1) {
-                currentQuoteIndex = foundIndex;
-                updateQuoteDisplay();
-                quoteSearchInputSimple.value = '';
-                clearSearchSimpleBtn.style.display = 'none';
-                filteredQuotes = [...fullQuotesList];
-                currentQuoteIndex = foundIndex;
-                updateQuoteDisplay();
+
+    function updateLevel() {
+        var mins = user.totalMinutes;
+        var level = "Novice 🌿";
+        if (mins >= 5000) level = "Mahasiddha 🕉️";
+        else if (mins >= 2500) level = "Enlightened 🌟";
+        else if (mins >= 1000) level = "Adept 🔮";
+        else if (mins >= 300) level = "Seeker 🌱";
+
+        var levelBadge = document.getElementById('userLevelBadge');
+        var enhLevel = document.getElementById('enhLevel');
+        if (levelBadge) levelBadge.textContent = level;
+        if (enhLevel) enhLevel.textContent = level;
+
+        var progress = Math.min(100, (mins % 1000) / 10);
+        var progBar = document.getElementById('levelProgress');
+        if (progBar) progBar.value = progress;
+    }
+
+    function showToast(message, type) {
+        type = type || 'info';
+        var existing = document.querySelector('.toast');
+        if (existing) existing.remove();
+
+        var toast = document.createElement('div');
+        toast.className = 'toast ' + type;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(function() {
+            if (toast.parentNode) toast.remove();
+        }, 2800);
+    }
+
+    function saveQuoteToDiary(text, author) {
+        user.savedQuotes.push({ text: text, author: author, date: new Date().toISOString() });
+        user.diary.unshift({ date: new Date(), text: '📖 Saved Quote: "' + text + '" — ' + author });
+        saveAll();
+        showToast('📖 Quote saved to diary', 'success');
+    }
+
+    // ============================================================
+    // 8. ACHIEVEMENTS
+    // ============================================================
+    function checkAchievements() {
+        var unlocked = 0;
+        ACHIEVEMENT_DEFS.forEach(function(def) {
+            if (user.achievements[def.id]) return;
+            var current = def.get();
+            if (current >= def.target) {
+                user.achievements[def.id] = { unlockedAt: new Date().toISOString() };
+                unlocked++;
+                showToast('🏆 Achievement: ' + def.name, 'success');
             }
         });
-    });
-}
-
-function saveCurrentQuote() {
-    const quote = filteredQuotes[currentQuoteIndex];
-    if (!user.savedQuotes.some(q => q.text === quote.text && q.author === quote.author)) {
-        user.savedQuotes.unshift({ text: quote.text, author: quote.author, date: new Date().toISOString() });
-        user.diary.unshift({ date: new Date(), text: `📖 Saved Quote: "${quote.text}" — ${quote.author}` });
-        saveAll();
-        renderFavoritesChips();
-        updateQuoteDisplay();
-        showToast('Quote saved to favorites');
-    } else {
-        // Remove if already favorited
-        user.savedQuotes = user.savedQuotes.filter(q => !(q.text === quote.text && q.author === quote.author));
-        saveAll();
-        renderFavoritesChips();
-        updateQuoteDisplay();
-        showToast('Removed from favorites');
+        if (unlocked > 0) saveAll();
     }
-}
 
-function filterQuotesSimple(term) {
-    if (!term) {
-        filteredQuotes = [...fullQuotesList];
-        clearSearchSimpleBtn.style.display = 'none';
-    } else {
-        filteredQuotes = fullQuotesList.filter(q => 
-            q.text.toLowerCase().includes(term.toLowerCase()) || 
-            q.author.toLowerCase().includes(term.toLowerCase())
-        );
-        clearSearchSimpleBtn.style.display = 'block';
-    }
-    currentQuoteIndex = 0;
-    updateQuoteDisplay();
-    if (filteredQuotes.length === 0) {
-        quoteTextLarge.innerText = "No matching quotes.";
-        quoteAuthorLarge.innerText = "";
-        quoteTagsSimple.innerHTML = "";
-        quotePositionDisplay.innerText = "0 / 0";
-    }
-}
+    function renderAchievements() {
+        var container = document.getElementById('achievementsList');
+        if (!container) return;
 
-// Event Listeners
-document.addEventListener('DOMContentLoaded', () => {
-    filteredQuotes = [...fullQuotesList];
-    currentQuoteIndex = 0;
-    updateQuoteDisplay();
-    renderFavoritesChips();
-    
-    document.getElementById('prevLibQuote').addEventListener('click', () => {
-        if (filteredQuotes.length === 0) return;
-        currentQuoteIndex = (currentQuoteIndex - 1 + filteredQuotes.length) % filteredQuotes.length;
-        updateQuoteDisplay();
-    });
-    document.getElementById('nextLibQuote').addEventListener('click', () => {
-        if (filteredQuotes.length === 0) return;
-        currentQuoteIndex = (currentQuoteIndex + 1) % filteredQuotes.length;
-        updateQuoteDisplay();
-    });
-    
-    document.getElementById('saveQuoteMainBtn').addEventListener('click', saveCurrentQuote);
-    toggleFavoriteBtn.addEventListener('click', saveCurrentQuote);
-    
-    document.getElementById('copyQuoteBtn').addEventListener('click', () => {
-        const quote = filteredQuotes[currentQuoteIndex];
-        navigator.clipboard?.writeText(`"${quote.text}" — ${quote.author}`).then(() => {
-            showToast('Quote copied');
-        }).catch(() => showToast('Copy failed'));
-    });
-    
-    document.getElementById('shareQuoteBtn').addEventListener('click', () => {
-        const quote = filteredQuotes[currentQuoteIndex];
-        if (navigator.share) {
-            navigator.share({ title: 'Wisdom', text: `"${quote.text}" — ${quote.author}` });
-        } else {
-            navigator.clipboard?.writeText(`"${quote.text}" — ${quote.author}`);
-            showToast('Quote copied (share not supported)');
+        var html = '';
+        ACHIEVEMENT_DEFS.forEach(function(def) {
+            var unlocked = !!user.achievements[def.id];
+            var current = def.get();
+            var progress = Math.min(100, (current / def.target) * 100);
+            html +=
+                '<div class="achievement-item">' +
+                '<div class="ach-header">' +
+                '<span class="ach-name"><i class="fas ' + (unlocked ? 'fa-trophy' : 'fa-lock') + '"></i> ' + def.name +
+                '</span>' +
+                '<span class="ach-progress-text">' + current + '/' + def.target + '</span>' +
+                '</div>' +
+                '<div class="achievement-bar"><div class="achievement-progress" style="width:' + progress +
+                '%;"></div></div>' +
+                '<div style="font-size:0.7rem;color:var(--text-secondary);opacity:0.6;margin-top:0.2rem;">' + def.desc +
+                '</div>' +
+                '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    // ============================================================
+    // 9. BREATHWORK ENGINE
+    // ============================================================
+    var breathActive = false;
+    var breathInterval = null;
+
+    function startBreathPractice(type) {
+        if (breathInterval) clearInterval(breathInterval);
+        breathActive = true;
+        var stopBtn = document.getElementById('stopBreathBtn');
+        if (stopBtn) stopBtn.style.display = 'inline-block';
+
+        var protocol = BREATH_PROTOCOLS[type];
+        if (!protocol) return;
+
+        var phases = protocol.phases;
+        var timings = protocol.timings;
+        var phaseIdx = 0;
+        var cycle = 0;
+        var maxCycles = 6;
+
+        var instructionPanel = document.getElementById('breathInstructionPanel');
+        if (instructionPanel) {
+            instructionPanel.innerHTML = '<strong>🧘 ' + protocol.name +
+                '</strong><br>Follow the guided rhythm. Focus on your breath.';
         }
-    });
-    
-    quoteSearchInputSimple.addEventListener('input', (e) => filterQuotesSimple(e.target.value));
-    clearSearchSimpleBtn.addEventListener('click', () => {
-        quoteSearchInputSimple.value = '';
-        filterQuotesSimple('');
-    });
-    
-    // Also keep compatibility with old save button
-    const oldSaveBtn = document.getElementById('saveLibQuoteBtn');
-    if (oldSaveBtn) oldSaveBtn.addEventListener('click', saveCurrentQuote);
-});
 
-// Override the old updateLibQuote function to avoid conflicts
-function updateLibQuote() {
-    updateQuoteDisplay();
+        function runPhase() {
+            if (!breathActive) return;
+            if (phaseIdx >= phases.length) {
+                phaseIdx = 0;
+                cycle++;
+                if (cycle >= maxCycles) {
+                    resetBreathUI();
+                    addPractice(0, protocol.name + ' Breathwork', 3);
+                    showToast('🌬️ Breath session complete', 'success');
+                    return;
+                }
             }
 
-// ==================== MUDRA CAROUSEL ====================
-const mudrasData = [
-    { name:"Bhumisparsa", sanskrit:"Bhūmisparśa Mudrā", meaning:"Earth-Touching Gesture", how:"Sit in meditation posture. Left hand rests in lap. Right hand reaches down and touches the earth.", essence:"When the mind disappears, the whole existence becomes your witness.", meditation:"Sit silently. Touch the ground. Feel that the whole universe supports your consciousness.", svg:`<svg viewBox="0 0 100 100"><path stroke="currentColor" stroke-width="2" d="M50,70 L50,30 M30,50 L70,50 M40,60 L60,40 M40,40 L60,60"/><circle cx="50" cy="50" r="25" fill="none" stroke="currentColor"/></svg>` },
-    { name:"Dhyana", sanskrit:"Dhyāna Mudrā", meaning:"Meditation Gesture", how:"Sit in lotus. Hands rest in lap, right over left, thumbs touching.", essence:"Perfect equilibrium. The triangle of body, mind, consciousness.", meditation:"Hold the mudra, breathe slowly, observe thoughts. Find the gap between thoughts.", svg:`<svg viewBox="0 0 100 100"><path stroke="currentColor" stroke-width="2" d="M35,65 L65,65 M40,55 L60,55 M45,45 L55,45"/><circle cx="50" cy="50" r="30" fill="none" stroke="currentColor"/></svg>` },
-    { name:"Abhaya", sanskrit:"Abhaya Mudrā", meaning:"Fearlessness Gesture", how:"Raise the right hand. Palm faces outward, fingers pointing upward.", essence:"Fear exists because the ego exists. When you realize your true consciousness, fear dissolves.", meditation:"Raise the hand and feel life flowing through you, existence supporting you.", svg:`<svg viewBox="0 0 100 100"><path stroke="currentColor" stroke-width="2" d="M40,60 L60,60 M50,70 L50,40"/><path d="M35,50 L45,50 M55,50 L65,50"/><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor"/></svg>` },
-    { name:"Dharmachakra", sanskrit:"Dharmacakra Mudrā", meaning:"Turning the Wheel of Dharma", how:"Both hands near the chest. Thumb and index finger form circles. Hands face outward.", essence:"Truth cannot be taught directly; it can only be shared through presence.", meditation:"Sit calmly. Feel wisdom flowing from your heart outward. Radiating awareness.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="22" fill="none" stroke="currentColor"/><circle cx="50" cy="50" r="10" fill="none"/><path d="M40,35 L60,65 M60,35 L40,65" stroke="currentColor"/></svg>` },
-    { name:"Jnana", sanskrit:"Jñāna Mudrā", meaning:"Gesture of Knowledge", how:"Touch thumb and index finger tip. Other fingers extended. Hands rest on knees.", essence:"Thumb represents universal consciousness; index finger the individual ego. When they meet, ego merges into cosmic.", meditation:"Sit quietly. Observe breath. Realize: you are not the mind — you are the awareness behind it.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="22" fill="none" stroke="currentColor"/><path d="M42,42 L58,58 M42,58 L58,42"/><circle cx="50" cy="50" r="8" fill="none" stroke="currentColor"/></svg>` },
-    { name:"Karana", sanskrit:"Karaṇa Mudrā", meaning:"Gesture of Dispelling Negativity", how:"Index and little finger extended. Middle and ring fingers folded. Thumb holds them down.", essence:"Negativity arises from unconsciousness. Awareness dispels it.", meditation:"Visualize negativity leaving the mind. Breathe deeply. Purification.", svg:`<svg viewBox="0 0 100 100"><path stroke="currentColor" stroke-width="2" d="M35,55 L65,45 M35,45 L65,55 M50,65 L50,35"/><circle cx="50" cy="50" r="25" fill="none" stroke="currentColor"/></svg>` },
-    { name:"Uttarabodhi", sanskrit:"Uttarabodhi Mudrā", meaning:"Gesture of Supreme Enlightenment", how:"Interlock fingers. Extend index fingers upward. Thumbs crossed.", essence:"Rising energy of awakening. Expanding consciousness beyond mind.", meditation:"Imagine energy rising from spine toward head. Feel expansion to infinity.", svg:`<svg viewBox="0 0 100 100"><path stroke="currentColor" stroke-width="2" d="M30,55 L70,55 M50,30 L50,70 M40,40 L60,60 M40,60 L60,40"/><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor"/></svg>` },
-    { name:"Vitarka", sanskrit:"Vitarka Mudrā", meaning:"Gesture of Teaching", how:"Thumb and index finger form a circle. Palm faces outward. Hand slightly raised.", essence:"Conscious dialogue. Truth grows through questioning and reflection.", meditation:"Hold mudra while contemplating a question. Let answer arise from silence.", svg:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="20" fill="none" stroke="currentColor"/><path d="M38,45 L62,55 M38,55 L62,45"/><circle cx="50" cy="50" r="8" fill="none" stroke="currentColor"/></svg>` },
-    { name:"Namaskara", sanskrit:"Namaskāra Mudrā", meaning:"Prayer Gesture", how:"Palms pressed together near the heart.", essence:"'The divine in me honors the divine in you.' Recognition of unity.", meditation:"Bring palms together at heart. Feel meeting of opposites. Offer respect to all beings.", svg:`<svg viewBox="0 0 100 100"><path stroke="currentColor" stroke-width="2" d="M30,60 L70,60 M50,40 L50,70 M40,45 L60,55 M40,55 L60,45"/><circle cx="50" cy="50" r="25" fill="none" stroke="currentColor"/></svg>` },
-    { name:"Tarjani", sanskrit:"Tarjanī Mudrā", meaning:"Gesture of Warning", how:"Index finger extended, other fingers folded. Hand raised.", essence:"Awareness pointing toward ignorance. Wake up call.", meditation:"Raise the index finger as a reminder to yourself: 'Wake up. Don't be unconscious.'", svg:`<svg viewBox="0 0 100 100"><path stroke="currentColor" stroke-width="2" d="M50,65 L50,30 M40,45 L60,45"/><circle cx="50" cy="30" r="4" fill="none"/><circle cx="50" cy="50" r="22" fill="none" stroke="currentColor"/></svg>` },
-    { name:"Kesapana", sanskrit:"Keśapana Mudrā", meaning:"Gesture of Sprinkling Immortal Nectar", how:"Two hands together, fingers intertwined, as if sprinkling.", essence:"Showering of wisdom and compassion. Bestowing blessings.", meditation:"Imagine cool, luminous nectar flowing from hands into your heart and out to all beings.", svg:`<svg viewBox="0 0 100 100"><path stroke="currentColor" stroke-width="2" d="M35,55 L65,45 M35,45 L65,55 M45,65 L55,35 M45,35 L55,65"/><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor"/></svg>` }
-];
+            var timer = timings[phaseIdx];
+            var phase = phases[phaseIdx];
+            var remaining = timer;
 
-let currentMudraIndex = 0;
+            var phaseLabel = document.getElementById('breathPhaseLabel');
+            var phaseText = document.getElementById('breathPhaseText');
+            var timerDisplay = document.getElementById('breathTimerDisplay');
 
-function renderMudra(index) {
-    const mudra = mudrasData[index];
-    const container = document.getElementById('mudraContent');
-    if (!container) return;
-    container.innerHTML = `
-        <div class="mudra-svg">${mudra.svg}</div>
-        <div class="mudra-name">${mudra.name}</div>
-        <div class="mudra-sanskrit">${mudra.sanskrit}</div>
-        <div class="mudra-section"><h4>✨ Meaning</h4><p>${mudra.meaning}</p></div>
-        <div class="mudra-section"><h4>🖐️ How to Form</h4><p>${mudra.how}</p></div>
-        <div class="mudra-section"><h4>💎 Essence</h4><p>${mudra.essence}</p></div>
-        <div class="mudra-section"><h4>🧘 Inner Meditation</h4><p>${mudra.meditation}</p></div>
-    `;
-    document.getElementById('mudraCounter').innerText = `${index + 1} / ${mudrasData.length}`;
-}
+            if (phaseLabel) phaseLabel.textContent = phase.includes('inhale') ? '🌬️' : (phase.includes('hold') ? '🌀' :
+                '💨');
+            if (phaseText) phaseText.textContent = phase.toUpperCase();
 
-function nextMudra() { currentMudraIndex = (currentMudraIndex + 1) % mudrasData.length; renderMudra(currentMudraIndex); }
-function prevMudra() { currentMudraIndex = (currentMudraIndex - 1 + mudrasData.length) % mudrasData.length; renderMudra(currentMudraIndex); }
-function saveCurrentMudraToDiary() {
-    const mudra = mudrasData[currentMudraIndex];
-    const entry = `🧘 Mudra: ${mudra.name} (${mudra.sanskrit})\n\nMeaning: ${mudra.meaning}\n\nHow to Form: ${mudra.how}\n\nEssence: ${mudra.essence}\n\nInner Meditation: ${mudra.meditation}`;
-    saveQuoteToBoth(entry, `Mudra: ${mudra.name}`);
-}
+            var interval = setInterval(function() {
+                if (!breathActive) { clearInterval(interval); return; }
+                remaining = Math.round(remaining - 0.1);
+                if (remaining < 0) remaining = 0;
+                if (timerDisplay) timerDisplay.textContent = Math.ceil(remaining);
 
-// ==================== TECHNIQUES UI (Fixed) ====================
-function buildTechCard(t, showPractice=true) {
-    const div = document.createElement('div'); div.className = 'tech-card';
-    const isFav = user.favorites.includes(t.id);
-    div.innerHTML = `
-        <div class="tech-name">${t.name}</div>
-        <div class="tech-category">${t.category}</div>
-        <div class="tech-essence">“${t.essence.substring(0,80)}”</div>
-        <div class="tech-footer"><span><i class="far fa-clock"></i> ${t.duration}</span><div><button class="favorite-btn ${isFav ? 'fas' : 'far'} fa-heart" data-id="${t.id}"></button>${showPractice ? `<button class="practice-btn" data-id="${t.id}" data-name="${t.name}"><i class="fas fa-play"></i> Practice</button>` : ''}</div></div>
-    `;
-    div.querySelector('.favorite-btn')?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (user.favorites.includes(t.id)) user.favorites = user.favorites.filter(f => f !== t.id);
-        else user.favorites.push(t.id);
-        saveAll();
-        e.target.classList.toggle('fas'); e.target.classList.toggle('far');
-        showToast(user.favorites.includes(t.id) ? 'Added to favorites' : 'Removed');
-    });
-    if(showPractice) {
-        div.querySelector('.practice-btn')?.addEventListener('click', (e) => {
-            e.stopPropagation();
-            addPracticedTechnique(t.id, t.name, 15);
+                var progress = ((timer - remaining) / timer) * 860;
+                var ring = document.querySelector('.progress-circle');
+                if (ring) ring.style.strokeDashoffset = 860 - Math.min(860, progress);
+
+                if (remaining <= 0) {
+                    clearInterval(interval);
+                    phaseIdx++;
+                    runPhase();
+                }
+            }, 100);
+
+            breathInterval = interval;
+        }
+
+        runPhase();
+    }
+
+    function resetBreathUI() {
+        if (breathInterval) clearInterval(breathInterval);
+        breathActive = false;
+        var stopBtn = document.getElementById('stopBreathBtn');
+        if (stopBtn) stopBtn.style.display = 'none';
+
+        var phaseLabel = document.getElementById('breathPhaseLabel');
+        var phaseText = document.getElementById('breathPhaseText');
+        var timerDisplay = document.getElementById('breathTimerDisplay');
+        var ring = document.querySelector('.progress-circle');
+        var instructionPanel = document.getElementById('breathInstructionPanel');
+
+        if (phaseLabel) phaseLabel.textContent = '🌀';
+        if (phaseText) phaseText.textContent = 'Ready';
+        if (timerDisplay) timerDisplay.textContent = '0';
+        if (ring) ring.style.strokeDashoffset = 860;
+        if (instructionPanel) instructionPanel.innerHTML = '✨ Select a breath technique to begin your pranic journey.';
+    }
+
+    // ============================================================
+    // 10. TIMER ENGINE
+    // ============================================================
+    var timerSec = 300;
+    var timerInt = null;
+    var timerRunning = false;
+
+    function updateTimerDisplay() {
+        var mins = Math.floor(timerSec / 60);
+        var secs = timerSec % 60;
+        var display = document.getElementById('timerDisplay');
+        if (display) {
+            display.textContent = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+        }
+
+        var progress = 1 - (timerSec / 300);
+        var offset = 597 - (progress * 597);
+        var ring = document.querySelector('.timer-progress');
+        if (ring) ring.style.strokeDashoffset = Math.max(0, Math.min(597, offset));
+    }
+
+    function playBell() {
+        try {
+            var audio = new Audio('https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3');
+            audio.volume = 0.3;
+            audio.play().catch(function() {});
+        } catch (e) {}
+    }
+
+    // ============================================================
+    // 11. UI UPDATE FUNCTIONS
+    // ============================================================
+    function updateUI() {
+        var enhPractices = document.getElementById('enhTotalPractices');
+        var enhMinutes = document.getElementById('enhTotalMinutes');
+        var enhStreak = document.getElementById('enhStreak');
+        var streakDisplay = document.getElementById('streakDisplay');
+        var totalPracticesDisplay = document.getElementById('totalPracticesDisplay');
+        var totalMinutesDisplay = document.getElementById('totalMinutesDisplay');
+
+        if (enhPractices) enhPractices.textContent = user.totalPractices;
+        if (enhMinutes) enhMinutes.textContent = user.totalMinutes;
+        if (enhStreak) enhStreak.textContent = user.streak;
+        if (streakDisplay) streakDisplay.textContent = user.streak;
+        if (totalPracticesDisplay) totalPracticesDisplay.textContent = user.totalPractices;
+        if (totalMinutesDisplay) totalMinutesDisplay.textContent = user.totalMinutes;
+
+        updateLevel();
+        renderDiary();
+        renderCalendar();
+        renderAchievements();
+        updateCharts();
+
+        // Cosmic weather
+        var vib = Math.floor(60 + Math.random() * 35);
+        var vibEl = document.getElementById('vibrationLevel');
+        if (vibEl) vibEl.textContent = vib + '%';
+    }
+
+    function renderDiary() {
+        var container = document.getElementById('diaryList');
+        if (!container) return;
+
+        if (user.diary.length === 0) {
+            container.innerHTML =
+                '<div style="color:var(--text-secondary);opacity:0.5;text-align:center;padding:1rem 0;">No entries yet. Begin your journey.</div>';
+            return;
+        }
+
+        var html = '';
+        var entries = user.diary.slice().reverse().slice(0, 30);
+        entries.forEach(function(entry) {
+            var date = new Date(entry.date);
+            var dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit',
+                minute: '2-digit' });
+            var id = entry.id || Math.random().toString(36);
+            html +=
+                '<div class="diary-entry-item">' +
+                '<div class="entry-header">' +
+                '<span>' + dateStr + '</span>' +
+                '<button class="entry-delete" data-id="' + id + '" aria-label="Delete entry"><i class="fas fa-trash-alt"></i></button>' +
+                '</div>' +
+                '<div class="entry-text">' + entry.text + '</div>' +
+                '</div>';
+        });
+        container.innerHTML = html;
+
+        // Delete handlers
+        container.querySelectorAll('.entry-delete').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var id = this.dataset.id;
+                var idx = user.diary.findIndex(function(e) { return (e.id || e._id) === id; });
+                if (idx !== -1) {
+                    user.diary.splice(idx, 1);
+                    saveAll();
+                    renderDiary();
+                    showToast('Entry deleted', 'warning');
+                }
+            });
         });
     }
-    div.addEventListener('click', () => showModal(t));
-    return div;
-}
 
-function showModal(t) {
-    let modal = document.getElementById('detailModal');
-    if(!modal) {
-        modal = document.createElement('div');
-        modal.id = 'detailModal';
-        modal.className = 'modal';
-        document.body.appendChild(modal);
+    function renderCalendar() {
+        var container = document.getElementById('calendarTracker');
+        if (!container) return;
+
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth();
+        var firstDay = new Date(year, month, 1).getDay();
+        var daysInMonth = new Date(year, month + 1, 0).getDate();
+        var todayStr = getToday();
+
+        var html = '';
+        var weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+        weekdays.forEach(function(d) {
+            html += '<div class="calendar-day weekday">' + d + '</div>';
+        });
+
+        for (var i = 0; i < firstDay; i++) {
+            html += '<div class="calendar-day"></div>';
+        }
+
+        for (var d = 1; d <= daysInMonth; d++) {
+            var monthStr = String(month + 1).padStart(2, '0');
+            var dayStr = String(d).padStart(2, '0');
+            var dateStr = year + '-' + monthStr + '-' + dayStr;
+            var practiced = !!user.practiceDays[dateStr];
+            var isToday = dateStr === todayStr;
+            var classes = 'calendar-day';
+            if (practiced) classes += ' practiced';
+            if (isToday) classes += ' today';
+            html += '<div class="' + classes + '">' + d + '</div>';
+        }
+
+        container.innerHTML = html;
     }
-    modal.innerHTML = `<div class="modal-content glass-card"><h2>${t.name}</h2><p><em>${t.sanskrit}</em> · ${t.category}</p><div style="background: rgba(157,123,255,0.2); padding:1rem; border-radius:20px; margin:1rem 0;"><i class="fas fa-quote-left"></i> ${t.wisdom}</div><h3>🧘 Step-by-Step</h3><ol>${t.steps.map(s=>`<li>${s}</li>`).join('')}</ol><h3>🪷 Posture & Mudra</h3><p>${t.posture} · ${t.mudra}</p><h3>🌟 Benefits</h3><p>✨ Students: ${t.benefits.student}<br>✨ Employees: ${t.benefits.employee}<br>✨ Seekers: ${t.benefits.seeker}</p><button class="btn-primary addPlanBtn">➕ Add to My Plan</button><button class="btn-outline closeModal">Close</button></div>`;
-    modal.classList.add('active');
-    modal.querySelector('.addPlanBtn').addEventListener('click', () => { if(!user.plan.includes(t.id)) { user.plan.push(t.id); saveAll(); renderPlan(); showToast('added to plan'); } });
-    modal.querySelector('.closeModal').addEventListener('click', () => modal.classList.remove('active'));
-    modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
-}
 
-// Archetype grid and carousel
-const profGrid = document.getElementById('professionGrid');
-profGrid.innerHTML = professions.map(p => `<div class="prof-card" data-prof='${JSON.stringify(p)}'><i class="fas ${p.icon}"></i><span>${p.name}</span><div class="prof-desc">${p.desc}</div><div class="prof-full-desc">${p.fullDesc}</div></div>`).join('');
+    var progressChartInstance = null;
+    var categoryChartInstance = null;
 
-let currentTechList = [];
-let currentTechIndex = 0;
+    function updateCharts() {
+        // Weekly progress
+        var weekData = [0, 0, 0, 0, 0, 0, 0];
+        user.practicedTechniques.forEach(function(p) {
+            var d = new Date(p.date);
+            var day = d.getDay();
+            weekData[day] += p.minutes || 15;
+        });
 
-function renderTechCarousel() {
-    const tech = currentTechList[currentTechIndex];
-    if(!tech) return;
-    document.getElementById('techCarouselContent').innerHTML = `
-        <div class="tech-name" style="font-size:1.6rem; font-weight:700;">${tech.name}</div>
-        <div style="font-size:0.9rem; color:var(--accent-secondary);">${tech.sanskrit} · ${tech.category}</div>
-        <div class="tech-detail-section"><h4>✨ Essence</h4><p>${tech.essence}</p></div>
-        <div class="tech-detail-section"><h4>💎 Wisdom</h4><p>${tech.wisdom}</p></div>
-        <div class="tech-detail-section"><h4>🧘 Step-by-Step</h4><ol>${tech.steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>
-        <div class="tech-detail-section"><h4>🪷 Posture & Mudra</h4><p>${tech.posture} · ${tech.mudra}</p></div>
-        <div class="tech-detail-section"><h4>🌬️ Breath</h4><p>${tech.breath}</p></div>
-        <div class="tech-detail-section"><h4>⏱️ Duration</h4><p>${tech.duration}</p></div>
-        <div class="tech-detail-section"><h4>🌟 Benefits</h4><p>✨ Students: ${tech.benefits.student}<br>✨ Employees: ${tech.benefits.employee}<br>✨ Seekers: ${tech.benefits.seeker}</p></div>
-    `;
-    document.getElementById('techCounter').innerText = `${currentTechIndex+1} / ${currentTechList.length}`;
-    const favBtn = document.getElementById('favoriteTechBtn');
-    favBtn.innerHTML = user.favorites.includes(tech.id) ? '<i class="fas fa-heart"></i> Favorite' : '<i class="far fa-heart"></i> Favorite';
-    favBtn.dataset.id = tech.id;
-}
+        var ctx1 = document.getElementById('progressChart');
+        if (ctx1) {
+            if (progressChartInstance) progressChartInstance.destroy();
+            if (typeof Chart !== 'undefined') {
+                progressChartInstance = new Chart(ctx1, {
+                    type: 'line',
+                    data: {
+                        labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        datasets: [{
+                            label: 'Minutes',
+                            data: weekData,
+                            borderColor: '#9d7bff',
+                            backgroundColor: 'rgba(157,123,255,0.08)',
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: '#9d7bff',
+                            pointRadius: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: 'var(--text-secondary)' }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: 'var(--text-secondary)' }
+                            }
+                        }
+                    }
+                });
+            }
+        }
 
-function nextTech() { if(currentTechList.length) { currentTechIndex = (currentTechIndex+1) % currentTechList.length; renderTechCarousel(); } }
-function prevTech() { if(currentTechList.length) { currentTechIndex = (currentTechIndex-1+currentTechList.length) % currentTechList.length; renderTechCarousel(); } }
-function practiceCurrentTech() { if(currentTechList[currentTechIndex]) addPracticedTechnique(currentTechList[currentTechIndex].id, currentTechList[currentTechIndex].name, 15); }
-function addCurrentTechToPlan() { const t = currentTechList[currentTechIndex]; if(t && !user.plan.includes(t.id)) { user.plan.push(t.id); saveAll(); renderPlan(); showToast('Added to My Plan'); } else showToast('Already in plan'); }
-function toggleFavoriteCurrentTech() { const t = currentTechList[currentTechIndex]; if(t) { if(user.favorites.includes(t.id)) user.favorites = user.favorites.filter(f=>f!==t.id); else user.favorites.push(t.id); saveAll(); renderTechCarousel(); showToast(user.favorites.includes(t.id)?'Added to favorites':'Removed from favorites'); } }
+        // Category breakdown
+        var catCount = {};
+        user.practicedTechniques.forEach(function(p) {
+            var t = TECHNIQUES[p.id];
+            if (t) {
+                var cat = t.category || 'other';
+                catCount[cat] = (catCount[cat] || 0) + 1;
+            }
+        });
 
-// Attach archetype click handlers
-document.querySelectorAll('.prof-card').forEach(card => {
-    card.addEventListener('click', () => {
-        const prof = JSON.parse(card.dataset.prof);
-        currentTechList = getRecommendedTechniques(prof);
-        currentTechIndex = 0;
-        renderTechCarousel();
-        document.getElementById('professionSelectionView').classList.add('hidden');
-        document.getElementById('recommendedTechniquesView').classList.remove('hidden');
-        document.getElementById('allTechniquesView').classList.add('hidden');
-        document.getElementById('selectedProfessionTitle').innerHTML = `🌀 ${prof.name} · Recommended Techniques`;
-    });
-});
+        var ctx2 = document.getElementById('categoryChart');
+        if (ctx2) {
+            if (categoryChartInstance) categoryChartInstance.destroy();
+            if (typeof Chart !== 'undefined') {
+                var colors = ['#9d7bff', '#ffb3a0', '#6b4eff', '#ff8a6c', '#c4b5fd', '#ffd58c', '#7ae0b0'];
+                var labels = Object.keys(catCount);
+                var data = Object.values(catCount);
+                categoryChartInstance = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: colors.slice(0, labels.length),
+                            borderColor: 'rgba(0,0,0,0.3)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: 'var(--text-secondary)', padding: 12, font: { size: 10 } }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
 
-document.getElementById('backToProfessionsBtn').addEventListener('click', () => {
-    document.getElementById('professionSelectionView').classList.remove('hidden');
-    document.getElementById('recommendedTechniquesView').classList.add('hidden');
-    document.getElementById('allTechniquesView').classList.add('hidden');
-});
-document.getElementById('showArchetypeBtn').addEventListener('click', () => {
-    document.getElementById('professionSelectionView').classList.remove('hidden');
-    document.getElementById('recommendedTechniquesView').classList.add('hidden');
-    document.getElementById('allTechniquesView').classList.add('hidden');
-});
-document.getElementById('showAllTechBtn').addEventListener('click', () => {
-    document.getElementById('professionSelectionView').classList.add('hidden');
-    document.getElementById('recommendedTechniquesView').classList.add('hidden');
-    document.getElementById('allTechniquesView').classList.remove('hidden');
-    const grid = document.getElementById('allTechniquesGrid');
-    grid.innerHTML = '';
-    Object.values(techniques).forEach(t => grid.appendChild(buildTechCard(t, true)));
-    const searchInput = document.getElementById('techSearchInput');
-    searchInput.oninput = () => {
-        const term = searchInput.value.toLowerCase();
-        grid.innerHTML = '';
-        Object.values(techniques).filter(t => t.name.toLowerCase().includes(term) || t.category.includes(term)).forEach(t => grid.appendChild(buildTechCard(t, true)));
+    // ============================================================
+    // 12. NAVIGATION
+    // ============================================================
+    var viewMap = {
+        home: 'homeView',
+        techniques: 'techniquesView',
+        breathwork: 'breathworkView',
+        quotes: 'quotesView',
+        diary: 'diaryView',
+        timer: 'timerView',
+        enhanced: 'enhancedView'
     };
-});
 
-document.getElementById('prevTechBtn').addEventListener('click', prevTech);
-document.getElementById('nextTechBtn').addEventListener('click', nextTech);
-document.getElementById('practiceTechBtn').addEventListener('click', practiceCurrentTech);
-document.getElementById('addToPlanTechBtn').addEventListener('click', addCurrentTechToPlan);
-document.getElementById('favoriteTechBtn').addEventListener('click', toggleFavoriteCurrentTech);
+    function showView(name) {
+        // Hide all views
+        for (var key in viewMap) {
+            if (viewMap.hasOwnProperty(key)) {
+                var el = document.getElementById(viewMap[key]);
+                if (el) el.classList.remove('active-view');
+            }
+        }
 
-// ==================== BREATHWORK ====================
-const breathInstructions = {
-    box: "Inhale 4s → Hold 4s → Exhale 6s → Hold 4s. Calms nervous system.",
-    "478": "Inhale 4s → Hold 7s → Exhale 8s. Deep relaxation.",
-    nadi: "Alternate nostril: close right, inhale left; close left, exhale right. Balances hemispheres.",
-    kapal: "Rapid forceful exhales, passive inhales. 30 breaths then rest. Cleanses lungs.",
-    ujjayi: "Ocean breath: slight throat constriction, audible hiss. Soothes mind."
-};
-let breathActive=false, breathInterval=null;
+        // Show target
+        var target = document.getElementById(viewMap[name]);
+        if (target) target.classList.add('active-view');
 
-function startBreathPractice(type) {
-    if(breathInterval) clearInterval(breathInterval);
-    breathActive=true;
-    document.getElementById('stopBreathBtn').style.display='inline-block';
-    document.getElementById('breathInstructionPanel').innerHTML=`<strong>📖 How to practice:</strong> ${breathInstructions[type]}<br><br>🧘 Starting guided session...`;
-    let phases=[], timings=[];
-    if(type==='box'){ phases=['inhale','hold','exhale','hold']; timings=[4,4,6,4]; }
-    else if(type==='478'){ phases=['inhale','hold','exhale']; timings=[4,7,8]; }
-    else if(type==='nadi'){ phases=['inhale left','hold','exhale right','inhale right','hold','exhale left']; timings=[4,4,4,4,4,4]; }
-    else if(type==='kapal'){ phases=['rapid exhale','rest']; timings=[20,10]; }
-    else if(type==='ujjayi'){ phases=['ujjayi inhale','ujjayi exhale']; timings=[5,5]; }
-    let phaseIdx=0, cycle=0, maxCycles=4;
-    const runPhase=()=>{
-        if(!breathActive) return;
-        if(phaseIdx>=phases.length){ phaseIdx=0; cycle++; if(cycle>=maxCycles){ resetBreathUI(); addPracticedTechnique(0,`${type.toUpperCase()} Breathwork`,5); showToast('Practice complete'); return; } }
-        let timer=timings[phaseIdx];
-        const phase=phases[phaseIdx];
-        document.getElementById('breathPhaseLabel').innerHTML=phase.includes('inhale')?'🌬️':(phase.includes('hold')?'🌀':'💨');
-        document.getElementById('breathPhaseText').innerHTML=phase.toUpperCase();
-        let step=0;
-        const interval=setInterval(()=>{
-            if(!breathActive){ clearInterval(interval); return; }
-            step++;
-            document.getElementById('breathTimerDisplay').innerHTML=timer-step;
-            const progress=(step/timer)*100;
-            document.querySelector('.progress-circle').style.strokeDashoffset=860-(progress/100)*860;
-            if(step>=timer){ clearInterval(interval); phaseIdx++; runPhase(); }
-        },1000);
-        breathInterval=interval;
-    };
-    runPhase();
-}
+        // Update nav
+        var navLinks = document.querySelectorAll('.nav a[data-view]');
+        navLinks.forEach(function(a) {
+            a.classList.toggle('active', a.dataset.view === name);
+        });
 
-function resetBreathUI() {
-    if(breathInterval) clearInterval(breathInterval);
-    breathActive=false;
-    document.getElementById('stopBreathBtn').style.display='none';
-    document.getElementById('breathInstructionPanel').innerHTML="✨ Select a breath technique to see detailed instructions and begin your practice.";
-    document.getElementById('breathPhaseLabel').innerHTML='🌀';
-    document.getElementById('breathPhaseText').innerHTML='Ready';
-    document.getElementById('breathTimerDisplay').innerHTML='0';
-    document.querySelector('.progress-circle').style.strokeDashoffset=860;
-}
+        // Refresh content if needed
+        if (name === 'enhanced') {
+            renderCalendar();
+            updateCharts();
+            renderAchievements();
+        }
+        if (name === 'diary') renderDiary();
+        if (name === 'home') {
+            updateHomeQuote();
+            updateUI();
+        }
+    }
 
-document.querySelectorAll('.start-breath').forEach(btn=>btn.addEventListener('click',(e)=>{ e.stopPropagation(); const type=btn.closest('.breath-card').dataset.breath; startBreathPractice(type); }));
-document.getElementById('stopBreathBtn').addEventListener('click',resetBreathUI);
+    // ============================================================
+    // 13. QUOTE FUNCTIONS
+    // ============================================================
+    var currentQuotes = QUOTE_LIBRARY.slice();
+    var libQuoteIndex = 0;
+    var homeQuoteIndex = 0;
 
-// ==================== TIMER ====================
-let timerSec=300, timerInt=null, running=false;
-const timerDisplay=document.getElementById('timerDisplay'), timerCircle=document.querySelector('.timer-progress');
-const circumferenceTimer=553;
-function updateTimerDisplay() {
-    const mins=Math.floor(timerSec/60), secs=timerSec%60;
-    timerDisplay.innerText=`${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-    const progress=(timerSec<=0?0:(300-timerSec)/300);
-    const offset=circumferenceTimer-(progress*circumferenceTimer);
-    if(timerCircle) timerCircle.style.strokeDashoffset=Math.min(circumferenceTimer,Math.max(0,offset));
-}
-document.querySelectorAll('.timer-pill').forEach(btn=>btn.addEventListener('click',(e)=>{ timerSec=parseInt(e.target.dataset.min)*60; updateTimerDisplay(); }));
-document.getElementById('customMinutes')?.addEventListener('change',(e)=>{ if(e.target.value>0) timerSec=parseInt(e.target.value)*60; updateTimerDisplay(); });
-document.getElementById('startTimer').addEventListener('click',()=>{
-    if(running) return;
-    running=true;
-    timerInt=setInterval(()=>{
-        if(timerSec<=0){
-            clearInterval(timerInt); running=false;
-            addPracticedTechnique(0, "Focused Meditation", Math.floor((300-timerSec)/60)||5);
-            document.getElementById('timerMsg').innerText='✨ Complete! +xp ✨';
-            showToast('Meditation completed!');
-            updateTimerDisplay();
-        } else { timerSec--; updateTimerDisplay(); }
-    },1000);
-});
-document.getElementById('pauseTimer').addEventListener('click',()=>{ clearInterval(timerInt); running=false; });
-document.getElementById('resetTimer').addEventListener('click',()=>{ clearInterval(timerInt); running=false; timerSec=300; updateTimerDisplay(); document.getElementById('timerMsg').innerText=''; });
+    function updateHomeQuote() {
+        var q = QUOTE_LIBRARY[homeQuoteIndex % QUOTE_LIBRARY.length];
+        var textEl = document.getElementById('homeQuoteText');
+        var authorEl = document.getElementById('homeQuoteAuthor');
+        if (textEl) textEl.textContent = '“' + q.text + '”';
+        if (authorEl) authorEl.textContent = '— ' + q.author;
+    }
 
-// ==================== AMBIENT SOUNDS ====================
-let currentSound = null;
-const soundFiles = {
-    rain: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-    forest: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-    ocean: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-    fire: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
-};
-function playSound(sound) {
-    if (currentSound) { currentSound.pause(); currentSound.currentTime = 0; }
-    if (sound === 'silence') { currentSound = null; return; }
-    const audio = new Audio(soundFiles[sound]);
-    audio.loop = true;
-    audio.volume = 0.3;
-    audio.play().catch(e => console.log('Autoplay blocked'));
-    currentSound = audio;
-}
-document.querySelectorAll('.sound-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const sound = btn.dataset.sound;
-        playSound(sound);
-        document.querySelectorAll('.sound-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-    });
-});
+    function updateLibQuote() {
+        if (currentQuotes.length === 0) {
+            var textEl = document.getElementById('quoteTextLarge');
+            var authorEl = document.getElementById('quoteAuthorLarge');
+            if (textEl) textEl.textContent = 'No quotes found';
+            if (authorEl) authorEl.textContent = '';
+            return;
+        }
+        var q = currentQuotes[libQuoteIndex % currentQuotes.length];
+        var textEl = document.getElementById('quoteTextLarge');
+        var authorEl = document.getElementById('quoteAuthorLarge');
+        if (textEl) textEl.textContent = '“' + q.text + '”';
+        if (authorEl) authorEl.textContent = '— ' + q.author;
+    }
 
-// ==================== DIARY ====================
-document.getElementById('saveDiary').addEventListener('click',()=>{ const txt = document.getElementById('diaryEntry').value.trim(); if(txt){ user.diary.unshift({ date: new Date(), text: txt }); saveAll(); renderDiary(); renderProfileSections(); document.getElementById('diaryEntry').value=''; showToast('saved'); } });
+    // ============================================================
+    // 14. TECHNIQUES UI
+    // ============================================================
+    var currentTechList = [];
+    var currentTechIdx = 0;
 
-// ==================== EXPORT DATA ====================
-function exportData() {
-    const data = { user, exportDate: new Date().toISOString() };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `vigyan_bhairav_data_${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('Data exported');
-}
-function exportCSV() {
-    let csv = "Date,Technique,Minutes\n";
-    user.practicedTechniques.forEach(p => {
-        csv += `"${new Date(p.date).toISOString().slice(0,10)}","${p.name}",${p.minutes}\n`;
-    });
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `practice_history_${new Date().toISOString().slice(0,10)}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('CSV exported');
-}
-document.getElementById('exportDataBtn')?.addEventListener('click', exportData);
-document.getElementById('exportCSVBtn')?.addEventListener('click', exportCSV);
+    function renderTechCarousel() {
+        var t = currentTechList[currentTechIdx];
+        if (!t) return;
+        var container = document.getElementById('techCarouselContent');
+        if (!container) return;
+        container.innerHTML =
+            '<div class="glass-card" style="padding:1.2rem;">' +
+            '<h3 style="font-size:1.2rem;">' + t.name + '</h3>' +
+            '<div style="font-size:0.8rem;color:var(--text-secondary);">' + t.sanskrit + ' · ' + t.chakra +
+            ' chakra · ' + t.element + '</div>' +
+            '<div style="margin:0.8rem 0;font-size:0.9rem;">' + t.essence + '</div>' +
+            '<div style="font-size:0.85rem;color:var(--text-secondary);"><strong>Steps:</strong> ' + t.steps +
+            '</div>' +
+            '<div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.8rem;">' +
+            '<span style="background:rgba(157,123,255,0.12);padding:0.2rem 0.8rem;border-radius:20px;font-size:0.7rem;">' +
+            t.category + '</span>' +
+            '<span style="background:rgba(157,123,255,0.12);padding:0.2rem 0.8rem;border-radius:20px;font-size:0.7rem;">' +
+            t.duration + '</span>' +
+            '</div>' +
+            '</div>';
+    }
 
-// ==================== PROFILE TABS ====================
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-        const tab=btn.dataset.profileTab;
-        document.querySelectorAll('.profile-section-container').forEach(sec=>sec.classList.remove('active-tab'));
-        document.getElementById(`profile${tab.charAt(0).toUpperCase()+tab.slice(1)}`).classList.add('active-tab');
-        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-    });
-});
+    // ============================================================
+    // 15. INITIALIZATION
+    // ============================================================
+    function init() {
+        // --- Navigation ---
+        document.querySelectorAll('.nav a[data-view]').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                showView(this.dataset.view);
+            });
+        });
 
-// ==================== NOTIFICATIONS ====================
-if ('Notification' in window && Notification.permission !== 'granted') {
-    Notification.requestPermission();
-}
+        document.querySelectorAll('footer a[data-view]').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                showView(this.dataset.view);
+            });
+        });
 
-// ==================== THEME ====================
-const themeBtn=document.getElementById('themeToggle');
-themeBtn.addEventListener('click',()=>{ const html=document.documentElement; const cur=html.getAttribute('data-theme'); html.setAttribute('data-theme', cur==='dark'?'light':'dark'); themeBtn.innerHTML=cur==='dark'?'<i class="fas fa-sun"></i>':'<i class="fas fa-moon"></i>'; localStorage.setItem('theme',html.getAttribute('data-theme')); });
-const savedTheme=localStorage.getItem('theme')||'dark'; document.documentElement.setAttribute('data-theme',savedTheme); themeBtn.innerHTML=savedTheme==='dark'?'<i class="fas fa-moon"></i>':'<i class="fas fa-sun"></i>';
+        // --- Theme Toggle ---
+        var themeToggle = document.getElementById('themeToggle');
+        var html = document.documentElement;
+        var savedTheme = localStorage.getItem('theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+        if (themeToggle) {
+            themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-moon"></i>' :
+            '<i class="fas fa-sun"></i>';
+            themeToggle.addEventListener('click', function() {
+                var current = html.getAttribute('data-theme');
+                var next = current === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+                this.innerHTML = next === 'dark' ? '<i class="fas fa-moon"></i>' :
+                '<i class="fas fa-sun"></i>';
+            });
+        }
 
-// ==================== TOAST & SCROLL ====================
-function showToast(msg){ const t=document.createElement('div'); t.className='toast'; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
-const scrollBtn=document.getElementById('scrollTop');
-window.addEventListener('scroll',()=>scrollBtn.style.opacity=window.scrollY>200?'1':'0');
-scrollBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+        // --- Home: Explore & Daily ---
+        var exploreBtn = document.getElementById('exploreBtn');
+        var dailyBtn = document.getElementById('dailyBtn');
+        if (exploreBtn) exploreBtn.addEventListener('click', function() { showView('techniques'); });
+        if (dailyBtn) {
+            dailyBtn.addEventListener('click', function() {
+                var rand = Math.floor(Math.random() * 112) + 1;
+                var t = TECHNIQUES[rand];
+                showToast('Today\'s technique: ' + t.name + ' · ' + t.chakra + ' chakra', 'info');
+            });
+        }
 
-// ==================== NAVIGATION ====================
-const views={ home:'homeView', techniques:'techniquesView', breathwork:'breathworkView', quotes:'quotesView', diary:'diaryView', timer:'timerView', plan:'planView', profile:'profileView', enhanced:'enhancedView', stats:'statsView', achievements:'achievementsView' };
-function showView(viewName) {
-    Object.values(views).forEach(id=>document.getElementById(id).classList.add('hidden'));
-    document.getElementById(views[viewName]).classList.remove('hidden');
-    document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
-    const activeNav=document.querySelector(`.nav a[data-view="${viewName}"]`);
-    if(activeNav) activeNav.classList.add('active');
-}
-document.querySelectorAll('[data-view]').forEach(el=>el.addEventListener('click',(e)=>{ e.preventDefault(); showView(el.dataset.view); }));
-document.getElementById('exploreBtn').addEventListener('click',()=>showView('techniques'));
-document.getElementById('dailyBtn').addEventListener('click',()=>{ const ids=Object.keys(techniques); alert(`Today's technique: ${techniques[ids[Math.floor(Math.random()*ids.length)]].name}`); });
+        // --- Home: Next Quote ---
+        var nextQuoteBtn = document.getElementById('nextHomeQuote');
+        if (nextQuoteBtn) {
+            nextQuoteBtn.addEventListener('click', function() {
+                homeQuoteIndex = (homeQuoteIndex + 1) % QUOTE_LIBRARY.length;
+                updateHomeQuote();
+            });
+        }
 
-// ==================== INITIAL RENDERING ====================
-renderMudra(0);
-updateHomeQuote();
-updateLibQuote();
-renderPlan();
-renderDiary();
-renderProfileSections();
-updateUI();
-showView('home');
+        var saveHomeQuoteBtn = document.getElementById('saveHomeQuoteBtn');
+        if (saveHomeQuoteBtn) {
+            saveHomeQuoteBtn.addEventListener('click', function() {
+                var q = QUOTE_LIBRARY[homeQuoteIndex % QUOTE_LIBRARY.length];
+                saveQuoteToDiary(q.text, q.author);
+            });
+        }
+
+        // --- Mood Buttons ---
+        document.querySelectorAll('.mood-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.mood-btn').forEach(function(b) { b.classList.remove(
+                    'selected'); });
+                this.classList.add('selected');
+                var mood = this.dataset.mood;
+
+                user.moodHistory.push({ mood: mood, date: new Date().toISOString() });
+                saveAll();
+
+                var recId;
+                if (mood === 'serene' || mood === 'curious') recId = Math.floor(Math.random() * 20) + 1;
+                else if (mood === 'anxious') recId = [1, 3, 8, 20][Math.floor(Math.random() * 4)];
+                else if (mood === 'focused') recId = [4, 5, 10, 15][Math.floor(Math.random() * 4)];
+                else recId = Math.floor(Math.random() * 40) + 1;
+
+                var rec = TECHNIQUES[recId] || TECHNIQUES[1];
+                var moodRec = document.getElementById('moodRecommend');
+                if (moodRec) {
+                    moodRec.innerHTML = '🌀 Based on your mood, we recommend: <strong>' + rec.name +
+                        '</strong> (' + rec.chakra + ' chakra) — ' + rec.essence.substring(0, 80) +
+                        '...';
+                }
+            });
+        });
+
+        // --- Quotes Library ---
+        var prevLibBtn = document.getElementById('prevLibQuote');
+        var nextLibBtn = document.getElementById('nextLibQuote');
+        var saveLibBtn = document.getElementById('saveLibQuoteBtn');
+        var quoteSearch = document.getElementById('quoteSearchInput');
+
+        if (prevLibBtn) {
+            prevLibBtn.addEventListener('click', function() {
+                if (currentQuotes.length) {
+                    libQuoteIndex = (libQuoteIndex - 1 + currentQuotes.length) % currentQuotes.length;
+                    updateLibQuote();
+                }
+            });
+        }
+        if (nextLibBtn) {
+            nextLibBtn.addEventListener('click', function() {
+                if (currentQuotes.length) {
+                    libQuoteIndex = (libQuoteIndex + 1) % currentQuotes.length;
+                    updateLibQuote();
+                }
+            });
+        }
+        if (saveLibBtn) {
+            saveLibBtn.addEventListener('click', function() {
+                if (currentQuotes.length) {
+                    var q = currentQuotes[libQuoteIndex % currentQuotes.length];
+                    saveQuoteToDiary(q.text, q.author);
+                }
+            });
+        }
+        if (quoteSearch) {
+            quoteSearch.addEventListener('input', function() {
+                var term = this.value.toLowerCase();
+                currentQuotes = QUOTE_LIBRARY.filter(function(q) {
+                    return q.text.toLowerCase().includes(term) || q.author.toLowerCase().includes(
+                    term);
+                });
+                libQuoteIndex = 0;
+                updateLibQuote();
+            });
+        }
+
+        // --- Diary ---
+        var saveDiaryBtn = document.getElementById('saveDiary');
+        var diaryEntry = document.getElementById('diaryEntry');
+        var exportDiaryBtn = document.getElementById('exportDiaryPDFBtn');
+
+        if (saveDiaryBtn) {
+            saveDiaryBtn.addEventListener('click', function() {
+                var text = diaryEntry ? diaryEntry.value.trim() : '';
+                if (text) {
+                    user.diary.unshift({ date: new Date(), text: text });
+                    if (diaryEntry) diaryEntry.value = '';
+                    saveAll();
+                    renderDiary();
+                    showToast('📓 Diary entry saved', 'success');
+                } else {
+                    showToast('Please write something before saving', 'warning');
+                }
+            });
+        }
+
+        if (exportDiaryBtn) {
+            exportDiaryBtn.addEventListener('click', function() {
+                if (typeof window.jspdf !== 'undefined' && window.jspdf.jsPDF) {
+                    var doc = new window.jspdf.jsPDF();
+                    doc.text("Cosmic Diary", 20, 20);
+                    var y = 30;
+                    var entries = user.diary.slice(0, 30);
+                    if (entries.length === 0) {
+                        doc.text("No entries yet.", 20, 30);
+                    } else {
+                        entries.forEach(function(e) {
+                            var text = new Date(e.date).toLocaleString() + ': ' + e.text
+                            .substring(0, 120);
+                            doc.text(text, 20, y, { maxWidth: 170 });
+                            y += 10;
+                            if (y > 280) { doc.addPage();
+                                y = 20; }
+                        });
+                    }
+                    doc.save('diary_' + new Date().toISOString().slice(0, 10) + '.pdf');
+                    showToast('📄 Diary exported as PDF', 'success');
+                } else {
+                    showToast('PDF library loading... please try again', 'warning');
+                }
+            });
+        }
+
+        // --- Timer ---
+        document.querySelectorAll('.timer-preset').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                timerSec = parseInt(this.dataset.min) * 60;
+                updateTimerDisplay();
+                document.querySelectorAll('.timer-preset').forEach(function(b) { b.classList.remove(
+                    'active'); });
+                this.classList.add('active');
+                if (timerRunning) {
+                    clearInterval(timerInt);
+                    timerRunning = false;
+                }
+                var msg = document.getElementById('timerMsg');
+                if (msg) msg.textContent = this.dataset.min + ' min timer set';
+            });
+        });
+
+        var startTimerBtn = document.getElementById('startTimer');
+        var pauseTimerBtn = document.getElementById('pauseTimer');
+        var resetTimerBtn = document.getElementById('resetTimer');
+
+        if (startTimerBtn) {
+            startTimerBtn.addEventListener('click', function() {
+                if (timerRunning) return;
+                if (timerSec <= 0) {
+                    showToast('Please set a timer duration first', 'warning');
+                    return;
+                }
+                timerRunning = true;
+                timerInt = setInterval(function() {
+                    timerSec--;
+                    updateTimerDisplay();
+                    if (timerSec <= 0) {
+                        clearInterval(timerInt);
+                        timerRunning = false;
+                        playBell();
+                        addPractice(0, "Meditation Timer", Math.floor((300 - timerSec) / 60) || 5);
+                        var msg = document.getElementById('timerMsg');
+                        if (msg) msg.textContent = '✨ Meditation complete! ✨';
+                    }
+                }, 1000);
+                var msg = document.getElementById('timerMsg');
+                if (msg) msg.textContent = '🧘 Focus on your breath...';
+            });
+        }
+
+        if (pauseTimerBtn) {
+            pauseTimerBtn.addEventListener('click', function() {
+                if (timerRunning) {
+                    clearInterval(timerInt);
+                    timerRunning = false;
+                    var msg = document.getElementById('timerMsg');
+                    if (msg) msg.textContent = '⏸️ Paused';
+                }
+            });
+        }
+
+        if (resetTimerBtn) {
+            resetTimerBtn.addEventListener('click', function() {
+                clearInterval(timerInt);
+                timerRunning = false;
+                timerSec = 300;
+                updateTimerDisplay();
+                document.querySelectorAll('.timer-preset').forEach(function(b) { b.classList.remove(
+                    'active'); });
+                var msg = document.getElementById('timerMsg');
+                if (msg) msg.textContent = '↻ Reset to 5 minutes';
+            });
+        }
+
+        // --- Ambient Sounds ---
+        var currentSound = null;
+        document.querySelectorAll('.sound-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var sound = this.dataset.sound;
+                if (currentSound) {
+                    currentSound.pause();
+                    currentSound.currentTime = 0;
+                    currentSound = null;
+                }
+                document.querySelectorAll('.sound-btn').forEach(function(b) { b.classList.remove(
+                    'active'); });
+                if (sound === 'silence') {
+                    showToast('🔇 Silence', 'info');
+                    return;
+                }
+                this.classList.add('active');
+                try {
+                    var audio = new Audio();
+                    if (sound === 'rain') {
+                        audio.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+                    } else if (sound === 'forest') {
+                        audio.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
+                    }
+                    audio.loop = true;
+                    audio.volume = 0.15;
+                    audio.play().catch(function() {});
+                    currentSound = audio;
+                    showToast('🌿 Playing: ' + sound, 'info');
+                } catch (e) {
+                    showToast('Sound playback not available', 'warning');
+                }
+            });
+        });
+
+        // --- Breathwork ---
+        document.querySelectorAll('.start-breath').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var type = this.dataset.type;
+                startBreathPractice(type);
+            });
+        });
+
+        var stopBreathBtn = document.getElementById('stopBreathBtn');
+        if (stopBreathBtn) stopBreathBtn.addEventListener('click', resetBreathUI);
+
+        // --- Techniques: Archetype Grid ---
+        var profGrid = document.getElementById('professionGrid');
+        if (profGrid) {
+            var profHtml = '';
+            professions.forEach(function(p) {
+                profHtml +=
+                    '<div class="prof-card" data-prof=\'' + JSON.stringify(p) + '\'>' +
+                    '<i class="fas ' + p.icon + '"></i>' +
+                    '<span>' + p.name + '</span>' +
+                    '<div class="prof-desc">' + p.desc + '</div>' +
+                    '</div>';
+            });
+            profGrid.innerHTML = profHtml;
+
+            profGrid.querySelectorAll('.prof-card').forEach(function(card) {
+                card.addEventListener('click', function() {
+                    var prof = JSON.parse(this.dataset.prof);
+                    var recs = getRecommendedTechniques(prof);
+                    currentTechList = recs;
+                    currentTechIdx = 0;
+                    renderTechCarousel();
+
+                    var profSel = document.getElementById('professionSelectionView');
+                    var recView = document.getElementById('recommendedTechniquesView');
+                    var allView = document.getElementById('allTechniquesView');
+                    var archetypeBtn = document.getElementById('showArchetypeBtn');
+
+                    if (profSel) profSel.classList.add('hidden');
+                    if (recView) recView.classList.remove('hidden');
+                    if (allView) allView.classList.add('hidden');
+                    if (archetypeBtn) archetypeBtn.textContent = '🌀 ' + prof.name + ' · ' + recs
+                        .length + ' techniques';
+                });
+            });
+        }
+
+        // --- Tech Carousel Controls ---
+        var prevTechBtn = document.getElementById('prevTechBtn');
+        var nextTechBtn = document.getElementById('nextTechBtn');
+        var practiceTechBtn = document.getElementById('practiceTechBtn');
+        var readFullBtn = document.getElementById('readFullChapterBtn');
+        var backToProfBtn = document.getElementById('backToProfessionsBtn');
+
+        if (prevTechBtn) {
+            prevTechBtn.addEventListener('click', function() {
+                if (currentTechList.length) {
+                    currentTechIdx = (currentTechIdx - 1 + currentTechList.length) % currentTechList
+                    .length;
+                    renderTechCarousel();
+                }
+            });
+        }
+        if (nextTechBtn) {
+            nextTechBtn.addEventListener('click', function() {
+                if (currentTechList.length) {
+                    currentTechIdx = (currentTechIdx + 1) % currentTechList.length;
+                    renderTechCarousel();
+                }
+            });
+        }
+        if (practiceTechBtn) {
+            practiceTechBtn.addEventListener('click', function() {
+                if (currentTechList[currentTechIdx]) {
+                    var t = currentTechList[currentTechIdx];
+                    addPractice(t.id, t.name, 15);
+                }
+            });
+        }
+        if (readFullBtn) {
+            readFullBtn.addEventListener('click', function() {
+                if (currentTechList[currentTechIdx]) {
+                    var t = currentTechList[currentTechIdx];
+                    alert('📖 Full Chapter: ' + t.name + '\n\n' + t.sanskrit + '\n\n' + t.essence +
+                        '\n\n' + t.steps + '\n\nWisdom: ' + t.wisdom + '\n\nChakra: ' + t.chakra +
+                        '\nElement: ' + t.element);
+                }
+            });
+        }
+        if (backToProfBtn) {
+            backToProfBtn.addEventListener('click', function() {
+                var profSel = document.getElementById('professionSelectionView');
+                var recView = document.getElementById('recommendedTechniquesView');
+                var archetypeBtn = document.getElementById('showArchetypeBtn');
+                if (profSel) profSel.classList.remove('hidden');
+                if (recView) recView.classList.add('hidden');
+                if (archetypeBtn) archetypeBtn.textContent = 'Archetype Selection';
+            });
+        }
+
+        // --- All Techniques ---
+        var showAllBtn = document.getElementById('showAllTechBtn');
+        if (showAllBtn) {
+            showAllBtn.addEventListener('click', function() {
+                var container = document.getElementById('allTechniquesGrid');
+                if (!container) return;
+                container.innerHTML = '';
+                for (var id in TECHNIQUES) {
+                    if (TECHNIQUES.hasOwnProperty(id)) {
+                        var t = TECHNIQUES[id];
+                        var card = document.createElement('div');
+                        card.className = 'tech-card';
+                        card.innerHTML =
+                            '<div class="tech-name">' + t.name + '</div>' +
+                            '<div class="tech-sanskrit">' + t.sanskrit + '</div>' +
+                            '<div class="tech-meta">' + t.chakra + ' · ' + t.element + '</div>' +
+                            '<button class="btn-outline btn-sm practice-tech" data-id="' + t.id +
+                            '" style="margin-top:0.5rem;">Practice</button>';
+                        var practiceBtn = card.querySelector('.practice-tech');
+                        if (practiceBtn) {
+                            practiceBtn.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                var techId = parseInt(this.dataset.id);
+                                var tech = TECHNIQUES[techId];
+                                if (tech) addPractice(techId, tech.name, 15);
+                            });
+                        }
+                        card.addEventListener('click', function() {
+                            var tech = TECHNIQUES[parseInt(this.dataset.id || this.querySelector(
+                                '.practice-tech')?.dataset.id)];
+                            if (tech) {
+                                alert('📖 ' + tech.name + '\n\n' + tech.sanskrit + '\n\n' + tech
+                                    .essence + '\n\nSteps: ' + tech.steps + '\n\nChakra: ' +
+                                    tech.chakra);
+                            }
+                        }.bind(card, t));
+                        // Store id on card
+                        card.dataset.id = t.id;
+                        container.appendChild(card);
+                    }
+                }
+                var profSel = document.getElementById('professionSelectionView');
+                var recView = document.getElementById('recommendedTechniquesView');
+                var allView = document.getElementById('allTechniquesView');
+                if (profSel) profSel.classList.add('hidden');
+                if (recView) recView.classList.add('hidden');
+                if (allView) allView.classList.remove('hidden');
+            });
+        }
+
+        var showArchetypeBtn = document.getElementById('showArchetypeBtn');
+        if (showArchetypeBtn) {
+            showArchetypeBtn.addEventListener('click', function() {
+                var profSel = document.getElementById('professionSelectionView');
+                var recView = document.getElementById('recommendedTechniquesView');
+                var allView = document.getElementById('allTechniquesView');
+                if (profSel) profSel.classList.remove('hidden');
+                if (recView) recView.classList.add('hidden');
+                if (allView) allView.classList.add('hidden');
+                this.textContent = 'Archetype Selection';
+            });
+        }
+
+        // --- Search Techniques ---
+        var techSearch = document.getElementById('techSearchInput');
+        if (techSearch) {
+            techSearch.addEventListener('input', function() {
+                var term = this.value.toLowerCase();
+                var cards = document.querySelectorAll('#allTechniquesGrid .tech-card');
+                cards.forEach(function(card) {
+                    var text = card.textContent.toLowerCase();
+                    card.style.display = text.includes(term) ? '' : 'none';
+                });
+            });
+        }
+
+        // --- Export Techniques PDF ---
+        var exportTechPdfBtn = document.getElementById('exportTechniquesPDFBtn');
+        if (exportTechPdfBtn) {
+            exportTechPdfBtn.addEventListener('click', function() {
+                if (typeof window.jspdf !== 'undefined' && window.jspdf.jsPDF) {
+                    var doc = new window.jspdf.jsPDF();
+                    doc.text("112 Techniques of Vigyan Bhairav Tantra", 20, 20);
+                    var y = 30;
+                    var techs = Object.values(TECHNIQUES);
+                    techs.slice(0, 112).forEach(function(t) {
+                        doc.text(t.id + '. ' + t.name + ' (' + t.sanskrit + ')', 20, y);
+                        y += 6;
+                        if (y > 280) { doc.addPage();
+                            y = 20; }
+                    });
+                    doc.save('techniques_' + new Date().toISOString().slice(0, 10) + '.pdf');
+                    showToast('📄 Techniques exported as PDF', 'success');
+                } else {
+                    showToast('PDF library loading... try again', 'warning');
+                }
+            });
+        }
+
+        // --- Data Export/Import ---
+        var exportDataBtn = document.getElementById('exportDataBtn');
+        var importDataBtn = document.getElementById('importDataBtn');
+        var importFileInput = document.getElementById('importFileInput');
+
+        if (exportDataBtn) {
+            exportDataBtn.addEventListener('click', function() {
+                var data = JSON.stringify({ user: user, exportDate: new Date().toISOString() }, null, 2);
+                var blob = new Blob([data], { type: 'application/json' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'tantra_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast('💾 Data exported', 'success');
+            });
+        }
+
+        if (importDataBtn && importFileInput) {
+            importDataBtn.addEventListener('click', function() {
+                importFileInput.click();
+            });
+            importFileInput.addEventListener('change', function(e) {
+                var file = this.files[0];
+                if (!file) return;
+                var reader = new FileReader();
+                reader.onload = function(ev) {
+                    try {
+                        var data = JSON.parse(ev.target.result);
+                        if (data.user) {
+                            for (var key in data.user) {
+                                if (data.user.hasOwnProperty(key)) {
+                                    user[key] = data.user[key];
+                                }
+                            }
+                            saveAll();
+                            showToast('📥 Data imported successfully', 'success');
+                            updateUI();
+                        } else {
+                            showToast('Invalid backup file', 'error');
+                        }
+                    } catch (err) {
+                        showToast('Error importing: ' + err.message, 'error');
+                    }
+                };
+                reader.readAsText(file);
+                this.value = '';
+            });
+        }
+
+        // --- Scroll to Top ---
+        var scrollBtn = document.getElementById('scrollTop');
+        if (scrollBtn) {
+            window.addEventListener('scroll', function() {
+                scrollBtn.classList.toggle('show', window.scrollY > 300);
+            });
+            scrollBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // --- Initial Load ---
+        updateHomeQuote();
+        updateLibQuote();
+        updateUI();
+        renderAchievements();
+        showView('home');
+
+        // Periodic cosmic weather update
+        setInterval(function() {
+            var vib = Math.floor(60 + Math.random() * 35);
+            var vibEl = document.getElementById('vibrationLevel');
+            if (vibEl) vibEl.textContent = vib + '%';
+        }, 30000);
+
+        // Greeting based on time
+        var hour = new Date().getHours();
+        var greeting = '✨ Seeker';
+        if (hour < 12) greeting = '🌅 Good morning, Seeker';
+        else if (hour < 17) greeting = '☀️ Good afternoon, Seeker';
+        else greeting = '🌙 Good evening, Seeker';
+        var greetEl = document.getElementById('greetingUser');
+        if (greetEl) greetEl.textContent = greeting;
+
+        console.log('🧘 Vigyan Bhairav · Peaceful Meditation Platform loaded');
+        console.log('📊 ' + user.totalPractices + ' practices · ' + user.totalMinutes + ' minutes · ' + user
+            .streak + ' day streak');
+    }
+
+    // ============================================================
+    // 16. DOM READY
+    // ============================================================
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
