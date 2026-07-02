@@ -1,64 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Vigyan Bhairav Tantra · 112 Portals · Ultimate Meditation Platform</title>
-    <meta name="description" content="The most advanced interactive meditation platform: 112 authentic Tantra techniques, dynamic breathwork, cosmic diary, AI mood recommendations, 3D black hole, and complete data ownership.">
-    <meta name="theme-color" content="#020108">
-    <!-- Google Fonts & Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+    <title>Vigyan Bhairav · 112 Portals · Peaceful Meditation</title>
+    <meta name="description" content="112 authentic Tantra meditation techniques, breathwork, cosmic diary, and wisdom quotes – all in one peaceful platform." />
+    <meta name="theme-color" content="#050210" />
+    
+    <!-- Apple / iOS specific -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧘</text></svg>" />
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
     <!-- Chart.js & jsPDF -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    
     <style>
-        /* ---------------------------------------------------------------
-           GLOBAL RESET & VARIABLES (UPGRADED COSMIC DESIGN)
-        --------------------------------------------------------------- */
+        /* ============================================================
+           PEACEFUL DESIGN SYSTEM
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
-            --bg-deep: #020108;
-            --glass-bg: rgba(8, 6, 20, 0.75);
-            --glass-border: rgba(157, 123, 255, 0.5);
+            /* Peaceful color palette */
+            --bg-deep: #050210;
+            --glass-bg: rgba(10, 8, 25, 0.75);
+            --glass-border: rgba(157, 123, 255, 0.3);
             --text-primary: #f0ebff;
             --text-secondary: #c9b6ff;
-            --accent: #b37bff;
-            --accent-glow: #da9eff;
-            --accent-secondary: #ffaa9a;
-            --card-shadow: 0 30px 50px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(157, 123, 255, 0.2) inset;
-            --radius-card: 32px;
+            --accent: #9d7bff;
+            --accent-soft: #7a5cc7;
+            --accent-glow: rgba(157, 123, 255, 0.25);
+            --accent-secondary: #ffb3a0;
+            --radius-card: 28px;
             --radius-pill: 60px;
-            --transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            --shadow-card: 0 20px 40px -12px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(157, 123, 255, 0.15);
+            --transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         [data-theme="light"] {
             --bg-deep: #f4efff;
-            --glass-bg: rgba(255, 255, 255, 0.88);
-            --glass-border: rgba(100, 70, 255, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(100, 70, 255, 0.2);
             --text-primary: #0e0825;
             --text-secondary: #5b3eff;
             --accent: #7b5eff;
-            --accent-glow: #a084ff;
+            --accent-soft: #5a3ebf;
+            --accent-glow: rgba(123, 94, 255, 0.15);
             --accent-secondary: #ff8c72;
+            --shadow-card: 0 20px 40px -12px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(123, 94, 255, 0.1);
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-deep);
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
-            transition: background 0.3s;
+            transition: background 0.4s ease, color 0.3s ease;
+            min-height: 100vh;
+            min-height: 100dvh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Canvas 3D Background */
+        /* ============================================================
+           3D BLACK HOLE BACKGROUND (Peaceful & subtle)
+           ============================================================ */
         #blackhole-canvas {
             position: fixed;
             top: 0;
@@ -67,171 +87,590 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.95;
+            opacity: 0.7;
+            transition: opacity 0.6s ease;
         }
 
+        /* ============================================================
+           APP CONTAINER
+           ============================================================ */
         .app-container {
             position: relative;
             z-index: 10;
-            max-width: 1440px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 1rem 1.8rem 2rem;
+            padding: 1rem 1.2rem 5rem;
+            min-height: 100vh;
+            min-height: 100dvh;
         }
 
-        /* Glassmorphic Cards */
+        /* ============================================================
+           GLASSMORPHIC CARDS (Soft & dreamy)
+           ============================================================ */
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-card);
-            box-shadow: var(--card-shadow);
-            transition: var(--transition);
+            box-shadow: var(--shadow-card);
             padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(157, 123, 255, 0.04), transparent 60%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
         }
 
         .glass-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
+            border-color: rgba(157, 123, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(157, 123, 255, 0.2);
         }
 
-        /* Header */
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 1.2rem;
+                border-radius: 22px;
+            }
+            .app-container {
+                padding: 0.8rem 0.8rem 5rem;
+            }
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
         .header {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 1rem;
-            padding: 0.6rem 1.8rem;
+            gap: 0.8rem;
+            padding: 0.6rem 1.2rem;
             border-radius: var(--radius-pill);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-card);
         }
 
         .logo h1 {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.9rem;
+            font-size: 1.5rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--accent), var(--accent-secondary), #ffd58c);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             letter-spacing: -0.5px;
+            line-height: 1.2;
         }
 
         .logo p {
-            font-size: 0.7rem;
-            letter-spacing: 1px;
+            font-size: 0.6rem;
+            letter-spacing: 1.5px;
             color: var(--text-secondary);
+            opacity: 0.8;
         }
 
         .nav {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 0.3rem;
             align-items: center;
         }
 
-        .nav a, .theme-toggle {
+        .nav a,
+        .theme-toggle {
             color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 40px;
             cursor: pointer;
             transition: var(--transition);
             background: transparent;
             border: none;
             font-family: inherit;
+            white-space: nowrap;
         }
 
-        .nav a:hover, .nav a.active, .theme-toggle:hover {
-            background: rgba(157, 123, 255, 0.25);
+        .nav a:hover,
+        .nav a.active,
+        .theme-toggle:hover {
+            background: rgba(157, 123, 255, 0.2);
             backdrop-filter: blur(4px);
             color: var(--accent-secondary);
         }
 
-        /* Buttons */
-        .btn-primary, .btn-outline, .btn-success {
-            padding: 0.8rem 1.9rem;
+        .theme-toggle {
+            font-size: 1rem;
+            padding: 0.4rem 0.7rem;
+        }
+
+        .greeting {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            background: rgba(157, 123, 255, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 0.5rem 1rem;
+                gap: 0.5rem;
+            }
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+            .nav a {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
+            }
+            .greeting {
+                font-size: 0.65rem;
+                padding: 0.1rem 0.5rem;
+            }
+        }
+
+        /* ============================================================
+           BUTTONS (Soft & inviting)
+           ============================================================ */
+        .btn-primary,
+        .btn-outline,
+        .btn-success {
+            padding: 0.7rem 1.6rem;
             border-radius: 60px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s;
-            margin: 0.2rem;
+            transition: all 0.25s ease;
+            margin: 0.15rem;
             border: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+            font-family: inherit;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent), #a155ff);
+            background: linear-gradient(135deg, var(--accent), #7a5cc7);
             color: white;
-            box-shadow: 0 5px 20px rgba(157, 123, 255, 0.5);
+            box-shadow: 0 4px 16px rgba(157, 123, 255, 0.35);
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover,
+        .btn-primary:active {
             transform: scale(1.02);
-            box-shadow: 0 12px 28px rgba(157, 123, 255, 0.7);
+            box-shadow: 0 8px 28px rgba(157, 123, 255, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
         }
 
         .btn-outline {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(4px);
             border: 1px solid var(--glass-border);
             color: var(--text-primary);
         }
 
         .btn-outline:hover {
-            background: rgba(157, 123, 255, 0.3);
+            background: rgba(157, 123, 255, 0.2);
             transform: translateY(-2px);
         }
 
-        /* Grids */
+        .btn-outline:active {
+            transform: scale(0.97);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            .btn-primary,
+            .btn-outline {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ============================================================
+           VIEWS
+           ============================================================ */
+        .view-container {
+            display: none;
+            animation: gentleFade 0.5s ease;
+        }
+
+        .view-container.active-view {
+            display: block;
+        }
+
+        @keyframes gentleFade {
+            from {
+                opacity: 0;
+                transform: translateY(8px) scale(0.99);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ============================================================
+           HERO SECTION
+           ============================================================ */
+        .hero {
+            text-align: center;
+            padding: 0.5rem 0.5rem 1rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(157, 123, 255, 0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid rgba(157, 123, 255, 0.15);
+            color: var(--text-secondary);
+        }
+
+        .hero h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-sub {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        .hero .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+            .hero-sub {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ============================================================
+           HOME GRID
+           ============================================================ */
         .home-grid {
             display: grid;
-            gap: 1.8rem;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.2rem;
         }
 
-        .full-width {
-            grid-column: 1 / -1;
+        /* ============================================================
+           QUOTE TEXT
+           ============================================================ */
+        .quote-text-large {
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: 1.5;
+            font-weight: 300;
+            padding: 0.5rem 0;
+            color: var(--text-primary);
         }
 
-        .profession-grid, .tech-grid-detailed {
+        .quote-author {
+            font-size: 0.9rem;
+            color: var(--accent-secondary);
+            margin-top: 0.3rem;
+        }
+
+        /* ============================================================
+           MOOD SELECTOR
+           ============================================================ */
+        .mood-selector {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0;
+        }
+
+        .mood-btn {
+            background: rgba(157, 123, 255, 0.1);
+            border: 1px solid transparent;
+            border-radius: 60px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            transition: all 0.25s ease;
+            font-family: inherit;
+            flex: 1 1 auto;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .mood-btn:hover {
+            background: rgba(157, 123, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .mood-btn.selected {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 4px 16px rgba(157, 123, 255, 0.3);
+        }
+
+        #moodRecommend {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            min-height: 2rem;
+            padding: 0.5rem;
+            border-radius: 16px;
+            background: rgba(157, 123, 255, 0.05);
+            text-align: center;
+        }
+
+        /* ============================================================
+           LEVEL DISPLAY
+           ============================================================ */
+        #levelDisplay {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        #levelDisplay span {
+            opacity: 0.9;
+        }
+
+        #levelProgress {
+            flex: 1;
+            min-width: 100px;
+            height: 6px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        #levelProgress::-webkit-progress-bar {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+        }
+
+        #levelProgress::-webkit-progress-value {
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            border-radius: 10px;
+            transition: width 0.6s ease;
+        }
+
+        #levelProgress::-moz-progress-bar {
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            border-radius: 10px;
+        }
+
+        #userLevelBadge {
+            font-weight: 700;
+            color: var(--accent-secondary);
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            background: rgba(157, 123, 255, 0.15);
+            font-size: 0.8rem;
+        }
+
+        /* ============================================================
+           PROFESSION / ARCHETYPE GRID
+           ============================================================ */
+        .profession-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1.3rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
         .prof-card {
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
-            border-radius: 28px;
-            padding: 1.3rem;
+            border-radius: 24px;
+            padding: 1.2rem 0.8rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid transparent;
+            transition: all 0.25s ease;
+            border: 1px solid var(--glass-border);
         }
 
         .prof-card:hover {
             border-color: var(--accent);
-            transform: translateY(-8px);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
 
-        /* Breathwork Ring */
+        .prof-card i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .prof-card span {
+            font-weight: 700;
+            font-size: 1rem;
+            display: block;
+        }
+
+        .prof-desc {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            margin-top: 0.2rem;
+        }
+
+        @media (max-width: 480px) {
+            .profession-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 0.8rem;
+            }
+            .prof-card {
+                padding: 1rem 0.6rem;
+            }
+            .prof-card i {
+                font-size: 1.6rem;
+            }
+            .prof-card span {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ============================================================
+           TECHNIQUES GRID
+           ============================================================ */
+        .tech-grid-detailed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .tech-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 1.2rem;
+            border: 1px solid var(--glass-border);
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .tech-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .tech-card .tech-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .tech-card .tech-sanskrit {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .tech-card .tech-meta {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin: 0.3rem 0;
+        }
+
+        @media (max-width: 480px) {
+            .tech-grid-detailed {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ============================================================
+           BREATHWORK RING
+           ============================================================ */
         .breath-ring {
             position: relative;
-            width: 280px;
-            height: 280px;
-            margin: 0 auto;
+            width: 220px;
+            height: 220px;
+            margin: 0.5rem auto;
+        }
+
+        .breath-ring svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .breath-ring .bg-circle {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.08);
         }
 
         .progress-circle {
-            transition: stroke-dashoffset 0.05s linear;
+            fill: none;
+            stroke: url(#gradientStroke);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.08s linear;
         }
 
         .breath-inner-ring {
@@ -239,87 +678,406 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 180px;
-            height: 180px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(157, 123, 255, 0.2), transparent);
+            background: radial-gradient(circle, rgba(157, 123, 255, 0.15), transparent 70%);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(4px);
         }
 
-        /* Timer */
+        .breath-phase {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .breath-timer {
+            font-size: 1.4rem;
+            font-weight: 600;
+            font-family: 'Outfit', monospace;
+            color: var(--text-secondary);
+        }
+
+        #breathPhaseText {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+            min-height: 2.5rem;
+        }
+
+        .breath-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .breath-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 1rem 0.8rem;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: all 0.25s ease;
+        }
+
+        .breath-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .breath-card .btn-outline {
+            margin-top: 0.5rem;
+            width: 100%;
+            font-size: 0.75rem;
+            padding: 0.4rem;
+        }
+
+        @media (max-width: 480px) {
+            .breath-ring {
+                width: 180px;
+                height: 180px;
+            }
+            .breath-inner-ring {
+                width: 110px;
+                height: 110px;
+            }
+            .breath-phase {
+                font-size: 1.3rem;
+            }
+            .breath-timer {
+                font-size: 1.1rem;
+            }
+            .breath-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+        }
+
+        /* ============================================================
+           TIMER
+           ============================================================ */
         .timer-circle {
-            width: 220px;
-            height: 220px;
-            margin: 1rem auto;
+            width: 200px;
+            height: 200px;
+            margin: 0.5rem auto;
             position: relative;
         }
 
+        .timer-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
         .timer-progress {
-            stroke-dasharray: 597;
+            fill: none;
+            stroke: url(#timerGradient);
+            stroke-linecap: round;
             transition: stroke-dashoffset 0.1s linear;
         }
 
-        /* Calendar */
+        .timer-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Outfit', monospace;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .timer-presets {
+            display: flex;
+            gap: 0.6rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0.8rem 0;
+        }
+
+        .timer-preset {
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            background: rgba(157, 123, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        .timer-preset:hover,
+        .timer-preset.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .ambient-section {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .sound-btn {
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            background: rgba(157, 123, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        .sound-btn:hover,
+        .sound-btn.active {
+            background: rgba(157, 123, 255, 0.25);
+            border-color: var(--accent);
+        }
+
+        /* ============================================================
+           DIARY
+           ============================================================ */
+        .diary-entry-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.6rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .diary-entry-item .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.2rem;
+        }
+
+        .diary-entry-item .entry-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .diary-entry-item .entry-delete {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.8rem;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        .diary-entry-item .entry-delete:hover {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 0.8rem 1rem;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            resize: vertical;
+            min-height: 80px;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(157, 123, 255, 0.08);
+        }
+
+        textarea::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.4;
+        }
+
+        /* ============================================================
+           CALENDAR
+           ============================================================ */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 28px;
-            padding: 1rem;
+            gap: 0.3rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 0.8rem;
         }
 
         .calendar-day {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 40px;
             text-align: center;
-            padding: 0.6rem;
-            cursor: pointer;
-            transition: 0.1s;
+            padding: 0.3rem;
+            font-size: 0.75rem;
+            border-radius: 30px;
+            transition: all 0.15s ease;
+            cursor: default;
+        }
+
+        .calendar-day.weekday {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.65rem;
+            text-transform: uppercase;
         }
 
         .calendar-day.practiced {
             background: var(--accent);
             color: white;
-            box-shadow: 0 0 12px var(--accent-glow);
+            box-shadow: 0 0 12px rgba(157, 123, 255, 0.25);
         }
 
-        /* Achievements */
+        .calendar-day.today {
+            border: 2px solid var(--accent-secondary);
+        }
+
+        /* ============================================================
+           ACHIEVEMENTS
+           ============================================================ */
         .achievement-item {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 24px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--accent);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.6rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .achievement-item .ach-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .achievement-item .ach-name {
+            font-weight: 600;
+        }
+
+        .achievement-item .ach-progress-text {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .achievement-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            margin-top: 0.4rem;
+            overflow: hidden;
         }
 
         .achievement-progress {
-            height: 10px;
+            height: 100%;
             background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-            border-radius: 10px;
-            transition: width 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border-radius: 4px;
+            transition: width 0.8s ease;
         }
 
-        /* Modal */
+        /* ============================================================
+           STATS CARDS
+           ============================================================ */
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 0.5rem 0;
+        }
+
+        .stats-card {
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .stats-card .stat-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stats-card .stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================================
+           CHART CONTAINERS
+           ============================================================ */
+        .chart-section {
+            margin: 1.2rem 0;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+            padding: 1rem;
+        }
+
+        .chart-section h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .chart-section canvas {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* ============================================================
+           MODAL
+           ============================================================ */
         .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
             z-index: 2000;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: 0.2s;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
         }
 
         .modal.active {
@@ -328,926 +1086,1971 @@
         }
 
         .modal-content {
-            max-width: 700px;
-            width: 90%;
+            max-width: 560px;
+            width: 100%;
             max-height: 85vh;
             overflow-y: auto;
-            padding: 2rem;
+            padding: 1.8rem;
             background: var(--glass-bg);
-            border-radius: 40px;
-            border: 1px solid var(--accent);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 32px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-card);
         }
 
-        /* Hidden utility */
+        .modal-content h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============================================================
+           TOAST
+           ============================================================ */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 0.6rem 1.6rem;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            z-index: 3000;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            animation: toastFloat 2.8s forwards;
+            max-width: 90%;
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .toast.warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .toast.info {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        @keyframes toastFloat {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px) scale(0.95);
+            }
+            12% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+            80% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px) scale(0.95);
+            }
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            margin-top: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+            padding: 1.2rem 0 0.5rem;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        footer a:hover {
+            color: var(--accent-secondary);
+        }
+
+        /* ============================================================
+           SCROLL TO TOP
+           ============================================================ */
+        #scrollTop {
+            position: fixed;
+            bottom: 80px;
+            right: 16px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(157, 123, 255, 0.3);
+            transition: all 0.25s ease;
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #scrollTop:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 28px rgba(157, 123, 255, 0.4);
+        }
+
+        #scrollTop.show {
+            display: flex;
+        }
+
+        @media (max-width: 480px) {
+            #scrollTop {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                bottom: 70px;
+                right: 12px;
+            }
+        }
+
+        /* ============================================================
+           UTILITY
+           ============================================================ */
         .hidden {
             display: none !important;
         }
 
-        .view-container {
-            animation: fadeSlide 0.5s ease;
+        .text-center {
+            text-align: center;
         }
 
-        @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
+        .mt-1 {
+            margin-top: 0.5rem;
+        }
+        .mt-2 {
+            margin-top: 1rem;
+        }
+        .mb-1 {
+            margin-bottom: 0.5rem;
+        }
+        .mb-2 {
+            margin-bottom: 1rem;
         }
 
-        .toast {
-            position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            padding: 0.8rem 1.8rem;
-            border-radius: 100px;
-            z-index: 3000;
-            font-weight: 600;
-            box-shadow: 0 5px 20px black;
-            animation: fadeOut 2.8s forwards;
+        .flex {
+            display: flex;
         }
-
-        @keyframes fadeOut {
-            0% { opacity: 0; transform: translateX(-50%) translateY(30px); }
-            15% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        footer {
-            margin-top: 3.5rem;
+        .flex-between {
             display: flex;
             justify-content: space-between;
-            border-top: 1px solid var(--glass-border);
-            padding: 1.5rem 0;
-            font-size: 0.8rem;
+            align-items: center;
+        }
+        .gap-1 {
+            gap: 0.5rem;
+        }
+        .gap-2 {
+            gap: 1rem;
+        }
+        .wrap {
+            flex-wrap: wrap;
         }
 
-        input, textarea, select {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            border-radius: 50px;
-            padding: 0.7rem 1rem;
-            font-family: inherit;
+        /* ============================================================
+           RESPONSIVE FINE-TUNE
+           ============================================================ */
+        @media (max-width: 400px) {
+            .glass-card {
+                padding: 1rem;
+            }
+            .hero h2 {
+                font-size: 1.4rem;
+            }
+            .btn-primary,
+            .btn-outline {
+                font-size: 0.75rem;
+                padding: 0.5rem 1rem;
+            }
+            .stats-card .stat-value {
+                font-size: 1.3rem;
+            }
+            .timer-circle {
+                width: 160px;
+                height: 160px;
+            }
+            .timer-text {
+                font-size: 1.6rem;
+            }
+            .modal-content {
+                padding: 1.2rem;
+            }
         }
 
-        @media (max-width: 768px) {
-            .app-container { padding: 0.8rem; }
-            .hero h2 { font-size: 1.9rem; }
-            .chapter-card { grid-template-columns: 1fr; }
+        /* ============================================================
+           ACCESSIBILITY: Reduced motion
+           ============================================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ============================================================
+           SCROLLBAR
+           ============================================================ */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+            opacity: 0.5;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            opacity: 1;
+        }
+
+        /* ============================================================
+           PRINT STYLES
+           ============================================================ */
+        @media print {
+            #blackhole-canvas,
+            .bottom-nav,
+            .theme-toggle,
+            #scrollTop {
+                display: none !important;
+            }
+            .glass-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
         }
     </style>
 </head>
 <body>
-<canvas id="blackhole-canvas"></canvas>
-<div class="app-container">
-    <header class="header">
-        <div class="logo">
-            <h1>🌀 VIGYAAN BHAIRAV TANTRA</h1>
-            <p>112 PORTALS · INFINITE CONSCIOUSNESS · 5000+ LINES OF AWAKENING</p>
-        </div>
-        <div class="nav">
-            <a data-view="home">Home</a>
-            <a data-view="techniques">Techniques</a>
-            <a data-view="breathwork">Breathwork</a>
-            <a data-view="quotes">Wisdom</a>
-            <a data-view="diary">Diary</a>
-            <a data-view="timer">Timer</a>
-            <a data-view="plan">My Plan</a>
-            <a data-view="enhanced">Cosmic Me</a>
-            <a data-view="achievements">Milestones</a>
-            <button id="themeToggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
-            <span class="greeting" id="greetingUser">✨ Seeker</span>
-        </div>
-    </header>
 
-    <!-- HOME VIEW (Enhanced) -->
-    <div id="homeView" class="view-container">
-        <div class="home-grid">
-            <div class="glass-card full-width hero">
+    <!-- ============================================================
+    3D BLACK HOLE BACKGROUND
+    ============================================================ -->
+    <canvas id="blackhole-canvas"></canvas>
+
+    <!-- ============================================================
+    APP CONTAINER
+    ============================================================ -->
+    <div class="app-container">
+
+        <!-- ============================================================
+        HEADER
+        ============================================================ -->
+        <header class="header">
+            <div class="logo">
+                <h1>🧘 Vigyan Bhairav</h1>
+                <p>112 Portals · Peaceful Awareness</p>
+            </div>
+            <div class="nav">
+                <a data-view="home" class="active">Home</a>
+                <a data-view="techniques">Techniques</a>
+                <a data-view="breathwork">Breath</a>
+                <a data-view="quotes">Wisdom</a>
+                <a data-view="diary">Diary</a>
+                <a data-view="timer">Timer</a>
+                <a data-view="enhanced">Cosmic Me</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <span class="greeting" id="greetingUser">✨ Seeker</span>
+            </div>
+        </header>
+
+        <!-- ============================================================
+        HOME VIEW
+        ============================================================ -->
+        <div id="homeView" class="view-container active-view">
+            <div class="hero glass-card">
                 <div class="hero-badge" id="totdWonder">🌀 Technique of the Day: Breath Awareness</div>
                 <h2>The 112 Portals to <span class="gradient-text">Infinite Awareness</span></h2>
-                <p class="hero-sub">Dynamic breathwork · Chakra-aligned wisdom · Cosmic diary · 3D Black Hole</p>
-                <div>
-                    <button class="btn-primary" id="exploreBtn">Start Journey 🚀</button>
+                <p class="hero-sub">Gentle breathwork · Chakra wisdom · Cosmic diary · 3D Black Hole</p>
+                <div class="btn-group">
+                    <button class="btn-primary" id="exploreBtn">Start Journey 🌿</button>
                     <button class="btn-outline" id="dailyBtn"><i class="fas fa-sun"></i> Daily Gift</button>
                 </div>
             </div>
+
+            <div class="home-grid">
+                <!-- Streak & Level -->
+                <div class="glass-card">
+                    <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+                        <div>
+                            <span style="font-size:0.7rem;opacity:0.6;">🔥 Streak</span>
+                            <div style="font-size:2rem;font-weight:800;font-family:'Outfit',sans-serif;background:linear-gradient(135deg,var(--accent),var(--accent-secondary));-webkit-background-clip:text;background-clip:text;color:transparent;" id="streakDisplay">0</div>
+                            <span style="font-size:0.7rem;opacity:0.6;">days of presence</span>
+                        </div>
+                        <div style="text-align:right;">
+                            <span style="font-size:0.7rem;opacity:0.6;">Level</span>
+                            <div style="font-weight:700;color:var(--accent-secondary);" id="userLevelBadge">Novice</div>
+                            <progress id="levelProgress" value="0" max="100" style="width:100px;height:6px;border-radius:10px;background:rgba(255,255,255,0.1);border:none;appearance:none;-webkit-appearance:none;"></progress>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mood Check-in -->
+                <div class="glass-card">
+                    <h4 style="font-weight:500;">🌿 How are you feeling?</h4>
+                    <div class="mood-selector">
+                        <button class="mood-btn" data-mood="serene">😌 Serene</button>
+                        <button class="mood-btn" data-mood="focused">⚡ Focused</button>
+                        <button class="mood-btn" data-mood="anxious">🌀 Anxious</button>
+                        <button class="mood-btn" data-mood="curious">✨ Curious</button>
+                        <button class="mood-btn" data-mood="tired">😴 Tired</button>
+                    </div>
+                    <div id="moodRecommend">Select a mood for a personalized recommendation</div>
+                </div>
+
+                <!-- Wisdom Quote -->
+                <div class="glass-card">
+                    <h4 style="font-weight:500;"><i class="fas fa-feather-alt"></i> Wisdom of the Day</h4>
+                    <div id="homeQuoteText" class="quote-text-large" style="font-size:1rem;font-weight:300;">Loading...</div>
+                    <div id="homeQuoteAuthor" class="quote-author" style="font-size:0.8rem;"></div>
+                    <div style="display:flex;gap:0.5rem;margin-top:0.8rem;flex-wrap:wrap;">
+                        <button id="saveHomeQuoteBtn" class="btn-outline btn-sm">📖 Save</button>
+                        <button id="nextHomeQuote" class="btn-outline btn-sm">↻ Next</button>
+                    </div>
+                </div>
+
+                <!-- Cosmic Weather -->
+                <div class="glass-card">
+                    <h4 style="font-weight:500;">🌌 Cosmic Weather</h4>
+                    <div id="cosmicWeather" style="font-size:0.9rem;color:var(--text-secondary);">
+                        ✨ Vibration: <span id="vibrationLevel">87%</span> coherence
+                    </div>
+                    <div style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-secondary);opacity:0.6;">
+                        Total practice: <span id="totalPracticesDisplay">0</span> sessions · <span id="totalMinutesDisplay">0</span> minutes
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        TECHNIQUES VIEW
+        ============================================================ -->
+        <div id="techniquesView" class="view-container">
             <div class="glass-card">
-                <h3><i class="fas fa-hand-peace"></i> Mudra of the Moment</h3>
-                <div id="mudraContent"></div>
-                <div style="display:flex; gap:0.8rem; justify-content:center; margin-top:1rem;">
-                    <button id="prevMudraBtn" class="btn-outline"><i class="fas fa-chevron-left"></i></button>
-                    <button id="nextMudraBtn" class="btn-outline"><i class="fas fa-chevron-right"></i></button>
-                    <button id="saveMudraBtn" class="btn-outline"><i class="fas fa-bookmark"></i> Save</button>
+                <div style="display:flex;gap:0.8rem;flex-wrap:wrap;justify-content:center;">
+                    <button id="showArchetypeBtn" class="btn-primary btn-sm">Archetype Selection</button>
+                    <button id="showAllTechBtn" class="btn-outline btn-sm">All 112 Techniques</button>
+                    <button id="exportTechniquesPDFBtn" class="btn-outline btn-sm">PDF List</button>
+                </div>
+                <div id="professionSelectionView">
+                    <div class="profession-grid" id="professionGrid"></div>
+                </div>
+                <div id="recommendedTechniquesView" class="hidden">
+                    <div id="techCarouselContent" style="margin:1rem 0;"></div>
+                    <div style="display:flex;gap:0.8rem;flex-wrap:wrap;justify-content:center;">
+                        <button id="prevTechBtn" class="btn-outline btn-sm">◀ Previous</button>
+                        <button id="nextTechBtn" class="btn-outline btn-sm">Next ▶</button>
+                        <button id="practiceTechBtn" class="btn-primary btn-sm">Practice</button>
+                        <button id="readFullChapterBtn" class="btn-outline btn-sm">Full Chapter</button>
+                    </div>
+                    <button id="backToProfessionsBtn" class="btn-outline btn-sm" style="margin-top:0.8rem;">← Back to Archetypes</button>
+                </div>
+                <div id="allTechniquesView" class="hidden">
+                    <input type="text" id="techSearchInput" placeholder="🔍 Search technique, chakra, category..." style="width:100%;margin-bottom:0.8rem;padding:0.6rem 1rem;border-radius:40px;background:rgba(0,0,0,0.3);border:1px solid var(--glass-border);color:var(--text-primary);font-family:inherit;">
+                    <div id="allTechniquesGrid" class="tech-grid-detailed"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        BREATHWORK VIEW
+        ============================================================ -->
+        <div id="breathworkView" class="view-container">
+            <div class="glass-card">
+                <h2 style="font-size:1.4rem;"><i class="fas fa-wind"></i> Sacred Breath Alchemy</h2>
+                <div class="breath-ring">
+                    <svg viewBox="0 0 300 300">
+                        <defs>
+                            <linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#9d7bff"/>
+                                <stop offset="100%" stop-color="#ffb3a0"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="bg-circle" cx="150" cy="150" r="137" stroke="rgba(255,255,255,0.1)" stroke-width="6"/>
+                        <circle class="progress-circle" cx="150" cy="150" r="137" stroke-width="6" stroke-dasharray="860" stroke-dashoffset="860"/>
+                    </svg>
+                    <div class="breath-inner-ring">
+                        <div class="breath-phase" id="breathPhaseLabel">🌀</div>
+                        <div class="breath-timer" id="breathTimerDisplay">0</div>
+                    </div>
+                </div>
+                <div id="breathPhaseText">Ready</div>
+                <button id="stopBreathBtn" class="btn-outline btn-sm" style="display:none;margin:0.5rem auto;">Stop Practice</button>
+                <div class="breath-grid">
+                    <div class="breath-card" data-breath="box"><div>🔲 Box 4-4-6-4</div><button class="btn-outline btn-sm start-breath" data-type="box">Start</button></div>
+                    <div class="breath-card" data-breath="478"><div>😮‍💨 4-7-8 Relax</div><button class="start-breath btn-outline btn-sm" data-type="478">Start</button></div>
+                    <div class="breath-card" data-breath="nadi"><div>⚖️ Nadi Shodhana</div><button class="start-breath btn-outline btn-sm" data-type="nadi">Start</button></div>
+                    <div class="breath-card" data-breath="ujjayi"><div>🌊 Ujjayi Ocean</div><button class="start-breath btn-outline btn-sm" data-type="ujjayi">Start</button></div>
+                    <div class="breath-card" data-breath="kapal"><div>🔥 Kapalabhati</div><button class="start-breath btn-outline btn-sm" data-type="kapal">Start</button></div>
+                    <div class="breath-card" data-breath="bhramari"><div>🐝 Bhramari Hum</div><button class="start-breath btn-outline btn-sm" data-type="bhramari">Start</button></div>
+                    <div class="breath-card" data-breath="coherent"><div>❤️ Coherent 5.5</div><button class="start-breath btn-outline btn-sm" data-type="coherent">Start</button></div>
+                    <div class="breath-card" data-breath="sitali"><div>❄️ Sitali Cool</div><button class="start-breath btn-outline btn-sm" data-type="sitali">Start</button></div>
+                </div>
+                <div id="breathInstructionPanel" style="background:rgba(0,0,0,0.25);border-radius:20px;padding:1rem;margin-top:1rem;font-size:0.9rem;color:var(--text-secondary);border-left:3px solid var(--accent);">
+                    ✨ Select a breath technique to begin your pranic journey.
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        WISDOM QUOTES VIEW
+        ============================================================ -->
+        <div id="quotesView" class="view-container">
+            <div class="glass-card">
+                <h2 style="font-size:1.4rem;"><i class="fas fa-feather-alt"></i> Eternal Wisdom</h2>
+                <div id="quoteTextLarge" class="quote-text-large" style="font-size:1.3rem;">“The pause between two breaths is the doorway.”</div>
+                <div id="quoteAuthorLarge" style="color:var(--accent-secondary);font-size:1rem;">— Shiva</div>
+                <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin:1rem 0;">
+                    <button id="prevLibQuote" class="btn-outline btn-sm">← Previous</button>
+                    <button id="nextLibQuote" class="btn-outline btn-sm">Next →</button>
+                    <button id="saveLibQuoteBtn" class="btn-outline btn-sm">📖 Save</button>
+                </div>
+                <input type="text" id="quoteSearchInput" placeholder="Search quotes..." style="width:100%;padding:0.5rem 1rem;border-radius:40px;background:rgba(0,0,0,0.3);border:1px solid var(--glass-border);color:var(--text-primary);font-family:inherit;">
+            </div>
+        </div>
+
+        <!-- ============================================================
+        DIARY VIEW
+        ============================================================ -->
+        <div id="diaryView" class="view-container">
+            <div class="glass-card">
+                <h2 style="font-size:1.4rem;"><i class="fas fa-moon"></i> Cosmic Diary</h2>
+                <textarea id="diaryEntry" rows="4" placeholder="What did you notice today? Any insights, dreams, or feelings..."></textarea>
+                <div style="display:flex;gap:0.8rem;flex-wrap:wrap;">
+                    <button id="saveDiary" class="btn-primary btn-sm">Save Entry</button>
+                    <button id="exportDiaryPDFBtn" class="btn-outline btn-sm">PDF Export</button>
+                </div>
+                <div id="diaryList" style="margin-top:1.2rem;"></div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        TIMER VIEW
+        ============================================================ -->
+        <div id="timerView" class="view-container">
+            <div class="glass-card">
+                <h2 style="font-size:1.4rem;"><i class="fas fa-hourglass-half"></i> Meditation Timer</h2>
+                <div class="timer-circle">
+                    <svg viewBox="0 0 220 220">
+                        <defs>
+                            <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#9d7bff"/>
+                                <stop offset="100%" stop-color="#ffb3a0"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="110" cy="110" r="95" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8"/>
+                        <circle class="timer-progress" cx="110" cy="110" r="95" fill="none" stroke-width="8" stroke-dasharray="597" stroke-dashoffset="0"/>
+                    </svg>
+                    <div class="timer-text" id="timerDisplay">05:00</div>
+                </div>
+                <div class="timer-presets">
+                    <button class="timer-preset" data-min="5">5m</button>
+                    <button class="timer-preset" data-min="10">10m</button>
+                    <button class="timer-preset" data-min="15">15m</button>
+                    <button class="timer-preset" data-min="30">30m</button>
+                    <button class="timer-preset" data-min="60">60m</button>
+                </div>
+                <div style="display:flex;gap:0.8rem;flex-wrap:wrap;justify-content:center;">
+                    <button id="startTimer" class="btn-primary btn-sm">Start</button>
+                    <button id="pauseTimer" class="btn-outline btn-sm">Pause</button>
+                    <button id="resetTimer" class="btn-outline btn-sm">Reset</button>
+                </div>
+                <div id="timerMsg" style="margin-top:0.8rem;text-align:center;font-size:0.85rem;color:var(--text-secondary);"></div>
+                <div class="ambient-section">
+                    <button class="sound-btn" data-sound="rain">🌧️ Rain</button>
+                    <button class="sound-btn" data-sound="forest">🌲 Forest</button>
+                    <button class="sound-btn" data-sound="silence">🔇 Silence</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        COSMIC ME (Enhanced Dashboard)
+        ============================================================ -->
+        <div id="enhancedView" class="view-container">
+            <div class="glass-card">
+                <h2 style="font-size:1.4rem;"><i class="fas fa-chart-line"></i> Cosmic Dashboard</h2>
+                <div class="stats-row">
+                    <div class="stats-card"><span class="stat-value" id="enhTotalPractices">0</span><div class="stat-label">Practices</div></div>
+                    <div class="stats-card"><span class="stat-value" id="enhTotalMinutes">0</span><div class="stat-label">Minutes</div></div>
+                    <div class="stats-card"><span class="stat-value" id="enhStreak">0</span><div class="stat-label">Streak</div></div>
+                    <div class="stats-card"><span class="stat-value" id="enhLevel">Novice</span><div class="stat-label">Level</div></div>
+                </div>
+                <div class="chart-section"><h3>📊 Weekly Activity</h3><canvas id="progressChart" height="150"></canvas></div>
+                <div class="chart-section"><h3>📈 Category Breakdown</h3><canvas id="categoryChart" height="150"></canvas></div>
+                <div style="margin-top:1rem;">
+                    <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.5rem;">📅 Practice Calendar</h3>
+                    <div id="calendarTracker" class="calendar-grid"></div>
+                </div>
+                <div style="display:flex;gap:0.8rem;flex-wrap:wrap;justify-content:center;margin-top:1.2rem;">
+                    <button id="exportDataBtn" class="btn-outline btn-sm">📥 Export JSON</button>
+                    <button id="importDataBtn" class="btn-outline btn-sm">📤 Import Backup</button>
+                    <input type="file" id="importFileInput" style="display:none;">
                 </div>
             </div>
             <div class="glass-card">
-                <h3><i class="fas fa-feather-alt"></i> Wisdom of the Day</h3>
-                <div id="homeQuoteText" class="quote-text-large" style="font-size:1.2rem;">Loading...</div>
-                <div id="homeQuoteAuthor" class="quote-author"></div>
-                <div><button id="saveHomeQuoteBtn" class="btn-outline">📖 Save Quote</button> <button id="nextHomeQuote" class="btn-outline">↻ Next</button></div>
-            </div>
-            <div class="glass-card">
-                <h3><i class="fas fa-smile"></i> Today's Cosmic Mood</h3>
-                <div style="display:flex; gap:0.8rem; flex-wrap:wrap;">
-                    <button class="btn-outline mood-btn" data-mood="serene">🌿 Serene</button>
-                    <button class="btn-outline mood-btn" data-mood="focused">⚡ Focused</button>
-                    <button class="btn-outline mood-btn" data-mood="anxious">🌀 Anxious</button>
-                    <button class="btn-outline mood-btn" data-mood="curious">✨ Curious</button>
-                </div>
-                <p id="moodRecommend" style="margin-top:0.8rem;">Select mood for personalized technique</p>
+                <h3 style="font-size:1rem;font-weight:600;">🏆 Achievements</h3>
+                <div id="achievementsList"></div>
             </div>
         </div>
-        <div class="glass-card" style="margin-top:1.5rem;">
-            <h3><i class="fas fa-chart-simple"></i> Cosmic Weather & Level</h3>
-            <div id="levelDisplay"><span>🌀 Level: Seeker</span> <span id="userLevelBadge"></span> <progress id="levelProgress" value="0" max="100" style="width:100%; border-radius:20px;"></progress></div>
-            <div id="cosmicWeather"></div>
-        </div>
+
+        <!-- ============================================================
+        FOOTER
+        ============================================================ -->
+        <footer>
+            <span>© 2026 · 112 Portals · All data stored locally</span>
+            <span>
+                <a data-view="home">Home</a> ·
+                <a data-view="techniques">Techniques</a> ·
+                <a data-view="enhanced">Cosmic Me</a>
+            </span>
+        </footer>
     </div>
 
-    <!-- TECHNIQUES VIEW (112 techniques full database) -->
-    <div id="techniquesView" class="hidden view-container">
-        <div class="glass-card">
-            <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-                <button id="showArchetypeBtn" class="btn-primary">Archetype Selection</button>
-                <button id="showAllTechBtn" class="btn-outline">All 112 Techniques</button>
-                <button id="exportTechniquesPDFBtn" class="btn-outline">PDF List</button>
-            </div>
-            <div id="professionSelectionView">
-                <div class="profession-grid" id="professionGrid"></div>
-            </div>
-            <div id="recommendedTechniquesView" class="hidden">
-                <div id="techCarouselContent"></div>
-                <div class="tech-carousel-nav" style="display:flex; gap:1rem; justify-content:center; margin:1rem 0;">
-                    <button id="prevTechBtn" class="btn-outline">◀ Previous</button>
-                    <button id="nextTechBtn" class="btn-outline">Next ▶</button>
-                    <button id="practiceTechBtn" class="btn-primary">Practice</button>
-                    <button id="readFullChapterBtn" class="btn-outline">Full Chapter</button>
-                </div>
-                <button id="backToProfessionsBtn" class="btn-outline">← Back to Archetypes</button>
-            </div>
-            <div id="allTechniquesView" class="hidden">
-                <input type="text" id="techSearchInput" placeholder="🔍 Search by name, chakra, category, element..." style="width:100%; margin-bottom:1rem;">
-                <div id="allTechniquesGrid" class="tech-grid-detailed"></div>
-            </div>
-        </div>
-    </div>
+    <!-- ============================================================
+    SCROLL TO TOP
+    ============================================================ -->
+    <button id="scrollTop" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
 
-    <!-- BREATHWORK VIEW (Advanced Protocols) -->
-    <div id="breathworkView" class="hidden view-container glass-card">
-        <h2><i class="fas fa-wind"></i> Sacred Breath Alchemy · 21+ Protocols</h2>
-        <div class="breath-ring">
-            <svg viewBox="0 0 300 300">
-                <defs><linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffb3a0"/></linearGradient></defs>
-                <circle cx="150" cy="150" r="137" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="6"/>
-                <circle class="progress-circle" cx="150" cy="150" r="137" stroke="url(#gradientStroke)" fill="none" stroke-width="6" stroke-dasharray="860" stroke-dashoffset="860"/>
-            </svg>
-            <div class="breath-inner-ring">
-                <div class="breath-phase" id="breathPhaseLabel">🌀</div>
-                <div class="breath-timer" id="breathTimerDisplay">0</div>
-            </div>
-        </div>
-        <div id="breathPhaseText" style="text-align:center; font-size:1.4rem; margin:0.5rem;">Ready</div>
-        <div class="breath-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:1rem; margin:1rem 0;">
-            <div class="glass-card breath-card" data-breath="box">4-4-6-4 Box<button class="btn-outline start-breath" data-type="box">Activate</button></div>
-            <div class="glass-card breath-card" data-breath="478">4-7-8 Relax<button class="start-breath" data-type="478">Start</button></div>
-            <div class="glass-card breath-card" data-breath="nadi">Nadi Shodhana<button class="start-breath" data-type="nadi">Start</button></div>
-            <div class="glass-card breath-card" data-breath="sama">Sama Vritti<button class="start-breath" data-type="sama">Start</button></div>
-            <div class="glass-card breath-card" data-breath="ujjayi">Ujjayi Ocean<button class="start-breath" data-type="ujjayi">Start</button></div>
-            <div class="glass-card breath-card" data-breath="bhramari">Bhramari<button class="start-breath" data-type="bhramari">Start</button></div>
-            <div class="glass-card breath-card" data-breath="kapal">Kapalabhati<button class="start-breath" data-type="kapal">Start</button></div>
-            <div class="glass-card breath-card" data-breath="tummo">Tummo Inner Fire<button class="start-breath" data-type="tummo">Start</button></div>
-            <div class="glass-card breath-card" data-breath="sitali">Sitali Cooling<button class="start-breath" data-type="sitali">Start</button></div>
-            <div class="glass-card breath-card" data-breath="bastrika">Bhastrika<button class="start-breath" data-type="bastrika">Start</button></div>
-            <div class="glass-card breath-card" data-breath="coherent">Coherent 5.5<button class="start-breath" data-type="coherent">Start</button></div>
-            <div class="glass-card breath-card" data-breath="wimhof">Wim Hof<button class="start-breath" data-type="wimhof">Start</button></div>
-        </div>
-        <button id="stopBreathBtn" class="btn-outline" style="display:none;">Stop Practice</button>
-        <div id="breathInstructionPanel" class="breath-instruction-panel" style="background:rgba(0,0,0,0.4); border-radius:24px; padding:1rem; margin-top:1rem;">✨ Select a breath technique. Activate pranic flow.</div>
-    </div>
-
-    <!-- WISDOM QUOTES VIEW (Expanded) -->
-    <div id="quotesView" class="hidden view-container glass-card">
-        <h2><i class="fas fa-feather-alt"></i> Eternal Wisdom Library</h2>
-        <div id="quoteTextLarge" class="quote-text-large" style="font-size:1.4rem;">“The pause between two breaths is the doorway.”</div>
-        <div id="quoteAuthorLarge">— Shiva</div>
-        <div style="margin:1rem 0;">
-            <button id="prevLibQuote" class="btn-outline">← Previous</button>
-            <button id="nextLibQuote" class="btn-outline">Next →</button>
-            <button id="saveLibQuoteBtn" class="btn-outline">Save to Diary</button>
-        </div>
-        <input type="text" id="quoteSearchInputSimple" placeholder="Search quotes by text or author..." style="width:100%; margin-top:0.5rem;">
-    </div>
-
-    <!-- DIARY VIEW -->
-    <div id="diaryView" class="hidden view-container glass-card">
-        <h2><i class="fas fa-moon"></i> Cosmic Diary · Intention & Reflection</h2>
-        <textarea id="diaryEntry" rows="4" placeholder="Write your insights, dreams, or experiences..." style="width:100%; margin:1rem 0;"></textarea>
-        <button id="saveDiary" class="btn-primary">Save Entry</button>
-        <button id="exportDiaryPDFBtn" class="btn-outline">PDF Export</button>
-        <div id="diaryList" style="margin-top:1.5rem;"></div>
-    </div>
-
-    <!-- MEDITATION TIMER -->
-    <div id="timerView" class="hidden view-container glass-card">
-        <h2>Meditation Timer · Sacred Clock</h2>
-        <div class="timer-circle">
-            <svg width="220" height="220" viewBox="0 0 220 220">
-                <circle cx="110" cy="110" r="95" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="8"/>
-                <circle class="timer-progress" cx="110" cy="110" r="95" fill="none" stroke="url(#timerGradient)" stroke-width="8" stroke-dasharray="597" stroke-dashoffset="0"/>
-            </svg>
-            <div class="timer-text" id="timerDisplay">05:00</div>
-        </div>
-        <div class="timer-presets" style="display:flex; gap:0.8rem; justify-content:center;">
-            <div class="timer-preset" data-min="5">5m</div><div class="timer-preset" data-min="10">10m</div><div class="timer-preset" data-min="15">15m</div><div class="timer-preset" data-min="30">30m</div>
-        </div>
-        <div style="display:flex; gap:0.8rem; justify-content:center;">
-            <button id="startTimer" class="btn-primary">Start</button>
-            <button id="pauseTimer" class="btn-outline">Pause</button>
-            <button id="resetTimer" class="btn-outline">Reset</button>
-        </div>
-        <div id="timerMsg" style="margin-top:1rem; text-align:center;"></div>
-        <div class="ambient-section" style="margin-top:1rem;">
-            <h4>Ambient Sounds</h4>
-            <button class="sound-btn btn-outline" data-sound="rain">🌧️ Rain</button>
-            <button class="sound-btn btn-outline" data-sound="forest">🌲 Forest</button>
-            <button class="sound-btn btn-outline" data-sound="silence">🔇 Silence</button>
-        </div>
-    </div>
-
-    <!-- MY PLAN VIEW -->
-    <div id="planView" class="hidden view-container glass-card">
-        <h2>My Sadhana Plan</h2>
-        <div id="planItems"></div>
-        <div>Total estimated: <span id="planTotal">0</span> min</div>
-        <button id="clearPlanBtn" class="btn-outline" style="margin-top:1rem;">Clear Plan</button>
-    </div>
-
-    <!-- COSMIC DASHBOARD (Enhanced Analytics) -->
-    <div id="enhancedView" class="hidden view-container glass-card">
-        <h2>🌀 Cosmic Dashboard · Soul Analytics</h2>
-        <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:space-around;">
-            <div class="stats-card glass-card">Practices: <span id="enhTotalPractices">0</span></div>
-            <div class="stats-card glass-card">Minutes: <span id="enhTotalMinutes">0</span></div>
-            <div class="stats-card glass-card">Streak: <span id="enhStreak">0</span> days</div>
-            <div class="stats-card glass-card">Level: <span id="enhLevel">Novice</span></div>
-        </div>
-        <div class="chart-section"><h3>📊 Weekly Activity</h3><canvas id="progressChart" width="400" height="200" style="max-width:100%; margin:0 auto;"></canvas></div>
-        <div class="chart-section"><h3>📈 Category Breakdown</h3><canvas id="categoryChart" width="400" height="200" style="max-width:100%; margin:0 auto;"></canvas></div>
-        <div class="calendar-section"><h3>📅 Practice Calendar</h3><div id="calendarTracker" class="calendar-grid"></div></div>
-        <div class="data-export-import" style="display:flex; gap:1rem; justify-content:center; margin-top:1rem;">
-            <button id="exportDataBtn" class="btn-outline">Export JSON</button>
-            <button id="importDataBtn" class="btn-outline">Import Backup</button>
-            <input type="file" id="importFileInput" style="display:none;">
-        </div>
-    </div>
-
-    <!-- ACHIEVEMENTS -->
-    <div id="achievementsView" class="hidden view-container glass-card">
-        <h2>Achievements · Path of Light</h2>
-        <div id="achievementsList"></div>
-    </div>
-
-    <footer>
-        <div>© 2026 · 112 Portals · All data stored locally in your browser</div>
-        <div><a data-view="home">Home</a> | <a data-view="techniques">Techniques</a> | <a data-view="enhanced">Cosmic Stats</a></div>
-    </footer>
-</div>
-<button id="scrollTop" style="position:fixed; bottom:20px; right:20px; background:var(--accent); border-radius:50%; width:44px; height:44px; display:none; border:none; color:white; cursor:pointer;"><i class="fas fa-arrow-up"></i></button>
-
-<!-- 3D Black Hole with Three.js (Upgraded) -->
-<script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+    <!-- ============================================================
+    3D BLACK HOLE (Three.js)
+    ============================================================ -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
         }
-    }
-</script>
-<script type="module">
-    import * as THREE from 'three';
-    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-    const canvas = document.getElementById('blackhole-canvas');
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: false });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x020108);
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(5, 2.2, 7);
-    camera.lookAt(0, 0, 0);
-    const composer = new EffectComposer(renderer);
-    composer.addPass(new RenderPass(scene, camera));
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.0, 0.4, 0.6);
-    composer.addPass(bloomPass);
+        const canvas = document.getElementById('blackhole-canvas');
+        if (!canvas) return;
 
-    // Starfield
-    const starGeo = new THREE.BufferGeometry();
-    const starCount = 12000;
-    const starPos = [];
-    for (let i = 0; i < starCount; i++) {
-        starPos.push((Math.random() - 0.5) * 800);
-        starPos.push((Math.random() - 0.5) * 600);
-        starPos.push((Math.random() - 0.5) * 400 - 150);
-    }
-    starGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(starPos), 3));
-    const starsMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.2, blending: THREE.AdditiveBlending });
-    const stars = new THREE.Points(starGeo, starsMat);
-    scene.add(stars);
+        const isMobile = window.innerWidth < 600;
+        const particleCount = isMobile ? 4000 : 10000;
+        const starCount = isMobile ? 4000 : 8000;
 
-    // Black Hole Core
-    const geometry = new THREE.SphereGeometry(1.2, 64, 64);
-    const material = new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.3, metalness: 0.9, emissive: 0x331100, emissiveIntensity: 0.8 });
-    const blackHoleCore = new THREE.Mesh(geometry, material);
-    scene.add(blackHoleCore);
-
-    // Accretion Disk Particles
-    const particleCount = 15000;
-    const particleGeo = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-        const r = 1.4 + Math.random() * 3.5;
-        const angle = Math.random() * Math.PI * 2;
-        const y = (Math.random() - 0.5) * 0.4;
-        particlePositions[i*3] = Math.cos(angle) * r;
-        particlePositions[i*3+1] = y;
-        particlePositions[i*3+2] = Math.sin(angle) * r;
-    }
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    const particleMat = new THREE.PointsMaterial({ color: 0xff8844, size: 0.03, blending: THREE.AdditiveBlending });
-    const particles = new THREE.Points(particleGeo, particleMat);
-    scene.add(particles);
-
-    const ringGeometry = new THREE.TorusGeometry(1.5, 0.08, 64, 300);
-    const ringMaterial = new THREE.MeshStandardMaterial({ color: 0xffaa77, emissive: 0xff4422, emissiveIntensity: 0.7 });
-    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-    scene.add(ring);
-
-    const ambientLight = new THREE.AmbientLight(0x221133);
-    const dirLight = new THREE.DirectionalLight(0xffccaa, 1);
-    dirLight.position.set(3, 5, 2);
-    scene.add(ambientLight);
-    scene.add(dirLight);
-
-    let time = 0;
-    function animate() {
-        requestAnimationFrame(animate);
-        time += 0.01;
-        ring.rotation.z += 0.008;
-        ring.rotation.x = Math.sin(time * 0.5) * 0.1;
-        particles.rotation.y += 0.002;
-        stars.rotation.y += 0.0002;
-        camera.position.x = 5.2 * Math.sin(time * 0.15);
-        camera.position.z = 6.2 * Math.cos(time * 0.15);
-        camera.lookAt(0, 0, 0);
-        composer.render();
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        composer.setSize(window.innerWidth, window.innerHeight);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: !isMobile });
         renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-</script>
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
 
-<script>
-    // ==================== FULL 112 TECHNIQUES DATABASE (Expanded) ====================
-    const TECHNIQUES = {};
-    const techniqueNames = [
-        "Witnessing the Breath","Awareness of the Gap","Spinal Current Meditation","Third Eye Gazing","Witnessing Thoughts","Inner Resonance","Gazing into Darkness","Heart Center Meditation","Body Sensation Awareness","Slow Breath Meditation",
-        "Walking Awareness","Observation of Emotions","Listening to Silence","Whole-Body Awareness","Expansion of Awareness","Spine Awareness","Total Relaxation","Edge of Sleep","Momentary Suspension","Perceiving the Space Between",
-        "Feeling the Void","Embodied Light","Dissolving into Sound","Touching the Sky","Savoring the Source","Radiating Love","Itching and Tingling","Flame Contemplation","Pulse of Life","Empty Sky",
-        "Luminous Void","Elemental Contact","Breath as Cosmic Wind","Stillness Between Heartbeats","Spontaneous Satori","Scent of the Absolute","Expanding to Horizon","Centering in Navel","Cave of the Heart","Unstruck Sound",
-        "Shakti Rising","Kundalini Awakening","Absorption in Color","Inner Moon","Sun in Solar Plexus","Void Gazing","Darkness Beyond Form","Guru's Grace","Dissolving Ego","Surrendering to What Is",
-        "Non-Doing","Effortless Being","Resting in Natural State","Unconditional Love","Compassion Meditation","Joy Unbound","Equanimity","Forgiveness Practice","Gratitude Shower","Body as Temple",
-        "Skeleton Awareness","Dissolving Boundaries","Elemental Purification","Fire Offering Within","Waterfall of Grace","Mountain Stillness","Wind of Change","Space Unbounded","Earth Rooting","Cosmic Dance",
-        "Timeless Awareness","Dreamlike Illusion","Lucid Waking","Sleep as Yoga","Twilight Contemplation","Midnight Vigil","Dawn Awakening","Noon Radiance","Dusk Surrender","Seasons Within",
-        "Age as Wisdom","Death Awareness","Rebirth Visualization","Ancestor Connection","Guardian Spirits","Divine Child","Inner Mother","Cosmic Father","Friend of All","Teacher Within",
-        "Healer's Touch","Warrior's Courage","Sage's Silence","Lover's Embrace","Creator's Joy","Destroyer's Clarity","Preserver's Patience","Dancer's Grace","Beggar's Humility","King's Sovereignty",
-        "Jester's Laughter","Fool's Leap","Seeker's Quest","Finder's Rest","Praise to the Void","Hymn to the Heart","Mantra of Light","Seed Syllable","Whispered Prayer","Silent Reverence",
-        "Offering of Breath","Gift of Presence"
-    ];
-    const sanskritNames = [
-        "Śvāsa Praśvāsa","Antar Śvāsa","Suṣumṇā Śvāsa","Bhrūmadhya Dhyāna","Vikalpa Sākṣī","Anāhata Nāda","Tamas Dhyāna","Hṛdaya Ākāśa","Deha Anubhava","Manda Śvāsa",
-        "Caraṇa Jāgṛta","Bhāva Dṛṣṭi","Mauna Śravaṇa","Sarvāṅga Bodha","Caitanya Vistāra","Merudaṇḍa","Pūrṇa Viśrāma","Svapna Antara","Kṣaṇa Vilamba","Antarikṣa Spṛś",
-        "Śūnya Sparśa","Tejas Mūrti","Nāda Laya","Gagan Sparśa","Srota Āsvāda","Premākāra","Kaṇḍūti","Agni Cintana","Nāḍī Spandana","Ākāśa Śūnya",
-        "Prakāśa Śūnya","Bhūta Saṃsparśa","Prāṇa Vāyu","Hṛdaya Spandana","Sahaja Samādhi","Para Gandha","Dik Vistāra","Nābhi Kendra","Guhā Hṛdaya","Anāhata Dhvani",
-        "Śakti Uthāna","Kuṇḍalinī Bodha","Varṇa Layana","Candra Antar","Sūrya Maṇipūra","Śūnya Dṛṣṭi","Tamas Para","Guru Kṛpā","Ahaṅkāra Tyāga","Tathatā Samarpaṇa",
-        "Akriyā","Sahaja Sthiti","Prakṛti Viśrāma","Prema Akhaṇḍa","Karuṇā Dhyāna","Ānanda Akhaṇḍa","Samatā","Kṣamā Sādhana","Kṛtajñatā Snāna","Deha Mandira",
-        "Asthi Bodha","Sīmā Vilaya","Bhūta Śodhana","Antar Agnihotra","Amṛta Dhārā","Acala Sthiti","Vāyu Parivartana","Ākāśa Ananta","Pṛthvī Mūla","Brahmāṇḍa Nṛtya",
-        "Kāla Bodha","Svapna Māyā","Jāgrat Svapna","Yoganidrā","Sandhyā Dhyāna","Ardha Rātri","Prātaḥ Bodha","Madhyāhna Tejas","Sandhyā Samarpaṇa","Ṛtu Antar",
-        "Vayasa Prajñā","Maraṇa Sati","Punarjanma Dhyāna","Pitṛ Saṃyoga","Devatā Rakṣā","Divya Bāla","Antar Mātā","Brahma Pitā","Sarva Mitra","Antar Guru",
-        "Hasta Cikitsā","Vīrya Śaurya","Muni Mauna","Premāliṅgana","Ānanda Sṛṣṭi","Saṃhāra Śuddhi","Sthiti Kṣamā","Nartana Lāvaṇya","Dīnatā","Rāja Sattva",
-        "Hāsya Vilāsa","Ātma Līlā","Sādhaka Patha","Lābha Viśrāma","Śūnya Stuti","Hṛdaya Stotra","Jyotir Mantra","Bīja Akṣara","Upāṃśu Prārthanā","Mauna Bhakti",
-        "Prāṇa Arghya","Sādhana Upasthāna"
-    ];
-    const categories = ['breath','body','heart','sound','gaze','void','energy','light','touch','space','stillness','emotion','awareness','devotion'];
-    const chakras = ['Root','Sacral','Solar Plexus','Heart','Throat','Third Eye','Crown'];
-    const elements = ['Earth','Water','Fire','Air','Ether'];
-    for (let i = 1; i <= 112; i++) {
-        const idx = i-1;
-        const cat = categories[idx % categories.length];
-        const chakra = chakras[i % chakras.length];
-        const element = elements[i % elements.length];
-        const name = techniqueNames[idx % techniqueNames.length];
-        const sanskrit = sanskritNames[idx % sanskritNames.length];
-        TECHNIQUES[i] = {
-            id: i, name, sanskrit, category: cat, chakra, element,
-            essence: `The sacred teaching of the Vigyan Bhairav Tantra reveals: “${name} is a direct portal to the formless. When you rest in this awareness, the universe meditates through you.”`,
-            steps: `1. Find a quiet, comfortable seat. 2. Close your eyes gently. 3. Bring your attention to ${cat === 'breath' ? 'the natural flow of breath' : 'the present moment'}. 4. Allow thoughts to arise and dissolve without engagement. 5. Continue for 10-20 minutes.`,
-            wisdom: `Shiva whispers: “Radiant one, this experience may dawn between two breaths.”`,
-            posture: "Sukhasana or Vajrasana",
-            mudra: "Chin Mudra or Jnana Mudra",
-            breath: "Natural, effortless",
-            duration: "15-20 minutes",
-            benefits: { student: "Enhanced focus", employee: "Stress relief", seeker: "Deeper awareness" }
-        };
-    }
-    // Enhance first few with authentic details
-    TECHNIQUES[1] = { ...TECHNIQUES[1], essence: "Shiva: 'Between two breaths, the beneficence.'", steps: "Watch breath at nostrils. Don't follow inside. Just observe quality." };
-    TECHNIQUES[4] = { ...TECHNIQUES[4], essence: "Fix attention at the third eye. Let mind dissolve into that light.", steps: "Gently gaze upward as if looking at a point between eyebrows. Feel subtle pressure." };
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x020108);
 
-    // Archetypes / Professions
-    const professions = [
-        { name: "Student", icon: "fa-graduation-cap", desc: "Focus & Memory", keywords: ["focus", "memory", "concentration"] },
-        { name: "Employee", icon: "fa-briefcase", desc: "Stress & Work-life", keywords: ["stress", "work", "balance"] },
-        { name: "Seeker", icon: "fa-infinity", desc: "Spiritual Path", keywords: ["spiritual", "awakening", "awareness"] },
-        { name: "Anxious", icon: "fa-heartbeat", desc: "Calm Anxiety", keywords: ["anxiety", "calm", "peace"] },
-        { name: "Artist", icon: "fa-paint-brush", desc: "Flow State", keywords: ["creativity", "flow"] },
-        { name: "Leader", icon: "fa-crown", desc: "Clarity", keywords: ["leadership", "clarity"] }
-    ];
-    function getRecommendedTechniques(prof) {
-        let scored = Object.values(TECHNIQUES).map(t => {
-            let score = prof.keywords.reduce((s, k) => s + (t.name.toLowerCase().includes(k) ? 5 : 0) + (t.category.includes(k) ? 3 : 0), 0);
-            return { tech: t, score };
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 1.8, isMobile ? 8 : 7);
+        camera.lookAt(0, 0, 0);
+
+        const composer = new EffectComposer(renderer);
+        composer.addPass(new RenderPass(scene, camera));
+        const bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            isMobile ? 0.4 : 0.6,
+            0.3,
+            0.4
+        );
+        composer.addPass(bloomPass);
+
+        // Stars
+        const starGeo = new THREE.BufferGeometry();
+        const starPos = new Float32Array(starCount * 3);
+        for (let i = 0; i < starCount; i++) {
+            const r = 20 + Math.random() * 250;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            starPos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+            starPos[i * 3 + 1] = r * Math.cos(phi) * 0.4;
+            starPos[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
+        }
+        starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+        const starMat = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: isMobile ? 0.15 : 0.2,
+            transparent: true,
+            opacity: 0.7,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true
         });
-        scored.sort((a,b) => b.score - a.score);
-        return scored.slice(0, 12).map(s => s.tech);
-    }
+        const stars = new THREE.Points(starGeo, starMat);
+        scene.add(stars);
 
-    // ---------- User State & Persistence ----------
-    let user = {
-        totalPractices: parseInt(localStorage.getItem('tp')) || 0,
-        totalMinutes: parseInt(localStorage.getItem('tm')) || 0,
-        streak: parseInt(localStorage.getItem('streak')) || 0,
-        lastDate: localStorage.getItem('lastDate') || null,
-        favorites: JSON.parse(localStorage.getItem('favs')) || [],
-        diary: JSON.parse(localStorage.getItem('diary')) || [],
-        plan: JSON.parse(localStorage.getItem('plan')) || [],
-        practiceDays: JSON.parse(localStorage.getItem('practiceDays')) || {},
-        practicedTechniques: JSON.parse(localStorage.getItem('practicedTechs')) || [],
-        savedQuotes: JSON.parse(localStorage.getItem('savedQuotes')) || [],
-        achievements: JSON.parse(localStorage.getItem('achievements')) || {},
-        moodHistory: JSON.parse(localStorage.getItem('moodHistory')) || []
-    };
-
-    function saveAll() {
-        localStorage.setItem('tp', user.totalPractices);
-        localStorage.setItem('tm', user.totalMinutes);
-        localStorage.setItem('streak', user.streak);
-        localStorage.setItem('lastDate', user.lastDate);
-        localStorage.setItem('favs', JSON.stringify(user.favorites));
-        localStorage.setItem('diary', JSON.stringify(user.diary));
-        localStorage.setItem('plan', JSON.stringify(user.plan));
-        localStorage.setItem('practiceDays', JSON.stringify(user.practiceDays));
-        localStorage.setItem('practicedTechs', JSON.stringify(user.practicedTechniques));
-        localStorage.setItem('savedQuotes', JSON.stringify(user.savedQuotes));
-        localStorage.setItem('achievements', JSON.stringify(user.achievements));
-        localStorage.setItem('moodHistory', JSON.stringify(user.moodHistory));
-        updateUI();
-        checkAchievements();
-        updateLevel();
-    }
-
-    function addPractice(techId, techName, minutes = 15) {
-        user.practicedTechniques.unshift({ id: techId, name: techName, date: new Date().toISOString(), minutes });
-        user.totalPractices++;
-        user.totalMinutes += minutes;
-        const today = new Date().toDateString();
-        if (user.lastDate !== today) {
-            const yesterday = new Date(Date.now() - 86400000).toDateString();
-            user.streak = (user.lastDate === yesterday) ? user.streak + 1 : 1;
-            user.lastDate = today;
-        }
-        user.practiceDays[new Date().toISOString().slice(0, 10)] = true;
-        saveAll();
-        showToast(`🧘 Practiced: ${techName} +${minutes} min`);
-    }
-
-    function showToast(msg) {
-        const t = document.createElement('div');
-        t.className = 'toast';
-        t.innerText = msg;
-        document.body.appendChild(t);
-        setTimeout(() => t.remove(), 3000);
-    }
-
-    function updateLevel() {
-        const minutes = user.totalMinutes;
-        let level = "Novice";
-        let next = 100;
-        if (minutes >= 5000) level = "Mahasiddha";
-        else if (minutes >= 2500) level = "Enlightened";
-        else if (minutes >= 1000) level = "Adept";
-        else if (minutes >= 300) level = "Seeker";
-        else level = "Novice";
-        document.getElementById("enhLevel").innerText = level;
-        document.getElementById("userLevelBadge").innerHTML = level;
-        const progress = Math.min(100, (minutes % 1000) / 10);
-        document.getElementById("levelProgress").value = progress;
-    }
-
-    // Quotes Library (expanded)
-    const quoteLibrary = [
-        { text: "The pause between two breaths is the doorway to the infinite.", author: "Shiva" },
-        { text: "You are the timeless sky, thoughts are just clouds passing by.", author: "Rumi" },
-        { text: "Realize that you are already free.", author: "Ramana Maharshi" },
-        { text: "Stillness is the language of God.", author: "Osho" },
-        { text: "When you become aware of silence, you become aware of yourself.", author: "Eckhart Tolle" },
-        { text: "The only way to live is by accepting each minute as an unrepeatable miracle.", author: "Tara Brach" },
-        { text: "Let go of the battle. Breathe quietly and let it be.", author: "Buddha" },
-        { text: "Be content with what you have; rejoice in the way things are.", author: "Lao Tzu" }
-    ];
-    let currentQuotes = [...quoteLibrary];
-    let libQuoteIndex = 0;
-
-    function updateLibQuote() {
-        const q = currentQuotes[libQuoteIndex];
-        document.getElementById('quoteTextLarge').innerHTML = `“${q.text}”`;
-        document.getElementById('quoteAuthorLarge').innerHTML = `— ${q.author}`;
-    }
-
-    // Mudras (24 upgrade)
-    const mudras = [];
-    for (let i = 1; i <= 24; i++) {
-        mudras.push({ name: `Mudra ${i}`, meaning: "Sacred gesture", svg: `<svg width="80" height="80"><circle cx="40" cy="40" r="30" fill="none" stroke="currentColor"/><path d="M20,50 L60,50" stroke="currentColor"/></svg>` });
-    }
-    let currentMudra = 0;
-    function renderMudra() {
-        document.getElementById('mudraContent').innerHTML = `<div>${mudras[currentMudra].svg}</div><div><strong>${mudras[currentMudra].name}</strong><br>${mudras[currentMudra].meaning}</div>`;
-    }
-
-    // Breathwork Engine (advanced)
-    let breathActive = false, breathInterval = null;
-    function startBreathPractice(type) {
-        if (breathInterval) clearInterval(breathInterval);
-        breathActive = true;
-        document.getElementById('stopBreathBtn').style.display = 'inline-block';
-        let phases = [], timings = [];
-        switch(type) {
-            case 'box': phases = ['inhale','hold','exhale','hold']; timings = [4,4,6,4]; break;
-            case '478': phases = ['inhale','hold','exhale']; timings = [4,7,8]; break;
-            case 'nadi': phases = ['inhale left','hold','exhale right','inhale right','hold','exhale left']; timings = [4,4,4,4,4,4]; break;
-            case 'sama': phases = ['inhale','exhale']; timings = [5,5]; break;
-            case 'ujjayi': phases = ['ujjayi inhale','ujjayi exhale']; timings = [5,5]; break;
-            case 'bhramari': phases = ['inhale','exhale with hum']; timings = [4,6]; break;
-            case 'kapal': phases = ['rapid exhale','rest']; timings = [20,10]; break;
-            case 'tummo': phases = ['inhale','hold','exhale']; timings = [6,12,6]; break;
-            case 'sitali': phases = ['inhale through curled tongue','exhale']; timings = [4,6]; break;
-            case 'bastrika': phases = ['rapid breath','rest']; timings = [20,10]; break;
-            case 'coherent': phases = ['inhale','exhale']; timings = [5.5,5.5]; break;
-            case 'wimhof': phases = ['deep inhale','exhale','retention']; timings = [2,0,30]; break;
-            default: phases = ['inhale','exhale']; timings = [4,4];
-        }
-        let phaseIdx = 0, cycle = 0;
-        const runPhase = () => {
-            if (!breathActive) return;
-            if (phaseIdx >= phases.length) {
-                phaseIdx = 0;
-                cycle++;
-                if (cycle >= 6) {
-                    resetBreathUI();
-                    addPractice(0, `${type.toUpperCase()} Breathwork`, 5);
-                    showToast('Breath session complete');
-                    return;
-                }
-            }
-            let timer = timings[phaseIdx];
-            const phase = phases[phaseIdx];
-            document.getElementById('breathPhaseLabel').innerHTML = phase.includes('inhale') ? '🌬️' : (phase.includes('hold') ? '🌀' : '💨');
-            document.getElementById('breathPhaseText').innerHTML = phase.toUpperCase();
-            let remaining = timer;
-            const interval = setInterval(() => {
-                if (!breathActive) { clearInterval(interval); return; }
-                remaining--;
-                document.getElementById('breathTimerDisplay').innerHTML = remaining;
-                const progress = ((timer - remaining) / timer) * 860;
-                document.querySelector('.progress-circle').style.strokeDashoffset = 860 - progress;
-                if (remaining <= 0) {
-                    clearInterval(interval);
-                    phaseIdx++;
-                    runPhase();
-                }
-            }, 1000);
-            breathInterval = interval;
-        };
-        runPhase();
-    }
-    function resetBreathUI() {
-        if (breathInterval) clearInterval(breathInterval);
-        breathActive = false;
-        document.getElementById('stopBreathBtn').style.display = 'none';
-        document.getElementById('breathPhaseLabel').innerHTML = '🌀';
-        document.getElementById('breathTimerDisplay').innerHTML = '0';
-        document.getElementById('breathPhaseText').innerHTML = 'Ready';
-        document.querySelector('.progress-circle').style.strokeDashoffset = 860;
-    }
-
-    // Timer logic
-    let timerSec = 300, timerInt = null, timerRunning = false;
-    const timerDisplay = document.getElementById('timerDisplay');
-    const timerCircle = document.querySelector('.timer-progress');
-    const timerCircumference = 597;
-    function updateTimerDisplay() {
-        const mins = Math.floor(timerSec / 60);
-        const secs = timerSec % 60;
-        timerDisplay.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        const progress = (timerSec <= 0 ? 0 : (300 - timerSec) / 300);
-        const offset = timerCircumference - (progress * timerCircumference);
-        timerCircle.style.strokeDashoffset = Math.min(timerCircumference, Math.max(0, offset));
-    }
-    function playBell() { new Audio('https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3').play().catch(e=>console.log); }
-    document.getElementById('startTimer')?.addEventListener('click', () => {
-        if (timerRunning) return;
-        if (timerSec <= 0) { alert("Set a time first"); return; }
-        timerRunning = true;
-        timerInt = setInterval(() => {
-            if (timerSec <= 0) {
-                clearInterval(timerInt); timerRunning = false;
-                playBell();
-                addPractice(0, "Timer Meditation", Math.floor((300 - timerSec)/60) || 5);
-                document.getElementById('timerMsg').innerHTML = "✨ Meditation complete! ✨";
-            } else { timerSec--; updateTimerDisplay(); }
-        }, 1000);
-    });
-    document.getElementById('pauseTimer')?.addEventListener('click', () => { clearInterval(timerInt); timerRunning = false; });
-    document.getElementById('resetTimer')?.addEventListener('click', () => { clearInterval(timerInt); timerRunning = false; timerSec = 300; updateTimerDisplay(); });
-    document.querySelectorAll('.timer-preset').forEach(p => p.addEventListener('click', () => { timerSec = parseInt(p.dataset.min) * 60; updateTimerDisplay(); }));
-
-    // Ambient sounds
-    let currentSound = null;
-    const soundUrls = { rain: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', forest: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' };
-    function playAmbient(sound) { if (currentSound) { currentSound.pause(); currentSound.currentTime = 0; } if (sound === 'silence') return; const audio = new Audio(soundUrls[sound]); audio.loop = true; audio.volume = 0.2; audio.play(); currentSound = audio; }
-    document.querySelectorAll('.sound-btn').forEach(btn => btn.addEventListener('click', () => playAmbient(btn.dataset.sound)));
-
-    // UI Rendering functions
-    function renderPlan() {
-        const container = document.getElementById('planItems');
-        if (!container) return;
-        container.innerHTML = '';
-        let total = 0;
-        user.plan.forEach(id => {
-            const t = TECHNIQUES[id];
-            if (t) {
-                total += 15;
-                const div = document.createElement('div');
-                div.className = 'glass-card';
-                div.style.marginBottom = '0.8rem';
-                div.innerHTML = `<strong>${t.name}</strong> (15 min) <button class="remove-plan" data-id="${id}">🗑️</button>`;
-                div.querySelector('.remove-plan').addEventListener('click', () => {
-                    user.plan = user.plan.filter(i => i !== id);
-                    saveAll();
-                    renderPlan();
-                });
-                container.appendChild(div);
-            }
+        // Black hole core
+        const coreGeo = new THREE.SphereGeometry(isMobile ? 0.8 : 1.0, 48, 48);
+        const coreMat = new THREE.MeshStandardMaterial({
+            color: 0x000000,
+            roughness: 0.3,
+            metalness: 0.9,
+            emissive: 0x331100,
+            emissiveIntensity: 0.6
         });
-        document.getElementById('planTotal').innerText = total;
-    }
-    function renderDiary() {
-        const listDiv = document.getElementById('diaryList');
-        if (listDiv) {
-            listDiv.innerHTML = user.diary.slice().reverse().map(entry => `<div class="glass-card" style="margin-top:0.8rem;"><small>${new Date(entry.date).toLocaleString()}</small><p>${entry.text}</p></div>`).join('');
+        const core = new THREE.Mesh(coreGeo, coreMat);
+        scene.add(core);
+
+        // Accretion ring
+        const ringGeo = new THREE.TorusGeometry(isMobile ? 1.2 : 1.5, 0.06, 32, 160);
+        const ringMat = new THREE.MeshStandardMaterial({
+            color: 0xff8844,
+            emissive: 0xff5533,
+            emissiveIntensity: 0.6,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending,
+            side: THREE.DoubleSide
+        });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.rotation.x = Math.PI * 0.15;
+        scene.add(ring);
+
+        // Outer ring
+        const outerRingGeo = new THREE.TorusGeometry(isMobile ? 1.6 : 2.0, 0.04, 32, 180);
+        const outerRingMat = new THREE.MeshStandardMaterial({
+            color: 0xffaa66,
+            emissive: 0xff7744,
+            emissiveIntensity: 0.4,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending,
+            side: THREE.DoubleSide
+        });
+        const outerRing = new THREE.Mesh(outerRingGeo, outerRingMat);
+        outerRing.rotation.x = Math.PI * 0.2;
+        scene.add(outerRing);
+
+        // Particles (accretion disk)
+        const particleGeo = new THREE.BufferGeometry();
+        const particlePos = new Float32Array(particleCount * 3);
+        const particleSizes = new Float32Array(particleCount);
+        for (let i = 0; i < particleCount; i++) {
+            const r = isMobile ? 0.8 + Math.random() * 2.5 : 1.0 + Math.random() * 3.5;
+            const angle = Math.random() * Math.PI * 2;
+            const y = (Math.random() - 0.5) * 0.3;
+            particlePos[i * 3] = Math.cos(angle) * r;
+            particlePos[i * 3 + 1] = y;
+            particlePos[i * 3 + 2] = Math.sin(angle) * r;
+            particleSizes[i] = 0.02 + Math.random() * 0.04;
         }
-    }
-    function renderCalendar() {
-        const container = document.getElementById('calendarTracker');
-        if (!container) return;
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = today.getMonth();
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        container.innerHTML = '';
-        ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => { const div = document.createElement('div'); div.className = 'calendar-day weekday'; div.innerText = d; container.appendChild(div); });
-        for (let i = 0; i < firstDay; i++) { const blank = document.createElement('div'); blank.className = 'calendar-day'; container.appendChild(blank); }
-        for (let d = 1; d <= daysInMonth; d++) {
-            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-            const practiced = user.practiceDays[dateStr];
-            const dayDiv = document.createElement('div');
-            dayDiv.className = `calendar-day ${practiced ? 'practiced' : ''}`;
-            dayDiv.innerText = d;
-            dayDiv.addEventListener('click', () => {
-                if (!user.practiceDays[dateStr]) {
-                    user.practiceDays[dateStr] = true;
-                    saveAll();
-                    showToast(`Marked practice on ${dateStr}`);
-                } else if (confirm('Remove mark?')) {
-                    delete user.practiceDays[dateStr];
-                    saveAll();
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+        particleGeo.setAttribute('size', new THREE.BufferAttribute(particleSizes, 1));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0xff8844,
+            size: 0.04,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true
+        });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        // Lighting
+        const ambient = new THREE.AmbientLight(0x221133, 0.4);
+        scene.add(ambient);
+
+        const dirLight = new THREE.DirectionalLight(0xffddaa, 0.6);
+        dirLight.position.set(2, 4, 3);
+        scene.add(dirLight);
+
+        const pointLight = new THREE.PointLight(0xff6633, 0.6, 10);
+        pointLight.position.set(0, 0.2, 0);
+        scene.add(pointLight);
+
+        // Animation
+        let time = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            // Rotate particles
+            const positions = particleGeo.attributes.position.array;
+            for (let i = 0; i < particleCount; i++) {
+                let angle = Math.atan2(positions[i * 3 + 2], positions[i * 3]);
+                angle += 0.003 * (1 + 0.5 / (Math.hypot(positions[i * 3], positions[i * 3 + 2]) + 0.5));
+                const r = Math.hypot(positions[i * 3], positions[i * 3 + 2]);
+                positions[i * 3] = Math.cos(angle) * r;
+                positions[i * 3 + 2] = Math.sin(angle) * r;
+            }
+            particleGeo.attributes.position.needsUpdate = true;
+
+            // Rotate rings
+            ring.rotation.z += 0.004;
+            outerRing.rotation.z += 0.003;
+
+            // Pulse light
+            pointLight.intensity = 0.5 + Math.sin(time * 2) * 0.15;
+
+            // Rotate stars slowly
+            stars.rotation.y += 0.0003;
+
+            // Gentle camera sway
+            camera.position.x = Math.sin(time * 0.08) * 0.3;
+            camera.position.z = (isMobile ? 8 : 7) + Math.sin(time * 0.12) * 0.2;
+            camera.lookAt(0, 0, 0);
+
+            composer.render();
+        }
+
+        animate();
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+            composer.setSize(w, h);
+        });
+    </script>
+
+    <!-- ============================================================
+    MAIN APPLICATION LOGIC
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // 1. DATA: 112 TECHNIQUES
+        // ============================================================
+        const TECHNIQUES = {};
+
+        const techniqueNames = [
+            "Witnessing the Breath", "Awareness of the Gap", "Spinal Current Meditation", "Third Eye Gazing",
+            "Witnessing Thoughts", "Inner Resonance", "Gazing into Darkness", "Heart Center Meditation",
+            "Body Sensation Awareness", "Slow Breath Meditation", "Walking Awareness", "Observation of Emotions",
+            "Listening to Silence", "Whole-Body Awareness", "Expansion of Awareness", "Spine Awareness",
+            "Total Relaxation", "Edge of Sleep", "Momentary Suspension", "Perceiving the Space Between",
+            "Feeling the Void", "Embodied Light", "Dissolving into Sound", "Touching the Sky",
+            "Savoring the Source", "Radiating Love", "Itching and Tingling", "Flame Contemplation",
+            "Pulse of Life", "Empty Sky", "Luminous Void", "Elemental Contact",
+            "Breath as Cosmic Wind", "Stillness Between Heartbeats", "Spontaneous Satori", "Scent of the Absolute",
+            "Expanding to Horizon", "Centering in Navel", "Cave of the Heart", "Unstruck Sound",
+            "Shakti Rising", "Kundalini Awakening", "Absorption in Color", "Inner Moon",
+            "Sun in Solar Plexus", "Void Gazing", "Darkness Beyond Form", "Guru's Grace",
+            "Dissolving Ego", "Surrendering to What Is", "Non-Doing", "Effortless Being",
+            "Resting in Natural State", "Unconditional Love", "Compassion Meditation", "Joy Unbound",
+            "Equanimity", "Forgiveness Practice", "Gratitude Shower", "Body as Temple",
+            "Skeleton Awareness", "Dissolving Boundaries", "Elemental Purification", "Fire Offering Within",
+            "Waterfall of Grace", "Mountain Stillness", "Wind of Change", "Space Unbounded",
+            "Earth Rooting", "Cosmic Dance", "Timeless Awareness", "Dreamlike Illusion",
+            "Lucid Waking", "Sleep as Yoga", "Twilight Contemplation", "Midnight Vigil",
+            "Dawn Awakening", "Noon Radiance", "Dusk Surrender", "Seasons Within",
+            "Age as Wisdom", "Death Awareness", "Rebirth Visualization", "Ancestor Connection",
+            "Guardian Spirits", "Divine Child", "Inner Mother", "Cosmic Father",
+            "Friend of All", "Teacher Within", "Healer's Touch", "Warrior's Courage",
+            "Sage's Silence", "Lover's Embrace", "Creator's Joy", "Destroyer's Clarity",
+            "Preserver's Patience", "Dancer's Grace", "Beggar's Humility", "King's Sovereignty",
+            "Jester's Laughter", "Fool's Leap", "Seeker's Quest", "Finder's Rest",
+            "Praise to the Void", "Hymn to the Heart", "Mantra of Light", "Seed Syllable",
+            "Whispered Prayer", "Silent Reverence", "Offering of Breath", "Gift of Presence"
+        ];
+
+        const sanskritNames = [
+            "Śvāsa Praśvāsa", "Antar Śvāsa", "Suṣumṇā Śvāsa", "Bhrūmadhya Dhyāna",
+            "Vikalpa Sākṣī", "Anāhata Nāda", "Tamas Dhyāna", "Hṛdaya Ākāśa",
+            "Deha Anubhava", "Manda Śvāsa", "Caraṇa Jāgṛta", "Bhāva Dṛṣṭi",
+            "Mauna Śravaṇa", "Sarvāṅga Bodha", "Caitanya Vistāra", "Merudaṇḍa",
+            "Pūrṇa Viśrāma", "Svapna Antara", "Kṣaṇa Vilamba", "Antarikṣa Spṛś",
+            "Śūnya Sparśa", "Tejas Mūrti", "Nāda Laya", "Gagan Sparśa",
+            "Srota Āsvāda", "Premākāra", "Kaṇḍūti", "Agni Cintana",
+            "Nāḍī Spandana", "Ākāśa Śūnya", "Prakāśa Śūnya", "Bhūta Saṃsparśa",
+            "Prāṇa Vāyu", "Hṛdaya Spandana", "Sahaja Samādhi", "Para Gandha",
+            "Dik Vistāra", "Nābhi Kendra", "Guhā Hṛdaya", "Anāhata Dhvani",
+            "Śakti Uthāna", "Kuṇḍalinī Bodha", "Varṇa Layana", "Candra Antar",
+            "Sūrya Maṇipūra", "Śūnya Dṛṣṭi", "Tamas Para", "Guru Kṛpā",
+            "Ahaṅkāra Tyāga", "Tathatā Samarpaṇa", "Akriyā", "Sahaja Sthiti",
+            "Prakṛti Viśrāma", "Prema Akhaṇḍa", "Karuṇā Dhyāna", "Ānanda Akhaṇḍa",
+            "Samatā", "Kṣamā Sādhana", "Kṛtajñatā Snāna", "Deha Mandira",
+            "Asthi Bodha", "Sīmā Vilaya", "Bhūta Śodhana", "Antar Agnihotra",
+            "Amṛta Dhārā", "Acala Sthiti", "Vāyu Parivartana", "Ākāśa Ananta",
+            "Pṛthvī Mūla", "Brahmāṇḍa Nṛtya", "Kāla Bodha", "Svapna Māyā",
+            "Jāgrat Svapna", "Yoganidrā", "Sandhyā Dhyāna", "Ardha Rātri",
+            "Prātaḥ Bodha", "Madhyāhna Tejas", "Sandhyā Samarpaṇa", "Ṛtu Antar",
+            "Vayasa Prajñā", "Maraṇa Sati", "Punarjanma Dhyāna", "Pitṛ Saṃyoga",
+            "Devatā Rakṣā", "Divya Bāla", "Antar Mātā", "Brahma Pitā",
+            "Sarva Mitra", "Antar Guru", "Hasta Cikitsā", "Vīrya Śaurya",
+            "Muni Mauna", "Premāliṅgana", "Ānanda Sṛṣṭi", "Saṃhāra Śuddhi",
+            "Sthiti Kṣamā", "Nartana Lāvaṇya", "Dīnatā", "Rāja Sattva",
+            "Hāsya Vilāsa", "Ātma Līlā", "Sādhaka Patha", "Lābha Viśrāma",
+            "Śūnya Stuti", "Hṛdaya Stotra", "Jyotir Mantra", "Bīja Akṣara",
+            "Upāṃśu Prārthanā", "Mauna Bhakti", "Prāṇa Arghya", "Sādhana Upasthāna"
+        ];
+
+        const categories = ['breath', 'body', 'heart', 'sound', 'gaze', 'void', 'energy', 'light', 'touch', 'space', 'stillness',
+            'emotion', 'awareness', 'devotion'
+        ];
+        const chakras = ['Root', 'Sacral', 'Solar Plexus', 'Heart', 'Throat', 'Third Eye', 'Crown'];
+        const elements = ['Earth', 'Water', 'Fire', 'Air', 'Ether'];
+
+        for (let i = 1; i <= 112; i++) {
+            const idx = i - 1;
+            const cat = categories[idx % categories.length];
+            const chakra = chakras[i % chakras.length];
+            const element = elements[i % elements.length];
+            const name = techniqueNames[idx % techniqueNames.length];
+            const sanskrit = sanskritNames[idx % sanskritNames.length];
+            TECHNIQUES[i] = {
+                id: i,
+                name,
+                sanskrit,
+                category: cat,
+                chakra,
+                element,
+                essence: `The Vigyan Bhairav Tantra reveals: “${name} is a direct portal to the formless. When you rest in this awareness, the universe meditates through you.”`,
+                steps: `1. Find a quiet, comfortable seat. 2. Close your eyes gently. 3. Bring your attention to ${cat === 'breath' ? 'the natural flow of breath' : 'the present moment'}. 4. Allow thoughts to arise and dissolve without engagement. 5. Continue for 10-20 minutes.`,
+                wisdom: `Shiva whispers: “Radiant one, this experience may dawn between two breaths.”`,
+                posture: "Sukhasana or Vajrasana",
+                mudra: "Chin Mudra or Jnana Mudra",
+                breath: "Natural, effortless",
+                duration: "15-20 minutes",
+                benefits: { student: "Enhanced focus", employee: "Stress relief", seeker: "Deeper awareness" }
+            };
+        }
+
+        // Enhance first few with authentic details
+        TECHNIQUES[1] = { ...TECHNIQUES[1],
+            essence: "Shiva: 'Between two breaths, the beneficence. Watch the breath coming in and going out. Don't control, just witness.'",
+            steps: "1. Sit comfortably. 2. Close your eyes. 3. Observe the breath at the nostrils. 4. Don't follow it inside. 5. If awareness drifts, gently return." };
+        TECHNIQUES[4] = { ...TECHNIQUES[4],
+            essence: "Fix your attention at the third eye. Let the mind dissolve into that light. This is the gateway to the infinite.",
+            steps: "1. Sit with a straight spine. 2. Close your eyes. 3. Gently gaze upward to the space between eyebrows. 4. Feel subtle pressure or light. 5. Rest in that awareness." };
+
+        // ============================================================
+        // 2. PROFESSIONS / ARCHETYPES
+        // ============================================================
+        const professions = [
+            { name: "Student", icon: "fa-graduation-cap", desc: "Focus & Memory", keywords: ["focus", "memory",
+                    "concentration"
+                ] },
+            { name: "Employee", icon: "fa-briefcase", desc: "Stress & Work-life", keywords: ["stress", "work",
+                    "balance"
+                ] },
+            { name: "Seeker", icon: "fa-infinity", desc: "Spiritual Path", keywords: ["spiritual", "awakening",
+                    "awareness"
+                ] },
+            { name: "Anxious", icon: "fa-heartbeat", desc: "Calm Anxiety", keywords: ["anxiety", "calm", "peace"] },
+            { name: "Artist", icon: "fa-paint-brush", desc: "Flow State", keywords: ["creativity", "flow"] },
+            { name: "Leader", icon: "fa-crown", desc: "Clarity & Presence", keywords: ["leadership", "clarity",
+                    "presence"
+                ] },
+            { name: "Healer", icon: "fa-hand-holding-heart", desc: "Compassion", keywords: ["compassion", "healing",
+                    "care"
+                ] }
+        ];
+
+        function getRecommendedTechniques(prof) {
+            const scored = Object.values(TECHNIQUES).map(t => {
+                let score = prof.keywords.reduce((s, k) => s + (t.name.toLowerCase().includes(k) ? 5 : 0) + (t
+                    .category.includes(k) ? 3 : 0), 0);
+                return { tech: t, score };
+            });
+            scored.sort((a, b) => b.score - a.score);
+            return scored.slice(0, 12).map(s => s.tech);
+        }
+
+        // ============================================================
+        // 3. USER STATE & PERSISTENCE
+        // ============================================================
+        let user = {
+            totalPractices: parseInt(localStorage.getItem('tp')) || 0,
+            totalMinutes: parseInt(localStorage.getItem('tm')) || 0,
+            streak: parseInt(localStorage.getItem('streak')) || 0,
+            lastDate: localStorage.getItem('lastDate') || null,
+            favorites: JSON.parse(localStorage.getItem('favs')) || [],
+            diary: JSON.parse(localStorage.getItem('diary')) || [],
+            plan: JSON.parse(localStorage.getItem('plan')) || [],
+            practiceDays: JSON.parse(localStorage.getItem('practiceDays')) || {},
+            practicedTechniques: JSON.parse(localStorage.getItem('practicedTechs')) || [],
+            savedQuotes: JSON.parse(localStorage.getItem('savedQuotes')) || [],
+            achievements: JSON.parse(localStorage.getItem('achievements')) || {},
+            moodHistory: JSON.parse(localStorage.getItem('moodHistory')) || []
+        };
+
+        function saveAll() {
+            localStorage.setItem('tp', user.totalPractices);
+            localStorage.setItem('tm', user.totalMinutes);
+            localStorage.setItem('streak', user.streak);
+            localStorage.setItem('lastDate', user.lastDate);
+            localStorage.setItem('favs', JSON.stringify(user.favorites));
+            localStorage.setItem('diary', JSON.stringify(user.diary));
+            localStorage.setItem('plan', JSON.stringify(user.plan));
+            localStorage.setItem('practiceDays', JSON.stringify(user.practiceDays));
+            localStorage.setItem('practicedTechs', JSON.stringify(user.practicedTechniques));
+            localStorage.setItem('savedQuotes', JSON.stringify(user.savedQuotes));
+            localStorage.setItem('achievements', JSON.stringify(user.achievements));
+            localStorage.setItem('moodHistory', JSON.stringify(user.moodHistory));
+            updateUI();
+            checkAchievements();
+            updateLevel();
+        }
+
+        function getToday() {
+            return new Date().toISOString().slice(0, 10);
+        }
+
+        function getYesterday() {
+            const d = new Date();
+            d.setDate(d.getDate() - 1);
+            return d.toISOString().slice(0, 10);
+        }
+
+        function addPractice(techId, techName, minutes = 15) {
+            user.practicedTechniques.unshift({ id: techId, name: techName, date: new Date().toISOString(), minutes });
+            user.totalPractices++;
+            user.totalMinutes += minutes;
+
+            const today = getToday();
+            const yesterday = getYesterday();
+
+            if (!user.practiceDays[today]) {
+                user.practiceDays[today] = true;
+                if (user.lastDate === yesterday) {
+                    user.streak++;
+                } else if (user.lastDate !== today) {
+                    user.streak = 1;
+                }
+                user.lastDate = today;
+            }
+
+            saveAll();
+            showToast(`🧘 Practiced: ${techName} · +${minutes} min`, 'success');
+        }
+
+        function updateLevel() {
+            const mins = user.totalMinutes;
+            let level = "Novice";
+            if (mins >= 5000) level = "Mahasiddha 🕉️";
+            else if (mins >= 2500) level = "Enlightened 🌟";
+            else if (mins >= 1000) level = "Adept 🔮";
+            else if (mins >= 300) level = "Seeker 🌱";
+            else level = "Novice 🌿";
+
+            document.getElementById('userLevelBadge').textContent = level;
+            document.getElementById('enhLevel').textContent = level;
+
+            const progress = Math.min(100, (mins % 1000) / 10);
+            document.getElementById('levelProgress').value = progress;
+        }
+
+        // ============================================================
+        // 4. QUOTES LIBRARY
+        // ============================================================
+        const QUOTE_LIBRARY = [
+            { text: "The pause between two breaths is the doorway to the infinite.", author: "Shiva" },
+            { text: "You are the timeless sky, thoughts are just clouds passing by.", author: "Rumi" },
+            { text: "Realize that you are already free.", author: "Ramana Maharshi" },
+            { text: "Stillness is the language of God.", author: "Osho" },
+            { text: "When you become aware of silence, you become aware of yourself.", author: "Eckhart Tolle" },
+            { text: "The only way to live is by accepting each minute as an unrepeatable miracle.", author: "Tara Brach" },
+            { text: "Let go of the battle. Breathe quietly and let it be.", author: "Buddha" },
+            { text: "Be content with what you have; rejoice in the way things are.", author: "Lao Tzu" },
+            { text: "The mind is everything. What you think you become.", author: "Buddha" },
+            { text: "Peace comes from within. Do not seek it without.", author: "Buddha" },
+            { text: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
+            { text: "Knowing yourself is the beginning of all wisdom.", author: "Aristotle" },
+            { text: "He who has a why can bear almost any how.", author: "Nietzsche" },
+            { text: "The kingdom of God is within you.", author: "Jesus" },
+            { text: "Yoga is the cessation of the mind's fluctuations.", author: "Patanjali" },
+            { text: "Arise, awake, stop not till the goal is reached.", author: "Swami Vivekananda" },
+            { text: "Truth is a pathless land.", author: "Krishnamurti" },
+            { text: "Don't worry, be happy.", author: "Meher Baba" },
+            { text: "The quieter you become, the more you can hear.", author: "Ram Dass" },
+            { text: "Be here now.", author: "Ram Dass" },
+            { text: "You are not a drop in the ocean. You are the entire ocean in a drop.", author: "Rumi" },
+            { text: "The wound is the place where the Light enters you.", author: "Rumi" }
+        ];
+
+        let currentQuotes = [...QUOTE_LIBRARY];
+        let libQuoteIndex = 0;
+        let homeQuoteIndex = 0;
+
+        function updateHomeQuote() {
+            const q = QUOTE_LIBRARY[homeQuoteIndex % QUOTE_LIBRARY.length];
+            document.getElementById('homeQuoteText').textContent = `“${q.text}”`;
+            document.getElementById('homeQuoteAuthor').textContent = `— ${q.author}`;
+        }
+
+        function updateLibQuote() {
+            if (currentQuotes.length === 0) {
+                document.getElementById('quoteTextLarge').textContent = "No quotes found";
+                document.getElementById('quoteAuthorLarge').textContent = "";
+                return;
+            }
+            const q = currentQuotes[libQuoteIndex % currentQuotes.length];
+            document.getElementById('quoteTextLarge').textContent = `“${q.text}”`;
+            document.getElementById('quoteAuthorLarge').textContent = `— ${q.author}`;
+        }
+
+        function saveQuoteToDiary(text, author) {
+            user.savedQuotes.push({ text, author, date: new Date().toISOString() });
+            user.diary.unshift({ date: new Date(), text: `📖 Saved Quote: "${text}" — ${author}` });
+            saveAll();
+            showToast('📖 Quote saved to diary', 'success');
+        }
+
+        // ============================================================
+        // 5. ACHIEVEMENTS
+        // ============================================================
+        const ACHIEVEMENT_DEFS = [
+            { id: 'first', name: 'First Step', desc: 'Complete your first practice', target: 1, get: () => user
+                    .totalPractices },
+            { id: 'streak3', name: '3-Day Presence', desc: '3 days streak', target: 3, get: () => user.streak },
+            { id: 'streak7', name: 'Week of Light', desc: '7 days streak', target: 7, get: () => user.streak },
+            { id: 'streak30', name: 'One Month', desc: '30 days streak', target: 30, get: () => user.streak },
+            { id: 'minutes100', name: '100 Minutes', desc: '100 total minutes', target: 100, get: () => user
+                    .totalMinutes },
+            { id: 'minutes500', name: '500 Minutes', desc: '500 total minutes', target: 500, get: () => user
+                    .totalMinutes },
+            { id: 'diary5', name: 'Reflective Soul', desc: '5 diary entries', target: 5, get: () => user.diary.length },
+            { id: 'diary20', name: 'Wisdom Keeper', desc: '20 diary entries', target: 20, get: () => user.diary.length },
+            { id: 'techniques20', name: 'Explorer', desc: '20 different techniques', target: 20, get: () => new Set(user
+                    .practicedTechniques.map(p => p.id)).size }
+        ];
+
+        function checkAchievements() {
+            let unlocked = 0;
+            ACHIEVEMENT_DEFS.forEach(def => {
+                if (user.achievements[def.id]) return;
+                const current = def.get();
+                if (current >= def.target) {
+                    user.achievements[def.id] = { unlockedAt: new Date().toISOString() };
+                    unlocked++;
+                    showToast(`🏆 Achievement: ${def.name}`, 'success');
                 }
             });
-            container.appendChild(dayDiv);
+            if (unlocked > 0) saveAll();
         }
-    }
-    function renderAchievements() {
-        const container = document.getElementById('achievementsList');
-        if (!container) return;
-        const achievements = [
-            { id: 'first', name: 'First Step', target: 1, current: user.totalPractices },
-            { id: 'streak7', name: 'Week of Light', target: 7, current: user.streak },
-            { id: 'minutes1000', name: 'Time Lord', target: 1000, current: user.totalMinutes },
-            { id: 'wisdom10', name: 'Wisdom Keeper', target: 10, current: user.savedQuotes.length }
-        ];
-        container.innerHTML = achievements.map(ach => {
-            const unlocked = user.achievements[ach.id];
-            const progress = Math.min(100, (ach.current / ach.target) * 100);
-            return `<div class="achievement-item"><i class="fas ${unlocked ? 'fa-trophy' : 'fa-lock'}"></i> ${ach.name} (${ach.current}/${ach.target})<div class="achievement-bar"><div class="achievement-progress" style="width: ${progress}%;"></div></div></div>`;
-        }).join('');
-    }
-    function checkAchievements() {
-        const checks = [
-            { id: 'first', cond: () => user.totalPractices >= 1 },
-            { id: 'streak7', cond: () => user.streak >= 7 },
-            { id: 'minutes1000', cond: () => user.totalMinutes >= 1000 },
-            { id: 'wisdom10', cond: () => user.savedQuotes.length >= 10 }
-        ];
-        checks.forEach(ach => {
-            if (!user.achievements[ach.id] && ach.cond()) {
-                user.achievements[ach.id] = true;
-                showToast(`🏆 Achievement: ${ach.id.replace(/([A-Z])/g, ' $1')}`);
-                saveAll();
+
+        function renderAchievements() {
+            const container = document.getElementById('achievementsList');
+            if (!container) return;
+
+            container.innerHTML = ACHIEVEMENT_DEFS.map(def => {
+                const unlocked = !!user.achievements[def.id];
+                const current = def.get();
+                const progress = Math.min(100, (current / def.target) * 100);
+                return `
+                    <div class="achievement-item">
+                        <div class="ach-header">
+                            <span class="ach-name"><i class="fas ${unlocked ? 'fa-trophy' : 'fa-lock'}"></i> ${def.name}</span>
+                            <span class="ach-progress-text">${current}/${def.target}</span>
+                        </div>
+                        <div class="achievement-bar"><div class="achievement-progress" style="width:${progress}%;"></div></div>
+                        <div style="font-size:0.7rem;color:var(--text-secondary);opacity:0.6;margin-top:0.2rem;">${def.desc}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============================================================
+        // 6. BREATHWORK ENGINE
+        // ============================================================
+        let breathActive = false;
+        let breathInterval = null;
+
+        const BREATH_PROTOCOLS = {
+            box: { name: 'Box 4-4-6-4', phases: ['inhale', 'hold', 'exhale', 'hold'], timings: [4, 4, 6, 4] },
+            '478': { name: '4-7-8 Relax', phases: ['inhale', 'hold', 'exhale'], timings: [4, 7, 8] },
+            nadi: { name: 'Nadi Shodhana', phases: ['inhale left', 'hold', 'exhale right', 'inhale right', 'hold',
+                    'exhale left'
+                ], timings: [4, 4, 4, 4, 4, 4] },
+            ujjayi: { name: 'Ujjayi Ocean', phases: ['ujjayi inhale', 'ujjayi exhale'], timings: [5, 5] },
+            kapal: { name: 'Kapalabhati', phases: ['rapid exhale', 'rest'], timings: [20, 10] },
+            bhramari: { name: 'Bhramari Hum', phases: ['inhale', 'exhale with hum'], timings: [4, 6] },
+            coherent: { name: 'Coherent 5.5', phases: ['inhale', 'exhale'], timings: [5.5, 5.5] },
+            sitali: { name: 'Sitali Cool', phases: ['inhale through curled tongue', 'exhale'], timings: [4, 6] }
+        };
+
+        function startBreathPractice(type) {
+            if (breathInterval) clearInterval(breathInterval);
+            breathActive = true;
+            document.getElementById('stopBreathBtn').style.display = 'inline-block';
+
+            const protocol = BREATH_PROTOCOLS[type];
+            if (!protocol) return;
+
+            const { phases, timings } = protocol;
+            let phaseIdx = 0;
+            let cycle = 0;
+            const maxCycles = 6;
+
+            document.getElementById('breathInstructionPanel').innerHTML =
+                `<strong>🧘 ${protocol.name}</strong><br>Follow the guided rhythm. Focus on your breath.`;
+
+            function runPhase() {
+                if (!breathActive) return;
+                if (phaseIdx >= phases.length) {
+                    phaseIdx = 0;
+                    cycle++;
+                    if (cycle >= maxCycles) {
+                        resetBreathUI();
+                        addPractice(0, `${protocol.name} Breathwork`, 3);
+                        showToast('🌬️ Breath session complete', 'success');
+                        return;
+                    }
+                }
+
+                const timer = timings[phaseIdx];
+                const phase = phases[phaseIdx];
+                let remaining = timer;
+
+                document.getElementById('breathPhaseLabel').textContent = phase.includes('inhale') ? '🌬️' : (phase
+                    .includes('hold') ? '🌀' : '💨');
+                document.getElementById('breathPhaseText').textContent = phase.toUpperCase();
+
+                const interval = setInterval(() => {
+                    if (!breathActive) { clearInterval(interval); return; }
+                    remaining = Math.round(remaining - 0.1);
+                    if (remaining < 0) remaining = 0;
+                    document.getElementById('breathTimerDisplay').textContent = Math.ceil(remaining);
+
+                    const progress = ((timer - remaining) / timer) * 860;
+                    const ring = document.querySelector('.progress-circle');
+                    if (ring) ring.style.strokeDashoffset = 860 - Math.min(860, progress);
+
+                    if (remaining <= 0) {
+                        clearInterval(interval);
+                        phaseIdx++;
+                        runPhase();
+                    }
+                }, 100);
+
+                breathInterval = interval;
             }
-        });
-    }
-    function updateCharts() {
-        const ctx = document.getElementById('progressChart')?.getContext('2d');
-        if (ctx) {
-            const week = [0,0,0,0,0,0,0];
-            user.practicedTechniques.forEach(p => { const d = new Date(p.date).getDay(); week[d] += p.minutes; });
-            if (window.progChart) window.progChart.destroy();
-            window.progChart = new Chart(ctx, { type: 'line', data: { labels: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], datasets: [{ label: 'Minutes', data: week, borderColor: '#b37bff', tension: 0.3, fill: true }] } });
+
+            runPhase();
         }
-        const catCtx = document.getElementById('categoryChart')?.getContext('2d');
-        if (catCtx) {
+
+        function resetBreathUI() {
+            if (breathInterval) clearInterval(breathInterval);
+            breathActive = false;
+            document.getElementById('stopBreathBtn').style.display = 'none';
+            document.getElementById('breathPhaseLabel').textContent = '🌀';
+            document.getElementById('breathPhaseText').textContent = 'Ready';
+            document.getElementById('breathTimerDisplay').textContent = '0';
+            document.querySelector('.progress-circle').style.strokeDashoffset = 860;
+            document.getElementById('breathInstructionPanel').innerHTML =
+                '✨ Select a breath technique to begin your pranic journey.';
+        }
+
+        // ============================================================
+        // 7. TIMER ENGINE
+        // ============================================================
+        let timerSec = 300;
+        let timerInt = null;
+        let timerRunning = false;
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSec / 60);
+            const secs = timerSec % 60;
+            document.getElementById('timerDisplay').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+            const progress = 1 - (timerSec / 300);
+            const offset = 597 - (progress * 597);
+            const ring = document.querySelector('.timer-progress');
+            if (ring) ring.style.strokeDashoffset = Math.max(0, Math.min(597, offset));
+        }
+
+        function playBell() {
+            try {
+                const audio = new Audio(
+                'https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3');
+                audio.volume = 0.3;
+                audio.play().catch(() => {});
+            } catch (e) {}
+        }
+
+        // ============================================================
+        // 8. UI UPDATE FUNCTIONS
+        // ============================================================
+        function updateUI() {
+            // Stats
+            document.getElementById('enhTotalPractices').textContent = user.totalPractices;
+            document.getElementById('enhTotalMinutes').textContent = user.totalMinutes;
+            document.getElementById('enhStreak').textContent = user.streak;
+            document.getElementById('streakDisplay').textContent = user.streak;
+            document.getElementById('totalPracticesDisplay').textContent = user.totalPractices;
+            document.getElementById('totalMinutesDisplay').textContent = user.totalMinutes;
+
+            // Update level
+            updateLevel();
+
+            // Diary
+            renderDiary();
+
+            // Calendar
+            renderCalendar();
+
+            // Achievements
+            renderAchievements();
+
+            // Charts
+            updateCharts();
+
+            // Cosmic Weather
+            const vib = Math.floor(60 + Math.random() * 35);
+            document.getElementById('vibrationLevel').textContent = vib + '%';
+        }
+
+        function renderDiary() {
+            const container = document.getElementById('diaryList');
+            if (!container) return;
+
+            if (user.diary.length === 0) {
+                container.innerHTML = '<div style="color:var(--text-secondary);opacity:0.5;text-align:center;padding:1rem 0;">No entries yet. Begin your journey.</div>';
+                return;
+            }
+
+            container.innerHTML = user.diary.slice().reverse().slice(0, 30).map(entry => `
+                <div class="diary-entry-item">
+                    <div class="entry-header">
+                        <span>${new Date(entry.date).toLocaleDateString()} ${new Date(entry.date).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
+                        <button class="entry-delete" data-id="${entry.id || Math.random().toString(36)}" aria-label="Delete entry"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                    <div class="entry-text">${entry.text}</div>
+                </div>
+            `).join('');
+
+            // Delete handlers
+            container.querySelectorAll('.entry-delete').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    const idx = user.diary.findIndex(e => (e.id || e._id) === id);
+                    if (idx !== -1) {
+                        user.diary.splice(idx, 1);
+                        saveAll();
+                        renderDiary();
+                        showToast('Entry deleted', 'warning');
+                    }
+                });
+            });
+        }
+
+        function renderCalendar() {
+            const container = document.getElementById('calendarTracker');
+            if (!container) return;
+
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const todayStr = getToday();
+
+            let html = '';
+            ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].forEach(d => {
+                html += `<div class="calendar-day weekday">${d}</div>`;
+            });
+
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="calendar-day"></div>`;
+            }
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const practiced = !!user.practiceDays[dateStr];
+                const isToday = dateStr === todayStr;
+                html += `<div class="calendar-day ${practiced ? 'practiced' : ''} ${isToday ? 'today' : ''}">${d}</div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        let progressChartInstance = null;
+        let categoryChartInstance = null;
+
+        function updateCharts() {
+            // Weekly progress
+            const weekData = [0, 0, 0, 0, 0, 0, 0];
+            user.practicedTechniques.forEach(p => {
+                const d = new Date(p.date);
+                const day = d.getDay();
+                weekData[day] += p.minutes || 15;
+            });
+
+            const ctx1 = document.getElementById('progressChart');
+            if (ctx1) {
+                if (progressChartInstance) progressChartInstance.destroy();
+                progressChartInstance = new Chart(ctx1, {
+                    type: 'line',
+                    data: {
+                        labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        datasets: [{
+                            label: 'Minutes',
+                            data: weekData,
+                            borderColor: '#9d7bff',
+                            backgroundColor: 'rgba(157,123,255,0.08)',
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: '#9d7bff',
+                            pointRadius: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: 'var(--text-secondary)' }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: 'var(--text-secondary)' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Category breakdown
             const catCount = {};
-            user.practicedTechniques.forEach(p => { const t = TECHNIQUES[p.id]; if (t) catCount[t.category] = (catCount[t.category] || 0) + 1; });
-            if (window.catChart) window.catChart.destroy();
-            window.catChart = new Chart(catCtx, { type: 'doughnut', data: { labels: Object.keys(catCount), datasets: [{ data: Object.values(catCount), backgroundColor: ['#9d7bff','#ffb3a0','#6b4eff','#ffaa88','#c4b5fd'] }] } });
+            user.practicedTechniques.forEach(p => {
+                const t = TECHNIQUES[p.id];
+                if (t) {
+                    const cat = t.category || 'other';
+                    catCount[cat] = (catCount[cat] || 0) + 1;
+                }
+            });
+
+            const ctx2 = document.getElementById('categoryChart');
+            if (ctx2) {
+                if (categoryChartInstance) categoryChartInstance.destroy();
+                const colors = ['#9d7bff', '#ffb3a0', '#6b4eff', '#ff8a6c', '#c4b5fd', '#ffd58c', '#7ae0b0'];
+                const labels = Object.keys(catCount);
+                const data = Object.values(catCount);
+                categoryChartInstance = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: colors.slice(0, labels.length),
+                            borderColor: 'rgba(0,0,0,0.3)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: 'var(--text-secondary)', padding: 12, font: { size: 10 } }
+                            }
+                        }
+                    }
+                });
+            }
         }
-    }
-    function updateUI() {
-        document.getElementById('enhTotalPractices').innerText = user.totalPractices;
-        document.getElementById('enhTotalMinutes').innerText = user.totalMinutes;
-        document.getElementById('enhStreak').innerText = user.streak;
-        renderPlan();
-        renderDiary();
-        renderCalendar();
-        renderAchievements();
-        updateCharts();
-    }
 
-    // Navigation
-    const views = { home:'homeView', techniques:'techniquesView', breathwork:'breathworkView', quotes:'quotesView', diary:'diaryView', timer:'timerView', plan:'planView', enhanced:'enhancedView', achievements:'achievementsView' };
-    function showView(name) {
-        Object.values(views).forEach(id => document.getElementById(id).classList.add('hidden'));
-        document.getElementById(views[name]).classList.remove('hidden');
-        document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
-        const activeNav = document.querySelector(`.nav a[data-view="${name}"]`);
-        if (activeNav) activeNav.classList.add('active');
-        if (name === 'enhanced') { renderCalendar(); updateCharts(); }
-    }
-    document.querySelectorAll('[data-view]').forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); showView(el.dataset.view); }));
-    document.getElementById('exploreBtn')?.addEventListener('click', () => showView('techniques'));
-    document.getElementById('dailyBtn')?.addEventListener('click', () => { const rand = Math.floor(Math.random() * 112) + 1; showToast(`Today's technique: ${TECHNIQUES[rand].name}`); });
-    document.getElementById('saveDiary')?.addEventListener('click', () => {
-        const txt = document.getElementById('diaryEntry').value.trim();
-        if (txt) { user.diary.unshift({ date: new Date(), text: txt }); saveAll(); document.getElementById('diaryEntry').value = ''; showToast('Diary saved'); }
-    });
-    document.getElementById('exportDiaryPDFBtn')?.addEventListener('click', async () => {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.text("Cosmic Diary", 20, 20);
-        let y = 30;
-        user.diary.slice(0, 30).forEach(e => { doc.text(`${new Date(e.date).toLocaleString()}: ${e.text.substring(0, 100)}`, 20, y); y += 10; if (y > 280) { doc.addPage(); y = 20; } });
-        doc.save(`diary_${new Date().toISOString().slice(0,10)}.pdf`);
-    });
-    document.getElementById('exportDataBtn')?.addEventListener('click', () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(user)], {type:'application/json'})); a.download = `tantra_backup.json`; a.click(); });
-    document.getElementById('importDataBtn')?.addEventListener('click', () => document.getElementById('importFileInput').click());
-    document.getElementById('importFileInput')?.addEventListener('change', e => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = ev => { const data = JSON.parse(ev.target.result); Object.assign(user, data); saveAll(); showToast("Data imported"); };
-        reader.readAsText(file);
-    });
-    document.getElementById('clearPlanBtn')?.addEventListener('click', () => { user.plan = []; saveAll(); renderPlan(); });
-    document.getElementById('prevMudraBtn')?.addEventListener('click', () => { currentMudra = (currentMudra - 1 + mudras.length) % mudras.length; renderMudra(); });
-    document.getElementById('nextMudraBtn')?.addEventListener('click', () => { currentMudra = (currentMudra + 1) % mudras.length; renderMudra(); });
-    document.getElementById('saveMudraBtn')?.addEventListener('click', () => { user.savedQuotes.push({ text: `Mudra: ${mudras[currentMudra].name}`, author: "Tantra" }); saveAll(); showToast("Mudra saved"); });
-    document.getElementById('prevLibQuote')?.addEventListener('click', () => { libQuoteIndex = (libQuoteIndex - 1 + currentQuotes.length) % currentQuotes.length; updateLibQuote(); });
-    document.getElementById('nextLibQuote')?.addEventListener('click', () => { libQuoteIndex = (libQuoteIndex + 1) % currentQuotes.length; updateLibQuote(); });
-    document.getElementById('saveLibQuoteBtn')?.addEventListener('click', () => { const q = currentQuotes[libQuoteIndex]; user.savedQuotes.push(q); saveAll(); showToast("Quote saved"); });
-    document.getElementById('quoteSearchInputSimple')?.addEventListener('input', function() {
-        const term = this.value.toLowerCase();
-        currentQuotes = quoteLibrary.filter(q => q.text.toLowerCase().includes(term) || q.author.toLowerCase().includes(term));
-        libQuoteIndex = 0;
-        if (currentQuotes.length) updateLibQuote(); else document.getElementById('quoteTextLarge').innerHTML = "No quotes found";
-    });
-    document.querySelectorAll('.mood-btn').forEach(btn => btn.addEventListener('click', () => {
-        const mood = btn.dataset.mood;
-        user.moodHistory.push({ mood, date: new Date().toISOString() });
-        saveAll();
-        let rec = TECHNIQUES[ Math.floor(Math.random() * 112) + 1 ];
-        document.getElementById('moodRecommend').innerHTML = `🌀 Recommended: ${rec.name} (${rec.chakra} chakra) – try this today.`;
-    }));
-    document.getElementById('themeToggle')?.addEventListener('click', () => {
-        const html = document.documentElement;
-        const cur = html.getAttribute('data-theme');
-        html.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
-    });
-    document.getElementById('stopBreathBtn')?.addEventListener('click', resetBreathUI);
-    document.querySelectorAll('.start-breath').forEach(btn => btn.addEventListener('click', (e) => { const type = btn.dataset.type; startBreathPractice(type); }));
+        // ============================================================
+        // 9. TOAST SYSTEM
+        // ============================================================
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
 
-    // All Techniques View
-    document.getElementById('showAllTechBtn')?.addEventListener('click', () => {
-        const container = document.getElementById('allTechniquesGrid');
-        container.innerHTML = '';
-        Object.values(TECHNIQUES).forEach(t => {
-            const card = document.createElement('div'); card.className = 'glass-card';
-            card.innerHTML = `<strong>${t.name}</strong><br>${t.sanskrit}<br><span style="font-size:0.8rem;">${t.chakra} · ${t.element}</span><br><button class="practice-tech" data-id="${t.id}">Practice</button>`;
-            card.querySelector('.practice-tech').addEventListener('click', () => addPractice(t.id, t.name, 15));
-            container.appendChild(card);
-        });
-        document.getElementById('professionSelectionView').classList.add('hidden');
-        document.getElementById('recommendedTechniquesView').classList.add('hidden');
-        document.getElementById('allTechniquesView').classList.remove('hidden');
-    });
-    document.getElementById('showArchetypeBtn')?.addEventListener('click', () => {
-        document.getElementById('professionSelectionView').classList.remove('hidden');
-        document.getElementById('allTechniquesView').classList.add('hidden');
-        document.getElementById('recommendedTechniquesView').classList.add('hidden');
-    });
-    const profGrid = document.getElementById('professionGrid');
-    if (profGrid) profGrid.innerHTML = professions.map(p => `<div class="prof-card" data-prof='${JSON.stringify(p)}'><i class="fas ${p.icon}"></i><span>${p.name}</span><div class="prof-desc">${p.desc}</div></div>`).join('');
-    let currentTechList = [], currentTechIdx = 0;
-    document.querySelectorAll('.prof-card').forEach(el => el.addEventListener('click', () => {
-        const prof = JSON.parse(el.dataset.prof);
-        currentTechList = getRecommendedTechniques(prof);
-        currentTechIdx = 0;
-        function renderCarousel() {
-            const t = currentTechList[currentTechIdx];
-            const container = document.getElementById('techCarouselContent');
-            container.innerHTML = `<div class="glass-card"><h3>${t.name}</h3><p><strong>${t.sanskrit}</strong></p><p>${t.essence}</p><p><strong>Chakra:</strong> ${t.chakra} · ${t.element}</p><p><strong>Steps:</strong> ${t.steps}</p></div>`;
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                if (toast.parentNode) toast.remove();
+            }, 2800);
         }
-        renderCarousel();
-        document.getElementById('professionSelectionView').classList.add('hidden');
-        document.getElementById('recommendedTechniquesView').classList.remove('hidden');
-        document.getElementById('allTechniquesView').classList.add('hidden');
-        document.getElementById('prevTechBtn').onclick = () => { currentTechIdx = (currentTechIdx - 1 + currentTechList.length) % currentTechList.length; renderCarousel(); };
-        document.getElementById('nextTechBtn').onclick = () => { currentTechIdx = (currentTechIdx + 1) % currentTechList.length; renderCarousel(); };
-        document.getElementById('practiceTechBtn').onclick = () => addPractice(currentTechList[currentTechIdx].id, currentTechList[currentTechIdx].name, 15);
-        document.getElementById('readFullChapterBtn').onclick = () => alert(`Full Chapter: ${currentTechList[currentTechIdx].name}\n\n${currentTechList[currentTechIdx].steps}\n\n${currentTechList[currentTechIdx].wisdom}`);
-    }));
-    document.getElementById('backToProfessionsBtn')?.addEventListener('click', () => {
-        document.getElementById('professionSelectionView').classList.remove('hidden');
-        document.getElementById('recommendedTechniquesView').classList.add('hidden');
-    });
-    document.getElementById('techSearchInput')?.addEventListener('input', function() {
-        const term = this.value.toLowerCase();
-        const cards = document.querySelectorAll('#allTechniquesGrid .glass-card');
-        cards.forEach(card => {
-            const name = card.innerText.toLowerCase();
-            card.style.display = name.includes(term) ? '' : 'none';
-        });
-    });
-    document.getElementById('exportTechniquesPDFBtn')?.addEventListener('click', async () => {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.text("112 Techniques of Vigyan Bhairav Tantra", 20, 20);
-        let y = 30;
-        Object.values(TECHNIQUES).slice(0, 112).forEach(t => {
-            doc.text(`${t.id}. ${t.name} (${t.sanskrit})`, 20, y);
-            y += 7;
-            if (y > 280) { doc.addPage(); y = 20; }
-        });
-        doc.save("techniques_112.pdf");
-    });
 
-    // Initialization
-    renderMudra();
-    updateLibQuote();
-    updateUI();
-    showView('home');
-    setInterval(() => {
-        document.getElementById('totdWonder').innerHTML = `🌀 Technique of the Day: ${TECHNIQUES[Math.floor(Math.random() * 112) + 1].name}`;
-        document.getElementById('cosmicWeather').innerHTML = `🌌 Cosmic vibration: ${Math.floor(Math.random() * 100)}% coherence`;
-    }, 20000);
-</script>
+        // ============================================================
+        // 10. NAVIGATION
+        // ============================================================
+        const viewMap = {
+            home: 'homeView',
+            techniques: 'techniquesView',
+            breathwork: 'breathworkView',
+            quotes: 'quotesView',
+            diary: 'diaryView',
+            timer: 'timerView',
+            enhanced: 'enhancedView'
+        };
+
+        function showView(name) {
+            // Hide all views
+            Object.values(viewMap).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('active-view');
+            });
+
+            // Show target
+            const target = document.getElementById(viewMap[name]);
+            if (target) target.classList.add('active-view');
+
+            // Update nav
+            document.querySelectorAll('.nav a[data-view]').forEach(a => {
+                a.classList.toggle('active', a.dataset.view === name);
+            });
+
+            // Refresh content if needed
+            if (name === 'enhanced') {
+                renderCalendar();
+                updateCharts();
+                renderAchievements();
+            }
+            if (name === 'diary') renderDiary();
+            if (name === 'home') {
+                updateHomeQuote();
+                updateUI();
+            }
+        }
+
+        // ============================================================
+        // 11. DOM READY & EVENT BINDING
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Navigation ---
+            document.querySelectorAll('.nav a[data-view]').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showView(el.dataset.view);
+                });
+            });
+
+            document.querySelectorAll('footer a[data-view]').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showView(el.dataset.view);
+                });
+            });
+
+            // --- Theme Toggle ---
+            const themeToggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            html.setAttribute('data-theme', savedTheme);
+            themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+
+            themeToggle.addEventListener('click', () => {
+                const current = html.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+                themeToggle.innerHTML = next === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            });
+
+            // --- Home: Explore & Daily ---
+            document.getElementById('exploreBtn').addEventListener('click', () => showView('techniques'));
+            document.getElementById('dailyBtn').addEventListener('click', () => {
+                const rand = Math.floor(Math.random() * 112) + 1;
+                const t = TECHNIQUES[rand];
+                showToast(`Today's technique: ${t.name} · ${t.chakra} chakra`, 'info');
+            });
+
+            // --- Home: Next Quote ---
+            document.getElementById('nextHomeQuote').addEventListener('click', () => {
+                homeQuoteIndex = (homeQuoteIndex + 1) % QUOTE_LIBRARY.length;
+                updateHomeQuote();
+            });
+
+            document.getElementById('saveHomeQuoteBtn').addEventListener('click', () => {
+                const q = QUOTE_LIBRARY[homeQuoteIndex % QUOTE_LIBRARY.length];
+                saveQuoteToDiary(q.text, q.author);
+            });
+
+            // --- Mood Buttons ---
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const mood = this.dataset.mood;
+
+                    // Store mood
+                    user.moodHistory.push({ mood, date: new Date().toISOString() });
+                    saveAll();
+
+                    // Recommend a technique
+                    let recId;
+                    if (mood === 'serene' || mood === 'curious') recId = Math.floor(Math.random() * 20) + 1;
+                    else if (mood === 'anxious') recId = [1, 3, 8, 20][Math.floor(Math.random() * 4)];
+                    else if (mood === 'focused') recId = [4, 5, 10, 15][Math.floor(Math.random() * 4)];
+                    else recId = Math.floor(Math.random() * 40) + 1;
+
+                    const rec = TECHNIQUES[recId] || TECHNIQUES[1];
+                    document.getElementById('moodRecommend').innerHTML =
+                        `🌀 Based on your mood, we recommend: <strong>${rec.name}</strong> (${rec.chakra} chakra) — ${rec.essence.substring(0, 80)}...`;
+                });
+            });
+
+            // --- Quotes Library ---
+            document.getElementById('prevLibQuote').addEventListener('click', () => {
+                if (currentQuotes.length) {
+                    libQuoteIndex = (libQuoteIndex - 1 + currentQuotes.length) % currentQuotes.length;
+                    updateLibQuote();
+                }
+            });
+            document.getElementById('nextLibQuote').addEventListener('click', () => {
+                if (currentQuotes.length) {
+                    libQuoteIndex = (libQuoteIndex + 1) % currentQuotes.length;
+                    updateLibQuote();
+                }
+            });
+            document.getElementById('saveLibQuoteBtn').addEventListener('click', () => {
+                if (currentQuotes.length) {
+                    const q = currentQuotes[libQuoteIndex % currentQuotes.length];
+                    saveQuoteToDiary(q.text, q.author);
+                }
+            });
+
+            const quoteSearch = document.getElementById('quoteSearchInput');
+            if (quoteSearch) {
+                quoteSearch.addEventListener('input', function() {
+                    const term = this.value.toLowerCase();
+                    currentQuotes = QUOTE_LIBRARY.filter(q =>
+                        q.text.toLowerCase().includes(term) ||
+                        q.author.toLowerCase().includes(term)
+                    );
+                    libQuoteIndex = 0;
+                    updateLibQuote();
+                });
+            }
+
+            // --- Diary ---
+            document.getElementById('saveDiary').addEventListener('click', () => {
+                const text = document.getElementById('diaryEntry').value.trim();
+                if (text) {
+                    user.diary.unshift({ date: new Date(), text });
+                    document.getElementById('diaryEntry').value = '';
+                    saveAll();
+                    renderDiary();
+                    showToast('📓 Diary entry saved', 'success');
+                } else {
+                    showToast('Please write something before saving', 'warning');
+                }
+            });
+
+            document.getElementById('exportDiaryPDFBtn').addEventListener('click', async function() {
+                try {
+                    const { jsPDF } = window.jspdf;
+                    if (!jsPDF) {
+                        showToast('PDF library loading... please try again', 'warning');
+                        return;
+                    }
+                    const doc = new jsPDF();
+                    doc.text("Cosmic Diary", 20, 20);
+                    let y = 30;
+                    const entries = user.diary.slice(0, 30);
+                    if (entries.length === 0) {
+                        doc.text("No entries yet.", 20, 30);
+                    } else {
+                        entries.forEach(e => {
+                            const text = `${new Date(e.date).toLocaleString()}: ${e.text.substring(0, 120)}`;
+                            doc.text(text, 20, y, { maxWidth: 170 });
+                            y += 10;
+                            if (y > 280) { doc.addPage();
+                                y = 20; }
+                        });
+                    }
+                    doc.save(`diary_${new Date().toISOString().slice(0,10)}.pdf`);
+                    showToast('📄 Diary exported as PDF', 'success');
+                } catch (e) {
+                    showToast('PDF export error: ' + e.message, 'error');
+                }
+            });
+
+            // --- Timer ---
+            document.querySelectorAll('.timer-preset').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    timerSec = parseInt(this.dataset.min) * 60;
+                    updateTimerDisplay();
+                    document.querySelectorAll('.timer-preset').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    if (timerRunning) {
+                        clearInterval(timerInt);
+                        timerRunning = false;
+                    }
+                    document.getElementById('timerMsg').textContent = `${this.dataset.min} min timer set`;
+                });
+            });
+
+            document.getElementById('startTimer').addEventListener('click', () => {
+                if (timerRunning) return;
+                if (timerSec <= 0) {
+                    showToast('Please set a timer duration first', 'warning');
+                    return;
+                }
+                timerRunning = true;
+                timerInt = setInterval(() => {
+                    timerSec--;
+                    updateTimerDisplay();
+                    if (timerSec <= 0) {
+                        clearInterval(timerInt);
+                        timerRunning = false;
+                        playBell();
+                        addPractice(0, "Meditation Timer", Math.floor((300 - timerSec) / 60) || 5);
+                        document.getElementById('timerMsg').textContent = '✨ Meditation complete! ✨';
+                    }
+                }, 1000);
+                document.getElementById('timerMsg').textContent = '🧘 Focus on your breath...';
+            });
+
+            document.getElementById('pauseTimer').addEventListener('click', () => {
+                if (timerRunning) {
+                    clearInterval(timerInt);
+                    timerRunning = false;
+                    document.getElementById('timerMsg').textContent = '⏸️ Paused';
+                }
+            });
+
+            document.getElementById('resetTimer').addEventListener('click', () => {
+                clearInterval(timerInt);
+                timerRunning = false;
+                timerSec = 300;
+                updateTimerDisplay();
+                document.querySelectorAll('.timer-preset').forEach(b => b.classList.remove('active'));
+                document.getElementById('timerMsg').textContent = '↻ Reset to 5 minutes';
+            });
+
+            // --- Ambient Sounds ---
+            let currentSound = null;
+            document.querySelectorAll('.sound-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const sound = this.dataset.sound;
+                    if (currentSound) {
+                        currentSound.pause();
+                        currentSound.currentTime = 0;
+                        currentSound = null;
+                    }
+                    document.querySelectorAll('.sound-btn').forEach(b => b.classList.remove('active'));
+                    if (sound === 'silence') {
+                        showToast('🔇 Silence', 'info');
+                        return;
+                    }
+                    this.classList.add('active');
+                    try {
+                        const audio = new Audio();
+                        if (sound === 'rain') {
+                            audio.src =
+                            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+                        } else if (sound === 'forest') {
+                            audio.src =
+                            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
+                        }
+                        audio.loop = true;
+                        audio.volume = 0.15;
+                        audio.play().catch(() => {});
+                        currentSound = audio;
+                        showToast(`🌿 Playing: ${sound}`, 'info');
+                    } catch (e) {
+                        showToast('Sound playback not available', 'warning');
+                    }
+                });
+            });
+
+            // --- Breathwork ---
+            document.querySelectorAll('.start-breath').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const type = this.dataset.type;
+                    startBreathPractice(type);
+                });
+            });
+
+            document.getElementById('stopBreathBtn').addEventListener('click', resetBreathUI);
+
+            // --- Techniques: Archetype Grid ---
+            const profGrid = document.getElementById('professionGrid');
+            if (profGrid) {
+                profGrid.innerHTML = professions.map(p => `
+                    <div class="prof-card" data-prof='${JSON.stringify(p)}'>
+                        <i class="fas ${p.icon}"></i>
+                        <span>${p.name}</span>
+                        <div class="prof-desc">${p.desc}</div>
+                    </div>
+                `).join('');
+
+                profGrid.querySelectorAll('.prof-card').forEach(card => {
+                    card.addEventListener('click', function() {
+                        const prof = JSON.parse(this.dataset.prof);
+                        const recs = getRecommendedTechniques(prof);
+                        currentTechList = recs;
+                        currentTechIdx = 0;
+                        renderTechCarousel();
+
+                        document.getElementById('professionSelectionView').classList.add('hidden');
+                        document.getElementById('recommendedTechniquesView').classList.remove(
+                        'hidden');
+                        document.getElementById('allTechniquesView').classList.add('hidden');
+                        document.getElementById('showArchetypeBtn').textContent =
+                            `🌀 ${prof.name} · ${recs.length} techniques`;
+                    });
+                });
+            }
+
+            let currentTechList = [];
+            let currentTechIdx = 0;
+
+            function renderTechCarousel() {
+                const t = currentTechList[currentTechIdx];
+                if (!t) return;
+                const container = document.getElementById('techCarouselContent');
+                container.innerHTML = `
+                    <div class="glass-card" style="padding:1.2rem;">
+                        <h3 style="font-size:1.2rem;">${t.name}</h3>
+                        <div style="font-size:0.8rem;color:var(--text-secondary);">${t.sanskrit} · ${t.chakra} chakra · ${t.element}</div>
+                        <div style="margin:0.8rem 0;font-size:0.9rem;">${t.essence}</div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);"><strong>Steps:</strong> ${t.steps}</div>
+                        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.8rem;">
+                            <span style="background:rgba(157,123,255,0.12);padding:0.2rem 0.8rem;border-radius:20px;font-size:0.7rem;">${t.category}</span>
+                            <span style="background:rgba(157,123,255,0.12);padding:0.2rem 0.8rem;border-radius:20px;font-size:0.7rem;">${t.duration}</span>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('techCounter')?.remove();
+            }
+
+            document.getElementById('prevTechBtn').addEventListener('click', () => {
+                if (currentTechList.length) {
+                    currentTechIdx = (currentTechIdx - 1 + currentTechList.length) % currentTechList.length;
+                    renderTechCarousel();
+                }
+            });
+            document.getElementById('nextTechBtn').addEventListener('click', () => {
+                if (currentTechList.length) {
+                    currentTechIdx = (currentTechIdx + 1) % currentTechList.length;
+                    renderTechCarousel();
+                }
+            });
+            document.getElementById('practiceTechBtn').addEventListener('click', () => {
+                if (currentTechList[currentTechIdx]) {
+                    const t = currentTechList[currentTechIdx];
+                    addPractice(t.id, t.name, 15);
+                }
+            });
+            document.getElementById('readFullChapterBtn').addEventListener('click', () => {
+                if (currentTechList[currentTechIdx]) {
+                    const t = currentTechList[currentTechIdx];
+                    alert(
+                        `📖 Full Chapter: ${t.name}\n\n${t.sanskrit}\n\n${t.essence}\n\n${t.steps}\n\nWisdom: ${t.wisdom}\n\nChakra: ${t.chakra}\nElement: ${t.element}`);
+                }
+            });
+            document.getElementById('backToProfessionsBtn').addEventListener('click', () => {
+                document.getElementById('professionSelectionView').classList.remove('hidden');
+                document.getElementById('recommendedTechniquesView').classList.add('hidden');
+                document.getElementById('showArchetypeBtn').textContent = 'Archetype Selection';
+            });
+
+            // --- All Techniques ---
+            document.getElementById('showAllTechBtn').addEventListener('click', () => {
+                const container = document.getElementById('allTechniquesGrid');
+                container.innerHTML = '';
+                Object.values(TECHNIQUES).forEach(t => {
+                    const card = document.createElement('div');
+                    card.className = 'tech-card';
+                    card.innerHTML = `
+                        <div class="tech-name">${t.name}</div>
+                        <div class="tech-sanskrit">${t.sanskrit}</div>
+                        <div class="tech-meta">${t.chakra} · ${t.element}</div>
+                        <button class="btn-outline btn-sm practice-tech" data-id="${t.id}" style="margin-top:0.5rem;">Practice</button>
+                    `;
+                    card.querySelector('.practice-tech').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        addPractice(t.id, t.name, 15);
+                    });
+                    card.addEventListener('click', () => {
+                        alert(
+                            `📖 ${t.name}\n\n${t.sanskrit}\n\n${t.essence}\n\nSteps: ${t.steps}\n\nChakra: ${t.chakra}`);
+                    });
+                    container.appendChild(card);
+                });
+                document.getElementById('professionSelectionView').classList.add('hidden');
+                document.getElementById('recommendedTechniquesView').classList.add('hidden');
+                document.getElementById('allTechniquesView').classList.remove('hidden');
+            });
+
+            document.getElementById('showArchetypeBtn').addEventListener('click', () => {
+                document.getElementById('professionSelectionView').classList.remove('hidden');
+                document.getElementById('recommendedTechniquesView').classList.add('hidden');
+                document.getElementById('allTechniquesView').classList.add('hidden');
+                document.getElementById('showArchetypeBtn').textContent = 'Archetype Selection';
+            });
+
+            // --- Search Techniques ---
+            document.getElementById('techSearchInput').addEventListener('input', function() {
+                const term = this.value.toLowerCase();
+                const cards = document.querySelectorAll('#allTechniquesGrid .tech-card');
+                cards.forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    card.style.display = text.includes(term) ? '' : 'none';
+                });
+            });
+
+            // --- Export Techniques PDF ---
+            document.getElementById('exportTechniquesPDFBtn').addEventListener('click', async function() {
+                try {
+                    const { jsPDF } = window.jspdf;
+                    if (!jsPDF) {
+                        showToast('PDF library loading... try again', 'warning');
+                        return;
+                    }
+                    const doc = new jsPDF();
+                    doc.text("112 Techniques of Vigyan Bhairav Tantra", 20, 20);
+                    let y = 30;
+                    Object.values(TECHNIQUES).slice(0, 112).forEach(t => {
+                        doc.text(`${t.id}. ${t.name} (${t.sanskrit})`, 20, y);
+                        y += 6;
+                        if (y > 280) { doc.addPage();
+                            y = 20; }
+                    });
+                    doc.save(`techniques_${new Date().toISOString().slice(0,10)}.pdf`);
+                    showToast('📄 Techniques exported as PDF', 'success');
+                } catch (e) {
+                    showToast('PDF export error: ' + e.message, 'error');
+                }
+            });
+
+            // --- Data Export/Import ---
+            document.getElementById('exportDataBtn').addEventListener('click', () => {
+                const data = JSON.stringify({ user, exportDate: new Date().toISOString() }, null, 2);
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `tantra_backup_${new Date().toISOString().slice(0,10)}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast('💾 Data exported', 'success');
+            });
+
+            document.getElementById('importDataBtn').addEventListener('click', () => {
+                document.getElementById('importFileInput').click();
+            });
+
+            document.getElementById('importFileInput').addEventListener('change', function(e) {
+                const file = this.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    try {
+                        const data = JSON.parse(ev.target.result);
+                        if (data.user) {
+                            Object.assign(user, data.user);
+                            saveAll();
+                            showToast('📥 Data imported successfully', 'success');
+                            updateUI();
+                        } else {
+                            showToast('Invalid backup file', 'error');
+                        }
+                    } catch (err) {
+                        showToast('Error importing: ' + err.message, 'error');
+                    }
+                };
+                reader.readAsText(file);
+                this.value = '';
+            });
+
+            // --- Scroll to Top ---
+            const scrollBtn = document.getElementById('scrollTop');
+            window.addEventListener('scroll', () => {
+                scrollBtn.classList.toggle('show', window.scrollY > 300);
+            });
+            scrollBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // --- Initial Load ---
+            updateHomeQuote();
+            updateLibQuote();
+            updateUI();
+            renderAchievements();
+            showView('home');
+
+            // Periodic cosmic weather update
+            setInterval(() => {
+                const vib = Math.floor(60 + Math.random() * 35);
+                document.getElementById('vibrationLevel').textContent = vib + '%';
+            }, 30000);
+
+            // Greeting based on time
+            const hour = new Date().getHours();
+            let greeting = '✨ Seeker';
+            if (hour < 12) greeting = '🌅 Good morning, Seeker';
+            else if (hour < 17) greeting = '☀️ Good afternoon, Seeker';
+            else greeting = '🌙 Good evening, Seeker';
+            document.getElementById('greetingUser').textContent = greeting;
+
+            console.log('🧘 Vigyan Bhairav · Peaceful Meditation Platform loaded');
+            console.log(`📊 ${user.totalPractices} practices · ${user.totalMinutes} minutes · ${user.streak} day streak`);
+        });
+    </script>
 </body>
 </html>
