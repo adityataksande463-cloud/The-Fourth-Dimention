@@ -1,1633 +1,3022 @@
 /* ============================================================================
-   VIGYAAN BHAIRAV — styles.css
+   VIGYAAN BHAIRAV — app.js
    Explore Awareness. Understand Consciousness.
    ----------------------------------------------------------------------------
    TABLE OF CONTENTS
    -----------------
-    01. Design tokens (:root) & theme variables
-    02. Reset & base typography
-    03. Accessibility (skip link, focus rings, reduced motion)
-    04. Layout shell (sidebar / content / topbar)
-    05. Navigation (sidebar, bottom nav)
-    06. Components
-        6.1  Cards
-        6.2  Buttons
-        6.3  Badges, chips, eyebrows, labels
-        6.4  Hero
-        6.5  Prose & reading typography
-        6.6  Source blocks, notes & callouts
-        6.7  Rows & lists
-        6.8  Progress bars
-        6.9  Forms & inputs
-        6.10 Technique cards
-        6.11 Glossary term cards
-        6.12 Tabs
-        6.13 Empty states
-        6.14 Breadcrumbs
-        6.15 Toast
-        6.16 Onboarding
-        6.17 Filter bar
-    07. Footer
-    08. Utility classes
-    09. Responsive breakpoints
-    10. Print styles
+     01. Internationalisation (UI strings)
+     02. Application state
+     03. Content data
+         3.1  The 112-index library
+         3.2  Seven selected techniques
+         3.3  Philosophical concepts
+         3.4  Sanskrit glossary
+         3.5  Sources
+     04. Utilities
+     05. Rendering helpers
+     06. Views
+         6.1  Welcome / onboarding
+         6.2  Home
+         6.3  Library
+         6.4  Library articles
+         6.5  Verse / index reader
+         6.6  112 index
+         6.7  Seven-technique programme
+         6.8  Technique detail
+         6.9  Philosophy centre
+         6.10 Concept detail
+         6.11 Glossary
+         6.12 Term detail
+         6.13 Journal
+         6.14 Bookmarks
+         6.15 History
+         6.16 Profile & settings
+         6.17 About & sub-pages
+         6.18 Search
+         6.19 Not found
+     07. Router
+     08. Visual preferences
+     09. Event delegation
+     10. Export / data helpers
+     11. Bootstrap
+   ----------------------------------------------------------------------------
+   CONTRACT WITH index.html
+   ------------------------
+     #app                — router outlet
+     #searchForm         — submit handler
+     #searchInput        — placeholder updated per language
+     #themeBtn           — toggle theme
+     #langBtn            — cycle language en → hi → sa
+     #profileBtn         — navigate to #/profile
+     [data-i18n]         — static shell text nodes translated by
+                           applyVisualPreferences()
+     [data-nav]          — receives .active class per current route
+     [data-onboard]      — pre-hydration card buttons (handled by
+                           delegation, in case the click fires before
+                           router() replaces #app)
+     #toast              — controlled by toast()
    ========================================================================== */
 
 
 /* ============================================================================
-   01. DESIGN TOKENS & THEME VARIABLES
+   01. INTERNATIONALISATION
    ============================================================================ */
 
-:root {
-  /* ---- Colour: Cosmic Dark (default) ---- */
-  --navy:        #0B1424;   /* main background */
-  --deep:        #111F33;   /* cards and panels */
-  --deep-2:      #16263F;   /* elevated surfaces */
-  --deep-3:      #1C2E4A;   /* highest surfaces */
-  --gold:        #C5A15A;   /* primary accent */
-  --gold-soft:   #E0C58A;   /* highlight accent */
-  --gold-dim:    rgba(197, 161, 90, .22);
-  --ivory:       #F1EBDD;   /* reading background */
-  --muted:       #A8B0BE;   /* secondary text */
-  --white:       #F7F7F5;   /* main text */
-  --line:        rgba(197, 161, 90, .20);
-  --line-soft:   rgba(168, 176, 190, .14);
-  --shadow:      0 10px 40px rgba(0, 0, 0, .35);
+const I18N = {
+  en: {
+    brandSub: "Explore Awareness",
+    navHome: "Home", navLibrary: "Library", navExplore: "Explore", navIndex: "112 Index",
+    navPhilosophy: "Philosophy", navGlossary: "Glossary", navJournal: "Journal",
+    navBookmarks: "Bookmarks", navHistory: "Learning History", navProfile: "Profile",
+    navAbout: "About & Sources",
+    editorialNote: "Editorial Note",
+    editorialNoteBody: "Original text, translation and interpretation are kept in separate, clearly labelled fields. Unverified passages are never presented as authoritative.",
+    footerDisclaimer: "An educational and philosophical learning platform inspired by the Vigyan Bhairav tradition. Contemplative exercises are offered for exploration and are not a substitute for medical or mental-health care.",
+    beginExploring: "Begin Exploring", openLibrary: "Open the Library",
+    continueLearning: "Continue Learning", featured: "Featured Knowledge",
+    sevenProgramme: "Seven Explorations of Awareness",
+    sevenSubtitle: "A carefully curated introductory programme of seven accessible contemplations.",
+    library: "Knowledge Library", explore: "Explore", search: "Search",
+    readMore: "Read more", back: "Back", save: "Bookmark", saved: "Bookmarked",
+    verified: "Verified", pending: "Pending verification", interpretation: "Interpretation",
+    originalText: "Original Text", transliteration: "Transliteration",
+    literalTranslation: "Literal Translation", readableTranslation: "Readable Translation",
+    wordByWord: "Word-by-word",
+    historicalContext: "Historical Context", researchNote: "Research Note",
+    safetyNote: "Safety Note", reflectionPrompts: "Reflection Prompts",
+    commonMisunderstandings: "Common Misunderstandings", gentleExploration: "Gentle Exploration",
+    understandingMethod: "Understanding the Method", philosophicalMeaning: "Philosophical Meaning",
+    furtherReading: "Further Reading", sourcesAndFurther: "Sources & Further Reading",
+    noBookmarks: "No bookmarks yet.", noJournal: "No journal entries yet.",
+    noHistory: "No learning history yet.", emptySearch: "No results found.",
+    saveEntry: "Save Entry", newEntry: "New Entry", delete: "Delete", edit: "Edit",
+    exportData: "Export Data", clearData: "Clear Local Data",
+    language: "Language", readingTheme: "Reading Theme", textSize: "Text Size",
+    dark: "Cosmic Dark", manuscript: "Manuscript", appearance: "Appearance",
+    technique: "Technique", indexEntry: "Index Entry", concept: "Concept", term: "Term"
+  },
+  hi: {
+    brandSub: "जागरूकता का अन्वेषण",
+    navHome: "होम", navLibrary: "पुस्तकालय", navExplore: "अन्वेषण", navIndex: "११२ सूची",
+    navPhilosophy: "दर्शन", navGlossary: "शब्दावली", navJournal: "डायरी",
+    navBookmarks: "सहेजे गए", navHistory: "अध्ययन इतिहास", navProfile: "प्रोफ़ाइल",
+    navAbout: "परिचय एवं स्रोत",
+    editorialNote: "संपादकीय सूचना",
+    editorialNoteBody: "मूल पाठ, अनुवाद और व्याख्या को अलग-अलग स्पष्ट रूप से चिह्नित क्षेत्रों में रखा गया है। असत्यापित अंशों को कभी प्रामाणिक नहीं बताया जाता।",
+    footerDisclaimer: "विज्ञान भैरव परंपरा से प्रेरित एक शैक्षिक एवं दार्शनिक अधिगम मंच। ये अभ्यास केवल अन्वेषण हेतु हैं और चिकित्सकीय या मानसिक स्वास्थ्य उपचार का विकल्प नहीं हैं।",
+    beginExploring: "अन्वेषण आरंभ करें", openLibrary: "पुस्तकालय खोलें",
+    continueLearning: "अध्ययन जारी रखें", featured: "चयनित ज्ञान",
+    sevenProgramme: "जागरूकता के सात अन्वेषण",
+    sevenSubtitle: "सात सुलभ चिंतन-अभ्यासों का एक चयनित परिचयात्मक कार्यक्रम।",
+    library: "ज्ञान पुस्तकालय", explore: "अन्वेषण", search: "खोजें",
+    readMore: "और पढ़ें", back: "वापस", save: "सहेजें", saved: "सहेजा गया",
+    verified: "सत्यापित", pending: "सत्यापन शेष", interpretation: "व्याख्या",
+    originalText: "मूल पाठ", transliteration: "लिप्यंतरण", literalTranslation: "शब्दार्थ अनुवाद",
+    readableTranslation: "सरल अनुवाद", wordByWord: "शब्दार्थ",
+    historicalContext: "ऐतिहासिक संदर्भ", researchNote: "शोध टिप्पणी",
+    safetyNote: "सुरक्षा सूचना", reflectionPrompts: "चिंतन प्रश्न",
+    commonMisunderstandings: "सामान्य भ्रांतियाँ", gentleExploration: "सौम्य अभ्यास",
+    understandingMethod: "विधि की समझ", philosophicalMeaning: "दार्शनिक अर्थ",
+    furtherReading: "आगे पढ़ें", sourcesAndFurther: "स्रोत एवं आगे पढ़ने हेतु",
+    noBookmarks: "अभी कोई सहेजा गया अंश नहीं।", noJournal: "अभी कोई डायरी प्रविष्टि नहीं।",
+    noHistory: "अभी कोई अध्ययन इतिहास नहीं।", emptySearch: "कोई परिणाम नहीं मिला।",
+    saveEntry: "प्रविष्टि सहेजें", newEntry: "नई प्रविष्टि", delete: "हटाएँ", edit: "संपादित करें",
+    exportData: "डेटा निर्यात करें", clearData: "स्थानीय डेटा साफ़ करें",
+    language: "भाषा", readingTheme: "पठन थीम", textSize: "पाठ आकार",
+    dark: "ब्रह्मांडीय गहरा", manuscript: "पांडुलिपि", appearance: "रूप",
+    technique: "तकनीक", indexEntry: "सूची प्रविष्टि", concept: "संकल्पना", term: "शब्द"
+  },
+  sa: {
+    brandSub: "चेतनायाः अन्वेषणम्",
+    navHome: "गृहम्", navLibrary: "पुस्तकालयः", navExplore: "अन्वेषणम्", navIndex: "११२ सूची",
+    navPhilosophy: "दर्शनम्", navGlossary: "शब्दावली", navJournal: "दैनन्दिनी",
+    navBookmarks: "सङ्गृहीतम्", navHistory: "अध्ययनवृत्तम्", navProfile: "विवरणम्",
+    navAbout: "परिचयः स्रोतांसि च",
+    editorialNote: "सम्पादकीयसूचना",
+    editorialNoteBody: "मूलपाठः, अनुवादः, व्याख्या च पृथक् पृथक् स्पष्टरूपेण लिखिताः। अप्रमाणिताः अंशाः कदापि प्रामाणिकाः न उच्यन्ते।",
+    footerDisclaimer: "विज्ञानभैरवपरम्परया प्रेरितं शैक्षणिकं दार्शनिकं च अधिगममञ्चम्। अभ्यासाः केवलम् अन्वेषणाय, न तु चिकित्सायाः विकल्पः।",
+    beginExploring: "अन्वेषणम् आरभताम्", openLibrary: "पुस्तकालयम् उद्घाटय",
+    continueLearning: "अध्ययनं पुनः", featured: "चितं ज्ञानम्",
+    sevenProgramme: "चेतनायाः सप्त अन्वेषणानि",
+    sevenSubtitle: "सप्त सुलभानां चिन्तनाभ्यासानां चितः परिचयात्मकः क्रमः।",
+    library: "ज्ञानपुस्तकालयः", explore: "अन्वेषणम्", search: "अन्विष्यताम्",
+    readMore: "अधिकं पठ", back: "प्रतिगच्छ", save: "सङ्गृहाण", saved: "सङ्गृहीतम्",
+    verified: "प्रमाणितम्", pending: "प्रमाणनं शेषम्", interpretation: "व्याख्या",
+    originalText: "मूलपाठः", transliteration: "लिप्यन्तरणम्", literalTranslation: "शब्दानुवादः",
+    readableTranslation: "सुबोधानुवादः", wordByWord: "पदार्थः",
+    historicalContext: "ऐतिहासिकः सन्दर्भः", researchNote: "शोधटिप्पणी",
+    safetyNote: "सुरक्षासूचना", reflectionPrompts: "चिन्तनप्रश्नाः",
+    commonMisunderstandings: "सामान्यभ्रान्तयः", gentleExploration: "सौम्याभ्यासः",
+    understandingMethod: "विधेः बोधः", philosophicalMeaning: "दार्शनिकः अर्थः",
+    furtherReading: "अग्रे पठनीयम्", sourcesAndFurther: "स्रोतांसि पठनीयानि च",
+    noBookmarks: "अद्यापि किमपि सङ्गृहीतं नास्ति।", noJournal: "अद्यापि का अपि दैनन्दिनीप्रविष्टिः नास्ति।",
+    noHistory: "अद्यापि अध्ययनवृत्तं नास्ति।", emptySearch: "किमपि फलं न लब्धम्।",
+    saveEntry: "प्रविष्टिं रक्ष", newEntry: "नवा प्रविष्टिः", delete: "अपनय", edit: "सम्पादय",
+    exportData: "दत्तांशं निर्यातय", clearData: "स्थानीयांशं शोधय",
+    language: "भाषा", readingTheme: "पठनवर्णः", textSize: "पाठमानम्",
+    dark: "ब्रह्माण्डीयः गाढः", manuscript: "पाण्डुलिपिः", appearance: "रूपम्",
+    technique: "विधिः", indexEntry: "सूचीप्रविष्टिः", concept: "संकल्पना", term: "शब्दः"
+  }
+};
 
-  /* ---- Geometry ---- */
-  --radius:      14px;
-  --radius-sm:   10px;
-  --radius-lg:   20px;
+const t = (key) =>
+  (I18N[state.lang] && I18N[state.lang][key]) ||
+  I18N.en[key] ||
+  key;
 
-  /* ---- Motion ---- */
-  --ease:        cubic-bezier(.4, 0, .2, 1);
 
-  /* ---- Type ---- */
-  --fs:          16px;
-  --serif:       'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --sans:        'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --dev-serif:   'Noto Serif Devanagari', 'Cormorant Garamond', serif;
-  --dev-sans:    'Noto Sans Devanagari', 'Inter', sans-serif;
+/* ============================================================================
+   02. APPLICATION STATE
+   ============================================================================ */
 
-  /* ---- Layout ---- */
-  --sidebar-w:   264px;
-  --maxw:        1120px;
+const STORAGE_KEY = 'vb_state_v1';
 
-  /* ---- Focus ring ---- */
-  --focus-ring:  0 0 0 3px rgba(197, 161, 90, .40);
+const state = {
+  lang: 'en',             // 'en' | 'hi' | 'sa'
+  theme: 'dark',          // 'dark' | 'manuscript'
+  fontScale: 1,
+  onboarded: false,
+  bookmarks: [],          // { type, id, title, ts }
+  journal: [],            // { id, title, body, related, ts }
+  history: [],            // { type, id, title, ts }
+  lastRoute: '',
+  pendingRelated: null,
+  indexFilter: 'all',
+  indexQuery: ''
+};
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    /* storage may be unavailable (private mode, quota) */
+  }
 }
 
-/* ---- Manuscript reading mode ---- */
-body.theme-manuscript {
-  --navy:        #F1EBDD;
-  --deep:        #FAF6EC;
-  --deep-2:      #F3ECDC;
-  --deep-3:      #EBE2CE;
-  --gold:        #8B6B2E;
-  --gold-soft:   #A9843C;
-  --gold-dim:    rgba(139, 107, 46, .20);
-  --ivory:       #2A2620;
-  --muted:       #6B6355;
-  --white:       #26221C;
-  --line:        rgba(139, 107, 46, .28);
-  --line-soft:   rgba(80, 70, 55, .14);
-  --shadow:      0 10px 40px rgba(120, 105, 80, .16);
-}
-
-/* Hindi interface → Devanagari sans body */
-body[data-lang="hi"] {
-  font-family: var(--dev-sans);
-}
-
-/* Sanskrit interface → Devanagari serif headings */
-body[data-lang="sa"] h1,
-body[data-lang="sa"] h2,
-body[data-lang="sa"] h3,
-body[data-lang="sa"] h4 {
-  font-family: var(--dev-serif);
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    Object.keys(state).forEach((k) => {
+      if (parsed[k] !== undefined) state[k] = parsed[k];
+    });
+  } catch (e) {
+    /* corrupt state — fall back to defaults */
+  }
 }
 
 
 /* ============================================================================
-   02. RESET & BASE TYPOGRAPHY
+   03. CONTENT DATA
    ============================================================================ */
 
-*, *::before, *::after { box-sizing: border-box; }
+/* --- 3.1 The 112-index library ------------------------------------------
+   IMPORTANT: These are EDITORIAL TITLES used to structure the reference
+   index. They are NOT a verified verse-by-verse classification of the
+   original text. Each entry's `status` field governs how it is presented:
+     • 'curated'   — carries the Seven Explorations programme label
+     • 'summary'   — a short summary is available
+     • 'pending'   — placeholder, awaiting source verification
+   ------------------------------------------------------------------------ */
+const CATEGORIES = {
+  breath:     { en:'Breath & Attention',      hi:'श्वास एवं ध्यान',        sa:'श्वासः ध्यानं च' },
+  transition: { en:'Transition & Stillness',  hi:'संधि एवं स्थिरता',       sa:'सन्धिः स्थिरता च' },
+  senses:     { en:'Sensory Awareness',       hi:'इंद्रिय जागरूकता',       sa:'इन्द्रियचेतना' },
+  space:      { en:'Space & Perception',      hi:'आकाश एवं प्रत्यक्ष',     sa:'आकाशः प्रत्यक्षं च' },
+  sound:      { en:'Sound & Listening',       hi:'ध्वनि एवं श्रवण',        sa:'ध्वनिः श्रवणं च' },
+  attention:  { en:'Attention & Focus',       hi:'ध्यान एवं एकाग्रता',     sa:'ध्यानम् एकाग्रता च' },
+  emotion:    { en:'Emotion & Feeling',       hi:'भाव एवं अनुभूति',        sa:'भावः अनुभूतिः च' },
+  body:       { en:'Body & Sensation',        hi:'शरीर एवं संवेदना',       sa:'शरीरं संवेदना च' },
+  mind:       { en:'Mind & Thought',          hi:'मन एवं विचार',           sa:'मनः विचारः च' },
+  nondual:    { en:'Non-duality & Expansion', hi:'अद्वैत एवं विस्तार',     sa:'अद्वैतं विस्तारः च' },
+  devotion:   { en:'Devotion & Wonder',       hi:'भक्ति एवं विस्मय',       sa:'भक्तिः विस्मयः च' },
+  daily:      { en:'Daily Life & Activity',   hi:'दैनिक जीवन',             sa:'दैनिकजीवनम्' }
+};
 
-html {
-  -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
+const RAW_INDEX = [
+  ["Natural Breath Awareness","breath"],
+  ["Observing the Pause Between Breaths","breath"],
+  ["The Turning Point of the Inhale","breath"],
+  ["Breath at the Nostril Threshold","breath"],
+  ["Breathing Without Deliberate Control","breath"],
+  ["The Subtle Sound of Breath","breath"],
+  ["Breath as Movement of Space","breath"],
+
+  ["Noticing the Gap Between Two Thoughts","mind"],
+  ["The Space Between Two Perceptions","transition"],
+  ["The Moment Before Sleep","transition"],
+  ["The Moment of Waking","transition"],
+  ["The Threshold Between Two States","transition"],
+  ["Stillness After a Movement Ends","transition"],
+  ["The Fade of a Sound","sound"],
+
+  ["The Space Around an Object","space"],
+  ["Gazing into Open Sky","space"],
+  ["The Room Around the Room","space"],
+  ["Space Within the Body","space"],
+  ["The Interval Between Two Objects","space"],
+  ["Dissolving the Boundary of the Body","space"],
+  ["The Emptiness of a Container","space"],
+
+  ["Listening to Distant Sounds","sound"],
+  ["Listening Without Naming","sound"],
+  ["A Sound Arising and Passing","sound"],
+  ["The Listener Behind the Sound","sound"],
+  ["The Inner Sound of the Body","sound"],
+  ["Silence Between Two Sounds","sound"],
+  ["Chanting and Attention","sound"],
+
+  ["Resting Attention on One Object","attention"],
+  ["Sustained Gaze on a Flame","attention"],
+  ["Fixing Attention on a Single Point","attention"],
+  ["Expanding Attention After Focus","attention"],
+  ["Attention Without Tension","attention"],
+  ["Watching Attention Wander","attention"],
+  ["Returning Without Judgement","attention"],
+
+  ["Noticing Sight as It Arises","senses"],
+  ["The First Instant of Perception","senses"],
+  ["Touch at the Fingertip","senses"],
+  ["Tasting Without Naming","senses"],
+  ["Smell and the Trace of Memory","senses"],
+  ["The Whole Field of Sensing","senses"],
+  ["Experience Without Commentary","senses"],
+
+  ["Noticing an Emotion as It Arises","emotion"],
+  ["Feeling Without Suppressing","emotion"],
+  ["The Space Around an Emotion","emotion"],
+  ["Desire and Attention","emotion"],
+  ["Fear Observed as Sensation","emotion"],
+  ["Joy Without Clinging","emotion"],
+  ["The Neutral Feeling","emotion"],
+
+  ["The Body as a Whole","body"],
+  ["Sensation at the Crown of the Head","body"],
+  ["Walking with Attention","body"],
+  ["The Pulse of the Body","body"],
+  ["The Body as Space","body"],
+  ["Eating with Full Attention","body"],
+  ["Resting in Bodily Stillness","body"],
+
+  ["Watching a Thought Take Form","mind"],
+  ["The Origin of a Thought","mind"],
+  ["Who Is Thinking?","mind"],
+  ["A Thought Treated as an Object","mind"],
+  ["The Edge of the Mind","mind"],
+  ["Noticing a Belief","mind"],
+  ["The Ending of a Thought","mind"],
+
+  ["Contemplating \u201CI Am\u201D","nondual"],
+  ["The Observer and the Observed","nondual"],
+  ["Dissolving Subject and Object","nondual"],
+  ["Awareness Without Content","nondual"],
+  ["The Vastness of Consciousness","nondual"],
+  ["The Non-dual Gaze","nondual"],
+  ["The World as Appearance","nondual"],
+
+  ["Wonder at Ordinary Things","devotion"],
+  ["Gratitude as a Form of Attention","devotion"],
+  ["The Feeling of the Sacred","devotion"],
+  ["Devotion Without an Object","devotion"],
+  ["Awe Before the Cosmos","devotion"],
+  ["Offering an Action","devotion"],
+  ["Surrender of the Need to Control","devotion"],
+
+  ["Awareness in Conversation","daily"],
+  ["Awareness While Walking","daily"],
+  ["Awareness While Working","daily"],
+  ["Awareness at Meals","daily"],
+  ["Awareness at the Threshold of a Door","daily"],
+  ["Awareness Between Two Tasks","daily"],
+  ["Awareness While Waiting","daily"],
+  ["Awareness in the Middle of Noise","daily"],
+  ["Awareness During Discomfort","daily"],
+  ["Awareness in the Night","daily"],
+  ["Awareness of Time Passing","daily"],
+  ["Awareness of a Habit","daily"],
+  ["Awareness in a Crowd","daily"],
+  ["Awareness in Solitude","daily"],
+  ["Awareness in Movement","daily"],
+  ["Awareness of Speech","daily"],
+  ["Awareness While Listening to Another","daily"],
+  ["Awareness of the Ordinary","daily"],
+  ["Awareness of Repetition","daily"],
+  ["Awareness of Anticipation","daily"],
+  ["Awareness of Memory","daily"],
+  ["Awareness of Planning","daily"],
+  ["Awareness of Choice","daily"],
+  ["Awareness of Rest","daily"],
+
+  ["Awareness of Light and Dark","senses"],
+  ["Awareness of the Horizon","space"],
+  ["The Night Sky","space"],
+  ["The First Light","transition"],
+  ["Dusk","transition"],
+  ["Awareness of the Seasons","daily"],
+  ["Awareness of the Body\u2019s Weight","body"],
+  ["Awareness of the Resting Tongue","body"],
+  ["Awareness of the Resting Eyes","body"],
+  ["Awareness of the Hands","body"],
+  ["Awareness of What Remains","nondual"]
+];
+
+/* The seven curated programme entries reference index positions. */
+const PROGRAMME_MAP = { 1: 1, 2: 12, 3: 15, 4: 22, 5: 36, 6: 29, 7: 67 };
+
+const INDEX = RAW_INDEX.map((row, i) => {
+  const n = i + 1;
+  const inProgramme = Object.values(PROGRAMME_MAP).includes(n);
+  return {
+    n,
+    title: row[0],
+    cat: row[1],
+    status: inProgramme ? 'curated' : (n % 11 === 0 ? 'summary' : 'pending')
+  };
+});
+
+
+/* --- 3.2 Seven selected techniques --------------------------------------
+   Each object is a complete, self-contained lesson record following the
+   technique detail template in the product specification.
+   ------------------------------------------------------------------------ */
+const TECHNIQUES = [
+  {
+    id:'t1', num:1, indexRef:1, difficulty:'Beginner',
+    title:{ en:'Natural Breath Awareness', hi:'स्वाभाविक श्वास जागरूकता', sa:'सहजश्वासचेतना' },
+    theme:{ en:'Attention to natural breathing', hi:'स्वाभाविक श्वास पर ध्यान', sa:'सहजश्वासे ध्यानम्' },
+    sanskritTerm:{ dev:'श्वास', iast:'śvāsa', gloss:'breath, the movement of breathing' },
+    intro:{
+      en:'This exploration begins with the most available object of attention there is: the breath exactly as it already is. Nothing is added, corrected, deepened or controlled. The work is simply to notice that breathing is happening and to observe its natural rhythm with a relaxed, interested attention.',
+      hi:'यह अभ्यास सबसे सुलभ ध्यान-विषय से आरंभ होता है — श्वास, जैसा वह पहले से है। कुछ जोड़ा नहीं जाता, सुधारा नहीं जाता, गहरा नहीं किया जाता। कार्य केवल यह देखना है कि श्वास चल रहा है, और उसकी स्वाभाविक लय को शिथिल जिज्ञासा से देखना है।'
+    },
+    philosophical:{
+      en:[
+        'In the philosophical world from which the Vigyan Bhairav emerges — the Kashmir Shaiva traditions of recognition — breath is treated as one of the most immediate displays of a dynamic, self-aware reality. The tradition speaks of spanda, a subtle vibration or throb that is not merely physical motion but the pulse of awareness expressing itself as movement.',
+        'This matters for practice. If breath is only a biological function, observing it is a relaxation exercise. If breath is understood as the meeting point of body, vitality and awareness, then observing it becomes a way of noticing the seam between what is observed and what observes. The text is generally less interested in breath manipulation than in the recognition that awareness is already present within ordinary functioning.',
+        'A careful reading therefore distinguishes between traditions that use breath control (prāṇāyāma) as a technical discipline and the more recognitive approach found in much of the Bhairava material, where the emphasis falls on noticing rather than on producing altered states.'
+      ],
+      hi:[
+        'जिस दार्शनिक परंपरा से विज्ञान भैरव आता है — कश्मीर शैव प्रत्यभिज्ञा — वहाँ श्वास को एक गतिशील, स्व-प्रकाशमान सत्ता की सबसे सुलभ अभिव्यक्ति माना गया है। परंपरा "स्पन्द" की बात करती है — एक सूक्ष्म कंपन जो केवल शारीरिक गति नहीं, बल्कि चेतना का ही स्पंदन है।',
+        'अभ्यास के लिए यह महत्वपूर्ण है। यदि श्वास केवल जैविक क्रिया है तो उसे देखना एक शिथिलीकरण है। यदि श्वास शरीर, प्राण और चेतना का संगम-बिंदु है, तो उसे देखना द्रष्टा और दृश्य के बीच की सीमा को देखना बन जाता है।'
+      ]
+    },
+    method:{
+      en:'Sit or lie in a position you can hold comfortably. Let the breath be entirely as it is. Place attention lightly at the nostrils, the chest, or the abdomen — wherever the sensation of breathing is clearest. When you notice that attention has moved away, return without commentary. Do not lengthen the exhale, do not count, do not retain the breath, and do not attempt to make the breath "deep". The whole instruction is: notice, and return.',
+      hi:'किसी आरामदायक स्थिति में बैठें या लेटें। श्वास को पूरी तरह वैसा ही रहने दें। ध्यान हल्के से नासिका, छाती या उदर पर रखें — जहाँ श्वास की संवेदना सबसे स्पष्ट हो। जब ध्यान भटके, बिना टिप्पणी के लौट आएँ। श्वास को लंबा न करें, गिनती न करें, रोकें नहीं। समस्त निर्देश है: देखें, और लौट आएँ।'
+    },
+    exploration:[
+      { en:'Sit comfortably with the spine upright but not rigid. Eyes may be closed or softly open.', hi:'कमर सीधी पर कठोर न हो, आराम से बैठें। आँखें बंद या हल्की खुली रखें।' },
+      { en:'Notice one full breath — the inhale, the small turning point, the exhale.', hi:'एक पूरा श्वास देखें — भीतर, छोटा मोड़, बाहर।' },
+      { en:'Do not change its rhythm. Simply continue noticing.', hi:'उसकी लय न बदलें। केवल देखते रहें।' },
+      { en:'When attention wanders, note it kindly and return to the next breath.', hi:'जब ध्यान भटके, सौम्यता से स्वीकार करें और अगले श्वास पर लौटें।' },
+      { en:'After a few minutes, open the eyes and notice the room again.', hi:'कुछ मिनटों बाद आँखें खोलें और कमरे को फिर से देखें।' },
+      { en:'Stop at any time if you feel uncomfortable. Nothing here needs to be endured.', hi:'असहजता हो तो कभी भी रुकें। यहाँ कुछ भी सहना आवश्यक नहीं।' }
+    ],
+    misunderstandings:[
+      { en:'This is not a breathing exercise. You are not trying to breathe "better" or more deeply.', hi:'यह श्वास-व्यायाम नहीं है। आप "बेहतर" या गहरा श्वास लेने का प्रयास नहीं कर रहे।' },
+      { en:'A wandering mind is not failure. Noticing the wandering is itself the observation being cultivated.', hi:'मन का भटकना असफलता नहीं। भटकने को देखना ही वह अवलोकन है जो विकसित किया जा रहा है।' },
+      { en:'No particular experience is being promised. Some sessions feel calm; others feel restless. Neither is the goal.', hi:'किसी विशेष अनुभव का वादा नहीं है। कुछ सत्र शांत लगते हैं, कुछ बेचैन। दोनों में से कोई लक्ष्य नहीं।' }
+    ],
+    reflection:[
+      'What did I actually notice about the breath, before any idea about it?',
+      'How quickly did attention leave, and how did returning feel?',
+      'Was there any urge to control or improve the breath? What was that like?'
+    ],
+    related:['t7','t6','t3']
+  },
+
+  {
+    id:'t2', num:2, indexRef:12, difficulty:'Beginner',
+    title:{ en:'Awareness of Transitions', hi:'संधियों की जागरूकता', sa:'सन्धिचेतना' },
+    theme:{ en:'Noticing the transitions between experiences', hi:'अनुभवों के बीच के संधि-क्षणों को देखना', sa:'अनुभवानां मध्यस्थसन्धीनां अवलोकनम्' },
+    sanskritTerm:{ dev:'सन्धि', iast:'sandhi', gloss:'junction, meeting point, the seam between two things' },
+    intro:{
+      en:'Most of life is spent inside experiences. This exploration turns attention to the edges — the moment one experience ends and another has not yet begun. Between two thoughts there is a gap. Between two sounds there is an interval. Between the exhale and the next inhale there is a small, easily missed stillness. The practice is to become familiar with these seams.',
+      hi:'जीवन का अधिकांश भाग अनुभवों के भीतर बीतता है। यह अभ्यास ध्यान को किनारों की ओर मोड़ता है — जहाँ एक अनुभव समाप्त होता है और दूसरा अभी आरंभ नहीं हुआ। दो विचारों के बीच एक अंतराल है, दो ध्वनियों के बीच एक व्यवधान है।'
+    },
+    philosophical:{
+      en:[
+        'The Vigyan Bhairav material repeatedly returns to the intervals of ordinary experience. In the philosophical vocabulary of the tradition, the ordinary mind tends to grasp at the arising content of experience and ignore the ground from which it arises. The intervals are interesting precisely because there is nothing to grasp there.',
+        'This is not a doctrine that intervals are more real than thoughts. It is an observation about attention: when attention is trained on the edges rather than the contents, the ordinary compulsion to comment on experience softens, and awareness becomes somewhat more visible to itself.',
+        'The tradition also associates these junctures with the idea of unmeṣa — an opening or unfolding. The metaphor should not be over-read. What can be explored directly is far simpler: the fact that experiences have beginnings and endings, and that something notices both.'
+      ],
+      hi:[
+        'विज्ञान भैरव सामग्री बार-बार साधारण अनुभव के अंतरालों की ओर लौटती है। सामान्य मन अनुभव की विषय-वस्तु को पकड़ता है और उस आधार को छोड़ देता है जहाँ से वह उठती है।',
+        'यह सिद्धांत नहीं कि अंतराल विचारों से अधिक वास्तविक हैं। यह ध्यान के बारे में एक अवलोकन है: जब ध्यान किनारों पर प्रशिक्षित होता है, तो अनुभव पर टिप्पणी करने की आदत ढीली पड़ती है।'
+      ]
+    },
+    method:{
+      en:'Choose an ordinary transition: the gap between two sounds, between two breaths, or between two thoughts. Do not try to create a gap or make it last longer. Simply wait at the edge and notice what is already there. When the next experience arises, let it. The practice is patience at the boundary, not effort at the boundary.',
+      hi:'कोई साधारण संधि चुनें: दो ध्वनियों के बीच, दो श्वासों के बीच, या दो विचारों के बीच का अंतराल। अंतराल बनाने या बढ़ाने का प्रयास न करें। किनारे पर प्रतीक्षा करें और देखें कि पहले से क्या है।'
+    },
+    exploration:[
+      { en:'Sit quietly and let sounds come and go without following them.', hi:'शांत बैठें और ध्वनियों को बिना पीछा किए आने-जाने दें।' },
+      { en:'Notice the small silence just after a sound has faded.', hi:'ध्वनि के क्षीण होने के तुरंत बाद के छोटे मौन को देखें।' },
+      { en:'Do not lengthen it. Just notice it while it is there.', hi:'उसे लंबा न करें। जब तक है, केवल देखें।' },
+      { en:'Repeat with the breath: the pause after the exhale.', hi:'श्वास के साथ दोहराएँ: निःश्वास के बाद का विराम।' },
+      { en:'Finally, notice the gap before the next thought begins.', hi:'अंत में, अगले विचार से पहले के अंतराल को देखें।' },
+      { en:'Return to ordinary attention before you stand up.', hi:'खड़े होने से पहले सामान्य ध्यान में लौट आएँ।' }
+    ],
+    misunderstandings:[
+      { en:'You are not trying to stop thoughts. You are noticing the space in which they occur.', hi:'आप विचार रोकने का प्रयास नहीं कर रहे। आप वह अवकाश देख रहे हैं जिसमें वे उठते हैं।' },
+      { en:'A brief glimpse is enough. There is no target duration.', hi:'एक क्षणिक झलक पर्याप्त है। कोई लक्षित अवधि नहीं।' },
+      { en:'If no gap is noticed, that is a valid observation too.', hi:'यदि अंतराल दिखाई न दे, तो वह भी एक वैध अवलोकन है।' }
+    ],
+    reflection:[
+      'What was it like to wait at the edge of an experience instead of inside it?',
+      'Did the intervals feel empty, or did something seem present there?',
+      'What made it difficult to stay at the boundary?'
+    ],
+    related:['t1','t7','t4']
+  },
+
+  {
+    id:'t3', num:3, indexRef:15, difficulty:'Beginner',
+    title:{ en:'Awareness of Space', hi:'आकाश की जागरूकता', sa:'आकाशचेतना' },
+    theme:{ en:'Space and perception', hi:'आकाश एवं प्रत्यक्ष', sa:'आकाशः प्रत्यक्षं च' },
+    sanskritTerm:{ dev:'आकाश', iast:'ākāśa', gloss:'space, openness, the medium in which things appear' },
+    intro:{
+      en:'Attention usually goes to objects. This exploration reverses the emphasis and notices the space in which objects appear — the room around the furniture, the sky behind the branches, the openness between you and the wall. Nothing is added to perception; a background is simply allowed to become foreground.',
+      hi:'ध्यान सामान्यतः वस्तुओं पर जाता है। यह अभ्यास जोर उलट देता है और उस आकाश को देखता है जिसमें वस्तुएँ प्रकट होती हैं — फर्नीचर के चारों ओर का कमरा, शाखाओं के पीछे का आकाश।'
+    },
+    philosophical:{
+      en:[
+        'Space holds a central place in the philosophical traditions surrounding the Bhairava material. It is not treated merely as an empty container but as a positive openness in which all appearances arise and within which they are held. Some strands of the tradition identify this openness with the nature of consciousness itself.',
+        'Care is needed here. Identifying physical space with consciousness is a philosophical position, not an established scientific finding, and it is interpreted differently across schools. What can be explored without adopting any position is the shift in attention: from the object to the field in which the object is known.',
+        'Practically, this shift tends to loosen the grip of object-fixation. Attention becomes wider, less pointed, less exhausting. Whether that constitutes a spiritual insight is a question the tradition answers in its own vocabulary; the app deliberately leaves that question open.'
+      ],
+      hi:[
+        'आकाश का विज्ञान भैरव परंपरा में केंद्रीय स्थान है। इसे केवल खाली पात्र नहीं, बल्कि वह सकारात्मक विस्तार माना गया है जिसमें सब कुछ प्रकट होता है।',
+        'सावधानी आवश्यक है। भौतिक आकाश को चेतना से एक मानना एक दार्शनिक मत है, वैज्ञानिक तथ्य नहीं। जो बिना कोई मत अपनाए अन्वेषित किया जा सकता है, वह है ध्यान का विषय से क्षेत्र की ओर स्थानांतरण।'
+      ]
+    },
+    method:{
+      en:'Look at an ordinary object and then, without moving the eyes much, let attention widen to include the space around it. Do not stare. Let the object remain in view while the surrounding openness becomes equally interesting. Hold this wide, soft attention for a short while, then let it rest.',
+      hi:'किसी साधारण वस्तु को देखें और फिर आँखें अधिक न हिलाते हुए ध्यान को उसके चारों ओर के आकाश में फैलने दें। घूरें नहीं। वस्तु दृष्टि में रहे और आसपास का विस्तार भी समान रूप से रुचिकर हो जाए।'
+    },
+    exploration:[
+      { en:'Choose a room you know well and sit facing an open direction.', hi:'कोई परिचित कमरा चुनें और खुली दिशा की ओर बैठें।' },
+      { en:'Rest the eyes on a single object without straining.', hi:'बिना तनाव के आँखों को एक वस्तु पर टिकाएँ।' },
+      { en:'Widen attention to include the space around and beyond the object.', hi:'ध्यान को वस्तु के चारों ओर और उससे आगे के आकाश तक फैलाएँ।' },
+      { en:'Notice whether the face and eyes have tensed. Let them soften.', hi:'देखें कि चेहरा या आँखें तन गई हैं या नहीं। उन्हें ढीला छोड़ें।' },
+      { en:'If you go outdoors, try the same with open sky.', hi:'बाहर जाएँ तो खुले आकाश के साथ वही प्रयास करें।' },
+      { en:'Close by returning attention to the body and the room.', hi:'शरीर और कमरे पर ध्यान लौटाकर समाप्त करें।' }
+    ],
+    misunderstandings:[
+      { en:'This is not staring or visual strain. Soft, wide eyes are the point.', hi:'यह घूरना या आँखों पर जोर डालना नहीं है। सौम्य, विस्तृत दृष्टि अपेक्षित है।' },
+      { en:'Do not drive or operate machinery while doing this.', hi:'इसे करते समय वाहन न चलाएँ।' },
+      { en:'The "emptiness" noticed is not a metaphysical claim; it is a change in how attention is distributed.', hi:'जो "शून्यता" दिखती है वह तात्विक दावा नहीं, ध्यान के वितरण में परिवर्तन है।' }
+    ],
+    reflection:[
+      'Did the object or the space dominate your attention?',
+      'Did widening attention change how the object appeared?',
+      'What did the wider attention feel like in the body?'
+    ],
+    related:['t2','t7','t5']
+  },
+
+  {
+    id:'t4', num:4, indexRef:22, difficulty:'Beginner',
+    title:{ en:'Deep Listening', hi:'गहन श्रवण', sa:'गभीरश्रवणम्' },
+    theme:{ en:'Sound and attention', hi:'ध्वनि एवं ध्यान', sa:'ध्वनिः ध्यानं च' },
+    sanskritTerm:{ dev:'नाद', iast:'nāda', gloss:'sound, resonance; in some traditions the inner sound' },
+    intro:{
+      en:'Listening is one of the least demanding and most revealing forms of attention. In this exploration, you do not choose a sound, follow a sound, or analyse a sound. You let the whole field of sound arrive on its own and notice it without naming. Near sounds, far sounds, faint sounds, silence between them.',
+      hi:'श्रवण ध्यान का सबसे सहज और सबसे प्रकाशक रूप है। इस अभ्यास में आप कोई ध्वनि नहीं चुनते, नाम नहीं देते, विश्लेषण नहीं करते। आप ध्वनि के समग्र क्षेत्र को स्वयं आने देते हैं।'
+    },
+    philosophical:{
+      en:[
+        'Sound has a distinctive place in the contemplative literature associated with this tradition. Unlike a visual object, a sound cannot be held still; it arises, endures briefly and dissolves. Attending to sound therefore means attending to something that is intrinsically impermanent, which makes it a natural teacher of impermanence.',
+        'The tradition also speaks of nāda — sound or resonance — and in some strands, of an inner sound said to be heard when outer attention settles. Claims about such inner sounds vary widely between lineages and should be treated as reported experiences rather than established facts.',
+        'What is straightforwardly explorable is the difference between hearing and naming. Most people name a sound almost instantly ("traffic", "bird", "fan"). The brief moment before the naming is where this exploration lives.'
+      ],
+      hi:[
+        'इस परंपरा के चिंतन-साहित्य में ध्वनि का विशिष्ट स्थान है। दृश्य वस्तु के विपरीत ध्वनि को स्थिर नहीं रखा जा सकता; वह उठती है, थोड़ी देर रहती है और विलीन हो जाती है।',
+        'जो सहजता से अन्वेषित किया जा सकता है वह है सुनने और नाम देने का अंतर। अधिकांश लोग ध्वनि को तुरंत नाम दे देते हैं। नाम देने से पहले का क्षण ही इस अभ्यास का केंद्र है।'
+      ]
+    },
+    method:{
+      en:'Sit somewhere you will not be interrupted. Let the ears do the work — do not reach out toward any sound. When you notice a sound, try simply registering it as "sound" rather than identifying its source. When you catch yourself naming, let the naming go and return to the raw field of hearing.',
+      hi:'ऐसी जगह बैठें जहाँ व्यवधान न हो। कानों को काम करने दें — किसी ध्वनि की ओर न पहुँचें। जब ध्वनि सुनाई दे, उसे केवल "ध्वनि" के रूप में ग्रहण करें, स्रोत की पहचान न करें।'
+    },
+    exploration:[
+      { en:'Sit comfortably and let the eyes close or soften.', hi:'आराम से बैठें, आँखें बंद या सौम्य करें।' },
+      { en:'Notice the most distant sound available to you.', hi:'आपको सुनाई देने वाली सबसे दूर की ध्वनि को देखें।' },
+      { en:'Then notice the nearest sound — perhaps the body itself.', hi:'फिर सबसे निकट की ध्वनि सुनें — शायद शरीर स्वयं।' },
+      { en:'Let attention rest in the whole field between near and far.', hi:'ध्यान को निकट और दूर के बीच के समग्र क्षेत्र में विश्राम दें।' },
+      { en:'When a sound ends, notice the brief quiet that follows.', hi:'ध्वनि समाप्त होने पर उसके बाद के क्षणिक मौन को देखें।' },
+      { en:'End by opening the eyes and hearing the room once more.', hi:'आँखें खोलकर कमरे को पुनः सुनकर समाप्त करें।' }
+    ],
+    misunderstandings:[
+      { en:'This is not concentration on one sound. It is an open, receptive hearing.', hi:'यह एक ध्वनि पर एकाग्रता नहीं है। यह खुला, ग्रहणशील श्रवण है।' },
+      { en:'Hearing loss or tinnitus does not make this impossible; adapt to what is actually available to you.', hi:'श्रवण-न्यूनता या टिनिटस इसे असंभव नहीं बनाते; जो उपलब्ध है उसके अनुसार ढलें।' },
+      { en:'No inner mystical sound is being promised.', hi:'किसी आंतरिक चमत्कारिक ध्वनि का वादा नहीं है।' }
+    ],
+    reflection:[
+      'How much of the time was spent naming rather than hearing?',
+      'Did any sound feel pleasant or unpleasant before you decided it was?',
+      'What was the quality of the quiet between sounds?'
+    ],
+    related:['t5','t2','t7']
+  },
+
+  {
+    id:'t5', num:5, indexRef:36, difficulty:'Beginner',
+    title:{ en:'Awareness of Sensory Experience', hi:'इंद्रिय अनुभव की जागरूकता', sa:'इन्द्रियानुभवचेतना' },
+    theme:{ en:'The senses', hi:'इंद्रियाँ', sa:'इन्द्रियाणि' },
+    sanskritTerm:{ dev:'इन्द्रिय', iast:'indriya', gloss:'sense faculty; capacity of perception' },
+    intro:{
+      en:'This exploration takes the ordinary senses — sight, sound, touch, taste, smell — as its field. The method is not to intensify sensation but to notice how quickly raw sensation becomes interpretation. A patch of colour becomes "a wall". A vibration becomes "a chair". The practice is to spend a little longer on the raw side of that transition.',
+      hi:'यह अभ्यास साधारण इंद्रियों — दृष्टि, श्रवण, स्पर्श, स्वाद, गंध — को क्षेत्र बनाता है। विधि संवेदना को तीव्र करना नहीं, बल्कि यह देखना है कि कच्ची संवेदना कितनी शीघ्र व्याख्या बन जाती है।'
+    },
+    philosophical:{
+      en:[
+        'Traditions of recognition place considerable weight on direct experience — anubhava — as distinct from second-hand description. The claim, broadly, is that reality is not hidden but is overlooked because attention is habitually absorbed in conceptual overlay.',
+        'The senses are therefore not obstacles in this framework. They are the place where the overlay can be observed most clearly. When you look at a colour before naming it, you are not withdrawing from the world; you are meeting it with less mediation.',
+        'This should not be confused with a rejection of thought. Thinking remains useful and necessary. The exploration simply adds a mode of attention that is available alongside it, and lets the practitioner notice the difference for themselves.'
+      ],
+      hi:[
+        'प्रत्यभिज्ञा परंपराएँ प्रत्यक्ष अनुभव — अनुभव — को विशेष महत्व देती हैं। दावा यह है कि वास्तविकता छिपी नहीं, बल्कि इसलिए छूट जाती है कि ध्यान आदतन संकल्पनाओं में डूबा रहता है।',
+        'इस ढाँचे में इंद्रियाँ बाधा नहीं हैं। वे वह स्थान हैं जहाँ यह आवरण सबसे स्पष्ट देखा जा सकता है।'
+      ]
+    },
+    method:{
+      en:'Pick one sense channel for a session. Rest attention on the raw sensation and postpone the label. When the label arrives — as it will — notice the moment of arrival. That moment, more than the sensation itself, is the object of interest.',
+      hi:'एक सत्र के लिए एक इंद्रिय चुनें। ध्यान को कच्ची संवेदना पर रखें और नामकरण को टालें। जब नाम आए — और आएगा — तो उस आने के क्षण को देखें।'
+    },
+    exploration:[
+      { en:'Rest your hand on a surface and notice pressure, temperature, texture.', hi:'हाथ किसी सतह पर रखें और दबाव, तापमान, बनावट देखें।' },
+      { en:'Before deciding what the surface is, stay with the sensation for a few seconds.', hi:'यह तय करने से पहले कि सतह क्या है, कुछ क्षण संवेदना के साथ रहें।' },
+      { en:'Notice the moment the label appears. What changed?', hi:'जिस क्षण नाम आया उसे देखें। क्या बदला?' },
+      { en:'Repeat with a colour, then with a taste, then with a smell.', hi:'रंग, स्वाद और गंध के साथ दोहराएँ।' },
+      { en:'Do not strain to keep the raw sensation. Effort defeats the purpose.', hi:'कच्ची संवेदना बनाए रखने का जोर न लगाएँ। जोर उद्देश्य को हरा देता है।' },
+      { en:'Close gently, and move and speak normally.', hi:'सौम्यता से समाप्त करें और सामान्य रूप से चलें-बोलें।' }
+    ],
+    misunderstandings:[
+      { en:'You are not trying to feel more. You are trying to notice the ordering of what is already felt.', hi:'आप अधिक अनुभव करने का प्रयास नहीं कर रहे; पहले से अनुभूत के क्रम को देख रहे हैं।' },
+      { en:'Sensory exploration is not a route to dissociation. If you feel detached from your body, stop and orient to the room.', hi:'यह वियोजन का मार्ग नहीं है। शरीर से अलगाव लगे तो रुकें और कमरे की ओर लौटें।' },
+      { en:'Strong emotions may arise when a sense channel is opened. Pause if needed.', hi:'इंद्रिय-चेतना खुलने पर तीव्र भाव उठ सकते हैं। आवश्यकता हो तो रुकें।' }
+    ],
+    reflection:[
+      'How long was the gap between sensation and label?',
+      'Did the label change the felt quality of the sensation?',
+      'Which sense channel was easiest to meet without naming?'
+    ],
+    related:['t4','t6','t3']
+  },
+
+  {
+    id:'t6', num:6, indexRef:29, difficulty:'Beginner',
+    title:{ en:'Focused Attention', hi:'एकाग्र ध्यान', sa:'एकाग्रचेतना' },
+    theme:{ en:'Attention and perception', hi:'ध्यान एवं प्रत्यक्ष', sa:'ध्यानं प्रत्यक्षं च' },
+    sanskritTerm:{ dev:'धारणा', iast:'dhāraṇā', gloss:'holding, sustaining; the directing of attention' },
+    intro:{
+      en:'Focused attention is the deliberate, gentle sustaining of attention on one simple object. It is included here not because concentration is an end in itself, but because the contrast between focused and unfocused attention becomes experientially obvious once both have been tried.',
+      hi:'एकाग्र ध्यान एक सरल वस्तु पर ध्यान को सचेत रूप से बनाए रखना है। यह अभ्यास इसलिए सम्मिलित है क्योंकि एकाग्र और अनैकाग्र ध्यान का अंतर अनुभव से स्पष्ट हो जाता है।'
+    },
+    philosophical:{
+      en:[
+        'The technical vocabulary of the tradition includes terms such as dhāraṇā — often rendered as holding or fixing attention — and related terms for a more expanded, absorbed state. Precision about these terms matters, because translations differ and modern usage often blurs them.',
+        'The Bhairava material is notably not limited to concentration practices. Many of its approaches are described as more sudden, relying on recognition rather than on gradual cultivation. Focused attention therefore appears here as one method among many, with a specific and limited role.',
+        'The practical value of focus is diagnostic. By trying to stay with one object, you learn a great deal about how attention actually behaves: its restlessness, its periods of stability, and the way effort itself can disturb it.'
+      ],
+      hi:[
+        'परंपरा की तकनीकी शब्दावली में "धारणा" जैसे शब्द हैं — ध्यान को धारण करना या स्थिर करना। इन शब्दों में सटीकता आवश्यक है क्योंकि अनुवाद भिन्न हैं।',
+        'एकाग्रता का व्यावहारिक मूल्य निदानात्मक है। एक वस्तु पर टिकने का प्रयास करके आप सीखते हैं कि ध्यान वास्तव में कैसे व्यवहार करता है।'
+      ]
+    },
+    method:{
+      en:'Choose a simple, neutral object: a small stone, a candle flame, a point on the wall, or the sensation of the breath. Let attention rest there. When it moves, bring it back — without scolding, without scoring. Brief, frequent returns are more useful than long, strained holds.',
+      hi:'कोई सरल, तटस्थ वस्तु चुनें: छोटा पत्थर, दीपक की लौ, या श्वास की संवेदना। ध्यान को वहाँ विश्राम दें। भटके तो बिना डाँट लौटाएँ।'
+    },
+    exploration:[
+      { en:'Choose one object and place it at a comfortable distance.', hi:'एक वस्तु चुनें और सुविधाजनक दूरी पर रखें।' },
+      { en:'Let the eyes rest on it without staring or straining.', hi:'आँखों को घूरे बिना उस पर टिकाएँ।' },
+      { en:'When attention leaves, notice where it went, then return.', hi:'ध्यान हटे तो देखें कहाँ गया, फिर लौटा दें।' },
+      { en:'Keep sessions short — three to five minutes is plenty.', hi:'सत्र छोटे रखें — तीन से पाँच मिनट पर्याप्त हैं।' },
+      { en:'If the eyes water or the head tenses, close them and rest.', hi:'आँखें भरें या सिर तने तो आँखें बंद कर विश्राम करें।' },
+      { en:'Finish by letting attention widen to the whole room.', hi:'अंत में ध्यान को पूरे कमरे में फैला दें।' }
+    ],
+    misunderstandings:[
+      { en:'Effort is not the same as strain. If you are tightening, you are over-working.', hi:'प्रयास और तनाव एक नहीं हैं। कठोरता हो तो अधिक प्रयास हो रहा है।' },
+      { en:'A busy mind is not a failed session. Noticing the busyness is the practice.', hi:'व्यस्त मन असफल सत्र नहीं। व्यस्तता को देखना ही अभ्यास है।' },
+      { en:'Do not use flame-gazing if you have photosensitive epilepsy or eye conditions without medical advice.', hi:'प्रकाश-संवेदनशील मिर्गी या नेत्र-समस्या हो तो लौ-त्राटक बिना चिकित्सकीय सलाह न करें।' }
+    ],
+    reflection:[
+      'How long did attention actually stay before moving?',
+      'Was there a difference between returning gently and returning forcefully?',
+      'What did the object look like after sustained attention?'
+    ],
+    related:['t7','t1','t5']
+  },
+
+  {
+    id:'t7', num:7, indexRef:67, difficulty:'Beginner',
+    title:{ en:'Open Awareness', hi:'खुली जागरूकता', sa:'मुक्ता चेतना' },
+    theme:{ en:'Broad, undirected awareness', hi:'विस्तृत, अनिर्दिष्ट जागरूकता', sa:'विस्तृता अनिर्दिष्टा च चेतना' },
+    sanskritTerm:{ dev:'चित्', iast:'cit', gloss:'awareness, sentience; the capacity that knows' },
+    intro:{
+      en:'Open awareness is the counterpart to focused attention. Nothing is selected. Sounds, sensations, thoughts and moods arise and pass within a wide, permissive attention that does not prefer one content over another. Nothing is pushed away and nothing is held on to.',
+      hi:'खुली जागरूकता एकाग्र ध्यान का प्रतिरूप है। कुछ भी चुना नहीं जाता। ध्वनियाँ, संवेदनाएँ, विचार और मनोदशाएँ एक विस्तृत, अनुमतिपूर्ण ध्यान में उठती और बीतती हैं।'
+    },
+    philosophical:{
+      en:[
+        'The distinction between narrowed and expanded attention is a recurring theme in the contemplative literature of this tradition. Some approaches deliberately contract attention onto a point; others widen it until the boundary between observer and observed becomes difficult to locate.',
+        'The wider mode is associated with terms that resist neat translation — sometimes rendered as "awareness", "consciousness", "the heart", or "the void" depending on context and commentator. Treating any single English word as the definitive rendering would be misleading.',
+        'What can be said with more confidence is experiential: open awareness feels qualitatively different from focus. It is typically described as lighter, wider, and less effortful — and also less stable at first, because the mind is unaccustomed to not being pointed at something.'
+      ],
+      hi:[
+        'संकुचित और विस्तृत ध्यान का भेद इस परंपरा के चिंतन-साहित्य में बार-बार आता है। कुछ उपाय ध्यान को एक बिंदु पर सिकोड़ते हैं; अन्य उसे तब तक फैलाते हैं जब तक द्रष्टा और दृश्य की सीमा मिटने लगे।',
+        'अनुभव के स्तर पर यह अधिक निश्चितता से कहा जा सकता है: खुली जागरूकता एकाग्रता से गुणात्मक रूप से भिन्न लगती है — हल्की, विस्तृत और कम श्रमसाध्य।'
+      ]
+    },
+    method:{
+      en:'Sit comfortably and let attention be wide rather than pointed. Do not follow any content. Do not resist any content. When you notice you have been pulled into a thought, simply notice the pulling and let the field widen again. There is nothing to achieve and no state to maintain.',
+      hi:'आराम से बैठें और ध्यान को नुकीला नहीं, विस्तृत रहने दें। किसी विषय का पीछा न करें, विरोध न करें। जब ध्यान किसी विचार में खिंचे, उसे देखकर क्षेत्र को पुनः फैलने दें।'
+    },
+    exploration:[
+      { en:'Sit with eyes closed or softly open, in a place where you feel safe.', hi:'जहाँ सुरक्षित अनुभव हो वहाँ आँखें बंद या सौम्य रखकर बैठें।' },
+      { en:'Let the whole field of experience be present without sorting it.', hi:'अनुभव के समग्र क्षेत्र को बिना छाँटे उपस्थित रहने दें।' },
+      { en:'Notice thoughts as events within the field, not as tasks to solve.', hi:'विचारों को क्षेत्र की घटनाओं के रूप में देखें, सुलझाने के कार्य के रूप में नहीं।' },
+      { en:'If you become absorbed, that is fine — just notice when you return.', hi:'तल्लीन हो जाएँ तो ठीक है — लौटने पर उसे देखें।' },
+      { en:'Stay only as long as you remain comfortable and oriented.', hi:'जब तक सहज और स्थित रहें, तभी तक करें।' },
+      { en:'Close by feeling the weight of the body and looking around the room.', hi:'शरीर का भार अनुभव करके और कमरे को देखकर समाप्त करें।' }
+    ],
+    misunderstandings:[
+      { en:'Open awareness is not zoning out. Drowsiness is not the target; wakeful openness is.', hi:'खुली जागरूकता ध्यान का खो जाना नहीं। लक्ष्य नींद नहीं, जागृत विस्तार है।' },
+      { en:'You are not required to feel blissful. Neutrality is a perfectly good outcome.', hi:'आनंद अनुभव करना अनिवार्य नहीं। तटस्थता भी उत्तम परिणाम है।' },
+      { en:'If you feel ungrounded or dissociated, open your eyes, name five things you can see, and stop.', hi:'अस्थिर या वियोजित लगे तो आँखें खोलें, पाँच दृश्य वस्तुओं के नाम लें, और रुकें।' }
+    ],
+    reflection:[
+      'How did open awareness compare with focused attention?',
+      'What pulled attention most strongly?',
+      'Was there anything present throughout all the changing content?'
+    ],
+    related:['t6','t3','t2']
+  }
+];
+
+
+/* --- 3.3 Philosophical concepts --------------------------------------- */
+const CONCEPTS = [
+  {
+    id:'c-awareness',
+    title:'What Is Awareness?',
+    sanskrit:{ dev:'चेतना', iast:'cetanā / cit', gloss:'awareness, sentience' },
+    summary:'Awareness is the simple fact of being present to something. It is not a thing among things but the condition under which anything can appear at all.',
+    body:[
+      'In ordinary language, "awareness" and "consciousness" are often used interchangeably. In philosophical contexts they are sometimes distinguished: consciousness may refer to the overall state of a subject, while awareness may refer to the bare capacity to register. Different schools draw the line differently, and this app does not settle the question.',
+      'What is relatively uncontroversial is that awareness is not itself an object of experience in the way a colour or a sound is. You can be aware of a sound; you cannot in the same way be aware of your awareness as an object. Any attempt to do so seems to produce another object rather than the awareness itself.',
+      'The Vigyan Bhairav material treats this oddity as significant. Rather than attempting to observe awareness as an object, many of its approaches invite a shift of emphasis from content to the fact of presence — from what is known to the knowing itself.',
+      'Readers should note that this is a contemplative and philosophical framing. Contemporary cognitive science approaches attention and awareness with different methods and different vocabularies, and it would be a mistake to assume the two frameworks map onto one another neatly.'
+    ],
+    related:['c-bhairava','c-dharana','c-nondual']
+  },
+  {
+    id:'c-dharana',
+    title:'What Is Dharana?',
+    sanskrit:{ dev:'धारणा', iast:'dhāraṇā', gloss:'holding, sustaining, fixing of attention' },
+    summary:'Dharana is usually translated as concentration or the sustaining of attention. The word carries a sense of holding or bearing, not of forcing.',
+    body:[
+      'The term belongs to a broader technical vocabulary shared across several Indian contemplative systems. In classical yoga literature, dharana names the stage in which attention is held on a single support, preceding the more absorbed condition called dhyana.',
+      'The word derives from a root meaning to hold or bear. This is worth noting: the metaphor is one of steady support rather than of muscular exertion. Traditional descriptions often stress effortlessness as the mark of correct practice, which sits awkwardly with the way concentration is sometimes taught in modern settings.',
+      'In the Vigyan Bhairav, the vocabulary of holding appears alongside many approaches that do not involve holding at all. This suggests that the text is not organised around a single graded technique but presents a varied repertoire, and that different readers will find different entries in that repertoire useful.',
+      'For a modern reader, the practical question is less "which definition is correct" and more "what does sustained attention actually do when I try it, and what happens when I stop trying".'
+    ],
+    related:['c-awareness','c-translation','c-text']
+  },
+  {
+    id:'c-bhairava',
+    title:'Shiva and Bhairava in Context',
+    sanskrit:{ dev:'भैरव', iast:'bhairava', gloss:'the awesome one; a fierce form of Shiva' },
+    summary:'The text is framed as a dialogue between Bhairava and the goddess Bhairavi. Understanding that frame changes how the verses are read.',
+    body:[
+      'The Vigyan Bhairav is structured as a conversation. The goddess — usually Devi or Bhairavi — asks a question, and Bhairava answers by describing a sequence of approaches to the recognition of one\u2019s own nature. The number of approaches is traditionally given as 112.',
+      'Bhairava is a form of Shiva associated with the fierce, the awesome and the boundary-crossing. In the Kashmir Shaiva context in which the text is transmitted with commentary, Bhairava is not simply a deity among deities but a name for the ultimate reality in its most immediate, available aspect.',
+      'This matters for interpretation. Reading the text as a set of neutral "techniques" detaches it from a devotional and metaphysical frame that its authors took for granted. Reading it only as theology detaches it from the practical instructions it plainly contains. The best readings hold both.',
+      'The app presents the dialogue frame as historical and textual context. It does not require any reader to adopt a theological position in order to explore the practical content.'
+    ],
+    related:['c-awareness','c-text','c-nondual']
+  },
+  {
+    id:'c-text',
+    title:'The Text and Its History',
+    sanskrit:{ dev:'विज्ञानभैरव', iast:'vijñāna-bhairava', gloss:'the discernment of Bhairava' },
+    summary:'A short account of what the text is, how it was transmitted, and why translation is difficult.',
+    body:[
+      'The Vijñāna Bhairava is a relatively short tantric work, widely assigned to roughly the eighth or ninth century CE, though dating of such texts is often approximate. It belongs to the non-dual Shaiva literature of Kashmir, where it was studied with commentaries — most influentially the one attributed to Kṣemarāja.',
+      'The title is itself contested in translation. Vijñāna can mean discernment, knowledge, or a kind of experiential understanding; bhairava is both a name and a descriptor. Rendering the title as "the yoga of supreme identity" or "the practice of centring awareness" each encodes a different interpretative choice.',
+      'The text survives in manuscripts and in printed editions of varying quality. Verse numbering differs between editions, and some verses have variant readings. This is why any responsible digital presentation must record which edition it is following.',
+      'The 112 approaches vary enormously in character. Some involve breath, some sound, some visual attention, some conceptual inquiry, and some are described in language so compressed that commentaries disagree about the intended practice. The app\u2019s seven-technique programme is an editorial selection for beginners; it is not a claim about which approaches the text considers primary.'
+    ],
+    related:['c-translation','c-bhairava','c-dharana']
+  },
+  {
+    id:'c-nondual',
+    title:'Non-Duality: What the Claim Actually Is',
+    sanskrit:{ dev:'अद्वैत', iast:'advaita', gloss:'not-two' },
+    summary:'Non-duality is not the claim that everything is one substance. It is more carefully understood as a rejection of a specific kind of separation between knower and known.',
+    body:[
+      'The word advaita literally means "not two". It is a negation rather than a positive assertion of unity, and this grammatical detail matters. The position being rejected is that awareness and its objects are fundamentally different kinds of thing.',
+      'In the Kashmir Shaiva framing, the claim is that the world is not other than the dynamic expression of a single awareness. This is a metaphysical position with a long history of argument, and it is not universally accepted even within Indian philosophy — dualist and pluralist schools argue against it at length.',
+      'For a practitioner, the practical question is narrower. Regardless of metaphysics, it is possible to notice that the boundary between "me" and "what I am aware of" is less fixed than it seems, and that it shifts with attention. Whether that observation supports a non-dual metaphysics is a further question.',
+      'The app treats non-duality as a contested philosophical position, presented with its arguments and its critics, not as a settled fact.'
+    ],
+    related:['c-awareness','c-bhairava','c-translation']
+  },
+  {
+    id:'c-translation',
+    title:'Translation, Interpretation and the Difference',
+    sanskrit:{ dev:'अनुवाद', iast:'anuvāda', gloss:'translation, "saying after"' },
+    summary:'A translation is not a neutral window. Every rendering of a Sanskrit verse involves choices that carry interpretive weight.',
+    body:[
+      'Sanskrit compounds can be analysed in multiple ways, technical terms have histories that shift between schools, and verse form often constrains word order in ways that make literal prose awkward. A translator must decide, constantly, between fidelity to syntax and readability in the target language.',
+      'Beyond translation lies interpretation. Two translators may agree on every word and still disagree about what the passage is instructing the reader to do. Commentarial traditions disagree in exactly this way, and modern scholarship has not resolved those disagreements.',
+      'This app therefore separates fields. Original text is presented as text. Transliteration is mechanical. Literal translation stays close to the grammar. Readable translation aims at fluency. Interpretation is explicitly labelled as interpretation, and where a specific scholar or commentator is being followed, that is stated.',
+      'No AI-generated gloss is ever presented as the meaning of the original text or as an established traditional commentary.'
+    ],
+    related:['c-text','c-dharana','c-nondual']
+  },
+  {
+    id:'c-attention',
+    title:'Attention and Perception',
+    sanskrit:{ dev:'ध्यान', iast:'dhyāna', gloss:'attention, meditation' },
+    summary:'What we notice is shaped by where attention goes — and attention is far less stable, and far more trainable, than most people assume.',
+    body:[
+      'Ordinary experience feels like a continuous stream, but it is assembled from discontinuous acts of noticing. Attention selects, and selection shapes what appears. This is not a mystical claim; it is close to the everyday observation that you can look at a room for a minute and then notice something you had entirely missed.',
+      'Contemplative traditions built practices around this observation long before experimental psychology existed. The practices are, broadly, ways of influencing the selection process — either by narrowing it (focus) or by widening it (open awareness) or by observing it without interference (bare attention).',
+      'Modern research on attention has produced findings that are interesting alongside these practices, though the two literatures use different methods and should not be conflated. Nothing in the app claims that a traditional practice has been scientifically validated unless a specific study is cited.',
+      'The practical invitation is simply to test the observation for yourself: try narrowing attention, then widening it, and notice what changes in the texture of experience.'
+    ],
+    related:['c-awareness','c-dharana','c-nondual']
+  },
+  {
+    id:'c-senses',
+    title:'The Role of Sensory Experience',
+    sanskrit:{ dev:'इन्द्रिय', iast:'indriya', gloss:'sense faculty' },
+    summary:'In this tradition the senses are not obstacles to be shut down. They are the most immediate available evidence of awareness at work.',
+    body:[
+      'Some contemplative systems treat sensory experience as a distraction to be withdrawn from. The non-dual Shaiva material moves in a different direction: if reality is not other than awareness, then sensory experience is not a departure from reality but one of its expressions.',
+      'This produces a distinctive practical attitude. Rather than suppressing sound or sight, the practitioner is invited to meet it with a quality of attention that does not grasp. The senses remain fully active; what changes is the relationship to what they present.',
+      'This should be distinguished from sensory indulgence. The point is not to seek more intense experience but to notice the ordinary one more precisely — to see what is actually given before it is overwritten by expectation and label.',
+      'For readers who find sensory practice destabilising, the tradition itself offers alternatives: conceptual inquiry, sound-based practice, or simple recollection. No single approach suits everyone.'
+    ],
+    related:['c-awareness','c-attention','c-nondual']
+  }
+];
+
+
+/* --- 3.4 Sanskrit glossary -------------------------------------------- */
+const GLOSSARY = [
+  { term:'Vijñāna', dev:'विज्ञान', iast:'vijñāna', pron:'vij-NYAA-na', gloss:'Discernment, experiential knowledge, understanding.',
+    detail:'In the title of the text it is usually read as a kind of distinguishing knowledge — the discernment by which reality is recognised as it is. It is not simply "information". Related to the root jñā, to know, with the prefix vi-, suggesting differentiation or thoroughness.',
+    related:['Bhairava','Cit','Jñāna'] },
+  { term:'Bhairava', dev:'भैरव', iast:'bhairava', pron:'BHAI-ra-va', gloss:'The awesome or terrible one; a fierce form of Shiva.',
+    detail:'Etymologies are debated. It is commonly connected with the root bhī, to fear, and read as "the one who is awesome" or "the one who removes fear". In the Kashmir Shaiva context, Bhairava names ultimate reality in its most immediate aspect, and the text is framed as his answer to the goddess.',
+    related:['Vijñāna','Bhairavī','Shakti'] },
+  { term:'Dhāraṇā', dev:'धारणा', iast:'dhāraṇā', pron:'DHAA-ra-naa', gloss:'Holding, sustaining; concentration.',
+    detail:'From the root dhṛ, to hold or bear. In classical yoga literature it names the sustaining of attention on a single support. The metaphor is of steady support rather than force.',
+    related:['Dhyāna','Cit'] },
+  { term:'Cit', dev:'चित्', iast:'cit', pron:'chit', gloss:'Awareness, sentience, the capacity to know.',
+    detail:'A fundamental term in non-dual Shaiva and Vedantic thought, often used for awareness considered in itself, apart from any particular content. Frequently compounded as cit-śakti, the power of awareness.',
+    related:['Cetanā','Śakti','Vijñāna'] },
+  { term:'Cetanā', dev:'चेतना', iast:'cetanā', pron:'che-ta-NAA', gloss:'Awareness, sentience, animation.',
+    detail:'A general term for being conscious or sentient. Less technically loaded than cit in some contexts, and closer to the ordinary sense of "being awake to something".',
+    related:['Cit','Dhyāna'] },
+  { term:'Śakti', dev:'शक्ति', iast:'śakti', pron:'SHUK-ti', gloss:'Power, capacity, dynamic energy.',
+    detail:'In the tantric framework, śakti is the dynamic aspect through which a conscious principle expresses itself. The relationship between the static and dynamic poles is one of the central philosophical questions of the tradition, and different schools answer it differently.',
+    related:['Cit','Bhairavī','Spanda'] },
+  { term:'Spanda', dev:'स्पन्द', iast:'spanda', pron:'SPUN-da', gloss:'Vibration, throb, subtle movement.',
+    detail:'A key term in Kashmir Shaiva thought, associated with a whole school (the Spanda school). It refers to the subtle self-motion of awareness — not physical vibration, but the sense that consciousness is not inert.',
+    related:['Śakti','Cit'] },
+  { term:'Śūnya', dev:'शून्य', iast:'śūnya', pron:'SHOON-ya', gloss:'Empty, void, zero.',
+    detail:'Used across traditions with very different meanings. In some Buddhist contexts it relates to emptiness of inherent existence; in tantric and later Vedantic contexts it may denote a state of absorption or an apparent void that is not the final reality. Context is essential.',
+    related:['Cit','Ākāśa'] },
+  { term:'Ākāśa', dev:'आकाश', iast:'ākāśa', pron:'AA-kaa-sha', gloss:'Space, openness, the medium of appearance.',
+    detail:'One of the classical elements. In contemplative usage it often denotes openness itself rather than a physical medium, and some traditions identify it metaphorically with the nature of awareness.',
+    related:['Śūnya','Cit'] },
+  { term:'Dhyāna', dev:'ध्यान', iast:'dhyāna', pron:'DHYAA-na', gloss:'Meditation, sustained attention.',
+    detail:'In classical yoga literature, the state following dhāraṇā, in which attention flows more continuously toward its support. In broader usage it covers a wide range of contemplative practices.',
+    related:['Dhāraṇā','Cit'] },
+  { term:'Nāda', dev:'नाद', iast:'nāda', pron:'NAA-da', gloss:'Sound, resonance.',
+    detail:'Used for sound generally, and in some tantric and hatha contexts for an inner sound said to be perceived in deep absorption. Claims about such sounds vary considerably between lineages.',
+    related:['Śabda','Dhyāna'] },
+  { term:'Anubhava', dev:'अनुभव', iast:'anubhava', pron:'a-nu-BHA-va', gloss:'Direct experience, firsthand apprehension.',
+    detail:'Contrasted with secondhand knowledge or mere belief. Recognition traditions place heavy emphasis on anubhava as the test of philosophical claims, though what counts as valid experience is itself debated.',
+    related:['Cit','Vijñāna'] },
+  { term:'Pratyabhijñā', dev:'प्रत्यभिज्ञा', iast:'pratyabhijñā', pron:'pra-tya-BHI-JYAA', gloss:'Recognition.',
+    detail:'The name of a major Kashmir Shaiva school and its central metaphor: realisation is not the production of something new but the recognition of what was always the case. Associated with the philosopher Abhinavagupta and his predecessors.',
+    related:['Vijñāna','Cit','Spanda'] },
+  { term:'Unmeṣa', dev:'उन्मेष', iast:'unmeṣa', pron:'un-ME-sha', gloss:'Opening, unfolding, a flash of arising.',
+    detail:'Literally an opening of the eyes. Used metaphorically for the spontaneous arising or unfolding of awareness. Its opposite, nimeṣa, is a closing.',
+    related:['Spanda','Cit'] }
+];
+
+
+/* --- 3.5 Sources ------------------------------------------------------ */
+const SOURCES = [
+  { group:'Primary editions and commentaries',
+    items:[
+      { cite:'Vijñāna Bhairava, with the commentary of Kṣemarāja. Edited by Mukunda Rāma Śāstrī. Kashmir Series of Texts and Studies, no. 9. Srinagar, 1918.', note:'One of the foundational printed editions of the Sanskrit text with commentary.' },
+      { cite:'Kṣemarāja. Pratyabhijñāhṛdaya ("The Heart of Recognition").', note:'A short, highly influential summary of the Pratyabhijñā (recognition) school.' }
+    ]
+  },
+  { group:'Translations and studies',
+    items:[
+      { cite:'Jaideva Singh, trans. Vijñāna Bhairava: The Yoga of Supreme Identity. Motilal Banarsidass, 1979.', note:'Widely used English translation with Sanskrit text and commentary material.' },
+      { cite:'Swami Lakshmanjoo. Vijñāna Bhairava: The Practice of Centring Awareness. Edited by Bettina Bäumer.', note:'A translation and exposition from a living Kashmiri Śaiva lineage.' },
+      { cite:'Mark S. G. Dyczkowski. The Doctrine of Vibration. State University of New York Press, 1987.', note:'A scholarly study of the Spanda school and its philosophical context.' },
+      { cite:'Christopher D. Wallis. Tantra Illuminated. Mattamayura Press, 2013.', note:'An accessible introduction to tantric philosophy and practice for general readers.' }
+    ]
+  },
+  { group:'Reference and context',
+    items:[
+      { cite:'Monier-Williams Sanskrit–English Dictionary.', note:'Standard reference for lexical and etymological information.' },
+      { cite:'Encyclopaedia of Indian Philosophy and religion — general reference works on Kashmir Śaivism.', note:'Useful for orienting terminology; not a substitute for primary sources.' }
+    ]
+  }
+];
+
+
+/* ============================================================================
+   04. UTILITIES
+   ============================================================================ */
+
+function esc(str) {
+  return String(str == null ? '' : str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
-body {
-  margin: 0;
-  background: var(--navy);
-  color: var(--white);
-  font-family: var(--sans);
-  font-size: var(--fs);
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transition: background .35s var(--ease), color .35s var(--ease);
-  min-height: 100vh;
+function stripDiacritics(s) {
+  return String(s)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/ā/g, 'a').replace(/ī/g, 'i').replace(/ū/g, 'u')
+    .replace(/ṛ/g, 'r').replace(/ṝ/g, 'r').replace(/ḷ/g, 'l')
+    .replace(/ṃ/g, 'm').replace(/ṁ/g, 'm').replace(/ḥ/g, 'h')
+    .replace(/ś/g, 's').replace(/ṣ/g, 's').replace(/ñ/g, 'n')
+    .replace(/ṭ/g, 't').replace(/ḍ/g, 'd').replace(/ṇ/g, 'n')
+    .toLowerCase();
 }
 
-body[data-lang="hi"] { font-family: var(--dev-sans); }
-body[data-lang="sa"] .dev,
-.dev { font-family: var(--dev-serif); }
-
-h1, h2, h3, h4 {
-  font-family: var(--serif);
-  font-weight: 600;
-  line-height: 1.24;
-  margin: 0 0 .5em;
-  letter-spacing: .005em;
+function norm(s) {
+  return stripDiacritics(s).trim();
 }
 
-body[data-lang="hi"] h1,
-body[data-lang="hi"] h2,
-body[data-lang="hi"] h3,
-body[data-lang="hi"] h4 {
-  font-family: var(--dev-sans);
-  font-weight: 600;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2100);
 }
 
-h1 { font-size: clamp(1.85rem, 4.2vw, 2.9rem); }
-h2 { font-size: clamp(1.40rem, 2.6vw, 2.00rem); }
-h3 { font-size: 1.20rem; }
-h4 { font-size: 1.03rem; }
-
-p  { margin: 0 0 1em; }
-a  { color: var(--gold-soft); text-decoration: none; }
-a:hover { color: var(--gold); }
-
-img { max-width: 100%; display: block; }
-button { font-family: inherit; font-size: inherit; }
-input, textarea, select { font-family: inherit; }
-
-::selection {
-  background: var(--gold);
-  color: #0B1424;
+function fmtDate(ts) {
+  const d = new Date(ts);
+  try {
+    return d.toLocaleDateString(
+      state.lang === 'hi' || state.lang === 'sa' ? 'hi-IN' : 'en-GB',
+      { day:'numeric', month:'short', year:'numeric' }
+    );
+  } catch (e) {
+    return d.toDateString();
+  }
 }
 
-/* Scrollbar (WebKit) */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-  background: var(--deep-3);
-  border-radius: 20px;
-  border: 2px solid var(--navy);
+function relTime(ts) {
+  const diff = Date.now() - ts;
+  const min = Math.floor(diff / 60000);
+  if (min < 1) return 'just now';
+  if (min < 60) return min + ' min ago';
+  const hr = Math.floor(min / 60);
+  if (hr < 24) return hr + ' hr ago';
+  const d = Math.floor(hr / 24);
+  if (d < 7) return d + ' day' + (d > 1 ? 's' : '') + ' ago';
+  return fmtDate(ts);
 }
-::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
 
-/* Firefox scrollbar */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--deep-3) transparent;
+function langText(obj) {
+  if (obj == null) return '';
+  if (typeof obj === 'string') return obj;
+  return obj[state.lang] || obj.en || '';
+}
+
+/* --- bookmark helpers --- */
+function isBookmarked(type, id) {
+  return state.bookmarks.some((b) => b.type === type && String(b.id) === String(id));
+}
+
+function toggleBookmark(type, id, title) {
+  const i = state.bookmarks.findIndex((b) => b.type === type && String(b.id) === String(id));
+  if (i > -1) {
+    state.bookmarks.splice(i, 1);
+    toast('Removed from bookmarks');
+  } else {
+    state.bookmarks.unshift({ type, id, title, ts: Date.now() });
+    toast('Bookmarked');
+  }
+  saveState();
+  return isBookmarked(type, id);
+}
+
+function pushHistory(type, id, title) {
+  state.history = state.history.filter((h) => !(h.type === type && String(h.id) === String(id)));
+  state.history.unshift({ type, id, title, ts: Date.now() });
+  if (state.history.length > 60) state.history.length = 60;
+  saveState();
+}
+
+/* --- content lookups --- */
+function getTechnique(id) { return TECHNIQUES.find((x) => x.id === id); }
+function getIndexEntry(n) { return INDEX.find((x) => x.n === Number(n)); }
+function getConcept(id) { return CONCEPTS.find((x) => x.id === id); }
+function getGlossaryTerm(name) { return GLOSSARY.find((x) => norm(x.term) === norm(name)); }
+function techniqueForIndex(n) { return TECHNIQUES.find((x) => x.indexRef === Number(n)); }
+
+/* --- route resolution --- */
+function routeFor(type, id) {
+  switch (type) {
+    case 'technique': return '#/technique/' + id;
+    case 'verse':     return '#/verse/' + id;
+    case 'concept':   return '#/concept/' + id;
+    case 'term':      return '#/term/' + encodeURIComponent(id);
+    default:          return '#/library';
+  }
 }
 
 
 /* ============================================================================
-   03. ACCESSIBILITY
+   05. RENDERING HELPERS
    ============================================================================ */
 
-/* Skip link — visible only on keyboard focus */
-.skip-link {
-  position: fixed;
-  top: -60px;
-  left: 12px;
-  z-index: 999;
-  padding: 10px 18px;
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-  background: var(--gold);
-  color: #0B1424;
-  font-weight: 600;
-  font-size: .88rem;
-  text-decoration: none;
-  transition: top .2s var(--ease);
-}
-.skip-link:focus,
-.skip-link:focus-visible {
-  top: 0;
-  outline: none;
-  box-shadow: 0 0 0 3px var(--gold-soft);
+function pageHeader(eyebrow, title, lede) {
+  return `
+    <header class="mb32">
+      <span class="eyebrow">${esc(eyebrow)}</span>
+      <h1>${esc(title)}</h1>
+      ${lede ? `<p class="lede">${esc(lede)}</p>` : ''}
+    </header>`;
 }
 
-/* Global focus ring — visible only for keyboard navigation */
-:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
-  border-radius: 4px;
+function bookmarkBtn(type, id, title) {
+  const on = isBookmarked(type, id);
+  return `<button class="btn btn-sm ${on ? 'btn-outline' : 'btn-ghost'}"
+    data-bm-type="${esc(type)}" data-bm-id="${esc(id)}" data-bm-title="${esc(title)}"
+    aria-pressed="${on}">${on ? '★ Saved' : '☆ Save'}</button>`;
 }
 
-/* Remove focus outline for mouse users on buttons that already have a hover state */
-button:focus:not(:focus-visible),
-a:focus:not(:focus-visible) {
-  outline: none;
+function statusBadge(status) {
+  if (status === 'curated') return `<span class="badge">Programme</span>`;
+  if (status === 'summary') return `<span class="badge plain">Summary available</span>`;
+  return `<span class="badge pending">Pending verification</span>`;
 }
 
-/* Noscript notice */
-.noscript-notice {
-  max-width: 620px;
-  margin: 60px auto;
-  padding: 22px 26px;
-  border-radius: var(--radius);
-  border: 1px solid rgba(224, 176, 96, .45);
-  background: rgba(224, 176, 96, .08);
-  color: var(--white);
-  font-size: .92rem;
-  line-height: 1.7;
-  text-align: center;
-}
-.noscript-notice strong {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--gold-soft);
-  font-family: var(--serif);
-  font-size: 1.15rem;
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-    scroll-behavior: auto !important;
-  }
-  html { scroll-behavior: auto; }
+function safetyNote() {
+  return `
+  <div class="callout safety">
+    <h4>⚠ ${esc(t('safetyNote'))}</h4>
+    <ul>
+      <li>These explorations are offered for personal enquiry. They are not medical or psychological treatment.</li>
+      <li>Never force the breath, retain the breath, or deliberately hyperventilate.</li>
+      <li>You may practise with the eyes open if that feels safer, and you should stay aware of your surroundings.</li>
+      <li>Stop at any time. Stopping is a legitimate part of the practice, not a failure of it.</li>
+      <li>If you have a heart condition, respiratory condition, epilepsy, or a history of dissociation or trauma, consult a qualified professional before starting breath- or attention-based practices.</li>
+      <li>No outcome — calm, insight, bliss, or anything else — is promised or guaranteed.</li>
+    </ul>
+  </div>`;
 }
 
 
 /* ============================================================================
-   04. LAYOUT SHELL
+   06. VIEWS
    ============================================================================ */
 
-.shell {
-  display: grid;
-  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
-  min-height: 100vh;
+/* --- 6.1 Welcome / onboarding ----------------------------------------- */
+let onboardStep = 0;
+let onboardDraftLang = 'en';
+
+function renderWelcome() {
+  const steps = [
+    /* 0 — welcome */
+    () => `
+      <div class="onboard-step">Vigyaan Bhairav</div>
+      <div class="onboard-devanagari" lang="sa">विज्ञान भैरव</div>
+      <h1>Explore Awareness.<br>Understand Consciousness.</h1>
+      <p class="lede" style="margin:0 auto 26px;text-align:center">
+        Explore an ancient framework of awareness through its original
+        philosophical foundations, interpretations and practical explorations.
+      </p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-gold" type="button" data-onboard="next">Begin</button>
+        <button class="btn btn-ghost" type="button" data-onboard="guest">Continue as guest</button>
+      </div>
+      <p class="tiny muted mt24">No account required. All educational content remains accessible.</p>
+    `,
+
+    /* 1 — language */
+    () => `
+      <div class="onboard-step">Step 1 of 4</div>
+      <h2>Choose your language</h2>
+      <p class="lede" style="margin:0 auto 6px;text-align:center">You can change this at any time from the profile menu.</p>
+      <div class="lang-options">
+        ${[['en','English','English'],['hi','हिन्दी','Hindi'],['sa','संस्कृत','Sanskrit']].map(([code, native, en]) => `
+          <button class="lang-opt ${onboardDraftLang === code ? 'sel' : ''}" type="button" data-lang-pick="${code}">
+            <span class="native">${native}</span>
+            <span class="en">${en}</span>
+          </button>`).join('')}
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <button class="btn btn-ghost" type="button" data-onboard="back">Back</button>
+        <button class="btn btn-gold" type="button" data-onboard="next">Continue</button>
+      </div>
+    `,
+
+    /* 2 — what is it */
+    () => `
+      <div class="onboard-step">Step 2 of 4</div>
+      <h2>What is Vigyaan Bhairav?</h2>
+      <div style="text-align:left;max-width:520px;margin:0 auto 24px">
+        <p class="muted" style="font-size:.94rem">
+          The <strong style="color:var(--gold-soft)">Vijñāna Bhairava</strong> is a short tantric text from the
+          non-dual Shaiva traditions of Kashmir, generally dated to roughly the eighth or ninth century CE.
+          It is framed as a dialogue in which the goddess asks Bhairava how reality might be recognised directly,
+          and receives a series of 112 approaches in reply.
+        </p>
+        <p class="muted" style="font-size:.94rem">
+          This platform treats the text as a subject of study. It presents original material, translations and
+          interpretations as clearly separated categories, and it never presents an interpretation as if it were
+          the original text.
+        </p>
+        <div class="callout info" style="margin-top:18px">
+          <h4>What this app is not</h4>
+          <p>It is not a source of medical advice, not a promise of spiritual attainment, and not a substitute
+          for a qualified teacher or clinician where those are needed.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <button class="btn btn-ghost" type="button" data-onboard="back">Back</button>
+        <button class="btn btn-gold" type="button" data-onboard="next">Continue</button>
+      </div>
+    `,
+
+    /* 3 — interests */
+    () => `
+      <div class="onboard-step">Step 3 of 4</div>
+      <h2>What would you like to explore?</h2>
+      <p class="lede" style="margin:0 auto 18px;text-align:center">Optional — this only helps us suggest starting points.</p>
+      <div class="chip-row" style="justify-content:center;max-width:520px;margin:0 auto 26px">
+        ${['Meditation for beginners','Indian philosophy','Sanskrit literature','Consciousness studies','Contemplative practice','History of tantra']
+          .map((x) => `<button class="chip" type="button" data-interest="${esc(x)}">${esc(x)}</button>`).join('')}
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <button class="btn btn-ghost" type="button" data-onboard="back">Back</button>
+        <button class="btn btn-gold" type="button" data-onboard="next">Continue</button>
+      </div>
+    `,
+
+    /* 4 — enter */
+    () => `
+      <div class="onboard-step">Step 4 of 4</div>
+      <div style="font-family:var(--dev-serif);font-size:2.2rem;color:var(--gold-soft);line-height:1.5;margin-bottom:10px">॥</div>
+      <h2>You're ready to begin</h2>
+      <p class="lede" style="margin:0 auto 26px;text-align:center">
+        Start with the Seven Explorations, browse the full 112-technique index, or read the philosophy library.
+        Everything is available without an account.
+      </p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-gold" type="button" data-onboard="finish">Enter the Application</button>
+      </div>
+    `
+  ];
+
+  const body = (steps[onboardStep] || steps[0])();
+  return `<div class="onboard-wrap"><div class="onboard-card">${body}</div></div>`;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 100vh;
+
+/* --- 6.2 Home --------------------------------------------------------- */
+function renderHome() {
+  const recent = state.history.slice(0, 3);
+
+  const featured = [
+    { id:'c-awareness', label:'Philosophy', title:'What is awareness?' },
+    { id:'c-text',      label:'Historical context', title:'The text and its history' },
+    { id:'c-dharana',   label:'Terminology', title:'What is dharana?' },
+    { id:'c-attention', label:'Research note', title:'Attention and perception' }
+  ];
+
+  return `
+    <section class="hero">
+      <span class="eyebrow">${esc(t('brandSub'))}</span>
+      <h1>A Journey into Awareness</h1>
+      <p class="lede">
+        Explore the philosophical foundations and contemplative approaches of the Vigyaan Bhairav tradition —
+        with original sources, translations and interpretations clearly distinguished.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#/explore">${esc(t('beginExploring'))}</a>
+        <a class="btn btn-outline" href="#/library">${esc(t('openLibrary'))}</a>
+      </div>
+    </section>
+
+    ${recent.length ? `
+    <section class="section">
+      <div class="section-head">
+        <h2>${esc(t('continueLearning'))}</h2>
+        <a class="more" href="#/history">View all</a>
+      </div>
+      <div class="row-list">
+        ${recent.map((h) => `
+          <a class="row" href="${routeFor(h.type, h.id)}">
+            <div class="row-num">◷</div>
+            <div class="row-body">
+              <div class="row-title">${esc(h.title)}</div>
+              <div class="row-meta">${esc(h.type)} · ${esc(relTime(h.ts))}</div>
+            </div>
+            <div class="row-actions"><span class="badge plain">Resume</span></div>
+          </a>`).join('')}
+      </div>
+    </section>` : ''}
+
+    <section class="section">
+      <div class="section-head">
+        <h2>${esc(t('sevenProgramme'))}</h2>
+        <a class="more" href="#/explore">View programme</a>
+      </div>
+      <p class="lede mb24">${esc(t('sevenSubtitle'))}</p>
+      <div class="grid auto">
+        ${TECHNIQUES.slice(0, 3).map((tech) => `
+          <a class="tech-card" href="#/technique/${tech.id}" style="text-decoration:none">
+            <div class="tech-num">${String(tech.num).padStart(2, '0')}</div>
+            <h3 class="tech-title">${esc(langText(tech.title))}</h3>
+            <div class="tech-theme">${esc(langText(tech.theme))}</div>
+            <div style="margin-top:auto;padding-top:10px">
+              <span class="badge plain">${esc(tech.difficulty)}</span>
+            </div>
+          </a>`).join('')}
+      </div>
+      <div class="mt16">
+        <a class="btn btn-outline btn-sm" href="#/explore">See all seven →</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>${esc(t('featured'))}</h2>
+        <a class="more" href="#/philosophy">Philosophy centre</a>
+      </div>
+      <div class="grid g2">
+        ${featured.map((f) => {
+          const c = getConcept(f.id);
+          return `
+          <a class="card hoverable" href="#/concept/${f.id}" style="text-decoration:none;color:inherit">
+            <span class="eyebrow" style="margin-bottom:6px">${esc(f.label)}</span>
+            <h3 style="margin-bottom:8px;color:var(--white)">${esc(c ? c.title : f.title)}</h3>
+            <p class="small muted" style="margin:0">${esc(c ? c.summary : '')}</p>
+          </a>`;
+        }).join('')}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Explore by category</h2></div>
+      <div class="grid auto">
+        ${[
+          ['#/library',     'Original Text',           'Sanskrit source structure'],
+          ['#/index',       '112 Techniques',          'Complete reference index'],
+          ['#/explore',     'Seven Explorations',      'Curated beginner programme'],
+          ['#/philosophy',  'Philosophical Concepts',  'Depth and context'],
+          ['#/glossary',    'Sanskrit Glossary',       'Terminology and pronunciation'],
+          ['#/about',       'Historical Context',      'Sources and methodology']
+        ].map(([href, title, sub]) => `
+          <a class="card hoverable" href="${href}" style="text-decoration:none;color:inherit">
+            <h3 style="font-size:1.05rem;color:var(--gold-soft);margin-bottom:5px">${esc(title)}</h3>
+            <p class="small muted" style="margin:0">${esc(sub)}</p>
+          </a>`).join('')}
+      </div>
+    </section>
+
+    <hr class="rule-gold">
+    <p class="tiny muted center" style="max-width:640px;margin:0 auto">
+      Vigyaan Bhairav is an educational platform. All contemplative material is presented for study and
+      personal exploration. Nothing here is medical advice, and no outcome is guaranteed.
+    </p>
+  `;
 }
 
-main#app {
-  flex: 1;
-  width: 100%;
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 34px 26px 90px;
-  animation: fade .32s var(--ease);
+
+/* --- 6.3 Library ----------------------------------------------------- */
+function renderLibrary() {
+  const cards = [
+    { href:'#/library/intro',       title:'Introduction',            sub:'Background and overview of the text',                       badge:'Article' },
+    { href:'#/library/text',        title:'Original Sanskrit Text',  sub:'Source structure and reading conventions',                  badge:'Source' },
+    { href:'#/library/translation', title:'Translations',            sub:'How translation, interpretation and commentary are separated', badge:'Method' },
+    { href:'#/index',               title:'112 Techniques Index',    sub:'Complete numbered reference index',                          badge:'Index' },
+    { href:'#/explore',             title:'Seven Explorations',      sub:'Curated introductory programme',                             badge:'Programme' },
+    { href:'#/philosophy',          title:'Philosophical Concepts',  sub:'Awareness, dharana, non-duality and more',                   badge:'Depth' },
+    { href:'#/glossary',            title:'Sanskrit Glossary',       sub:'Terminology, transliteration and pronunciation',             badge:'Reference' },
+    { href:'#/about/sources',       title:'Research & References',   sub:'Editions, translations and scholarship',                     badge:'Sources' }
+  ];
+
+  return `
+    ${pageHeader('Knowledge Library', 'The Knowledge Library',
+      'The scholarly foundation of the platform: original material, translations, philosophical context and research references — organised so that the categories remain distinguishable.')}
+
+    <div class="callout info mb24">
+      <h4>Reading the library</h4>
+      <p>Every passage is presented under explicit labels. <strong>Original Text</strong> and
+      <strong>Transliteration</strong> are source material. <strong>Literal Translation</strong> stays close to
+      the grammar. <strong>Interpretation</strong> is editorial and is always marked as such. Where a passage
+      has not yet been checked against a specific edition, it is labelled
+      <em>pending verification</em> and never presented as authoritative.</p>
+    </div>
+
+    <div class="grid auto">
+      ${cards.map((c) => `
+        <a class="card hoverable" href="${c.href}" style="text-decoration:none;color:inherit">
+          <span class="badge plain mb8">${esc(c.badge)}</span>
+          <h3 style="font-size:1.08rem;color:var(--white);margin-bottom:6px">${esc(c.title)}</h3>
+          <p class="small muted" style="margin:0">${esc(c.sub)}</p>
+        </a>`).join('')}
+    </div>
+
+    <hr class="divider">
+    <h2>Recently added to your history</h2>
+    ${state.history.length ? `
+      <div class="row-list mt16">
+        ${state.history.slice(0, 5).map((h) => `
+          <a class="row" href="${routeFor(h.type, h.id)}">
+            <div class="row-num">◷</div>
+            <div class="row-body">
+              <div class="row-title">${esc(h.title)}</div>
+              <div class="row-meta">${esc(h.type)} · ${esc(relTime(h.ts))}</div>
+            </div>
+          </a>`).join('')}
+      </div>` : `<p class="muted small mt16">${esc(t('noHistory'))}</p>`}
+  `;
 }
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: none; }
+
+/* --- 6.4 Library articles -------------------------------------------- */
+function renderLibraryArticle(slug) {
+  const articles = {
+    intro: {
+      title:'Introduction to the Text',
+      eyebrow:'Library · Introduction',
+      body:`
+        <p>The <strong>Vijñāna Bhairava</strong> is a short tantric work belonging to the non-dual Shaiva
+        literature of Kashmir. It is generally dated to roughly the eighth or ninth century CE, though precise
+        dating of such texts is uncertain and scholarship differs.</p>
+        <p>The text takes the form of a dialogue. The goddess — variously named in different editions — asks
+        Bhairava a question about the nature of reality and the means of recognising it. The answer takes the
+        form of a sequence of approaches, traditionally counted as 112.</p>
+        <h3>Why the number matters</h3>
+        <p>The 112 count is a traditional figure, and different editions and commentarial traditions handle
+        the numbering differently. Some verses contain more than one approach; some approaches span several
+        verses. Any digital presentation that claims a definitive one-to-one mapping between verse numbers and
+        technique numbers is making an editorial decision, not reporting a fact.</p>
+        <h3>How this platform organises it</h3>
+        <p>We maintain two distinct things: a <strong>112-position reference index</strong>, which preserves the
+        traditional count and provides a stable address for each entry; and a <strong>seven-technique
+        programme</strong>, which is an editorial selection for beginners. The programme is not a ranking and
+        does not claim that these seven are the most important.</p>
+        <div class="note-block mt16">
+          <strong>Editorial status.</strong> The index titles used in this application are editorial
+          descriptors written to make the index navigable. They are not translations of verse headings, and
+          they will be revised as source verification proceeds.
+        </div>`
+    },
+    text: {
+      title:'The Original Sanskrit Text',
+      eyebrow:'Library · Source',
+      body:`
+        <p>The Sanskrit text survives in manuscripts and in printed editions of varying quality. This
+        application does not reproduce a full critical edition. It provides the structural frame for reading
+        source material responsibly, and it records which edition is being followed wherever a passage is
+        quoted.</p>
+        <h3>Reading conventions used here</h3>
+        <ul>
+          <li><strong>Devanagari</strong> — the original script.</li>
+          <li><strong>IAST transliteration</strong> — International Alphabet of Sanskrit Transliteration, used
+          for consistent roman rendering of diacritics.</li>
+          <li><strong>Word-by-word</strong> — a grammatical gloss, not a translation.</li>
+          <li><strong>Literal translation</strong> — close to the syntax, sometimes awkward in English.</li>
+          <li><strong>Readable translation</strong> — fluent, with the trade-offs that fluency requires.</li>
+        </ul>
+        <h3>Why verses are shown as "pending verification"</h3>
+        <p>A Sanskrit verse quoted from memory, or reconstructed from a secondary summary, can look authentic
+        while being subtly wrong. Since the entire value of this platform depends on source integrity, no
+        passage is presented as a verified quotation until it has been checked against a named edition by an
+        editor. Until then the passage is shown as pending.</p>
+        <div class="callout safety">
+          <h4>Content integrity rule</h4>
+          <p>No Sanskrit verse, verse number, translation or bibliographic reference is ever generated for
+          display. Where the source is not yet confirmed, the interface says so plainly.</p>
+        </div>`
+    },
+    translation: {
+      title:'Translation, Interpretation and Commentary',
+      eyebrow:'Library · Method',
+      body:`
+        <p>These three words are often used interchangeably in popular spiritual publishing. They are not the
+        same, and confusing them is one of the main reasons contemplative literature becomes unreliable.</p>
+        <h3>Translation</h3>
+        <p>The rendering of a text from one language into another. A translation can be literal or free, but
+        it remains accountable to the original wording. Two competent translators can produce different
+        translations of the same verse without either being wrong.</p>
+        <h3>Interpretation</h3>
+        <p>An account of what a passage means or instructs. Interpretation goes beyond the words. It draws on
+        context, on the commentator being followed, and on the interpreter's own philosophical commitments.</p>
+        <h3>Commentary</h3>
+        <p>A traditional exposition, usually by a named historical author, transmitted as part of the text's
+        reception. For the Vijñāna Bhairava the most influential is that attributed to Kṣemarāja. A commentary
+        is not the text; it is a reading of the text, and it carries its own authority and its own date.</p>
+        <hr class="divider">
+        <p>In this application, each of these occupies its own labelled field. Where modern academic
+        scholarship is summarised, it is attributed. Where the editors have made a pedagogical choice — for
+        example, in phrasing a beginner-friendly explanation — that is marked as editorial.</p>`
+    }
+  };
+
+  const a = articles[slug];
+  if (!a) return renderNotFound();
+
+  return `
+    <div class="crumbs"><a href="#/library">Library</a><span>/</span>${esc(a.title)}</div>
+    <span class="eyebrow">${esc(a.eyebrow)}</span>
+    <h1>${esc(a.title)}</h1>
+    <div class="prose mt24">${a.body}</div>
+    <hr class="divider">
+    <a class="btn btn-ghost btn-sm" href="#/library">← Back to Library</a>
+  `;
+}
+
+
+/* --- 6.5 Verse / index reader ---------------------------------------- */
+function renderVerse(n) {
+  const entry = getIndexEntry(n);
+  if (!entry) return renderNotFound();
+  const tech = techniqueForIndex(n);
+
+  pushHistory('verse', String(n), 'Index ' + String(n).padStart(3, '0') + ' · ' + entry.title);
+
+  return `
+    <div class="crumbs"><a href="#/index">112 Index</a><span>/</span>Entry ${String(n).padStart(3, '0')}</div>
+
+    <div class="flex between items-center wrap gap12 mb16">
+      <div>
+        <span class="eyebrow" style="margin-bottom:6px">Index Entry ${String(n).padStart(3, '0')}</span>
+        <h1 style="margin-bottom:6px">${esc(entry.title)}</h1>
+        <p class="muted small mb0">Category: ${esc(CATEGORIES[entry.cat].en)} ${statusBadge(entry.status)}</p>
+      </div>
+      <div class="flex gap8 wrap">
+        ${bookmarkBtn('verse', String(n), entry.title)}
+        ${tech ? `<a class="btn btn-sm btn-gold" href="#/technique/${tech.id}">Open technique →</a>` : ''}
+      </div>
+    </div>
+
+    ${tech ? `
+    <div class="callout info">
+      <h4>Part of the Seven Explorations programme</h4>
+      <p>This index position is mapped to the curated technique
+      <a href="#/technique/${tech.id}"><strong>${esc(langText(tech.title))}</strong></a>,
+      which includes a full lesson, exploration guidance and reflection prompts.</p>
+    </div>` : ''}
+
+    <!-- ORIGINAL TEXT -->
+    <section class="section">
+      <span class="field-label">${esc(t('originalText'))}</span>
+      <div class="source-block pending">
+        <p class="small muted" style="margin-bottom:12px">
+          <span class="badge pending">${esc(t('pending'))}</span>
+        </p>
+        <div class="devanagari" style="opacity:.55">॥ &nbsp; &nbsp; ॥</div>
+        <p class="small muted mt16 mb0">
+          The Devanagari passage for this index position has not yet been checked against a named edition.
+          It is therefore not reproduced here. Showing an unverified Sanskrit quotation would undermine the
+          integrity of the entire library.
+        </p>
+      </div>
+    </section>
+
+    <!-- TRANSLITERATION -->
+    <section class="section">
+      <span class="field-label">${esc(t('transliteration'))}</span>
+      <div class="source-block pending">
+        <p class="translit" style="opacity:.55">— pending source verification —</p>
+        <p class="tiny muted mb0">IAST transliteration will appear here once the source edition is confirmed.</p>
+      </div>
+    </section>
+
+    <!-- TRANSLATION -->
+    <section class="section">
+      <span class="field-label">${esc(t('readableTranslation'))}</span>
+      <div class="source-block pending">
+        <p class="muted mb0">
+          No translation is offered for this position yet. Any translation published here will name the
+          translator or state that it is an editorial rendering, and will record the edition it follows.
+        </p>
+      </div>
+    </section>
+
+    <!-- INTERPRETATION -->
+    <section class="section">
+      <span class="field-label">${esc(t('interpretation'))} · Editorial</span>
+      <div class="card">
+        <p style="margin-bottom:12px">
+          Editorial note on the theme: <strong>${esc(entry.title)}</strong>.
+        </p>
+        <p class="muted small">
+          This index position belongs to the editorial category
+          <strong>${esc(CATEGORIES[entry.cat].en)}</strong>. The category is a navigational aid, not a claim
+          about how the original text groups its approaches.
+        </p>
+        <p class="muted small mb0">
+          ${tech
+            ? `A full editorial explanation of this theme is available in the
+               <a href="#/technique/${tech.id}">${esc(langText(tech.title))}</a> technique page.`
+            : `A detailed editorial explanation for this position has not yet been written. When it is
+               published it will appear here under a clearly marked <em>Interpretation</em> label, distinct
+               from any translation.`}
+        </p>
+      </div>
+    </section>
+
+    <!-- HISTORICAL CONTEXT -->
+    <section class="section">
+      <span class="field-label">${esc(t('historicalContext'))}</span>
+      <div class="card">
+        <p class="muted small mb0">
+          The Vijñāna Bhairava belongs to the non-dual Shaiva literature of Kashmir, generally dated to
+          roughly the eighth or ninth century CE. Verse numbering and textual readings vary between editions.
+          For a fuller account, see <a href="#/concept/c-text">The Text and Its History</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- RESEARCH NOTE -->
+    <section class="section">
+      <span class="field-label">${esc(t('researchNote'))}</span>
+      <div class="note-block">
+        <strong>Status:</strong> ${esc(t('pending'))}. This entry is a structural placeholder in the
+        112-position index. It carries no sourced content. Related glossary terms and bibliography appear
+        under <a href="#/about/sources">Sources</a>.
+      </div>
+    </section>
+
+    <div class="flex gap12 wrap mt32">
+      <a class="btn btn-ghost" href="#/index">← All 112 positions</a>
+      ${Number(n) > 1 ? `<a class="btn btn-ghost" href="#/verse/${Number(n) - 1}">← ${String(Number(n) - 1).padStart(3, '0')}</a>` : ''}
+      ${Number(n) < 112 ? `<a class="btn btn-ghost" href="#/verse/${Number(n) + 1}">${String(Number(n) + 1).padStart(3, '0')} →</a>` : ''}
+    </div>
+  `;
+}
+
+
+/* --- 6.6 112 index --------------------------------------------------- */
+function renderIndex() {
+  const q = norm(state.indexQuery);
+  const f = state.indexFilter;
+
+  const list = INDEX.filter((e) => {
+    if (f !== 'all' && e.cat !== f) return false;
+    if (q && !norm(e.title).includes(q) && !String(e.n).includes(q)) return false;
+    return true;
+  });
+
+  return `
+    ${pageHeader('Reference', 'The Complete 112-Technique Index',
+      'All 112 traditional positions are preserved here as a browsable reference. Only seven carry the curated programme label. The remaining positions are structural placeholders until verified content is published.')}
+
+    <div class="callout info mb24">
+      <h4>About these titles</h4>
+      <p>The titles below are <strong>editorial descriptors</strong> written to make the index navigable.
+      They are not translations of verse headings, and the categories are navigational groupings, not a
+      verified classification of the original text. See <a href="#/library/intro">the introduction</a> for
+      details.</p>
+    </div>
+
+    <div class="filterbar">
+      <input type="text" id="indexSearch" placeholder="Filter by title or number…" value="${esc(state.indexQuery)}">
+      <select id="indexCat">
+        <option value="all">All categories</option>
+        ${Object.entries(CATEGORIES).map(([k, v]) =>
+          `<option value="${k}" ${f === k ? 'selected' : ''}>${esc(v.en)}</option>`).join('')}
+      </select>
+      <span class="tiny muted">${list.length} of 112 shown</span>
+    </div>
+
+    <div class="row-list">
+      ${list.length ? list.map((e) => `
+        <a class="row" href="#/verse/${e.n}">
+          <div class="row-num">${String(e.n).padStart(3, '0')}</div>
+          <div class="row-body">
+            <div class="row-title">${esc(e.title)}</div>
+            <div class="row-meta">${esc(CATEGORIES[e.cat].en)}</div>
+          </div>
+          <div class="row-actions">${statusBadge(e.status)}</div>
+        </a>`).join('') : `
+        <div class="empty"><div class="big">∅</div><p>${esc(t('emptySearch'))}</p></div>`}
+    </div>
+  `;
+}
+
+
+/* --- 6.7 Seven-technique programme ----------------------------------- */
+function renderExplore() {
+  return `
+    ${pageHeader('Curated Programme', 'Seven Explorations of Awareness',
+      'A carefully curated introductory programme featuring seven accessible contemplations selected from the larger tradition. This is a selection, not a ranking.')}
+
+    <div class="callout info mb24">
+      <h4>How the seven were chosen</h4>
+      <p>Selection criteria: relevance to the tradition, accessibility to complete beginners, diversity of
+      philosophical themes, ease of explaining accurately, low physical and psychological risk, and the
+      absence of any need for special equipment. These are <strong>editorial candidates</strong> — the mapping
+      to specific original verses is still being verified.</p>
+    </div>
+
+    ${safetyNote()}
+
+    <div class="grid auto mt24">
+      ${TECHNIQUES.map((tech) => `
+        <a class="tech-card" href="#/technique/${tech.id}" style="text-decoration:none">
+          <div class="tech-num">${String(tech.num).padStart(2, '0')}</div>
+          <h3 class="tech-title">${esc(langText(tech.title))}</h3>
+          <div class="tech-theme">${esc(langText(tech.theme))}</div>
+          <div class="flex between items-center" style="margin-top:auto;padding-top:12px">
+            <span class="badge plain">${esc(tech.difficulty)}</span>
+            <span class="tiny muted">Index ${String(tech.indexRef).padStart(3, '0')}</span>
+          </div>
+        </a>`).join('')}
+    </div>
+
+    <hr class="rule-gold">
+    <div class="card pad-lg">
+      <h3 style="color:var(--gold-soft)">A note on pace</h3>
+      <p class="muted small mb0">
+        This programme is not a seven-day challenge. There are no streaks, no completion scores and no
+        required durations. Explore at your own pace, return as often as you like, and stop whenever you wish.
+        Nothing here measures spiritual progress, and the application does not treat time spent as an
+        achievement.
+      </p>
+    </div>
+  `;
+}
+
+
+/* --- 6.8 Technique detail -------------------------------------------- */
+function renderTechnique(id) {
+  const tech = getTechnique(id);
+  if (!tech) return renderNotFound();
+
+  pushHistory('technique', tech.id, langText(tech.title));
+  const related = (tech.related || []).map(getTechnique).filter(Boolean);
+
+  return `
+    <div class="crumbs"><a href="#/explore">Seven Explorations</a><span>/</span>Technique ${String(tech.num).padStart(2, '0')}</div>
+
+    <div class="flex between items-start wrap gap12 mb24">
+      <div style="max-width:60ch">
+        <span class="eyebrow" style="margin-bottom:6px">Technique ${String(tech.num).padStart(2, '0')} · ${esc(tech.difficulty)}</span>
+        <h1 style="margin-bottom:10px">${esc(langText(tech.title))}</h1>
+        <p class="lede mb0">${esc(langText(tech.theme))}</p>
+      </div>
+      <div class="flex gap8 wrap">
+        ${bookmarkBtn('technique', tech.id, langText(tech.title))}
+        <a class="btn btn-sm btn-outline" href="#/verse/${tech.indexRef}">Index ${String(tech.indexRef).padStart(3, '0')}</a>
+      </div>
+    </div>
+
+    <div class="source-block pending mb24">
+      <span class="field-label">Source Reference</span>
+      <p class="small mb8"><span class="badge pending">${esc(t('pending'))}</span></p>
+      <p class="small muted mb0">
+        This technique is currently mapped editorially to index position
+        <strong>${String(tech.indexRef).padStart(3, '0')}</strong>.
+        The precise Sanskrit passage, verse number and edition have not yet been confirmed by the editorial
+        team. This page therefore presents the philosophical theme and a beginner-safe exploration, and does
+        <em>not</em> present any Sanskrit quotation, translation or verse number as verified.
+      </p>
+    </div>
+
+    ${safetyNote()}
+
+    <!-- 1. INTRODUCTION -->
+    <section class="section mt32">
+      <span class="field-label">01 · Introduction</span>
+      <h2>What is this technique about?</h2>
+      <div class="prose"><p>${esc(langText(tech.intro))}</p></div>
+    </section>
+
+    <!-- Sanskrit term -->
+    <section class="section">
+      <span class="field-label">Related Sanskrit Term</span>
+      <div class="card">
+        <div class="flex gap16 items-center wrap">
+          <div style="min-width:110px">
+            <div class="devanagari" style="font-size:2rem">${esc(tech.sanskritTerm.dev)}</div>
+            <div class="translit">${esc(tech.sanskritTerm.iast)}</div>
+          </div>
+          <div style="flex:1;min-width:200px">
+            <p class="small muted mb0">${esc(tech.sanskritTerm.gloss)}</p>
+            <a class="small" href="#/term/${encodeURIComponent(tech.sanskritTerm.iast)}" style="display:inline-block;margin-top:8px">See glossary →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ORIGINAL SOURCE -->
+    <section class="section">
+      <span class="field-label">02 · Original Source</span>
+      <h2>Sanskrit passage and translation</h2>
+      <div class="source-block pending">
+        <p class="small muted mb0">
+          Not yet published. When the source edition is confirmed, this block will contain the Devanagari
+          passage, its IAST transliteration, a word-by-word gloss, a literal translation and a readable
+          translation — each under its own label. Until then, no text is shown.
+        </p>
+      </div>
+      <div class="note-block">
+        <strong>Why this page has no Sanskrit yet.</strong> Reproducing a verse from memory or from a
+        secondary summary risks introducing errors that would be invisible to most readers. The editorial
+        policy is to publish source text only after checking it against a named edition.
+      </div>
+    </section>
+
+    <!-- 3. PHILOSOPHICAL MEANING -->
+    <section class="section">
+      <span class="field-label">03 · ${esc(t('philosophicalMeaning'))}</span>
+      <h2>What the tradition communicates</h2>
+      <div class="prose">
+        ${(tech.philosophical[state.lang] || tech.philosophical.en).map((p) => `<p>${esc(p)}</p>`).join('')}
+      </div>
+    </section>
+
+    <!-- 4. METHOD -->
+    <section class="section">
+      <span class="field-label">04 · ${esc(t('understandingMethod'))}</span>
+      <h2>In plain language</h2>
+      <div class="prose"><p>${esc(langText(tech.method))}</p></div>
+    </section>
+
+    <!-- 5. GENTLE EXPLORATION -->
+    <section class="section">
+      <span class="field-label">05 · ${esc(t('gentleExploration'))}</span>
+      <h2>A short, safe exploration</h2>
+      <div class="card">
+        <ol style="margin:0;padding-left:1.3em">
+          ${tech.exploration.map((step) => `<li style="margin-bottom:10px;color:var(--white);opacity:.92">${esc(langText(step))}</li>`).join('')}
+        </ol>
+      </div>
+      <p class="tiny muted mt16">
+        Suggested duration: three to ten minutes. Longer is not better. Stop as soon as you wish.
+      </p>
+    </section>
+
+    <!-- 6. MISUNDERSTANDINGS -->
+    <section class="section">
+      <span class="field-label">06 · ${esc(t('commonMisunderstandings'))}</span>
+      <h2>What this practice is not</h2>
+      <div class="grid" style="gap:12px">
+        ${tech.misunderstandings.map((m) => `
+          <div class="callout" style="margin:0">
+            <p style="margin:0"><strong style="color:var(--gold-soft)">✕</strong> ${esc(langText(m))}</p>
+          </div>`).join('')}
+      </div>
+    </section>
+
+    <!-- 7. REFLECTION -->
+    <section class="section">
+      <span class="field-label">07 · ${esc(t('reflectionPrompts'))}</span>
+      <h2>Questions to sit with</h2>
+      <div class="card">
+        <ul style="margin:0;padding-left:1.2em">
+          ${tech.reflection.map((r) => `<li style="margin-bottom:9px;color:var(--white);opacity:.9">${esc(r)}</li>`).join('')}
+        </ul>
+      </div>
+      <button class="btn btn-outline btn-sm mt16" type="button" data-journal-related="${esc(langText(tech.title))}">
+        ✎ Write a reflection entry
+      </button>
+    </section>
+
+    <!-- 8. FURTHER READING -->
+    <section class="section">
+      <span class="field-label">08 · ${esc(t('furtherReading'))}</span>
+      <h2>Related material</h2>
+      <div class="grid auto">
+        ${related.map((r) => `
+          <a class="card hoverable" href="#/technique/${r.id}" style="text-decoration:none;color:inherit">
+            <span class="badge plain mb8">Technique ${String(r.num).padStart(2, '0')}</span>
+            <div style="font-family:var(--serif);font-size:1.05rem;color:var(--white)">${esc(langText(r.title))}</div>
+          </a>`).join('')}
+        <a class="card hoverable" href="#/concept/c-awareness" style="text-decoration:none;color:inherit">
+          <span class="badge plain mb8">Concept</span>
+          <div style="font-family:var(--serif);font-size:1.05rem;color:var(--white)">What is awareness?</div>
+        </a>
+        <a class="card hoverable" href="#/about/sources" style="text-decoration:none;color:inherit">
+          <span class="badge plain mb8">Reference</span>
+          <div style="font-family:var(--serif);font-size:1.05rem;color:var(--white)">Sources & further reading</div>
+        </a>
+      </div>
+    </section>
+
+    <div class="flex gap12 wrap mt32">
+      <a class="btn btn-ghost" href="#/explore">← All seven techniques</a>
+      ${tech.num > 1 ? `<a class="btn btn-ghost" href="#/technique/t${tech.num - 1}">← Previous</a>` : ''}
+      ${tech.num < 7 ? `<a class="btn btn-ghost" href="#/technique/t${tech.num + 1}">Next →</a>` : ''}
+    </div>
+  `;
+}
+
+
+/* --- 6.9 Philosophy centre ------------------------------------------- */
+function renderPhilosophy() {
+  return `
+    ${pageHeader('Depth', 'Philosophical Knowledge Centre',
+      'Concepts, context and contested questions. Each topic distinguishes what the tradition says, what modern scholarship adds, and what remains genuinely uncertain.')}
+
+    <div class="callout info mb24">
+      <h4>On contested positions</h4>
+      <p>These are philosophical topics on which serious scholars disagree. Nothing here is presented as
+      universally accepted fact. Where a view belongs to a specific school or commentator, that is stated.</p>
+    </div>
+
+    <div class="grid g2">
+      ${CONCEPTS.map((c) => `
+        <a class="card hoverable" href="#/concept/${c.id}" style="text-decoration:none;color:inherit">
+          <div class="flex between items-start gap12" style="margin-bottom:10px">
+            <div>
+              <h3 style="font-size:1.12rem;color:var(--white);margin-bottom:2px">${esc(c.title)}</h3>
+              <div class="tiny muted">${esc(c.sanskrit.iast)}</div>
+            </div>
+            <div class="devanagari" style="font-size:1.35rem;opacity:.85;white-space:nowrap">${esc(c.sanskrit.dev)}</div>
+          </div>
+          <p class="small muted mb0">${esc(c.summary)}</p>
+        </a>`).join('')}
+    </div>
+  `;
+}
+
+
+/* --- 6.10 Concept detail --------------------------------------------- */
+function renderConcept(id) {
+  const c = getConcept(id);
+  if (!c) return renderNotFound();
+
+  pushHistory('concept', c.id, c.title);
+  const related = (c.related || []).map(getConcept).filter(Boolean);
+
+  return `
+    <div class="crumbs"><a href="#/philosophy">Philosophy</a><span>/</span>${esc(c.title)}</div>
+
+    <div class="flex between items-start wrap gap12 mb16">
+      <div style="max-width:62ch">
+        <span class="eyebrow" style="margin-bottom:6px">Philosophical Concept</span>
+        <h1 style="margin-bottom:10px">${esc(c.title)}</h1>
+        <p class="lede mb0">${esc(c.summary)}</p>
+      </div>
+      ${bookmarkBtn('concept', c.id, c.title)}
+    </div>
+
+    <div class="card mb24">
+      <div class="flex gap16 items-center wrap">
+        <div style="min-width:120px">
+          <div class="devanagari" style="font-size:2rem">${esc(c.sanskrit.dev)}</div>
+          <div class="translit">${esc(c.sanskrit.iast)}</div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <p class="small muted mb0">${esc(c.sanskrit.gloss)}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      ${c.body.map((p) => `<p>${esc(p)}</p>`).join('')}
+    </div>
+
+    ${related.length ? `
+    <hr class="divider">
+    <span class="field-label">Related concepts</span>
+    <div class="grid auto mt16">
+      ${related.map((r) => `
+        <a class="card hoverable" href="#/concept/${r.id}" style="text-decoration:none;color:inherit">
+          <div style="font-family:var(--serif);font-size:1.05rem;color:var(--white)">${esc(r.title)}</div>
+          <p class="tiny muted" style="margin:6px 0 0">${esc(r.summary.slice(0, 90))}…</p>
+        </a>`).join('')}
+    </div>` : ''}
+
+    <hr class="divider">
+    <a class="btn btn-ghost btn-sm" href="#/philosophy">← Philosophy centre</a>
+  `;
+}
+
+
+/* --- 6.11 Glossary --------------------------------------------------- */
+function renderGlossary() {
+  return `
+    ${pageHeader('Reference', 'Sanskrit Glossary',
+      'Terms that recur throughout the library, with Devanagari spelling, IAST transliteration, pronunciation guidance and contextual meaning.')}
+
+    <div class="callout info mb24">
+      <h4>On pronunciation</h4>
+      <p>Pronunciation guides here are approximate English approximations for orientation only. Sanskrit has
+      distinctions — long and short vowels, retroflex and dental consonants — that English spelling cannot
+      represent. The IAST transliteration is the reliable reference.</p>
+    </div>
+
+    <div class="grid auto">
+      ${GLOSSARY.map((g) => `
+        <a class="term-card" href="#/term/${encodeURIComponent(g.term)}" style="text-decoration:none;color:inherit">
+          <div class="term-dev">${esc(g.dev)}</div>
+          <div class="term-rom">${esc(g.iast)}</div>
+          <div class="tiny muted" style="margin-top:2px">${esc(g.pron)}</div>
+          <div class="term-def">${esc(g.gloss)}</div>
+        </a>`).join('')}
+    </div>
+  `;
+}
+
+
+/* --- 6.12 Term detail ------------------------------------------------ */
+function renderTerm(name) {
+  const g = getGlossaryTerm(decodeURIComponent(name));
+  if (!g) return renderNotFound();
+
+  pushHistory('term', g.term, g.term);
+
+  return `
+    <div class="crumbs"><a href="#/glossary">Glossary</a><span>/</span>${esc(g.term)}</div>
+
+    <div class="flex between items-start wrap gap12 mb24">
+      <div>
+        <span class="eyebrow" style="margin-bottom:6px">Sanskrit Term</span>
+        <h1 style="margin-bottom:8px">${esc(g.term)}</h1>
+        <div class="devanagari" style="font-size:2.2rem">${esc(g.dev)}</div>
+        <div class="translit" style="margin-top:4px">${esc(g.iast)}</div>
+      </div>
+      ${bookmarkBtn('term', g.term, g.term)}
+    </div>
+
+    <div class="grid g2 mb24">
+      <div class="card">
+        <span class="field-label">Pronunciation</span>
+        <p class="mb0" style="font-family:var(--serif);font-size:1.15rem;color:var(--gold-soft)">${esc(g.pron)}</p>
+      </div>
+      <div class="card">
+        <span class="field-label">Brief gloss</span>
+        <p class="mb0 small">${esc(g.gloss)}</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <span class="field-label">Contextual Meaning</span>
+      <div class="prose"><p>${esc(g.detail)}</p></div>
+    </section>
+
+    ${g.related && g.related.length ? `
+    <section class="section">
+      <span class="field-label">Related terms</span>
+      <div class="chip-row">
+        ${g.related.map((r) => `<a class="chip" href="#/term/${encodeURIComponent(r)}">${esc(r)}</a>`).join('')}
+      </div>
+    </section>` : ''}
+
+    <div class="note-block">
+      <strong>Note.</strong> Meaning in Sanskrit is context-dependent. A term may carry different senses in
+      different schools and periods. Entries here describe usage relevant to this library and are not
+      exhaustive dictionary definitions.
+    </div>
+
+    <hr class="divider">
+    <a class="btn btn-ghost btn-sm" href="#/glossary">← Glossary</a>
+  `;
+}
+
+
+/* --- 6.13 Journal ---------------------------------------------------- */
+function renderJournal() {
+  const entries = state.journal.slice().sort((a, b) => b.ts - a.ts);
+  const related = state.pendingRelated || '';
+
+  return `
+    ${pageHeader('Personal', 'Journal',
+      'A private place to record what you notice, what you question, and what you would like to explore further. Entries are stored on this device only and are never made public.')}
+
+    <div class="callout info mb24">
+      <h4>Privacy</h4>
+      <p>Journal entries are saved in this browser's local storage. They are not uploaded, not shared, and
+      not visible to anyone else. Clearing your browser data will remove them permanently, so export a copy
+      if they matter to you.</p>
+    </div>
+
+    <div class="card mb32">
+      <span class="field-label">${esc(t('newEntry'))}</span>
+      <div class="field">
+        <label for="jTitle">Title (optional)</label>
+        <input type="text" id="jTitle" placeholder="A short heading for this entry" value="${esc(related ? 'Reflection: ' + related : '')}">
+      </div>
+      <div class="field">
+        <label for="jRelated">Related to (optional)</label>
+        <input type="text" id="jRelated" placeholder="e.g. Technique 01 · Natural Breath Awareness" value="${esc(related)}">
+      </div>
+      <div class="field">
+        <label for="jBody">Entry</label>
+        <textarea id="jBody" placeholder="What did I understand today?&#10;Which idea interested me?&#10;What questions remain unanswered?&#10;What did I notice during my exploration?"></textarea>
+      </div>
+      <div class="flex gap12 wrap">
+        <button class="btn btn-gold btn-sm" type="button" id="jSave">${esc(t('saveEntry'))}</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="jClear">Clear</button>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h2>Your entries ${entries.length ? `<span class="muted" style="font-size:.9rem;font-family:var(--sans)">(${entries.length})</span>` : ''}</h2>
+      ${entries.length ? `<button class="btn btn-ghost btn-sm" type="button" id="jExport">${esc(t('exportData'))}</button>` : ''}
+    </div>
+
+    ${entries.length ? entries.map((e) => `
+      <div class="card mb16">
+        <div class="flex between items-start gap12 wrap mb8">
+          <div>
+            <h3 style="font-size:1.08rem;color:var(--white);margin-bottom:2px">${esc(e.title || 'Untitled entry')}</h3>
+            <div class="tiny muted">${esc(fmtDate(e.ts))}${e.related ? ' · ' + esc(e.related) : ''}</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" type="button" data-jdel="${esc(e.id)}">${esc(t('delete'))}</button>
+        </div>
+        <p class="small mb0" style="white-space:pre-wrap;color:var(--white);opacity:.9">${esc(e.body)}</p>
+      </div>`).join('') : `
+      <div class="empty"><div class="big">✎</div><p>${esc(t('noJournal'))}</p></div>`}
+
+    <hr class="divider">
+    <span class="field-label">Suggested prompts</span>
+    <div class="grid g2 mt16">
+      ${[
+        'What did I understand today?',
+        'Which philosophical idea interested me most?',
+        'What questions remain unanswered?',
+        'What did I notice during my exploration?',
+        'What would I like to research further?',
+        'Where did I notice resistance in myself?'
+      ].map((p) => `
+        <button class="card hoverable" type="button" style="text-align:left;cursor:pointer;color:inherit" data-prompt="${esc(p)}">
+          <p class="small mb0">${esc(p)}</p>
+        </button>`).join('')}
+    </div>
+  `;
+}
+
+
+/* --- 6.14 Bookmarks -------------------------------------------------- */
+function renderBookmarks() {
+  const groups = {
+    technique: 'Techniques',
+    verse:     'Index entries',
+    concept:   'Concepts',
+    term:      'Glossary terms'
+  };
+  const bms = state.bookmarks.slice().sort((a, b) => b.ts - a.ts);
+
+  return `
+    ${pageHeader('Personal', 'Bookmarks',
+      'Saved verses, techniques, concepts and glossary terms. Everything here is stored locally on this device.')}
+
+    ${bms.length ? Object.entries(groups).map(([type, label]) => {
+      const items = bms.filter((b) => b.type === type);
+      if (!items.length) return '';
+      return `
+        <section class="section">
+          <div class="section-head"><h2 style="font-size:1.25rem">${esc(label)}</h2></div>
+          <div class="row-list">
+            ${items.map((b) => `
+              <div class="row">
+                <a class="row-num" href="${routeFor(b.type, b.id)}" style="text-decoration:none">★</a>
+                <a class="row-body" href="${routeFor(b.type, b.id)}" style="text-decoration:none;color:inherit">
+                  <div class="row-title">${esc(b.title)}</div>
+                  <div class="row-meta">Saved ${esc(relTime(b.ts))}</div>
+                </a>
+                <div class="row-actions">
+                  <button class="btn btn-ghost btn-sm" type="button"
+                    data-bm-type="${esc(b.type)}" data-bm-id="${esc(b.id)}" data-bm-title="${esc(b.title)}">Remove</button>
+                </div>
+              </div>`).join('')}
+          </div>
+        </section>`;
+    }).join('') : `
+      <div class="empty">
+        <div class="big">☆</div>
+        <p>${esc(t('noBookmarks'))}</p>
+        <a class="btn btn-outline btn-sm mt16" href="#/explore">Explore the seven techniques</a>
+      </div>`}
+  `;
+}
+
+
+/* --- 6.15 History ---------------------------------------------------- */
+function renderHistory() {
+  const h = state.history;
+
+  return `
+    ${pageHeader('Personal', 'Learning History',
+      'A record of what you have opened, so you can pick up where you left off. This measures activity only — it does not measure understanding, and it is not a spiritual score.')}
+
+    ${h.length ? `
+      <div class="row-list">
+        ${h.map((item) => `
+          <a class="row" href="${routeFor(item.type, item.id)}">
+            <div class="row-num">${
+              item.type === 'technique' ? '◎' :
+              item.type === 'verse'     ? '⁂' :
+              item.type === 'concept'   ? '✦' : 'अ'
+            }</div>
+            <div class="row-body">
+              <div class="row-title">${esc(item.title)}</div>
+              <div class="row-meta">${esc(item.type)} · ${esc(relTime(item.ts))}</div>
+            </div>
+            <div class="row-actions"><span class="badge plain">Open</span></div>
+          </a>`).join('')}
+      </div>
+      <button class="btn btn-ghost btn-sm mt24" type="button" id="histClear">Clear history</button>
+    ` : `
+      <div class="empty">
+        <div class="big">◷</div>
+        <p>${esc(t('noHistory'))}</p>
+        <a class="btn btn-outline btn-sm mt16" href="#/library">Open the library</a>
+      </div>`}
+
+    <div class="callout info mt32">
+      <h4>A note on progress</h4>
+      <p>This application deliberately avoids streaks, points and completion percentages for contemplative
+      practice. Time spent reading or practising is not treated as evidence of progress, and no claim is made
+      that any metric corresponds to personal or spiritual development.</p>
+    </div>
+  `;
+}
+
+
+/* --- 6.16 Profile & settings ----------------------------------------- */
+function renderProfile() {
+  const counts = {
+    bookmarks: state.bookmarks.length,
+    journal: state.journal.length,
+    history: state.history.length
+  };
+
+  return `
+    ${pageHeader('Personal', 'Profile & Settings',
+      'Language, appearance, reading preferences and data management. Everything is stored locally on this device.')}
+
+    <section class="section">
+      <div class="section-head"><h2 style="font-size:1.3rem">Your activity</h2></div>
+      <div class="grid g3">
+        <a class="card hoverable" href="#/bookmarks" style="text-decoration:none;color:inherit">
+          <div class="tech-num" style="font-size:1.8rem">${counts.bookmarks}</div>
+          <div class="small muted">Bookmarks saved</div>
+        </a>
+        <a class="card hoverable" href="#/journal" style="text-decoration:none;color:inherit">
+          <div class="tech-num" style="font-size:1.8rem">${counts.journal}</div>
+          <div class="small muted">Journal entries</div>
+        </a>
+        <a class="card hoverable" href="#/history" style="text-decoration:none;color:inherit">
+          <div class="tech-num" style="font-size:1.8rem">${counts.history}</div>
+          <div class="small muted">Items in history</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 style="font-size:1.3rem">${esc(t('language'))}</h2></div>
+      <div class="chip-row">
+        ${[['en','English'],['hi','हिन्दी'],['sa','संस्कृत']].map(([code, label]) =>
+          `<button class="chip ${state.lang === code ? 'active' : ''}" type="button" data-set-lang="${code}">${label}</button>`).join('')}
+      </div>
+      <p class="tiny muted">
+        Interface language is switched immediately. Educational content in Hindi and Sanskrit is being added
+        progressively; untranslated passages fall back to English rather than showing machine translation.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 style="font-size:1.3rem">${esc(t('readingTheme'))}</h2></div>
+      <div class="chip-row">
+        <button class="chip ${state.theme === 'dark' ? 'active' : ''}" type="button" data-set-theme="dark">◐ ${esc(t('dark'))}</button>
+        <button class="chip ${state.theme === 'manuscript' ? 'active' : ''}" type="button" data-set-theme="manuscript">◑ ${esc(t('manuscript'))}</button>
+      </div>
+      <p class="tiny muted">
+        Cosmic dark mode is designed for low-light reading. Manuscript mode uses a warm ivory background
+        with dark text and muted gold separators, for extended reading in daylight.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 style="font-size:1.3rem">${esc(t('textSize'))}</h2></div>
+      <div class="flex items-center gap16 wrap">
+        <input type="range" id="fontRange" min="85" max="130" step="5" value="${Math.round(state.fontScale * 100)}"
+          style="flex:1;max-width:320px;accent-color:var(--gold)">
+        <span class="small muted mono-num" id="fontVal">${Math.round(state.fontScale * 100)}%</span>
+      </div>
+      <p class="tiny muted mt8">Adjusts body text across the entire application. Headings scale proportionally.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 style="font-size:1.3rem">Data</h2></div>
+      <div class="card">
+        <p class="small muted">
+          All personal data — bookmarks, journal entries and history — is stored in this browser only. There
+          is no account, no server and no synchronisation. Exporting gives you a JSON file you control.
+        </p>
+        <div class="flex gap12 wrap mt16">
+          <button class="btn btn-outline btn-sm" type="button" id="exportAll">${esc(t('exportData'))}</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="clearAll">${esc(t('clearData'))}</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 style="font-size:1.3rem">Accessibility</h2></div>
+      <div class="card">
+        <ul class="small muted" style="margin:0;padding-left:1.2em">
+          <li style="margin-bottom:8px">Full keyboard navigation with visible focus states.</li>
+          <li style="margin-bottom:8px">Respects the operating system's reduced-motion preference.</li>
+          <li style="margin-bottom:8px">Semantic headings and landmark regions throughout.</li>
+          <li style="margin-bottom:8px">Text resizing up to 130% without layout breakage.</li>
+          <li style="margin-bottom:0">Two reading themes with different contrast profiles.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 style="font-size:1.3rem">Information</h2></div>
+      <div class="row-list">
+        <a class="row" href="#/about"><div class="row-num">ⓘ</div><div class="row-body"><div class="row-title">About the application</div></div></a>
+        <a class="row" href="#/about/sources"><div class="row-num">❑</div><div class="row-body"><div class="row-title">Sources & bibliography</div></div></a>
+        <a class="row" href="#/about/methodology"><div class="row-num">✦</div><div class="row-body"><div class="row-title">Editorial methodology</div></div></a>
+        <a class="row" href="#/about/privacy"><div class="row-num">⚿</div><div class="row-body"><div class="row-title">Privacy</div></div></a>
+        <a class="row" href="#/about/help"><div class="row-num">?</div><div class="row-body"><div class="row-title">Help & support</div></div></a>
+      </div>
+    </section>
+  `;
+}
+
+
+/* --- 6.17 About & sub-pages ------------------------------------------ */
+function renderAbout(slug) {
+  if (slug === 'sources') {
+    return `
+      <div class="crumbs"><a href="#/about">About</a><span>/</span>Sources</div>
+      ${pageHeader('Research', 'Sources & Further Reading',
+        'A starting bibliography. This list is maintained by the editorial team and will be expanded and corrected as verification proceeds.')}
+
+      <div class="callout safety">
+        <h4>Verification status</h4>
+        <p>Bibliographic details below should be checked against the physical or digital editions before being
+        treated as final. No reference is included here that the editorial team has invented; equally, no
+        reference is presented as having been exhaustively verified.</p>
+      </div>
+
+      ${SOURCES.map((g) => `
+        <section class="section">
+          <div class="section-head"><h2 style="font-size:1.25rem">${esc(g.group)}</h2></div>
+          <div class="row-list">
+            ${g.items.map((i) => `
+              <div class="row" style="cursor:default;align-items:flex-start">
+                <div class="row-num">❑</div>
+                <div class="row-body">
+                  <div class="row-title" style="font-weight:400;line-height:1.65">${esc(i.cite)}</div>
+                  <div class="row-meta">${esc(i.note)}</div>
+                </div>
+              </div>`).join('')}
+          </div>
+        </section>`).join('')}
+
+      <hr class="divider">
+      <a class="btn btn-ghost btn-sm" href="#/about">← About</a>
+    `;
+  }
+
+  if (slug === 'methodology') {
+    return `
+      <div class="crumbs"><a href="#/about">About</a><span>/</span>Methodology</div>
+      ${pageHeader('Research', 'Editorial Methodology',
+        'How content is produced, checked and published on this platform.')}
+
+      <div class="prose">
+        <h3>The six-stage workflow</h3>
+        <ol>
+          <li><strong>Source identification.</strong> Identify the Sanskrit edition, translator or scholarly
+          publication being followed.</li>
+          <li><strong>Text verification.</strong> Check spelling, verse numbering and textual variants against
+          that named edition.</li>
+          <li><strong>Translation.</strong> Compare available translations and note where they differ.</li>
+          <li><strong>Interpretation.</strong> Clearly separate traditional commentary from modern editorial
+          interpretation.</li>
+          <li><strong>Editorial review.</strong> Check accuracy, readability and the absence of unsupported
+          claims.</li>
+          <li><strong>Publication.</strong> Publish with source attribution, version and review status
+          visible.</li>
+        </ol>
+
+        <h3>Publication statuses</h3>
+        <p>Every content item carries one of the following: <strong>Draft</strong>,
+        <strong>Under Review</strong>, <strong>Verified</strong>, <strong>Published</strong> or
+        <strong>Archived</strong>. Only verified content may be labelled as verified educational material.</p>
+
+        <h3>What is never done</h3>
+        <ul>
+          <li>Sanskrit verses, verse numbers or translations are never generated for display.</li>
+          <li>Bibliographic references are never invented or approximated.</li>
+          <li>An interpretation is never presented as the meaning of the original text.</li>
+          <li>An unverified passage is never labelled as verified.</li>
+          <li>Health or spiritual outcomes are never guaranteed.</li>
+        </ul>
+
+        <h3>On AI assistance</h3>
+        <p>Text-processing tools may assist with structure and drafting, but every source passage, translation
+        and reference must be confirmed by a human editor against a named edition before publication. Editorial
+        prose is labelled as editorial.</p>
+      </div>
+
+      <hr class="divider">
+      <a class="btn btn-ghost btn-sm" href="#/about">← About</a>
+    `;
+  }
+
+  if (slug === 'privacy') {
+    return `
+      <div class="crumbs"><a href="#/about">About</a><span>/</span>Privacy</div>
+      ${pageHeader('Information', 'Privacy',
+        'This application is designed to collect as little as possible.')}
+
+      <div class="prose">
+        <h3>What we store</h3>
+        <p>Your language preference, reading theme, text size, bookmarks, journal entries and learning
+        history. All of it is stored in your browser's local storage on this device.</p>
+
+        <h3>What we do not do</h3>
+        <ul>
+          <li>We do not create accounts or collect email addresses.</li>
+          <li>We do not transmit journal entries anywhere.</li>
+          <li>We do not use advertising trackers or third-party analytics.</li>
+          <li>We do not share any data with third parties.</li>
+          <li>We do not sell data, because there is none to sell.</li>
+        </ul>
+
+        <h3>Your control</h3>
+        <p>You can export your data as a JSON file at any time from the profile page. You can delete
+        everything with one action. Clearing your browser's site data will also remove it permanently.</p>
+
+        <h3>Cookies</h3>
+        <p>This application does not set cookies. It uses local storage only, which is not transmitted to any
+        server.</p>
+
+        <h3>External resources</h3>
+        <p>Fonts are loaded from Google Fonts. That request discloses your IP address to Google in the normal
+        way any web font request does. No other external requests are made.</p>
+      </div>
+
+      <hr class="divider">
+      <a class="btn btn-ghost btn-sm" href="#/about">← About</a>
+    `;
+  }
+
+  if (slug === 'help') {
+    return `
+      <div class="crumbs"><a href="#/about">About</a><span>/</span>Help</div>
+      ${pageHeader('Information', 'Help & Support',
+        'Answers to common questions about using the platform.')}
+
+      <div class="prose">
+        <h3>How do I start?</h3>
+        <p>Open <a href="#/explore">Explore</a> for the seven-technique programme, or
+        <a href="#/library">the Library</a> for the full reference material. Nothing requires an account.</p>
+
+        <h3>Why do many entries say "pending verification"?</h3>
+        <p>Because they are. The index structure is complete, but the source text for most positions has not
+        yet been checked against a named edition. Publishing unverified Sanskrit would be worse than
+        publishing none.</p>
+
+        <h3>Is this a meditation app?</h3>
+        <p>No. It is an educational and philosophical platform that includes a small set of contemplative
+        explorations. It has no streaks, no timers and no progress scoring.</p>
+
+        <h3>Can I use this offline?</h3>
+        <p>Once the page has loaded, most content is available without a network connection, since all
+        content is embedded in the page itself.</p>
+
+        <h3>I found an error in a Sanskrit passage or reference.</h3>
+        <p>Corrections are essential to this project. Every published passage records its source edition
+        precisely so that errors can be traced and fixed. Please report the entry number and the edition you
+        are checking against.</p>
+
+        <h3>Is there a teacher or a community?</h3>
+        <p>Not on this platform. Traditional study of these texts normally involves a qualified teacher within
+        a living lineage. This application is a study aid, not a substitute for that relationship.</p>
+      </div>
+
+      <hr class="divider">
+      <a class="btn btn-ghost btn-sm" href="#/about">← About</a>
+    `;
+  }
+
+  /* main about */
+  return `
+    ${pageHeader('Information', 'About Vigyaan Bhairav',
+      'A multilingual, research-oriented digital learning platform inspired by the Vigyaan Bhairav text.')}
+
+    <div class="card pad-lg mb32">
+      <div class="center" style="margin-bottom:20px">
+        <div class="devanagari" style="font-size:2.4rem;margin-bottom:6px">विज्ञान भैरव</div>
+        <div class="tiny" style="letter-spacing:.24em;text-transform:uppercase;color:var(--gold)">Vigyaan Bhairav</div>
+      </div>
+      <p class="muted" style="max-width:64ch;margin:0 auto;text-align:center">
+        Explore awareness. Understand consciousness. A platform built around three connected pillars:
+        the knowledge library, the seven explorations, and personal reflection.
+      </p>
+    </div>
+
+    <section class="section">
+      <div class="section-head"><h2>Core principles</h2></div>
+      <div class="grid g2">
+        ${[
+          ['Authenticity',   'The original Sanskrit source is preserved and kept distinct from interpretations.'],
+          ['Clarity',        'Difficult concepts are explained in understandable language, without oversimplification.'],
+          ['Depth',          'Academic and philosophical explanations go beyond superficial summaries.'],
+          ['Practicality',   'The seven selected techniques are presented clearly and safely.'],
+          ['Accessibility',  'English, Hindi and Sanskrit are supported throughout.'],
+          ['Transparency',   'Historical facts, translations, interpretations and modern explanations are labelled distinctly.'],
+          ['Simplicity',     'The interface never overwhelms. Expandable sections prevent information overload.'],
+          ['Responsibility', 'No medical claims, no guaranteed outcomes, no competitive spiritual scoring.']
+        ].map(([h, p]) => `
+          <div class="card">
+            <h3 style="font-size:1rem;color:var(--gold-soft);margin-bottom:6px">${esc(h)}</h3>
+            <p class="small muted mb0">${esc(p)}</p>
+          </div>`).join('')}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Three pillars</h2></div>
+      <div class="grid g3">
+        <a class="card hoverable" href="#/library" style="text-decoration:none;color:inherit">
+          <span class="badge plain mb8">01</span>
+          <h3 style="font-size:1.05rem;color:var(--white)">The Knowledge Library</h3>
+          <p class="small muted mb0">Original text, the 112-position index, translations, philosophy and research.</p>
+        </a>
+        <a class="card hoverable" href="#/explore" style="text-decoration:none;color:inherit">
+          <span class="badge plain mb8">02</span>
+          <h3 style="font-size:1.05rem;color:var(--white)">The Seven Explorations</h3>
+          <p class="small muted mb0">A researched, accessible introductory programme of seven contemplations.</p>
+        </a>
+        <a class="card hoverable" href="#/journal" style="text-decoration:none;color:inherit">
+          <span class="badge plain mb8">03</span>
+          <h3 style="font-size:1.05rem;color:var(--white)">Personal Exploration</h3>
+          <p class="small muted mb0">A private journal, bookmarks and reading history stored only on your device.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Further information</h2></div>
+      <div class="row-list">
+        <a class="row" href="#/about/sources"><div class="row-num">❑</div><div class="row-body"><div class="row-title">Sources & Further Reading</div><div class="row-meta">Editions, translations and scholarship</div></div></a>
+        <a class="row" href="#/about/methodology"><div class="row-num">✦</div><div class="row-body"><div class="row-title">Editorial Methodology</div><div class="row-meta">How content is verified and published</div></div></a>
+        <a class="row" href="#/about/privacy"><div class="row-num">⚿</div><div class="row-body"><div class="row-title">Privacy</div><div class="row-meta">What is stored and where</div></div></a>
+        <a class="row" href="#/about/help"><div class="row-num">?</div><div class="row-body"><div class="row-title">Help & Support</div><div class="row-meta">Common questions answered</div></div></a>
+      </div>
+    </section>
+
+    <div class="callout safety">
+      <h4>Responsible practice</h4>
+      <p>This application is educational. The contemplative exercises it describes are offered for personal
+      exploration and are not a substitute for medical or mental-health care. No technique presented here
+      guarantees any particular experience, insight or outcome. If a practice makes you uncomfortable, stop.</p>
+    </div>
+  `;
+}
+
+
+/* --- 6.18 Search ----------------------------------------------------- */
+function renderSearch(query) {
+  const q = norm(query);
+  const results = [];
+
+  if (q) {
+    /* Techniques */
+    TECHNIQUES.forEach((tech) => {
+      const hay = norm(
+        langText(tech.title) + ' ' + langText(tech.theme) + ' ' +
+        langText(tech.intro) + ' ' + tech.sanskritTerm.iast + ' ' + tech.sanskritTerm.dev
+      );
+      if (hay.includes(q)) {
+        results.push({
+          type:'technique', id:tech.id,
+          title:langText(tech.title),
+          meta:'Technique ' + String(tech.num).padStart(2, '0'),
+          href:'#/technique/' + tech.id
+        });
+      }
+    });
+
+    /* Index */
+    INDEX.forEach((e) => {
+      if (norm(e.title).includes(q) || String(e.n) === q) {
+        results.push({
+          type:'verse', id:String(e.n),
+          title:e.title,
+          meta:'Index ' + String(e.n).padStart(3, '0') + ' · ' + CATEGORIES[e.cat].en,
+          href:'#/verse/' + e.n
+        });
+      }
+    });
+
+    /* Concepts */
+    CONCEPTS.forEach((c) => {
+      const hay = norm(
+        c.title + ' ' + c.summary + ' ' +
+        c.sanskrit.iast + ' ' + c.sanskrit.dev + ' ' + c.body.join(' ')
+      );
+      if (hay.includes(q)) {
+        results.push({
+          type:'concept', id:c.id,
+          title:c.title,
+          meta:'Philosophical concept',
+          href:'#/concept/' + c.id
+        });
+      }
+    });
+
+    /* Glossary */
+    GLOSSARY.forEach((g) => {
+      const hay = norm(
+        g.term + ' ' + g.iast + ' ' + g.dev + ' ' +
+        g.gloss + ' ' + g.detail
+      );
+      if (hay.includes(q)) {
+        results.push({
+          type:'term', id:g.term,
+          title:g.term + ' (' + g.iast + ')',
+          meta:'Glossary',
+          href:'#/term/' + encodeURIComponent(g.term)
+        });
+      }
+    });
+
+    /* Static pages */
+    [
+      ['library',    'Knowledge Library'],
+      ['explore',    'Seven Explorations'],
+      ['index',      '112 Technique Index'],
+      ['philosophy', 'Philosophical Knowledge Centre'],
+      ['glossary',   'Sanskrit Glossary'],
+      ['about',      'About & Sources'],
+      ['journal',    'Journal'],
+      ['bookmarks',  'Bookmarks']
+    ].forEach(([slug, title]) => {
+      if (norm(title).includes(q)) {
+        results.push({ type:'page', id:slug, title, meta:'Page', href:'#/' + slug });
+      }
+    });
+  }
+
+  return `
+    <div class="crumbs"><a href="#/home">Home</a><span>/</span>Search</div>
+    ${pageHeader('Search', 'Results for "' + esc(query) + '"',
+      results.length + ' result' + (results.length === 1 ? '' : 's') + ' found across the library, techniques, concepts and glossary.')}
+
+    ${results.length ? `
+      <div class="row-list">
+        ${results.map((r) => `
+          <a class="row" href="${r.href}">
+            <div class="row-num">${
+              r.type === 'technique' ? '◎' :
+              r.type === 'verse'     ? '⁂' :
+              r.type === 'concept'   ? '✦' :
+              r.type === 'term'      ? 'अ' : '▤'
+            }</div>
+            <div class="row-body">
+              <div class="row-title">${esc(r.title)}</div>
+              <div class="row-meta">${esc(r.meta)}</div>
+            </div>
+          </a>`).join('')}
+      </div>` : `
+      <div class="empty">
+        <div class="big">⌕</div>
+        <p>${esc(t('emptySearch'))}</p>
+        <p class="tiny">Try a shorter term, or search for a Sanskrit word such as <em>dhāraṇā</em>, <em>cit</em> or <em>spanda</em>.</p>
+        <a class="btn btn-outline btn-sm mt16" href="#/library">Browse the library</a>
+      </div>`}
+  `;
+}
+
+
+/* --- 6.19 Not found -------------------------------------------------- */
+function renderNotFound() {
+  return `
+    <div class="empty" style="margin-top:60px">
+      <div class="big">॥</div>
+      <h2 style="color:var(--white)">This page was not found</h2>
+      <p class="muted">The address may be mistyped, or the content may not have been published yet.</p>
+      <div class="flex gap12 center" style="justify-content:center;margin-top:20px">
+        <a class="btn btn-gold btn-sm" href="#/home">Return home</a>
+        <a class="btn btn-ghost btn-sm" href="#/library">Open the library</a>
+      </div>
+    </div>
+  `;
 }
 
 
 /* ============================================================================
-   05. NAVIGATION
+   07. ROUTER
    ============================================================================ */
 
-/* ---- 5.1 Sidebar ---- */
-.sidebar {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid var(--line-soft);
-  background: linear-gradient(180deg, var(--deep) 0%, var(--navy) 100%);
-  padding: 22px 16px 18px;
-  overflow-y: auto;
-  z-index: 40;
-}
+function router() {
+  const raw = location.hash.replace(/^#\/?/, '');
+  const parts = raw.split('/').filter(Boolean);
+  const view = parts[0] || '';
+  const param = parts[1];
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 8px 20px;
-  border-bottom: 1px solid var(--line-soft);
-  margin-bottom: 16px;
-  text-decoration: none;
-}
+  const app = document.getElementById('app');
+  if (!app) return;
 
-.brand-mark {
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 32% 28%, var(--gold-soft), var(--gold) 42%, #6d5322 100%);
-  display: grid;
-  place-items: center;
-  font-family: var(--dev-serif);
-  font-size: 19px;
-  color: #0B1424;
-  font-weight: 600;
-  letter-spacing: -.5px;
-  box-shadow: 0 0 0 1px var(--gold-dim), 0 0 22px rgba(197, 161, 90, .28);
-}
+  let html = '';
+  let navKey = view || 'home';
 
-.brand-text { min-width: 0; }
+  if (!view) {
+    html = state.onboarded ? renderHome() : renderWelcome();
+    navKey = state.onboarded ? 'home' : '';
+  } else {
+    switch (view) {
+      case 'welcome':
+        onboardStep = 0;
+        html = renderWelcome();
+        navKey = '';
+        break;
+      case 'home':
+        html = renderHome();
+        break;
+      case 'library':
+        html = param ? renderLibraryArticle(param) : renderLibrary();
+        break;
+      case 'verse':
+        html = renderVerse(param);
+        break;
+      case 'index':
+        html = renderIndex();
+        break;
+      case 'explore':
+        html = renderExplore();
+        break;
+      case 'technique':
+        html = renderTechnique(param);
+        break;
+      case 'philosophy':
+        html = renderPhilosophy();
+        break;
+      case 'concept':
+        html = renderConcept(param);
+        break;
+      case 'glossary':
+        html = renderGlossary();
+        break;
+      case 'term':
+        html = renderTerm(param);
+        break;
+      case 'journal':
+        html = renderJournal();
+        break;
+      case 'bookmarks':
+        html = renderBookmarks();
+        break;
+      case 'history':
+        html = renderHistory();
+        break;
+      case 'profile':
+        html = renderProfile();
+        break;
+      case 'about':
+        html = renderAbout(param);
+        break;
+      case 'search':
+        html = renderSearch(decodeURIComponent(param || ''));
+        break;
+      default:
+        html = renderNotFound();
+        navKey = '';
+    }
+  }
 
-.brand-title {
-  display: block;
-  font-family: var(--serif);
-  font-size: .96rem;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--gold-soft);
-  font-weight: 600;
-  line-height: 1.25;
-  white-space: nowrap;
-}
+  app.innerHTML = html;
+  state.lastRoute = location.hash;
+  saveState();
 
-.brand-sub {
-  display: block;
-  font-size: .63rem;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
-}
+  /* Active navigation states */
+  document.querySelectorAll('[data-nav]').forEach((el) => {
+    el.classList.toggle('active', el.getAttribute('data-nav') === navKey);
+  });
 
-.nav-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+  /* Scroll to top */
+  window.scrollTo({ top: 0, behavior: 'auto' });
+  app.focus({ preventScroll: true });
 
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 12px;
-  border-radius: var(--radius-sm);
-  color: var(--muted);
-  font-size: .90rem;
-  font-weight: 400;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all .18s var(--ease);
-}
-
-.nav-link:hover {
-  background: var(--deep-2);
-  color: var(--white);
-  text-decoration: none;
-}
-
-.nav-link.active {
-  background: var(--deep-2);
-  color: var(--gold-soft);
-  border-color: var(--line);
-  font-weight: 500;
-}
-
-.nav-link .ico {
-  width: 19px;
-  flex: 0 0 19px;
-  text-align: center;
-  font-size: 15px;
-  opacity: .9;
-}
-
-/* Inline SVG icons inside navigation */
-.ico-svg {
-  width: 18px;
-  height: 18px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vertical-align: middle;
-}
-
-/* Devanagari text "icon" (used for the glossary item) */
-.ico-text {
-  font-family: var(--dev-serif);
-  font-size: 16px;
-  line-height: 1;
-}
-
-.sidebar-foot {
-  margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid var(--line-soft);
-}
-
-.sidebar-note {
-  font-size: .68rem;
-  color: var(--muted);
-  line-height: 1.55;
-  padding: 0 10px;
-  margin: 0;
-}
-
-.sidebar-note strong {
-  display: block;
-  margin-bottom: 3px;
-  color: var(--gold-soft);
-  font-weight: 500;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  font-size: .63rem;
-}
-
-/* ---- 5.2 Top bar ---- */
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 26px;
-  background: color-mix(in srgb, var(--navy) 88%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line-soft);
-}
-
-.topbar-mobile-brand { display: none; }
-
-.search-form {
-  flex: 1;
-  max-width: 430px;
-  position: relative;
-}
-
-.search-form input {
-  width: 100%;
-  padding: 9px 14px 9px 38px;
-  background: var(--deep);
-  border: 1px solid var(--line-soft);
-  border-radius: 999px;
-  color: var(--white);
-  font-size: .86rem;
-  outline: none;
-  transition: .18s var(--ease);
-}
-
-.search-form input::placeholder {
-  color: var(--muted);
-  opacity: .8;
-}
-
-.search-form input:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px var(--gold-dim);
-}
-
-.search-ico {
-  position: absolute;
-  left: 13px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  font-size: .85rem;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-}
-
-.search-ico .ico-svg {
-  width: 16px;
-  height: 16px;
-}
-
-.topbar-right {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.icon-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: transparent;
-  border: 1px solid var(--line-soft);
-  color: var(--muted);
-  cursor: pointer;
-  font-size: .92rem;
-  transition: .18s var(--ease);
-}
-
-.icon-btn:hover,
-.icon-btn.on {
-  color: var(--gold-soft);
-  border-color: var(--gold);
-  background: var(--deep-2);
-}
-
-.icon-btn .ico-svg {
-  width: 18px;
-  height: 18px;
-}
-
-/* ---- 5.3 Bottom nav (mobile) ---- */
-.bottomnav {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  background: color-mix(in srgb, var(--deep) 94%, transparent);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-top: 1px solid var(--line-soft);
-  padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
-  grid-template-columns: repeat(5, 1fr);
-  gap: 2px;
-}
-
-.bn-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 7px 2px;
-  border-radius: 10px;
-  color: var(--muted);
-  font-size: .60rem;
-  letter-spacing: .04em;
-  cursor: pointer;
-  text-decoration: none;
-  transition: .16s var(--ease);
-  border: 0;
-  background: transparent;
-}
-
-.bn-item .ico {
-  font-size: 16px;
-  line-height: 1;
-  display: flex;
-}
-
-.bn-item .ico-svg {
-  width: 20px;
-  height: 20px;
-}
-
-.bn-item.active { color: var(--gold-soft); }
-
-.bn-item:hover {
-  color: var(--white);
-  text-decoration: none;
+  /* Re-apply reading scale (content may have re-rendered) */
+  applyVisualPreferences();
 }
 
 
 /* ============================================================================
-   06. COMPONENTS
+   08. VISUAL PREFERENCES
    ============================================================================ */
 
-/* ---- 6.1 Cards ---- */
-.card {
-  background: var(--deep);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius);
-  padding: 22px;
-  transition: border-color .2s var(--ease),
-              transform .2s var(--ease),
-              box-shadow .2s var(--ease);
-}
-
-.card.pad-lg { padding: 30px; }
-
-.card.hoverable { cursor: pointer; }
-
-.card.hoverable:hover {
-  border-color: var(--line);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-}
-
-/* ---- 6.2 Buttons ---- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 20px;
-  border-radius: 999px;
-  font-size: .87rem;
-  font-weight: 500;
-  letter-spacing: .02em;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: .18s var(--ease);
-  text-align: center;
-  background: transparent;
-  color: var(--white);
-}
-
-.btn:hover { text-decoration: none; }
-
-.btn-gold {
-  background: linear-gradient(180deg, var(--gold-soft), var(--gold));
-  color: #0B1424;
-  font-weight: 600;
-  box-shadow: 0 4px 18px rgba(197, 161, 90, .22);
-}
-
-.btn-gold:hover {
-  filter: brightness(1.07);
-  color: #0B1424;
-  transform: translateY(-1px);
-}
-
-.btn-outline {
-  border-color: var(--gold-dim);
-  color: var(--gold-soft);
-  background: var(--deep);
-}
-
-.btn-outline:hover {
-  border-color: var(--gold);
-  background: var(--deep-2);
-  color: var(--gold-soft);
-}
-
-.btn-ghost {
-  color: var(--muted);
-  border-color: var(--line-soft);
-}
-
-.btn-ghost:hover {
-  color: var(--white);
-  border-color: var(--line);
-}
-
-.btn-sm { padding: 7px 14px; font-size: .79rem; }
-.btn-block { width: 100%; }
-.btn:disabled { opacity: .45; cursor: not-allowed; }
-
-/* ---- 6.3 Badges, chips, eyebrows, labels ---- */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: .66rem;
-  letter-spacing: .10em;
-  text-transform: uppercase;
-  font-weight: 600;
-  border: 1px solid var(--line);
-  color: var(--gold-soft);
-  background: var(--gold-dim);
-  white-space: nowrap;
-}
-
-.badge.plain {
-  background: transparent;
-  color: var(--muted);
-  border-color: var(--line-soft);
-}
-
-.badge.warn {
-  color: #E0B060;
-  border-color: rgba(224, 176, 96, .40);
-  background: rgba(224, 176, 96, .10);
-}
-
-.badge.ok {
-  color: #8FCB9B;
-  border-color: rgba(143, 203, 155, .35);
-  background: rgba(143, 203, 155, .10);
-}
-
-.badge.pending {
-  color: var(--muted);
-  border-color: var(--line-soft);
-  background: transparent;
-}
-
-.eyebrow {
-  display: block;
-  font-size: .68rem;
-  letter-spacing: .19em;
-  text-transform: uppercase;
-  color: var(--gold);
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-.lede {
-  font-size: 1.03rem;
-  color: var(--muted);
-  line-height: 1.78;
-  max-width: 68ch;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: .73rem;
-  border: 1px solid var(--line-soft);
-  color: var(--muted);
-  cursor: pointer;
-  transition: .16s var(--ease);
-  background: transparent;
-  white-space: nowrap;
-}
-
-.chip:hover {
-  border-color: var(--gold-dim);
-  color: var(--gold-soft);
-}
-
-.chip.active {
-  background: var(--gold-dim);
-  border-color: var(--gold);
-  color: var(--gold-soft);
-  font-weight: 500;
-}
-
-.chip-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 18px;
-}
-
-.field-label {
-  display: inline-block;
-  font-size: .62rem;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-/* ---- 6.4 Hero ---- */
-.hero {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  padding: 52px 42px;
-  margin-bottom: 30px;
-  background:
-    radial-gradient(1200px 420px at 82% -10%, rgba(197, 161, 90, .16), transparent 62%),
-    radial-gradient(700px 340px at 8% 110%, rgba(64, 110, 180, .16), transparent 60%),
-    linear-gradient(160deg, var(--deep-2), var(--deep) 55%, var(--navy));
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: .85;
-  background-image:
-    radial-gradient(1.4px 1.4px at 12% 22%, rgba(224, 197, 138, .50), transparent),
-    radial-gradient(1.2px 1.2px at 68% 12%, rgba(224, 197, 138, .35), transparent),
-    radial-gradient(1.6px 1.6px at 88% 62%, rgba(224, 197, 138, .30), transparent),
-    radial-gradient(1.1px 1.1px at 38% 78%, rgba(224, 197, 138, .32), transparent),
-    radial-gradient(1.3px 1.3px at 52% 42%, rgba(224, 197, 138, .22), transparent),
-    radial-gradient(1.0px 1.0px at 24% 60%, rgba(224, 197, 138, .28), transparent);
-}
-
-.hero > * { position: relative; z-index: 1; }
-
-.hero h1 {
-  margin-bottom: 14px;
-  max-width: 19ch;
-}
-
-.hero .lede {
-  font-size: 1.08rem;
-  max-width: 56ch;
-  margin-bottom: 26px;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-/* ---- 6.5 Prose & reading typography ---- */
-.prose {
-  max-width: 72ch;
-}
-
-.prose p {
-  color: var(--white);
-  opacity: .92;
-}
-
-.prose h3 {
-  margin-top: 1.7em;
-  color: var(--gold-soft);
-}
-
-.prose ul,
-.prose ol {
-  padding-left: 1.25em;
-  margin: 0 0 1.1em;
-}
-
-.prose li {
-  margin-bottom: .55em;
-  color: var(--white);
-  opacity: .90;
-}
-
-.prose strong {
-  color: var(--gold-soft);
-  font-weight: 600;
-}
-
-.devanagari {
-  font-family: var(--dev-serif);
-  font-size: 1.55rem;
-  line-height: 2;
-  color: var(--gold-soft);
-  letter-spacing: .01em;
-}
-
-.translit {
-  font-family: var(--serif);
-  font-size: 1.14rem;
-  font-style: italic;
-  color: var(--muted);
-  letter-spacing: .01em;
-}
-
-/* ---- 6.6 Source blocks, notes, callouts ---- */
-.source-block {
-  background: var(--deep-2);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--gold);
-  border-radius: var(--radius-sm);
-  padding: 20px 22px;
-  margin: 0 0 18px;
-}
-
-.source-block.pending {
-  border-left-color: var(--muted);
-  background: var(--deep);
-}
-
-.note-block {
-  background: var(--deep-2);
-  border: 1px dashed var(--line);
-  border-radius: var(--radius-sm);
-  padding: 16px 18px;
-  font-size: .86rem;
-  color: var(--muted);
-  line-height: 1.72;
-}
-
-.note-block strong {
-  color: var(--gold-soft);
-}
-
-.callout {
-  border-radius: var(--radius-sm);
-  padding: 18px 20px;
-  border: 1px solid var(--line);
-  background: var(--deep-2);
-  font-size: .87rem;
-  line-height: 1.72;
-  margin-bottom: 18px;
-}
-
-.callout.safety {
-  border-color: rgba(224, 176, 96, .40);
-  background: rgba(224, 176, 96, .07);
-}
-
-.callout.safety h4 {
-  color: #E0B060;
-  margin-bottom: 6px;
-  font-size: .92rem;
-}
-
-.callout.info {
-  border-color: var(--line-soft);
-}
-
-.callout.info h4 {
-  color: var(--gold-soft);
-  margin-bottom: 6px;
-  font-size: .92rem;
-}
-
-.callout p:last-child { margin-bottom: 0; }
-
-.callout ul {
-  margin: 0;
-  padding-left: 1.2em;
-}
-
-.callout li {
-  margin-bottom: .4em;
-  color: var(--white);
-  opacity: .88;
-}
-
-/* ---- 6.7 Rows & lists ---- */
-.row-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  background: var(--line-soft);
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--line-soft);
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 18px;
-  background: var(--deep);
-  cursor: pointer;
-  transition: background .16s var(--ease);
-  color: inherit;
-  text-decoration: none;
-}
-
-.row:hover {
-  background: var(--deep-2);
-  text-decoration: none;
-  color: inherit;
-}
-
-.row-num {
-  flex: 0 0 40px;
-  font-family: var(--serif);
-  font-size: .92rem;
-  color: var(--gold);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: .04em;
-}
-
-.row-body {
-  min-width: 0;
-  flex: 1;
-}
-
-.row-title {
-  font-size: .93rem;
-  font-weight: 500;
-  color: var(--white);
-  line-height: 1.4;
-}
-
-.row-meta {
-  font-size: .73rem;
-  color: var(--muted);
-  letter-spacing: .03em;
-  margin-top: 2px;
-}
-
-.row-actions {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  flex: 0 0 auto;
-}
-
-/* ---- 6.8 Progress bars ---- */
-.bar {
-  height: 4px;
-  border-radius: 99px;
-  background: var(--deep-3);
-  overflow: hidden;
-}
-
-.bar > span {
-  display: block;
-  height: 100%;
-  border-radius: 99px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-soft));
-  transition: width .5s var(--ease);
-}
-
-/* ---- 6.9 Forms & inputs ---- */
-.field { margin-bottom: 16px; }
-
-.field label {
-  display: block;
-  font-size: .74rem;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 7px;
-  font-weight: 600;
-}
-
-input[type="text"],
-input[type="email"],
-textarea,
-select {
-  width: 100%;
-  padding: 11px 14px;
-  background: var(--deep-2);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-sm);
-  color: var(--white);
-  font-size: .90rem;
-  outline: none;
-  transition: .16s var(--ease);
-  resize: vertical;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px var(--gold-dim);
-}
-
-textarea {
-  min-height: 130px;
-  line-height: 1.7;
-}
-
-input[type="range"] {
-  accent-color: var(--gold);
-  cursor: pointer;
-}
-
-/* ---- 6.10 Technique cards ---- */
-.tech-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background: var(--deep);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius);
-  padding: 20px;
-  cursor: pointer;
-  transition: .2s var(--ease);
-  position: relative;
-  overflow: hidden;
-}
-
-.tech-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold), transparent);
-  opacity: 0;
-  transition: opacity .25s var(--ease);
-}
-
-.tech-card:hover {
-  border-color: var(--line);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
-}
-
-.tech-card:hover::before { opacity: 1; }
-
-.tech-num {
-  font-family: var(--serif);
-  font-size: 2rem;
-  color: var(--gold);
-  line-height: 1;
-  letter-spacing: .02em;
-  opacity: .9;
-}
-
-.tech-title {
-  font-family: var(--serif);
-  font-size: 1.22rem;
-  color: var(--white);
-  line-height: 1.3;
-  margin: 0;
-}
-
-body[data-lang="hi"] .tech-title,
-body[data-lang="sa"] .tech-title {
-  font-family: var(--dev-sans);
-}
-
-.tech-theme {
-  font-size: .82rem;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-/* ---- 6.11 Glossary term cards ---- */
-.term-card {
-  background: var(--deep);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  cursor: pointer;
-  transition: .18s var(--ease);
-}
-
-.term-card:hover {
-  border-color: var(--line);
-  background: var(--deep-2);
-  transform: translateY(-2px);
-}
-
-.term-dev {
-  font-family: var(--dev-serif);
-  font-size: 1.5rem;
-  color: var(--gold-soft);
-  line-height: 1.5;
-}
-
-.term-rom {
-  font-family: var(--serif);
-  font-size: 1rem;
-  color: var(--white);
-  font-style: italic;
-  margin-top: 2px;
-}
-
-.term-def {
-  font-size: .83rem;
-  color: var(--muted);
-  margin-top: 8px;
-  line-height: 1.65;
-}
-
-/* ---- 6.12 Tabs ---- */
-.tabs {
-  display: flex;
-  gap: 4px;
-  border-bottom: 1px solid var(--line-soft);
-  margin-bottom: 22px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.tabs::-webkit-scrollbar { display: none; }
-
-.tab {
-  padding: 10px 16px;
-  font-size: .85rem;
-  color: var(--muted);
-  cursor: pointer;
-  border: 0;
-  background: transparent;
-  border-bottom: 2px solid transparent;
-  white-space: nowrap;
-  transition: .16s var(--ease);
-  font-weight: 400;
-}
-
-.tab:hover { color: var(--white); }
-
-.tab.active {
-  color: var(--gold-soft);
-  border-bottom-color: var(--gold);
-  font-weight: 500;
-}
-
-/* ---- 6.13 Empty states ---- */
-.empty {
-  text-align: center;
-  padding: 56px 24px;
-  border: 1px dashed var(--line-soft);
-  border-radius: var(--radius);
-  color: var(--muted);
-}
-
-.empty .big {
-  font-size: 2rem;
-  opacity: .5;
-  margin-bottom: 12px;
-}
-
-/* ---- 6.14 Breadcrumbs ---- */
-.crumbs {
-  font-size: .76rem;
-  color: var(--muted);
-  margin-bottom: 16px;
-  letter-spacing: .04em;
-}
-
-.crumbs a { color: var(--muted); }
-.crumbs a:hover { color: var(--gold-soft); }
-.crumbs span { margin: 0 8px; opacity: .5; }
-
-/* ---- 6.15 Toast ---- */
-#toast {
-  position: fixed;
-  bottom: 96px;
-  left: 50%;
-  transform: translate(-50%, 20px);
-  background: var(--deep-3);
-  color: var(--white);
-  border: 1px solid var(--gold);
-  border-radius: 999px;
-  padding: 10px 22px;
-  font-size: .82rem;
-  z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: .28s var(--ease);
-  box-shadow: var(--shadow);
-  white-space: nowrap;
-}
-
-#toast.show {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-/* ---- 6.16 Onboarding ---- */
-.onboard-wrap {
-  min-height: calc(100vh - 120px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 0;
-}
-
-.onboard-card {
-  width: 100%;
-  max-width: 640px;
-  background: linear-gradient(165deg, var(--deep-2), var(--deep));
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 44px 40px;
-  box-shadow: var(--shadow);
-  text-align: center;
-}
-
-.onboard-step {
-  font-size: .68rem;
-  letter-spacing: .20em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-
-/* Large Devanagari title used on the welcome card */
-.onboard-devanagari {
-  font-family: var(--dev-serif);
-  font-size: 2.6rem;
-  color: var(--gold-soft);
-  line-height: 1.4;
-  margin-bottom: 14px;
-}
-
-.lang-options {
-  display: grid;
-  gap: 10px;
-  margin: 24px 0;
-}
-
-.lang-opt {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 18px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--line-soft);
-  background: var(--deep);
-  cursor: pointer;
-  text-align: left;
-  transition: .16s var(--ease);
-  color: var(--white);
-}
-
-.lang-opt:hover {
-  border-color: var(--gold-dim);
-  background: var(--deep-2);
-}
-
-.lang-opt.sel {
-  border-color: var(--gold);
-  background: var(--gold-dim);
-}
-
-.lang-opt .native {
-  font-family: var(--dev-serif);
-  font-size: 1.15rem;
-  color: var(--gold-soft);
-  min-width: 90px;
-}
-
-.lang-opt .en {
-  font-size: .85rem;
-  color: var(--muted);
-}
-
-/* Small language badge used in some contexts */
-.lang-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 22px;
-  height: 22px;
-  padding: 0 6px;
-  border-radius: 6px;
-  background: var(--gold-dim);
-  color: var(--gold-soft);
-  font-size: .66rem;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-
-/* ---- 6.17 Filter bar ---- */
-.filterbar {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 18px;
-}
-
-.filterbar input[type="text"] {
-  flex: 1;
-  min-width: 200px;
-}
-
-.filterbar select {
-  width: auto;
-  min-width: 170px;
+function applyVisualPreferences() {
+  document.documentElement.style.setProperty('--fs', (16 * state.fontScale) + 'px');
+  document.body.dataset.lang = state.lang;
+  document.body.classList.toggle('theme-manuscript', state.theme === 'manuscript');
+  document.body.classList.toggle('theme-dark', state.theme === 'dark');
+
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) {
+    meta.setAttribute('content', state.theme === 'manuscript' ? '#F1EBDD' : '#0B1424');
+  }
+
+  /* Translate static shell strings */
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.getAttribute('data-i18n');
+    el.textContent = t(key);
+  });
+
+  /* Update search placeholder per language */
+  const si = document.getElementById('searchInput');
+  if (si) {
+    const placeholders = {
+      en: 'Search verses, techniques, terms…',
+      hi: 'श्लोक, तकनीक, शब्द खोजें…',
+      sa: 'श्लोकान्, विधीन्, शब्दान् अन्विष्य…'
+    };
+    si.placeholder = placeholders[state.lang] || placeholders.en;
+  }
 }
 
 
 /* ============================================================================
-   07. FOOTER
+   09. EVENT DELEGATION
    ============================================================================ */
 
-.site-footer {
-  border-top: 1px solid var(--line-soft);
-  padding: 26px;
-  text-align: center;
-  font-size: .74rem;
-  color: var(--muted);
-  line-height: 1.8;
-}
+document.addEventListener('click', (e) => {
+  /* ---- Onboarding buttons ---- */
+  const ob = e.target.closest('[data-onboard]');
+  if (ob) {
+    const action = ob.getAttribute('data-onboard');
+    if (action === 'next') {
+      onboardStep = Math.min(onboardStep + 1, 4);
+      if (onboardStep >= 1) state.lang = onboardDraftLang;
+      applyVisualPreferences();
+      document.getElementById('app').innerHTML = renderWelcome();
+    } else if (action === 'back') {
+      onboardStep = Math.max(onboardStep - 1, 0);
+      document.getElementById('app').innerHTML = renderWelcome();
+    } else if (action === 'guest') {
+      state.onboarded = true;
+      saveState();
+      location.hash = '#/home';
+    } else if (action === 'finish') {
+      state.onboarded = true;
+      saveState();
+      location.hash = '#/home';
+    }
+    return;
+  }
 
-.site-footer a {
-  color: var(--muted);
-  border-bottom: 1px dotted var(--gold-dim);
-}
+  /* ---- Language pick during onboarding ---- */
+  const lp = e.target.closest('[data-lang-pick]');
+  if (lp) {
+    onboardDraftLang = lp.getAttribute('data-lang-pick');
+    state.lang = onboardDraftLang;
+    applyVisualPreferences();
+    document.getElementById('app').innerHTML = renderWelcome();
+    return;
+  }
 
-.site-footer a:hover { color: var(--gold-soft); }
+  /* ---- Interests (visual toggle only) ---- */
+  const interest = e.target.closest('[data-interest]');
+  if (interest) {
+    interest.classList.toggle('active');
+    return;
+  }
+
+  /* ---- Bookmark toggles (anywhere) ---- */
+  const bm = e.target.closest('[data-bm-type]');
+  if (bm) {
+    e.preventDefault();
+    e.stopPropagation();
+    const type = bm.getAttribute('data-bm-type');
+    const id = bm.getAttribute('data-bm-id');
+    const title = bm.getAttribute('data-bm-title');
+    const nowSaved = toggleBookmark(type, id, title);
+
+    document.querySelectorAll(`[data-bm-type="${type}"][data-bm-id="${CSS.escape(id)}"]`).forEach((b) => {
+      b.textContent = nowSaved ? '★ Saved' : '☆ Save';
+      b.classList.toggle('btn-outline', nowSaved);
+      b.classList.toggle('btn-ghost', !nowSaved);
+      b.setAttribute('aria-pressed', nowSaved ? 'true' : 'false');
+    });
+
+    if (location.hash.startsWith('#/bookmarks')) router();
+    return;
+  }
+
+  /* ---- Quick journal entry from technique page ---- */
+  const jr = e.target.closest('[data-journal-related]');
+  if (jr) {
+    state.pendingRelated = jr.getAttribute('data-journal-related');
+    saveState();
+    location.hash = '#/journal';
+    return;
+  }
+
+  /* ---- Journal prompt fill ---- */
+  const pr = e.target.closest('[data-prompt]');
+  if (pr) {
+    const body = document.getElementById('jBody');
+    if (body) {
+      body.value = (body.value ? body.value + '\n\n' : '') + pr.getAttribute('data-prompt') + '\n';
+      body.focus();
+      body.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return;
+  }
+
+  /* ---- Journal: delete ---- */
+  const jd = e.target.closest('[data-jdel]');
+  if (jd) {
+    const id = jd.getAttribute('data-jdel');
+    state.journal = state.journal.filter((x) => x.id !== id);
+    saveState();
+    toast('Entry deleted');
+    router();
+    return;
+  }
+
+  /* ---- Settings: language ---- */
+  const sl = e.target.closest('[data-set-lang]');
+  if (sl) {
+    state.lang = sl.getAttribute('data-set-lang');
+    saveState();
+    applyVisualPreferences();
+    router();
+    return;
+  }
+
+  /* ---- Settings: theme ---- */
+  const st = e.target.closest('[data-set-theme]');
+  if (st) {
+    state.theme = st.getAttribute('data-set-theme');
+    saveState();
+    applyVisualPreferences();
+    router();
+    return;
+  }
+
+  /* ---- Journal save (delegated by id) ---- */
+  if (e.target.id === 'jSave') {
+    const title = document.getElementById('jTitle').value.trim();
+    const related = document.getElementById('jRelated').value.trim();
+    const body = document.getElementById('jBody').value.trim();
+    if (!body) { toast('Write something first'); return; }
+    state.journal.unshift({
+      id: 'j' + Date.now(),
+      title, body, related,
+      ts: Date.now()
+    });
+    state.pendingRelated = null;
+    saveState();
+    toast('Entry saved privately on this device');
+    router();
+    return;
+  }
+
+  /* ---- Journal: clear form ---- */
+  if (e.target.id === 'jClear') {
+    document.getElementById('jTitle').value = '';
+    document.getElementById('jRelated').value = '';
+    document.getElementById('jBody').value = '';
+    return;
+  }
+
+  /* ---- Journal: export ---- */
+  if (e.target.id === 'jExport') {
+    exportData();
+    return;
+  }
+
+  /* ---- History: clear ---- */
+  if (e.target.id === 'histClear') {
+    state.history = [];
+    saveState();
+    toast('History cleared');
+    router();
+    return;
+  }
+
+  /* ---- Profile: export ---- */
+  if (e.target.id === 'exportAll') {
+    exportData();
+    return;
+  }
+
+  /* ---- Profile: clear all local data ---- */
+  if (e.target.id === 'clearAll') {
+    if (confirm('This will permanently delete all bookmarks, journal entries and history stored on this device. Continue?')) {
+      state.bookmarks = [];
+      state.journal = [];
+      state.history = [];
+      saveState();
+      toast('All local data cleared');
+      router();
+    }
+    return;
+  }
+});
+
+
+/* ---- Change events (delegated) ---- */
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'indexCat') {
+    state.indexFilter = e.target.value;
+    saveState();
+    document.getElementById('app').innerHTML = renderIndex();
+  }
+  if (e.target.id === 'fontRange') {
+    state.fontScale = Number(e.target.value) / 100;
+    const fv = document.getElementById('fontVal');
+    if (fv) fv.textContent = e.target.value + '%';
+    applyVisualPreferences();
+    saveState();
+  }
+});
+
+
+/* ---- Input events (delegated) ---- */
+let indexSearchTimer;
+document.addEventListener('input', (e) => {
+  if (e.target.id === 'indexSearch') {
+    clearTimeout(indexSearchTimer);
+    const val = e.target.value;
+    indexSearchTimer = setTimeout(() => {
+      state.indexQuery = val;
+      saveState();
+      document.getElementById('app').innerHTML = renderIndex();
+      const inp = document.getElementById('indexSearch');
+      if (inp) {
+        inp.focus();
+        inp.setSelectionRange(val.length, val.length);
+      }
+    }, 220);
+  }
+});
 
 
 /* ============================================================================
-   08. UTILITY CLASSES
+   10. EXPORT / DATA HELPERS
    ============================================================================ */
 
-/* Margins */
-.mt0  { margin-top: 0; }    .mb0  { margin-bottom: 0; }
-.mt8  { margin-top: 8px; }  .mb8  { margin-bottom: 8px; }
-.mt16 { margin-top: 16px; } .mb16 { margin-bottom: 16px; }
-.mt24 { margin-top: 24px; } .mb24 { margin-bottom: 24px; }
-.mt32 { margin-top: 32px; } .mb32 { margin-bottom: 32px; }
-
-/* Text */
-.muted  { color: var(--muted); }
-.small  { font-size: .80rem; }
-.tiny   { font-size: .70rem; letter-spacing: .04em; }
-.center { text-align: center; }
-
-/* Flex helpers */
-.flex      { display: flex; }
-.between   { justify-content: space-between; }
-.items-center { align-items: center; }
-.items-start  { align-items: flex-start; }
-.gap8      { gap: 8px; }
-.gap12     { gap: 12px; }
-.gap16     { gap: 16px; }
-.wrap      { flex-wrap: wrap; }
-
-/* Numeric alignment */
-.mono-num  { font-variant-numeric: tabular-nums; }
-
-/* Display */
-.hide      { display: none !important; }
-
-/* Grid helpers */
-.grid { display: grid; gap: 16px; }
-.g2   { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.g3   { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.g4   { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.auto { grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); }
-
-/* Sections */
-.section { margin: 0 0 46px; }
-
-.section-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-}
-
-.section-head h2 { margin: 0; }
-
-.section-head .more {
-  font-size: .78rem;
-  color: var(--gold-soft);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-/* Dividers */
-.divider {
-  height: 1px;
-  background: var(--line-soft);
-  border: 0;
-  margin: 30px 0;
-}
-
-.rule-gold {
-  height: 1px;
-  border: 0;
-  margin: 34px 0;
-  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+function exportData() {
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    application: 'Vigyaan Bhairav',
+    preferences: {
+      lang: state.lang,
+      theme: state.theme,
+      fontScale: state.fontScale
+    },
+    bookmarks: state.bookmarks,
+    journal: state.journal,
+    history: state.history
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'vigyaan-bhairav-export-' + new Date().toISOString().slice(0, 10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Data exported');
 }
 
 
 /* ============================================================================
-   09. RESPONSIVE BREAKPOINTS
+   11. BOOTSTRAP
    ============================================================================ */
 
-/* ---- Tablet / small desktop ---- */
-@media (max-width: 1024px) {
-  .g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .g3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
+(function init() {
+  loadState();
+  applyVisualPreferences();
 
-/* ---- Mobile / small tablet ---- */
-@media (max-width: 900px) {
-  .shell {
-    grid-template-columns: 1fr;
+  if (!location.hash) {
+    location.hash = state.onboarded ? '#/home' : '#/welcome';
   }
 
-  .sidebar { display: none; }
+  window.addEventListener('hashchange', router);
+  router();
 
-  .bottomnav { display: grid; }
-
-  .topbar {
-    padding: 10px 16px;
-    gap: 10px;
+  /* ---- Bind topbar buttons ---- */
+  const searchForm = document.getElementById('searchForm');
+  if (searchForm) {
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = document.getElementById('searchInput').value.trim();
+      if (q) location.hash = '#/search/' + encodeURIComponent(q);
+    });
   }
 
-  .topbar-mobile-brand {
-    display: flex;
-    align-items: center;
-    gap: 9px;
+  const themeBtn = document.getElementById('themeBtn');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      state.theme = state.theme === 'manuscript' ? 'dark' : 'manuscript';
+      saveState();
+      applyVisualPreferences();
+      toast(state.theme === 'manuscript' ? 'Manuscript reading mode' : 'Cosmic dark mode');
+      if (location.hash.startsWith('#/profile')) router();
+    });
   }
 
-  .topbar-mobile-brand .brand-mark {
-    width: 32px;
-    height: 32px;
-    flex: 0 0 32px;
-    font-size: 15px;
+  const langBtn = document.getElementById('langBtn');
+  if (langBtn) {
+    langBtn.addEventListener('click', () => {
+      const order = ['en', 'hi', 'sa'];
+      const next = order[(order.indexOf(state.lang) + 1) % order.length];
+      state.lang = next;
+      saveState();
+      applyVisualPreferences();
+      toast('Language: ' + ({ en: 'English', hi: 'हिन्दी', sa: 'संस्कृत' })[next]);
+      router();
+    });
   }
 
-  .topbar-mobile-brand .brand-title {
-    font-size: .80rem;
-    letter-spacing: .13em;
+  const profileBtn = document.getElementById('profileBtn');
+  if (profileBtn) {
+    profileBtn.addEventListener('click', () => {
+      location.hash = '#/profile';
+    });
   }
 
-  .search-form { max-width: none; }
-
-  .search-form input {
-    padding: 8px 12px 8px 34px;
-    font-size: .82rem;
-  }
-
-  main#app {
-    padding: 22px 16px 96px;
-  }
-
-  .hero {
-    padding: 34px 24px;
-    border-radius: var(--radius);
-  }
-
-  .hero h1 { max-width: none; }
-
-  .g2,
-  .g3,
-  .g4 { grid-template-columns: 1fr; }
-
-  .onboard-card { padding: 30px 22px; }
-
-  .site-footer { padding-bottom: 96px; }
-
-  .card { padding: 18px; }
-  .card.pad-lg { padding: 22px; }
-
-  /* Toast sits above the bottom nav */
-  #toast { bottom: 80px; }
-}
-
-/* ---- Small phones ---- */
-@media (max-width: 480px) {
-  h1 { font-size: 1.7rem; }
-
-  .brand-title { font-size: .72rem; }
-
-  .tech-num { font-size: 1.6rem; }
-
-  .row {
-    padding: 12px 14px;
-    gap: 12px;
-  }
-
-  .row-num {
-    flex: 0 0 32px;
-    font-size: .82rem;
-  }
-
-  .hero { padding: 28px 18px; }
-  .hero-actions .btn { flex: 1; justify-content: center; }
-
-  .onboard-devanagari { font-size: 2rem; }
-
-  .site-footer { font-size: .68rem; }
-}
-
-
-/* ============================================================================
-   10. PRINT STYLES
-   ============================================================================ */
-
-@media print {
-  .sidebar,
-  .bottomnav,
-  .topbar,
-  .site-footer,
-  #toast,
-  .skip-link {
-    display: none !important;
-  }
-
-  .shell { display: block; }
-
-  body {
-    background: #fff;
-    color: #000;
-    font-size: 12pt;
-  }
-
-  main#app {
-    max-width: none;
-    padding: 0;
-  }
-
-  a { color: #000; text-decoration: underline; }
-
-  .card,
-  .source-block,
-  .note-block,
-  .callout {
-    border: 1px solid #ccc;
-    background: #fff;
-    box-shadow: none;
-  }
-
-  .hero {
-    background: #fff;
-    border: 1px solid #ccc;
-  }
-
-  .hero::after { display: none; }
-
-  .devanagari,
-  .translit,
-  .prose strong,
-  .eyebrow {
-    color: #000 !important;
-  }
-}
+  /* ---- Keyboard shortcut: "/" focuses search ---- */
+  document.addEventListener('keydown', (e) => {
+    if (
+      e.key === '/' &&
+      document.activeElement.tagName !== 'INPUT' &&
+      document.activeElement.tagName !== 'TEXTAREA'
+    ) {
+      e.preventDefault();
+      const si = document.getElementById('searchInput');
+      if (si) si.focus();
+    }
+  });
+})();
