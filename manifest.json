@@ -1,0 +1,17 @@
+{
+  "name": "Vigyaan Bhairav",
+  "short_name": "Vigyaan",
+  "description": "Explore Awareness. Understand Consciousness.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0B1424",
+  "theme_color": "#0B1424",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgZmlsbD0iIzBCMTQyNCIvPjxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iMTQ0IiBmaWxsPSJub25lIiBzdHJva2U9IiNDNUExNUEiIHN0cm9rZS13aWR0aD0iMjAiLz48dGV4dCB4PSIyNTYiIHk9IjMyMCIgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXNpemU9IjE2MCIgZmlsbD0iI0UwQzU4QSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+4KS14KS/PC90ZXh0Pjwvc3ZnPg==",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
